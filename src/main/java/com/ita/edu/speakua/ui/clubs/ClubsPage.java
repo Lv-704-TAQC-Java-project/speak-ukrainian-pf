@@ -2,6 +2,7 @@ package com.ita.edu.speakua.ui.clubs;
 
 import com.ita.edu.speakua.ui.BasePage;
 import com.ita.edu.speakua.ui.clubs.card.components.CardComponent;
+import com.ita.edu.speakua.ui.clubs.card.components.CenterComponent;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -12,6 +13,7 @@ import java.util.List;
 public class ClubsPage extends BasePage {
 
     private List<CardComponent> cards;
+    private List<CenterComponent> centers;
 
     @FindBy(xpath = "//div[@class = 'content-clubs-list false']")
     private WebElement blockCardContainer;
@@ -35,6 +37,14 @@ public class ClubsPage extends BasePage {
             this.cards.add(new CardComponent(driver, card));
         }
         return this.cards;
+    }
+
+    public List<CenterComponent> getCenters() {
+        this.centers = new ArrayList<>();
+        for (WebElement center : cardsBody) {
+            this.centers.add(new CenterComponent(driver, center));
+        }
+        return this.centers;
     }
 
     public WebElement getAdvancedSearchButton() {
