@@ -16,6 +16,9 @@ public class ClubsPage extends BasePage {
     private ExpandedCardComponent expandedCardComponent;
     private List<CardComponent> cards;
     private List<CenterComponent> centers;
+    private PaginationComponent paginationComponent;
+
+    private SortClubComponent sortClubComponent;
 
     @FindBy(xpath = "//div[@class = 'content-clubs-list false']")
     private WebElement blockCardContainer;
@@ -65,6 +68,22 @@ public class ClubsPage extends BasePage {
 
     public WebElement getAdvancedSearchButton() {
         return advancedSearchButton;
+    }
+
+    public PaginationComponent getPaginationComponent() {
+        paginationComponent = new PaginationComponent(driver);
+        return paginationComponent;
+    }
+
+    public PaginationComponent openPaginationComponent() {
+        return getPaginationComponent().waitForPaginationComponentToOpen();
+    }
+
+    public SortClubComponent getSortClubComponent() {
+        if (sortClubComponent == null) {
+            sortClubComponent = new SortClubComponent(driver);
+        }
+        return sortClubComponent;
     }
 
 
