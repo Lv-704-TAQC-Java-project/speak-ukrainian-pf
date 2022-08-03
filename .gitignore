@@ -17,3 +17,5 @@ buildNumber.properties
 .project
 .settings
 test-output
+
+/src/test/resources/config.properties

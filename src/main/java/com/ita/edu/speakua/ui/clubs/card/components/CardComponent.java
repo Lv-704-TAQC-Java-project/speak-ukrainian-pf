@@ -1,6 +1,7 @@
 package com.ita.edu.speakua.ui.clubs.card.components;
 
 import com.ita.edu.speakua.ui.BasePage;
+import com.ita.edu.speakua.ui.clubs.ExpandedCardComponent;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -45,10 +46,10 @@ public class CardComponent extends BasePage {
         return cardBody;
     }
 
-//    public ExpandedCardComponent cardTitleClick() {
-//        cardTitle.click();
-//        return new ExpandedCardComponent(driver);
-//    }
+    public ExpandedCardComponent cardTitleClick() {
+        cardTitle.click();
+        return new ExpandedCardComponent(driver);
+    }
 
     public boolean isClubAvailableOnline() {
         return availableOnline.isDisplayed();

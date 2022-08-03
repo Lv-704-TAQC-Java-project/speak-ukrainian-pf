@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClubsPage extends BasePage {
+
+    private AdvancedSearchPanelComponent advancedSearchPanelComponent;
+    private ExpandedCardComponent expandedCardComponent;
     private List<CardComponent> cards;
     private List<CenterComponent> centers;
     private PaginationComponent paginationComponent;
@@ -31,6 +34,20 @@ public class ClubsPage extends BasePage {
 
     public ClubsPage(WebDriver driver) {
         super(driver);
+    }
+
+    public AdvancedSearchPanelComponent getAdvancedSearchPanelComponent() {
+        if (advancedSearchPanelComponent == null) {
+            advancedSearchPanelComponent = new AdvancedSearchPanelComponent(driver);
+        }
+        return advancedSearchPanelComponent;
+    }
+
+    public ExpandedCardComponent getExpandedCardComponent() {
+        if (expandedCardComponent == null) {
+            expandedCardComponent = new ExpandedCardComponent(driver);
+        }
+        return expandedCardComponent;
     }
 
     public List<CardComponent> getCards() {
