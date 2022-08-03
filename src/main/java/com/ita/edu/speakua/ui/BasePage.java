@@ -1,5 +1,8 @@
 package com.ita.edu.speakua.ui;
 
+import com.ita.edu.speakua.ui.clubs.ClubsPage;
+import com.ita.edu.speakua.ui.clubs.card.components.CardComponent;
+import com.ita.edu.speakua.ui.clubs.card.components.CenterComponent;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -115,6 +118,25 @@ public class BasePage {
     public void waitForTextPresentInElement(WebElement element, String text) {
         WebDriverWait wait = new WebDriverWait(driver, SHORT_TIMEOUT);
         wait.until(ExpectedConditions.textToBePresentInElement(element, text));
+    }
+
+    public void clickManagingClubsPageElement(WebElement element) {
+        List<CardComponent> cards = new ClubsPage(driver).getCards();
+        element.click();
+        driver.manage().timeouts().implicitlyWait(SHORT_TIMEOUT);
+        for (CardComponent card : cards) {
+            try {
+                waitStalenessOfElement(card.getCardBody());
+            } catch (TimeoutException ignored) {
+            }
+        }
+    }
+
+    public void clickManagingCenterPageElement(WebElement element) {
+        List<CenterComponent> cards = new ClubsPage(driver).getCenters();
+        element.click();
+        driver.manage().timeouts().implicitlyWait(SHORT_TIMEOUT);
+        sleep(2000);
     }
 
 
