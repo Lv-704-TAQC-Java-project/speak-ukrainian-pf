@@ -19,6 +19,9 @@ public class ClubsPage extends BasePage {
     @FindBy(xpath = "//div[@class = 'content-clubs-list content-clubs-block']")
     private WebElement listCardContainer;
 
+    @FindBy(xpath = "//span[contains(@class, 'anticon-control')]")
+    private WebElement advancedSearchButton;
+
     @FindBy(xpath = ".//div[contains(@class, 'card-body')]")
     private List<WebElement> cardsBody;
 
@@ -32,6 +35,10 @@ public class ClubsPage extends BasePage {
             this.cards.add(new CardComponent(driver, card));
         }
         return this.cards;
+    }
+
+    public WebElement getAdvancedSearchButton() {
+        return advancedSearchButton;
     }
 
 
