@@ -12,7 +12,7 @@ import java.util.List;
 public class CardComponent extends BasePage {
 
     protected DefaultElementLocatorFactory parentContext;
-    private WebElement cardBody;
+    protected WebElement cardBody;
 
     @FindBy(xpath = ".//div[@class='title']")
     protected WebElement cardTitle;
