@@ -1,12 +1,14 @@
 package com.ita.edu.speakua.ui;
 
 import com.ita.edu.speakua.ui.clubs.ClubsPage;
+import com.ita.edu.speakua.ui.header.HeaderComponent;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+
 public class HomePage extends BasePage {
-    //private HeaderComponent header;
+    private HeaderComponent header;
 
     @FindBy(xpath = "//span[contains(@class, 'anticon-search')]")
     private WebElement searchButton;
@@ -17,17 +19,18 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//span[contains(@class, 'anticon-control')]")
     private WebElement advancedSearchButton;
 
+
     public HomePage(WebDriver driver) {
         super(driver);
     }
 
-//    public HeaderComponent getHeader() {
-//        if (header == null) {
-//            header = new HeaderComponent(driver);
-//        }
-//        return header;
-//    }
 
+    public HeaderComponent getHeader() {
+        if (header == null) {
+            header = new HeaderComponent(driver);
+        }
+        return header;
+    }
 
     public ClubsPage clickAdvancedSearchInput() {
         searchInput.click();
