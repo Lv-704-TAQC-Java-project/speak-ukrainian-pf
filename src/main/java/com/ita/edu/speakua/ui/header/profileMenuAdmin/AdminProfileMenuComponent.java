@@ -2,14 +2,18 @@ package com.ita.edu.speakua.ui.header.profileMenuAdmin;
 
 import com.ita.edu.speakua.ui.BasePage;
 import com.ita.edu.speakua.ui.HomePage;
+import com.ita.edu.speakua.ui.header.AbstractProfileMenu;
+import com.ita.edu.speakua.ui.header.IProfileMenu;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addCenterComponent.AbstractAddCenterComponent;
+import com.ita.edu.speakua.ui.header.profileMenuAdmin.addCenterComponent.AddCenterMainInfoComponent;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubMainInfoComponent;
+import com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.AdministrationComponent;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.profilePage.ProfilePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class AdminProfileMenuComponent extends BasePage {
+public class AdminProfileMenuComponent extends AbstractProfileMenu {
 
     @FindBy(xpath = "//div[contains(text(),'Додати гурток')]")
     private WebElement addClubComponent;
@@ -35,9 +39,9 @@ public class AdminProfileMenuComponent extends BasePage {
         return new AddClubMainInfoComponent(driver);
     }
 
-    public AbstractAddCenterComponent openAddCenterModal() {
+    public AddCenterMainInfoComponent openAddCenterModal() {
         addCenterModal.click();
-        return new AbstractAddCenterComponent(driver);
+        return new AddCenterMainInfoComponent(driver);
     }
 
     public ProfilePage openUserProfilePage() {
@@ -54,6 +58,8 @@ public class AdminProfileMenuComponent extends BasePage {
         administrationBtn.click();
         return new AdministrationComponent(driver);
     }
+
+
 
 
 }

@@ -14,7 +14,7 @@ public abstract class AbstractAddCenterComponent extends BasePage {
     public AbstractAddCenterComponent(WebDriver driver) {
         super(driver);
     }
-    public HomePage clickCloseComponent(String name){
+    public HomePage clickCloseComponent(){
         closeClubComponent.click();
         return new HomePage(driver);
     }

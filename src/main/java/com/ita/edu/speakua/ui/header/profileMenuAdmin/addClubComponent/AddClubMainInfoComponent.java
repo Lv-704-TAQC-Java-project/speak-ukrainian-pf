@@ -1,6 +1,5 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent;
 
-import com.ita.edu.speakua.ui.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
