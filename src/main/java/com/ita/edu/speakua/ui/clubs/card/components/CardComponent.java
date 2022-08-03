@@ -11,7 +11,7 @@ import java.util.List;
 
 public class CardComponent extends BasePage {
 
-    protected DefaultElementLocatorFactory cardParentContext;
+    protected DefaultElementLocatorFactory parentContext;
     private WebElement cardBody;
 
     @FindBy(xpath = ".//div[@class='title']")
@@ -37,8 +37,8 @@ public class CardComponent extends BasePage {
 
     public CardComponent(WebDriver driver, WebElement cardBody) {
         super(driver);
-        cardParentContext = new DefaultElementLocatorFactory(cardBody);
-        PageFactory.initElements(cardParentContext, this);
+        parentContext = new DefaultElementLocatorFactory(cardBody);
+        PageFactory.initElements(parentContext, this);
     }
 
     public WebElement getCardBody() {
