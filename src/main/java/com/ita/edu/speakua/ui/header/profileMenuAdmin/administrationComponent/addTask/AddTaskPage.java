@@ -1,4 +1,4 @@
-package com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.taskPage;
+package com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.addTask;
 
 import com.ita.edu.speakua.ui.BasePage;
 import org.openqa.selenium.By;

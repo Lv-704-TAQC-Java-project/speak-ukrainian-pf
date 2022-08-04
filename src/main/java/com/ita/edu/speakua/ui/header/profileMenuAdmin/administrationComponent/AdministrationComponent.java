@@ -2,7 +2,7 @@ package com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent;
 
 import com.ita.edu.speakua.ui.BasePage;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.addChallenge.AddChallengePage;
-import com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.taskPage.AddTaskPage;
+import com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.addTask.AddTaskPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
