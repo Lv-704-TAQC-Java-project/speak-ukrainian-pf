@@ -1,4 +1,4 @@
-package utils;
+package com.ita.edu.speakua.ui.utils;
 
 import java.io.FileInputStream;
 import java.io.IOException;
