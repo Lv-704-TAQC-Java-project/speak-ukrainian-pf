@@ -20,6 +20,9 @@ public class AddCenterMainInfoComponent extends AbstractAddCenterComponent{
     @FindBy(xpath = "//span[contains(text(),'Наступний крок')]/ancestor::button")
     private WebElement nextStepBtn;
 
+    @FindBy(xpath = "//div[contains(text(),'Некоректна назва центру')]")
+    private WebElement errorMessage;
+
     public AddCenterMainInfoComponent(WebDriver driver) {
         super(driver);
     }
@@ -42,6 +45,10 @@ public class AddCenterMainInfoComponent extends AbstractAddCenterComponent{
     public AddCenterContactComponent clickNextStep(){
         nextStepBtn.click();
         return new AddCenterContactComponent(driver);
+    }
+
+    public boolean errorMessageCenterName(){
+        return errorMessage.isDisplayed();
     }
 
 }

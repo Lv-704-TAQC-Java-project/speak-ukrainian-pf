@@ -37,4 +37,8 @@ public class AddClubDescribeComponent extends AbstractAddClubComponent{
         return new HomePage(driver);
     }
 
+    public boolean finishBtnIsEnable(){
+        return finishBtn.isEnabled();
+    }
+
 }

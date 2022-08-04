@@ -33,6 +33,15 @@ public class AddTaskPage extends BasePage {
     @FindBy(xpath = "//span[contains(text(),'Зберегти')]/ancestor::button")
     WebElement saveButton;
 
+    @FindBy(xpath = "//span[contains(text(),'Please')]")
+    WebElement errorMessageIsEmpty;
+
+    @FindBy(xpath = "//span[contains(text(),'Помилка')]")
+    WebElement errorInvalidCharacters;
+
+    @FindBy(xpath = "//span[contains(text(),'minimum of 40')]")
+    WebElement errorLessThenFortyCharacters;
+
     public AddTaskPage(WebDriver driver) {
         super(driver);
     }
@@ -79,4 +88,21 @@ public class AddTaskPage extends BasePage {
         saveButton.click();
         return new TaskPage(driver);
     }
+
+    public boolean errorMessageIsEmptyIsVisible(){
+        return errorMessageIsEmpty.isDisplayed();
+    }
+
+    public boolean errorMessageInvalidCharactersIsVisible(){
+        return errorInvalidCharacters.isDisplayed();
+    }
+
+    public boolean errorMessageLessThenFortyCharactersIsVisible(){
+        return errorLessThenFortyCharacters.isDisplayed();
+    }
+
+    public boolean errorMessageMoreThenThreeThousandCharactersIsVisible(){
+        return errorLessThenFortyCharacters.isDisplayed();
+    }
+
 }
