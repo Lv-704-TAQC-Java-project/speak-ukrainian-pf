@@ -1,11 +1,11 @@
 package com.ita.edu.speakua.ui.clubs;
 
-import com.ita.edu.speakua.ui.BasePage;
+import com.ita.edu.speakua.ui.BaseMethods;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class SortClubComponent extends BasePage {
+public class SortClubComponent extends ClubsPage {
     @FindBy(xpath = "//div/span[contains(text(), 'за алфавітом')]")
     private WebElement sortByABCButton;
 

@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class ServicesPage extends BasePage{
+public class ServicesPage extends HeaderComponent {
 
     @FindBy(xpath = "//section[@class='ant-layout serviceInUkr global-padding']")
     WebElement pageIdentifier;
@@ -14,7 +14,7 @@ public class ServicesPage extends BasePage{
     private HeaderComponent header;
 
 
-    public ServicesPage (WebDriver driver) {
+    public ServicesPage(WebDriver driver) {
         super(driver);
     }
 

@@ -1,6 +1,6 @@
 package com.ita.edu.speakua.ui.clubs.card.components;
 
-import com.ita.edu.speakua.ui.BasePage;
+import com.ita.edu.speakua.ui.BaseMethods;
 import com.ita.edu.speakua.ui.clubs.ExpandedCardComponent;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,9 +10,7 @@ import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
 
 import java.util.List;
 
-public class CardComponent extends BasePage {
-
-    protected DefaultElementLocatorFactory parentContext;
+public class CardComponent extends BaseMethods {
     protected WebElement cardBody;
 
     @FindBy(xpath = ".//div[@class='title']")
@@ -38,8 +36,8 @@ public class CardComponent extends BasePage {
 
     public CardComponent(WebDriver driver, WebElement cardBody) {
         super(driver);
-        parentContext = new DefaultElementLocatorFactory(cardBody);
-        PageFactory.initElements(parentContext, this);
+        this.cardBody = cardBody;
+        PageFactory.initElements(new DefaultElementLocatorFactory(cardBody), this);
     }
 
     public WebElement getCardBody() {

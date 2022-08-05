@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class NewsPage extends BasePage{
+public class NewsPage extends HeaderComponent {
 
     @FindBy(xpath = "//div[@class='global-padding news-content']")
     WebElement pageIdentifier;

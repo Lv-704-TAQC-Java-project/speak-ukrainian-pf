@@ -1,6 +1,6 @@
 package com.ita.edu.speakua.ui.header;
 
-import com.ita.edu.speakua.ui.BasePage;
+import com.ita.edu.speakua.ui.BaseMethods;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.AdminProfileMenuComponent;
 import com.ita.edu.speakua.ui.header.profileMenuGuest.GuestProfileMenuComponent;
 import org.openqa.selenium.WebDriver;
@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 
-public class HeaderComponent extends BasePage {
+public class HeaderComponent extends BaseMethods {
     @FindBy(xpath = "//div[contains(@class, 'user-profile')]")
     private WebElement profileMenuButton;
 
@@ -17,8 +17,6 @@ public class HeaderComponent extends BasePage {
 
     @FindBy(xpath = "//span[contains(text(), 'Показати на мапі')]/parent::button")
     private WebElement showOnMapButton;
-
-    private NavigationComponent navigationComponent;
     private LocationComponent locationComponent;
     private PopupMessageComponent popupMessageComponent;
     private GuestProfileMenuComponent guestProfileMenuComponent;
@@ -32,10 +30,7 @@ public class HeaderComponent extends BasePage {
 
 
     public NavigationComponent getNavigationComponent() {
-        if (navigationComponent == null) {
-            navigationComponent = new NavigationComponent(driver);
-        }
-        return navigationComponent;
+        return new NavigationComponent(driver);
     }
 
     public LocationComponent getLocationComponent() {

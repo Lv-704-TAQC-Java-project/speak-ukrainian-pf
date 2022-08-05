@@ -1,6 +1,6 @@
 package com.ita.edu.speakua.ui.header.profileMenuGuest;
 
-import com.ita.edu.speakua.ui.BasePage;
+import com.ita.edu.speakua.ui.BaseMethods;
 import com.ita.edu.speakua.ui.HomePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -10,7 +10,7 @@ import org.openqa.selenium.support.FindBy;
 import java.util.List;
 
 
-public class RegistrationModalComponent extends BasePage {
+public class RegistrationModalComponent extends BaseMethods {
     @FindBy(xpath = "//input[@id='lastName']")
     private WebElement lastNameInputField;
 

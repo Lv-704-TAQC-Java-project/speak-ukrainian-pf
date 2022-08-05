@@ -7,7 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 
-public class HomePage extends BasePage {
+public class HomePage extends HeaderComponent {
     private HeaderComponent header;
 
     @FindBy(xpath = "//span[contains(@class, 'anticon-search')]")

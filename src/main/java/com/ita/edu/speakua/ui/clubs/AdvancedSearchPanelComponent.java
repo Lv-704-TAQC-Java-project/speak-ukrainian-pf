@@ -1,13 +1,15 @@
 package com.ita.edu.speakua.ui.clubs;
 
-import com.ita.edu.speakua.ui.BasePage;
+import com.ita.edu.speakua.ui.BaseMethods;
+import com.ita.edu.speakua.ui.clubs.card.components.CardComponent;
+import com.ita.edu.speakua.ui.clubs.card.components.CenterComponent;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
-public class AdvancedSearchPanelComponent extends BasePage {
+public class AdvancedSearchPanelComponent extends ClubsPage {
 
     private WebElement districtListSectionChildren;
     private WebElement metroListSectionChildren;
@@ -275,5 +277,6 @@ public class AdvancedSearchPanelComponent extends BasePage {
         clickManagingClubsPageElement(childAgeInput);
         return this;
     }
+
 
 }

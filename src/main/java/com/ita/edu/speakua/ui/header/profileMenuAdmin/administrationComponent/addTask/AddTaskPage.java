@@ -1,13 +1,14 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.addTask;
 
-import com.ita.edu.speakua.ui.BasePage;
+import com.ita.edu.speakua.ui.BaseMethods;
+import com.ita.edu.speakua.ui.header.HeaderComponent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class AddTaskPage extends BasePage {
+public class AddTaskPage extends HeaderComponent {
 
     @FindBy(xpath = "//input[@id='startDate']")
     WebElement startDate;

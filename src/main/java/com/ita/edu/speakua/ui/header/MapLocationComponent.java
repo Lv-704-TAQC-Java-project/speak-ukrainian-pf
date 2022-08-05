@@ -1,11 +1,11 @@
 package com.ita.edu.speakua.ui.header;
 
-import com.ita.edu.speakua.ui.BasePage;
+import com.ita.edu.speakua.ui.BaseMethods;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 
 
-public class MapLocationComponent extends BasePage {
+public class MapLocationComponent extends BaseMethods {
     @FindBy(xpath = "//button[contains(@class,'show-map-button')]")
     private WebElement showOnMapButton;
 

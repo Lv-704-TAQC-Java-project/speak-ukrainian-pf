@@ -1,13 +1,13 @@
 package com.ita.edu.speakua.ui.header.profileMenuGuest;
 
-import com.ita.edu.speakua.ui.BasePage;
+import com.ita.edu.speakua.ui.BaseMethods;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.profilePage.ProfilePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 
-public class GuestProfileMenuComponent extends BasePage {
+public class GuestProfileMenuComponent extends BaseMethods {
     @FindBy(xpath = "//div[contains(text(), 'Увійти')]//ancestor::li")
     private WebElement loginButton;
 

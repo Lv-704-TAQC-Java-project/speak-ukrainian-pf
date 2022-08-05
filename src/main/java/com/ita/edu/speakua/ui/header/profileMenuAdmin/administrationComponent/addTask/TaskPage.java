@@ -1,11 +1,12 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.addTask;
 
-import com.ita.edu.speakua.ui.BasePage;
+import com.ita.edu.speakua.ui.BaseMethods;
+import com.ita.edu.speakua.ui.header.HeaderComponent;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class TaskPage extends BasePage {
+public class TaskPage extends HeaderComponent {
 
     @FindBy(xpath = "//a[contains(text(),'Додати завдання')]/ancestor::button")
     WebElement addTaskBtn;
