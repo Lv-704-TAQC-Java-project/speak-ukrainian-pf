@@ -17,9 +17,6 @@ public class GuestProfileMenuComponent extends BaseMethods {
     @FindBy(xpath = "//a[contains(@href, 'user')]")
     private WebElement myProfileButton;
 
-    private LoginModalComponent loginModal;
-    private RegistrationModalComponent registrationModal;
-
 
     public GuestProfileMenuComponent(WebDriver driver) {
         super(driver);
@@ -27,17 +24,11 @@ public class GuestProfileMenuComponent extends BaseMethods {
 
 
     public LoginModalComponent getLoginModal() {
-        if (loginModal == null) {
-            loginModal = new LoginModalComponent(driver);
-        }
-        return loginModal;
+        return new LoginModalComponent(driver);
     }
 
     public RegistrationModalComponent getRegistrationModal() {
-        if (registrationModal == null) {
-            registrationModal = new RegistrationModalComponent(driver);
-        }
-        return registrationModal;
+        return new RegistrationModalComponent(driver);
     }
 
     public LoginModalComponent openLoginModal() {
