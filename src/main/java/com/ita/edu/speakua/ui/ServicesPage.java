@@ -11,19 +11,11 @@ public class ServicesPage extends HeaderComponent {
     @FindBy(xpath = "//section[@class='ant-layout serviceInUkr global-padding']")
     WebElement pageIdentifier;
 
-    private HeaderComponent header;
-
 
     public ServicesPage(WebDriver driver) {
         super(driver);
     }
 
-    public HeaderComponent getHeader() {
-        if (header == null) {
-            header = new HeaderComponent(driver);
-        }
-        return header;
-    }
 
     public boolean getPageIdentity() {
         try {

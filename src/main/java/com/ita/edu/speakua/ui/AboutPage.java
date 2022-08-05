@@ -8,8 +8,6 @@ import org.openqa.selenium.support.FindBy;
 
 public class AboutPage extends HeaderComponent {
 
-    // private HeaderComponent header;
-
     @FindBy(xpath = "//section[@class='ant-layout aboutProject global-padding']")
     private WebElement pageIdentifier;
 
