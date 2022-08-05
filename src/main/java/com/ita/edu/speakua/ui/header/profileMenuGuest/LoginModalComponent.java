@@ -25,20 +25,18 @@ public class LoginModalComponent extends BasePage {
     @FindBy(xpath = "//div[@class='login-header']")
     private WebElement loginHeader;
 
+    @FindBy(xpath = "//button[contains(@class, 'modal-close')]")
+    private WebElement closeLoginModal;
+
 
     public LoginModalComponent(WebDriver driver) {
         super(driver);
     }
 
 
-    public WebElement getCloseLoginModalButton() {
-        return driver.findElement(By.xpath("//button[contains(@class, 'modal-close')]"));
-    }
-
     public void closeLoginModal() {
-        getCloseLoginModalButton().click();
+        closeLoginModal.click();
     }
-
 
     public LoginModalComponent clickOnLoginHeader() {
         loginHeader.click();
