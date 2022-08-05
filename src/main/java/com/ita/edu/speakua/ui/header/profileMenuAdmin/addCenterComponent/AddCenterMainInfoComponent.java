@@ -23,6 +23,11 @@ public class AddCenterMainInfoComponent extends AbstractAddCenterComponent{
     @FindBy(xpath = "//div[contains(text(),'Некоректна назва центру')]")
     private WebElement errorMessage;
 
+    @FindBy(xpath = "//button[contains(@class, 'add-location-btn')]")
+    private WebElement addLocationButton;
+
+    private AddLocationComponent addLocationComponent;
+
     public AddCenterMainInfoComponent(WebDriver driver) {
         super(driver);
     }
@@ -49,6 +54,15 @@ public class AddCenterMainInfoComponent extends AbstractAddCenterComponent{
 
     public boolean errorMessageCenterName(){
         return errorMessage.isDisplayed();
+    }
+
+    public AddLocationComponent getAddLocationComponent() {
+        return new AddLocationComponent(driver);
+    }
+
+    public AddLocationComponent clickAddLocationButton() {
+        addLocationButton.click();
+        return new AddLocationComponent(driver);
     }
 
 }
