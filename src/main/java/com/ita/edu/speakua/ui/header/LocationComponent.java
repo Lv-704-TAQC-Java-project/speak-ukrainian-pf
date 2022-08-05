@@ -7,7 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import java.util.List;
 
 
-public class LocationComponent extends BaseMethods {
+public class LocationComponent extends HeaderComponent {
     @FindBy(xpath = "//div[contains(@class, 'city') and contains(@class, 'dropdown')]")
     WebElement locationMenuButton;
 
