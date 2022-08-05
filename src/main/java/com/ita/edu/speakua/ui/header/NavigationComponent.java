@@ -28,11 +28,10 @@ public class NavigationComponent extends BaseMethods {
     WebElement servicesBtn;
 
 
-
-
     public NavigationComponent(WebDriver driver) {
         super(driver);
     }
+
 
     public HomePage clickHomePageLink() {
         homePageLink.click();
@@ -63,6 +62,4 @@ public class NavigationComponent extends BaseMethods {
         servicesBtn.click();
         return new ServicesPage(driver);
     }
-
-
 }
