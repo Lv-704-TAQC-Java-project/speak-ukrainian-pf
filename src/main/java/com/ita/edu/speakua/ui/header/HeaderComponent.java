@@ -17,11 +17,6 @@ public class HeaderComponent extends BaseMethods {
 
     @FindBy(xpath = "//span[contains(text(), 'Показати на мапі')]/parent::button")
     private WebElement showOnMapButton;
-    private LocationComponent locationComponent;
-    private PopupMessageComponent popupMessageComponent;
-    private GuestProfileMenuComponent guestProfileMenuComponent;
-    private AdminProfileMenuComponent adminProfileMenuComponent;
-    private MapLocationComponent mapLocationComponent;
 
 
     public HeaderComponent(WebDriver driver) {
@@ -34,37 +29,23 @@ public class HeaderComponent extends BaseMethods {
     }
 
     public LocationComponent getLocationComponent() {
-        if (locationComponent == null) {
-            locationComponent = new LocationComponent(driver);
-        }
+
         return new LocationComponent(driver);
     }
 
     public PopupMessageComponent getPopupMessageComponent() {
-        if (popupMessageComponent == null) {
-            popupMessageComponent = new PopupMessageComponent(driver);
-        }
         return new PopupMessageComponent(driver);
     }
 
     public GuestProfileMenuComponent getGuestProfileMenuComponent() {
-        if (guestProfileMenuComponent == null) {
-            guestProfileMenuComponent = new GuestProfileMenuComponent(driver);
-        }
-        return guestProfileMenuComponent;
+        return new GuestProfileMenuComponent(driver);
     }
 
     public AdminProfileMenuComponent getAdminProfileMenuComponent() {
-        if (adminProfileMenuComponent == null) {
-            adminProfileMenuComponent = new AdminProfileMenuComponent(driver);
-        }
-        return adminProfileMenuComponent;
+        return new AdminProfileMenuComponent(driver);
     }
 
     public MapLocationComponent getMapLocationComponent() {
-        if (mapLocationComponent == null) {
-            mapLocationComponent = new MapLocationComponent(driver);
-        }
-        return mapLocationComponent;
+        return new MapLocationComponent(driver);
     }
 }
