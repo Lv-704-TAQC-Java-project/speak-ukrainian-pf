@@ -1,6 +1,7 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.addCenterComponent;
 
 import com.ita.edu.speakua.ui.BaseMethods;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -48,6 +49,16 @@ public class AddLocationComponent extends BaseMethods {
     public AddLocationComponent openCityDropDownMenu() {
         cityDropDownList.click();
         return this;
+    }
+
+    public WebElement findCityByName(String city) {
+        waitVisibilityOfElements(By.xpath("//input[contains(@id, 'cityName')] and contains(@aria-expanded, 'true')]"));
+        return driver.findElement(By.xpath
+                (String.format("//span[contains(@class, 'ant-select-selection-item') and contains(text(), '%s')]", city)));
+    }
+
+    public void selectCityByName(String city) {
+        findCityByName(city).click();
     }
 
     public AddLocationComponent openRegionDropDownMenu() {
