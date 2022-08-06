@@ -40,38 +40,37 @@ public class AddLocationComponent extends BaseMethods {
     }
 
     public AddLocationComponent fillInLocationNameField(String LocationName) {
+        waitVisibilityOfWebElement(locationNameField);
         locationNameField.click();
         locationNameField.clear();
         locationNameField.sendKeys(LocationName);
         return this;
     }
 
-    public AddLocationComponent openCityDropDownMenu() {
-        cityDropDownList.click();
-        return this;
-    }
-
-    public WebElement findCityByName(String city) {
-        waitVisibilityOfElements(By.xpath("//input[contains(@id, 'cityName')] and contains(@aria-expanded, 'true')]"));
+    public WebElement findCityByName(String City) {
         return driver.findElement(By.xpath
-                (String.format("//div[@class='ant-select-item-option-content'][contains(text(),'%s')]", city)));
+                (String.format("//div[@class='ant-select-item-option-content'][contains(text(),'%s')]", City)));
     }
 
-    public void selectCityByName(String city) {
-        findCityByName(city).click();
-    }
-
-    public AddLocationComponent openRegionDropDownMenu() {
-        regionDropDownList.click();
+    public AddLocationComponent selectCityByName(String City) {
+        cityDropDownList.click();
+        findCityByName(City).click();
         return this;
     }
 
-    public AddLocationComponent openMetroDropDownMenu() {
-        metroDropDownList.click();
+    public WebElement findRegionByName(String Region) {
+        return driver.findElement(By.xpath
+                (String.format("//div[@class='ant-select-item-option-content'][contains(text(),'%s')]", Region)));
+    }
+
+    public AddLocationComponent selectRegionByName(String Region) {
+        regionDropDownList.click();
+        findRegionByName(Region).click();
         return this;
     }
 
     public AddLocationComponent fillInAddressField(String Address) {
+        waitVisibilityOfWebElement(addressField);
         addressField.click();
         addressField.clear();
         addressField.sendKeys(Address);
@@ -82,6 +81,11 @@ public class AddLocationComponent extends BaseMethods {
         phoneNumberField.click();
         phoneNumberField.clear();
         phoneNumberField.sendKeys(PhoneNumber);
+        return this;
+    }
+
+    public AddLocationComponent addButtonClick() {
+        addButton.click();
         return this;
     }
 }

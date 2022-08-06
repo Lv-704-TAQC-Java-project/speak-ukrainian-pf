@@ -67,6 +67,7 @@ public class AddCenterMainInfoComponent extends AbstractAddCenterComponent{
     }
 
     public AddLocationComponent clickAddLocationButton() {
+        sleep(1000);
         addLocationButton.click();
         return new AddLocationComponent(driver);
     }

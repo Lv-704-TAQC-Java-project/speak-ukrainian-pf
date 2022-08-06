@@ -2,6 +2,7 @@ package com.ita.edu.speakua.ui.header.profileMenuAdmin;
 
 import com.ita.edu.speakua.ui.BaseMethods;
 import com.ita.edu.speakua.ui.HomePage;
+import com.ita.edu.speakua.ui.clubs.PaginationComponent;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addCenterComponent.AddCenterMainInfoComponent;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubMainInfoComponent;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.AdministrationComponent;
@@ -11,6 +12,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class AdminProfileMenuComponent extends BaseMethods {
+
+    private AddCenterMainInfoComponent addCenterMainInfoComponent;
 
     @FindBy(xpath = "//div[contains(text(),'Додати гурток')]")
     private WebElement addClubComponent;
@@ -54,6 +57,11 @@ public class AdminProfileMenuComponent extends BaseMethods {
     public AdministrationComponent openAdministrationModal() {
         administrationBtn.click();
         return new AdministrationComponent(driver);
+    }
+
+    public AddCenterMainInfoComponent getAddCenterMainInfoComponent() {
+        addCenterMainInfoComponent = new AddCenterMainInfoComponent(driver);
+        return addCenterMainInfoComponent;
     }
 
 
