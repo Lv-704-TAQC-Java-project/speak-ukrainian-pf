@@ -18,6 +18,9 @@ public class HeaderComponent extends BaseMethods {
     @FindBy(xpath = "//span[contains(text(), 'Показати на мапі')]/parent::button")
     private WebElement showOnMapButton;
 
+    @FindBy(xpath = "//div[contains(@class, 'user-profile')]")
+    private WebElement profileMenuBtn;
+
 
     public HeaderComponent(WebDriver driver) {
         super(driver);
@@ -47,5 +50,15 @@ public class HeaderComponent extends BaseMethods {
 
     public MapLocationComponent getMapLocationComponent() {
         return new MapLocationComponent(driver);
+    }
+
+    public GuestProfileMenuComponent openGuestProfileMenu(){
+        profileMenuBtn.click();
+        return new GuestProfileMenuComponent(driver);
+    }
+
+    public AdminProfileMenuComponent openAdminProfileMenu() {
+        profileMenuBtn.click();
+        return new AdminProfileMenuComponent(driver);
     }
 }

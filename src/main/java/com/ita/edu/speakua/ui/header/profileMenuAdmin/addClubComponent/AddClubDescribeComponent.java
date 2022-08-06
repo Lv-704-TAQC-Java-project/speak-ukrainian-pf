@@ -8,7 +8,7 @@ import org.openqa.selenium.support.FindBy;
 
 public class AddClubDescribeComponent extends AbstractAddClubComponent{
 
-    @FindBy(xpath = "//input[@id='basic_description']")
+    @FindBy(xpath = "//textarea[@id='basic_description']")
     WebElement describeArea;
 
     @FindBy(xpath = "//span[contains(text(),'Назад')]/ancestor::button")
@@ -21,10 +21,10 @@ public class AddClubDescribeComponent extends AbstractAddClubComponent{
         super(driver);
     }
 
-    public AddClubMainInfoComponent inputDescribe(String text){
+    public AddClubDescribeComponent inputDescribe(String text){
         describeArea.sendKeys(Keys.chord(Keys.CONTROL, "a"));
         describeArea.sendKeys(Keys.chord(text));
-        return new AddClubMainInfoComponent(driver);
+        return new AddClubDescribeComponent(driver);
     }
 
     public AddClubContactComponent clickPreviousStep(){
@@ -40,5 +40,13 @@ public class AddClubDescribeComponent extends AbstractAddClubComponent{
     public boolean finishBtnIsEnable(){
         return finishBtn.isEnabled();
     }
+
+    public AddClubDescribeComponent clearDescribeField() {
+        describeArea.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+//        describeArea.sendKeys(Keys.chord(""));
+//          describeArea.clear();
+        return this;
+    }
+
 
 }

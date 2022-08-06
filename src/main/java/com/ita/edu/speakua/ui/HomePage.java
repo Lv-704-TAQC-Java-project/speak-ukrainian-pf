@@ -18,7 +18,6 @@ public class HomePage extends HeaderComponent {
     @FindBy(xpath = "//span[contains(@class, 'anticon-control')]")
     private WebElement advancedSearchButton;
 
-
     public HomePage(WebDriver driver) {
         super(driver);
     }
@@ -38,4 +37,6 @@ public class HomePage extends HeaderComponent {
         searchButton.click();
         return new ClubsPage(driver);
     }
+
+
 }

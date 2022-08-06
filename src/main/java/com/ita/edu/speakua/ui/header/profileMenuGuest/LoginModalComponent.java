@@ -49,12 +49,12 @@ public class LoginModalComponent extends BaseMethods {
     }
 
     public LoginModalComponent fillInPassword(String password) {
-        emailField.sendKeys(Keys.chord(Keys.CONTROL, "a"));
-        emailField.sendKeys(password);
+        passwordField.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        passwordField.sendKeys(password);
         return this;
     }
 
-    public LoginModalComponent clickLoginButton() {
+    public LoginModalComponent logIn() {
         loginButton.click();
         return this;
     }

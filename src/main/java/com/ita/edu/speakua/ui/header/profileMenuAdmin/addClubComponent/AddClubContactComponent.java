@@ -29,40 +29,40 @@ public class AddClubContactComponent extends AbstractAddClubComponent {
         super(driver);
     }
 
-    public AddClubMainInfoComponent inputFaceBook(String name){
+    public AddClubContactComponent inputFaceBook(String name){
         inputFaceBook.sendKeys(Keys.chord(Keys.CONTROL, "a"));
         inputFaceBook.sendKeys(Keys.chord(name));
-        return new AddClubMainInfoComponent(driver);
+        return new AddClubContactComponent(driver);
     }
 
-    public AddClubMainInfoComponent inputBasicContact(String name){
+    public AddClubContactComponent inputBasicContact(String name){
         inputBasicContact.sendKeys(Keys.chord(Keys.CONTROL, "a"));
         inputBasicContact.sendKeys(Keys.chord(name));
-        return new AddClubMainInfoComponent(driver);
+        return new AddClubContactComponent(driver);
     }
 
-    public AddClubMainInfoComponent inputEmail(String name){
+    public AddClubContactComponent inputEmail(String name){
         inputEmail.sendKeys(Keys.chord(Keys.CONTROL, "a"));
         inputEmail.sendKeys(Keys.chord(name));
-        return new AddClubMainInfoComponent(driver);
+        return new AddClubContactComponent(driver);
     }
 
-    public AddClubMainInfoComponent inputSkype(String name){
+    public AddClubContactComponent inputSkype(String name){
         inputSkype.sendKeys(Keys.chord(Keys.CONTROL, "a"));
         inputSkype.sendKeys(Keys.chord(name));
-        return new AddClubMainInfoComponent(driver);
+        return new AddClubContactComponent(driver);
     }
 
-    public AddClubMainInfoComponent inputWhatsApp(String name){
+    public AddClubContactComponent inputWhatsApp(String name){
         inputWhatsApp.sendKeys(Keys.chord(Keys.CONTROL, "a"));
         inputWhatsApp.sendKeys(Keys.chord(name));
-        return new AddClubMainInfoComponent(driver);
+        return new AddClubContactComponent(driver);
     }
 
-    public AddClubMainInfoComponent inputPhoneNumber(String name){
+    public AddClubContactComponent inputPhoneNumber(String name){
         inputPhoneNumber.sendKeys(Keys.chord(Keys.CONTROL, "a"));
         inputPhoneNumber.sendKeys(Keys.chord(name));
-        return new AddClubMainInfoComponent(driver);
+        return new AddClubContactComponent(driver);
     }
 
 
