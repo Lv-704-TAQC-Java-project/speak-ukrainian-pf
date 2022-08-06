@@ -23,7 +23,6 @@ public class HeaderComponent extends BaseMethods {
         super(driver);
     }
 
-
     public NavigationComponent getNavigationComponent() {
         return new NavigationComponent(driver);
     }
@@ -45,7 +44,22 @@ public class HeaderComponent extends BaseMethods {
         return new AdminProfileMenuComponent(driver);
     }
 
+    public GuestProfileMenuComponent openGuestProfileMenu() {
+        profileMenuButton.click();
+        return getGuestProfileMenuComponent();
+    }
+
+    public AdminProfileMenuComponent openAdminProfileMenu() {
+        profileMenuButton.click();
+        return getAdminProfileMenuComponent();
+    }
+
     public MapLocationComponent getMapLocationComponent() {
         return new MapLocationComponent(driver);
+    }
+
+    public HeaderComponent getHomePageReload() {
+        waitForPageToReload();
+        return new HeaderComponent(driver);
     }
 }

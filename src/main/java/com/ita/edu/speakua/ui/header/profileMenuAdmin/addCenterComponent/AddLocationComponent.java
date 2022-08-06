@@ -54,7 +54,7 @@ public class AddLocationComponent extends BaseMethods {
     public WebElement findCityByName(String city) {
         waitVisibilityOfElements(By.xpath("//input[contains(@id, 'cityName')] and contains(@aria-expanded, 'true')]"));
         return driver.findElement(By.xpath
-                (String.format("//span[contains(@class, 'ant-select-selection-item') and contains(text(), '%s')]", city)));
+                (String.format("//div[@class='ant-select-item-option-content'][contains(text(),'%s')]", city)));
     }
 
     public void selectCityByName(String city) {
