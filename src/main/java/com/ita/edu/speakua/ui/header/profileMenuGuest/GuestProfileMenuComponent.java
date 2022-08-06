@@ -32,6 +32,7 @@ public class GuestProfileMenuComponent extends BaseMethods {
     }
 
     public LoginModalComponent openLoginModal() {
+        waitVisibilityOfWebElement(loginButton);
         loginButton.click();
         return getLoginModal();
     }
