@@ -61,15 +61,6 @@ public class HeaderComponent extends BaseMethods {
         return new MapLocationComponent(driver);
     }
 
-    public GuestProfileMenuComponent openGuestProfileMenu(){
-        profileMenuBtn.click();
-        return new GuestProfileMenuComponent(driver);
-    }
-
-    public AdminProfileMenuComponent openAdminProfileMenu() {
-        profileMenuBtn.click();
-        return new AdminProfileMenuComponent(driver);
-
     public HeaderComponent getHomePageReload() {
         waitForPageToReload();
         return new HeaderComponent(driver);
