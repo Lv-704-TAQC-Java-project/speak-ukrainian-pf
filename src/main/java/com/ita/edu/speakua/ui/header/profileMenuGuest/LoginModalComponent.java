@@ -43,18 +43,23 @@ public class LoginModalComponent extends BaseMethods {
     }
 
     public LoginModalComponent fillInEmail(String email) {
-        emailField.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        emailField.click();
+        emailField.clear();
         emailField.sendKeys(email);
         return this;
     }
 
     public LoginModalComponent fillInPassword(String password) {
-        passwordField.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+
+        passwordField.click();
+        passwordField.clear();
         passwordField.sendKeys(password);
         return this;
     }
 
-    public LoginModalComponent logIn() {
+
+    public LoginModalComponent clickLoginButton() {
+        waitVisibilityOfWebElement(loginButton);
         loginButton.click();
         return this;
     }

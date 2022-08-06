@@ -22,7 +22,6 @@ public class HomePage extends HeaderComponent {
         super(driver);
     }
 
-
     public ClubsPage clickAdvancedSearchInput() {
         searchInput.click();
         return new ClubsPage(driver);

@@ -1,28 +1,20 @@
 package com.ita.edu.speakua.ui.runners;
 
-import com.ita.edu.speakua.ui.HomePage;
-import org.testng.annotations.AfterMethod;
+import com.ita.edu.speakua.ui.header.HeaderComponent;
 import org.testng.annotations.BeforeMethod;
 
-
-public class BaseTestRunnerWithLogIn extends BaseTestRunner{
+public class BaseTestRunnerWithLogIn extends BaseTestRunner {
 
     @BeforeMethod
-    public void startTestFromAuthorizedPage(){
-        HomePage homePage = new HomePage(driver);
-        homePage.openGuestProfileMenu()
+    public void setUp() {
+        super.setUp();
+        HeaderComponent header = new HeaderComponent(driver);
+        header.openGuestProfileMenu()
                 .openLoginModal()
+                .clickLoginButton()
                 .fillInEmail(configProps.getUserEmail())
                 .fillInPassword(configProps.getUserPassword())
-                .logIn()
-                .waitForPageToReload();
-
-    }
-
-    @AfterMethod
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
+                .clickLoginButton();
+        header.getHomePageReload();
     }
 }
