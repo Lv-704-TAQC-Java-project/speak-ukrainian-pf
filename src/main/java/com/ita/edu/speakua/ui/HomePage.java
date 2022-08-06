@@ -36,4 +36,6 @@ public class HomePage extends HeaderComponent {
         searchButton.click();
         return new ClubsPage(driver);
     }
+
+
 }

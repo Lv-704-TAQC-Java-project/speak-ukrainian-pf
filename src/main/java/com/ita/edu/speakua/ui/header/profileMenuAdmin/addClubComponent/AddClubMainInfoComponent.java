@@ -52,15 +52,15 @@ public class AddClubMainInfoComponent extends AbstractAddClubComponent {
         return new AddClubMainInfoComponent(driver);
     }
 
-    public AddClubMainInfoComponent inputAgeFrom(String name){
+    public AddClubMainInfoComponent inputAgeFrom(int age){
         inputAgeFrom.sendKeys(Keys.chord(Keys.CONTROL, "a"));
-        inputAgeFrom.sendKeys(Keys.chord(name));
+        inputAgeFrom.sendKeys(Keys.chord(String.valueOf(age)));
         return new AddClubMainInfoComponent(driver);
     }
 
-    public AddClubMainInfoComponent inputAgeTo(String name){
+    public AddClubMainInfoComponent inputAgeTo(int age){
         inputAgeTo.sendKeys(Keys.chord(Keys.CONTROL, "a"));
-        inputAgeTo.sendKeys(Keys.chord(name));
+        inputAgeTo.sendKeys(Keys.chord(String.valueOf(age)));
         return new AddClubMainInfoComponent(driver);
     }
 

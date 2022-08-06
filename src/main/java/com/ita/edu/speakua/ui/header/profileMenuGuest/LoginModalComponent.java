@@ -50,11 +50,13 @@ public class LoginModalComponent extends BaseMethods {
     }
 
     public LoginModalComponent fillInPassword(String password) {
+
         passwordField.click();
         passwordField.clear();
         passwordField.sendKeys(password);
         return this;
     }
+
 
     public LoginModalComponent clickLoginButton() {
         waitVisibilityOfWebElement(loginButton);
