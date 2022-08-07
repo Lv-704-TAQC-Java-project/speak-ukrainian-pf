@@ -6,7 +6,7 @@ import com.ita.edu.speakua.ui.runners.BaseTestRunnerWithLogIn;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class addTaskTest extends BaseTestRunnerWithLogIn {
+public class AddTaskTest extends BaseTestRunnerWithLogIn {
     @Test
     public void verifyCreateTaskInvalidData(){
         AddTaskPage addTaskPage = new HomePage(driver)
