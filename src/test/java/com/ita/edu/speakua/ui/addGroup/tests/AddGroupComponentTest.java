@@ -64,4 +64,24 @@ public class AddGroupComponentTest extends BaseTestRunnerWithLogIn {
         Assert.assertTrue(verifyBtnFinishIsEnableThousandChars);
         Assert.assertTrue(verifyBtnFinishIsEnableOneAndHalfThousandChars);
     }
+
+    @Test
+    public void verifyErrorMessageAddClubDescriptionField() {
+        AddClubDescribeComponent addClubDescribeComponent = new HomePage(driver)
+                .openAdminProfileMenu()
+                .openAddGroupModal()
+                .inputNameOfClub("Спортивні танці")
+                .chooseCategoryClub("Спортивні секції")
+                .inputAgeFrom(4)
+                .inputAgeTo(8)
+                .clickNextStep()
+                .inputPhoneNumber("0672131246")
+                .clickNextStep()
+                .inputDescribe("Verify that description field can contain only Ukrainian and English letters. Just fill in this field with German and Ru‘э’, ‘ъ’, ‚ü‘,‘ö‘,‘ä‘\n" +
+                        "russian language 'Ы, ‘э’, ‘ъ’, ‚ü‘,‘ö‘,‘ä‘");
+
+        String errorMessageDescriptionFieldActual = addClubDescribeComponent.getErrorMessageDescriptionField();
+        String errorMessageDescriptionFieldExpected = "Це поле може містити тільки українські та англійські літери, цифри та спеціальні символи";
+        Assert.assertEquals(errorMessageDescriptionFieldActual, errorMessageDescriptionFieldExpected);
+    }
 }

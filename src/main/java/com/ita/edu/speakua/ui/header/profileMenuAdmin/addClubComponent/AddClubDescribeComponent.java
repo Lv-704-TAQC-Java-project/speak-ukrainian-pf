@@ -17,13 +17,22 @@ public class AddClubDescribeComponent extends AbstractAddClubComponent{
     @FindBy(xpath = "//span[contains(text(),'Завершити')]/ancestor::button")
     WebElement finishBtn;
 
+    @FindBy(xpath = "//div[contains(@class, 'explain')]//div[1]")
+    private WebElement errorMessageDescriptionFieldPart1;
+
+    @FindBy(xpath = "//div[contains(@class, 'explain')]//div[2]")
+    private WebElement errorMessageDescriptionFieldPart2;
+
     public AddClubDescribeComponent(WebDriver driver) {
         super(driver);
     }
 
     public AddClubDescribeComponent inputDescribe(String text){
-        describeArea.sendKeys(Keys.chord(Keys.CONTROL, "a"));
-        describeArea.sendKeys(Keys.chord(text));
+//        describeArea.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+//        describeArea.sendKeys(Keys.chord(text));
+        describeArea.click();
+        describeArea.clear();
+        describeArea.sendKeys(text);
         return new AddClubDescribeComponent(driver);
     }
 
@@ -35,6 +44,10 @@ public class AddClubDescribeComponent extends AbstractAddClubComponent{
     public HomePage clickFinishStep(){
         finishBtn.click();
         return new HomePage(driver);
+    }
+
+    public String getErrorMessageDescriptionField(){
+        return errorMessageDescriptionFieldPart1.getText() + errorMessageDescriptionFieldPart2.getText();
     }
 
     public boolean finishBtnIsEnable(){
