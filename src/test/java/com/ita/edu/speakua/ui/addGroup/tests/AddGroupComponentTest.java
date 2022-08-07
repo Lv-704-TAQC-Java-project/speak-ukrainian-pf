@@ -6,7 +6,7 @@ import com.ita.edu.speakua.ui.runners.BaseTestRunnerWithLogIn;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class addGroupComponentTest extends BaseTestRunnerWithLogIn {
+public class AddGroupComponentTest extends BaseTestRunnerWithLogIn {
 
     @Test
     public void verifyAddClubDescribeFieldValidDataTest(){
