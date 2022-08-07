@@ -44,6 +44,14 @@ public class CardComponent extends BaseMethods {
         return cardBody;
     }
 
+    public WebElement getCardName() {
+        return cardName;
+    }
+
+    public String getTextCardName() {
+        return getCardName().getText();
+    }
+
     public ExpandedCardComponent cardTitleClick() {
         cardTitle.click();
         return new ExpandedCardComponent(driver);

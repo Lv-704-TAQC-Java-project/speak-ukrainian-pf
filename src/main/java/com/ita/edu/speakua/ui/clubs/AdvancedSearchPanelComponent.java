@@ -1,8 +1,5 @@
 package com.ita.edu.speakua.ui.clubs;
 
-import com.ita.edu.speakua.ui.BaseMethods;
-import com.ita.edu.speakua.ui.clubs.card.components.CardComponent;
-import com.ita.edu.speakua.ui.clubs.card.components.CenterComponent;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -236,7 +233,7 @@ public class AdvancedSearchPanelComponent extends ClubsPage {
 
     public AdvancedSearchPanelComponent centerRadioButtonClick() {
         waitVisibilityOfWebElement(centerRadioButton);
-        clickManagingClubsPageElement(centerRadioButton);
+        clickManagingCenterPageElement(centerRadioButton);
         return this;
     }
 

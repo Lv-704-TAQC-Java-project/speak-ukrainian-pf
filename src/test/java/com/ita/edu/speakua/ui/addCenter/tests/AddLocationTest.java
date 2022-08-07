@@ -1,4 +1,4 @@
-package com.ita.edu.speakua.ui.club.tests;
+package com.ita.edu.speakua.ui.addCenter.tests;
 
 import com.ita.edu.speakua.ui.header.HeaderComponent;
 import com.ita.edu.speakua.ui.runners.BaseTestRunnerWithLogIn;
