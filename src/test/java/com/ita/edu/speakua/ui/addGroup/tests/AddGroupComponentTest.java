@@ -106,17 +106,17 @@ public class AddGroupComponentTest extends BaseTestRunnerWithLogIn {
                 .inputDescribe(descriptionInput);
 
         SoftAssert softAssert = new SoftAssert();
-        String lengthErrorMessageText = "Опис гуртка може містити від 40 до 1500 символів.";
-        softAssert.assertFalse(addClubDescribeComponent.lengthErrorMessageForDescriptionFieldIsPresent(lengthErrorMessageText));
+        String lengthErrorText = "Опис гуртка може містити від 40 до 1500 символів.";
+        softAssert.assertFalse(addClubDescribeComponent.errorMessageForDescriptionFieldContainsText(lengthErrorText));
 
         addClubDescribeComponent.inputDescribe(descriptionInput.substring(0, 1498));
-        softAssert.assertFalse(addClubDescribeComponent.lengthErrorMessageForDescriptionFieldIsPresent(lengthErrorMessageText));
+        softAssert.assertFalse(addClubDescribeComponent.errorMessageForDescriptionFieldContainsText(lengthErrorText));
 
         addClubDescribeComponent.inputDescribe(descriptionInput + "m");
-        softAssert.assertTrue(addClubDescribeComponent.lengthErrorMessageForDescriptionFieldIsPresent(lengthErrorMessageText));
+        softAssert.assertTrue(addClubDescribeComponent.errorMessageForDescriptionFieldContainsText(lengthErrorText));
 
         addClubDescribeComponent.inputDescribe(descriptionInput + "Hello world");
-        softAssert.assertTrue(addClubDescribeComponent.lengthErrorMessageForDescriptionFieldIsPresent(lengthErrorMessageText));
+        softAssert.assertTrue(addClubDescribeComponent.errorMessageForDescriptionFieldContainsText(lengthErrorText));
         softAssert.assertAll();
     }
 }
