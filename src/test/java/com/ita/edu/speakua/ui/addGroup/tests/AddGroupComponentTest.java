@@ -68,8 +68,10 @@ public class AddGroupComponentTest extends BaseTestRunnerWithLogIn {
     @Test
     public void verifyErrorMessageAddClubDescriptionField() {
         AddClubDescribeComponent addClubDescribeComponent = new HomePage(driver)
+
                 .openAdminProfileMenu()
-                .openAddGroupModal()
+                .openUserProfilePage()
+                .openAddClubModal()
                 .inputNameOfClub("Спортивні танці")
                 .chooseCategoryClub("Спортивні секції")
                 .inputAgeFrom(4)
