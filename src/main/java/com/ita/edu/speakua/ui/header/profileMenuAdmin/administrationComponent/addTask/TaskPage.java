@@ -2,6 +2,7 @@ package com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.a
 
 import com.ita.edu.speakua.ui.BaseMethods;
 import com.ita.edu.speakua.ui.header.HeaderComponent;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -16,6 +17,7 @@ public class TaskPage extends HeaderComponent {
     }
 
     public AddTaskPage clickAddTaskBtn(){
+        waitVisibilityOfWebElement(addTaskBtn);
         addTaskBtn.click();
         return new AddTaskPage(driver);
     }
