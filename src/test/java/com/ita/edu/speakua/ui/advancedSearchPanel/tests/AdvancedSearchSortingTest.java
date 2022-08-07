@@ -1,5 +1,6 @@
 package com.ita.edu.speakua.ui.advancedSearchPanel.tests;
 
+import com.ita.edu.speakua.ui.HomePage;
 import com.ita.edu.speakua.ui.clubs.ClubsPage;
 import com.ita.edu.speakua.ui.clubs.SortClubComponent;
 import com.ita.edu.speakua.ui.header.HeaderComponent;
@@ -53,7 +54,6 @@ public class AdvancedSearchSortingTest extends BaseTestRunner {
 
         softAssert.assertTrue(cardNamesText.get(0).startsWith("A"),
                 "Club cards are not sorted by ABC ASC when arrowDown is clicked");
-
         softAssert.assertAll();
     }
 
@@ -61,20 +61,18 @@ public class AdvancedSearchSortingTest extends BaseTestRunner {
     public void advancedSearchABCSortingCenterTest() {
         HeaderComponent header = new HeaderComponent(driver);
         SoftAssert softAssert = new SoftAssert();
-
         header
                 .getNavigationComponent()
                 .clickClubsBtn()
                 .advancedSearchButtonClick();
 
         ClubsPage clubsPage = new ClubsPage(driver);
-
         clubsPage
                 .getAdvancedSearchPanelComponent()
                 .centerRadioButtonClick();
 
         softAssert.assertTrue(clubsPage.getCenters().get(0).getTextCenterName().toLowerCase().startsWith("a"),
-               "Center cards are not sorted by ABC ASC order when user switch to centers");
+                "Center cards are not sorted by ABC ASC order when user switch to centers");
 
         SortClubComponent sortClubComponent = clubsPage.getSortClubComponent()
                 .arrowUpButtonClick();
@@ -86,7 +84,29 @@ public class AdvancedSearchSortingTest extends BaseTestRunner {
 
         softAssert.assertTrue(clubsPage.getCenters().get(0).getTextCenterName().toLowerCase().startsWith("a"),
                 "Center cards are not sorted by ABC ASC order when arrowDown is clicked");
+        softAssert.assertAll();
+    }
 
+    @Test
+    public void advancedSearchRatingSortingCenterTest() {
+        HomePage homePage = new HomePage(driver);
+        SoftAssert softAssert = new SoftAssert();
+        homePage
+                .clickAdvancedSearchButton();
+
+        ClubsPage clubsPage = new ClubsPage(driver);
+        clubsPage
+                .getAdvancedSearchPanelComponent()
+                .centerRadioButtonClick();
+
+        softAssert.assertTrue(clubsPage.getCenters().get(0).getTextCenterName().toLowerCase().startsWith("a"),
+                "Center cards are not sorted by ABC ASC order when user switch to centers");
+
+        SortClubComponent sortClubComponent = clubsPage.getSortClubComponent();
+        sortClubComponent
+                .sortByRatingButtonClick();
+
+        softAssert.assertEquals(clubsPage.getCards().get(0).getStarRatingZeroList().size(), 5);
         softAssert.assertAll();
     }
 }
