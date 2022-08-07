@@ -1,13 +1,12 @@
 package com.ita.edu.speakua.ui.header;
 
-import com.ita.edu.speakua.ui.BasePage;
-import org.openqa.selenium.By;
+import com.ita.edu.speakua.ui.BaseMethods;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 
-public class PopupMessageComponent extends BasePage {
+public class PopupMessageComponent extends BaseMethods {
 
     @FindBy(xpath = "//div[@class='ant-message']//span[contains(text(), 'успішно')]")
     WebElement loginSuccessPopupMessage;

@@ -1,8 +1,10 @@
 package com.ita.edu.speakua.ui.clubs;
 
-import com.ita.edu.speakua.ui.BasePage;
+import com.ita.edu.speakua.ui.BaseMethods;
 import com.ita.edu.speakua.ui.clubs.card.components.CardComponent;
 import com.ita.edu.speakua.ui.clubs.card.components.CenterComponent;
+import com.ita.edu.speakua.ui.header.HeaderComponent;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -10,10 +12,8 @@ import org.openqa.selenium.support.FindBy;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClubsPage extends BasePage {
+public class ClubsPage extends HeaderComponent {
 
-    private AdvancedSearchPanelComponent advancedSearchPanelComponent;
-    private ExpandedCardComponent expandedCardComponent;
     private List<CardComponent> cards;
     private List<CenterComponent> centers;
     private PaginationComponent paginationComponent;
@@ -37,17 +37,11 @@ public class ClubsPage extends BasePage {
     }
 
     public AdvancedSearchPanelComponent getAdvancedSearchPanelComponent() {
-        if (advancedSearchPanelComponent == null) {
-            advancedSearchPanelComponent = new AdvancedSearchPanelComponent(driver);
-        }
-        return advancedSearchPanelComponent;
+        return new AdvancedSearchPanelComponent(driver);
     }
 
     public ExpandedCardComponent getExpandedCardComponent() {
-        if (expandedCardComponent == null) {
-            expandedCardComponent = new ExpandedCardComponent(driver);
-        }
-        return expandedCardComponent;
+        return new ExpandedCardComponent(driver);
     }
 
     public List<CardComponent> getCards() {
@@ -66,8 +60,9 @@ public class ClubsPage extends BasePage {
         return this.centers;
     }
 
-    public WebElement getAdvancedSearchButton() {
-        return advancedSearchButton;
+    public ClubsPage advancedSearchButtonClick() {
+        clickManagingClubsPageElement(advancedSearchButton);
+        return this;
     }
 
     public PaginationComponent getPaginationComponent() {
@@ -86,5 +81,23 @@ public class ClubsPage extends BasePage {
         return sortClubComponent;
     }
 
+    public void clickManagingClubsPageElement(WebElement element) {
+        List<CardComponent> cards = new ClubsPage(driver).getCards();
+        element.click();
+        driver.manage().timeouts().implicitlyWait(SHORT_TIMEOUT);
+        for (CardComponent card : cards) {
+            try {
+                waitStalenessOfElement(card.getCardBody());
+            } catch (TimeoutException ignored) {
+            }
+        }
+    }
+
+    public void clickManagingCenterPageElement(WebElement element) {
+        List<CenterComponent> cards = new ClubsPage(driver).getCenters();
+        element.click();
+        driver.manage().timeouts().implicitlyWait(SHORT_TIMEOUT);
+        sleep(2000);
+    }
 
 }

@@ -1,14 +1,12 @@
 package com.ita.edu.speakua.ui;
 
-import org.openqa.selenium.By;
+import com.ita.edu.speakua.ui.header.HeaderComponent;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class AboutPage extends BasePage {
-
-    // private HeaderComponent header;
+public class AboutPage extends HeaderComponent {
 
     @FindBy(xpath = "//section[@class='ant-layout aboutProject global-padding']")
     private WebElement pageIdentifier;

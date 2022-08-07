@@ -34,8 +34,8 @@ public class AddCenterDescribeComponent extends AbstractAddCenterComponent{
         return new AddCenterContactComponent(driver);
     }
 
-    public HomePage clickNextStep(){
+    public AddCenterChooseClubComponent clickNextStep(){
         nextStep.click();
-        return new HomePage(driver);
+        return new AddCenterChooseClubComponent(driver);
     }
 }

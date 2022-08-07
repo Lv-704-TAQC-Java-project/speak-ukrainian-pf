@@ -1,18 +1,20 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.addTask;
 
-import com.ita.edu.speakua.ui.BasePage;
+import com.ita.edu.speakua.ui.header.HeaderComponent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class AddTaskPage extends BasePage {
+import java.util.List;
+
+public class AddTaskPage extends HeaderComponent {
 
     @FindBy(xpath = "//input[@id='startDate']")
     WebElement startDate;
 
-    @FindBy(xpath = "//span[contains(text(),'Завантажити')]")
+    @FindBy(xpath = "//input[@type='file']")
     WebElement uploadImage;
 
     @FindBy(xpath = "//input[@id='name']")
@@ -42,6 +44,12 @@ public class AddTaskPage extends BasePage {
     @FindBy(xpath = "//span[contains(text(),'minimum of 40')]")
     WebElement errorLessThenFortyCharacters;
 
+    @FindBy(xpath = "//span[@class='ant-upload-list-item-actions']")
+    List<WebElement> imageElements;
+
+    @FindBy(xpath = "//span[@aria-live='polite']")
+    WebElement challengeInput;
+
     public AddTaskPage(WebDriver driver) {
         super(driver);
     }
@@ -50,6 +58,11 @@ public class AddTaskPage extends BasePage {
         startDate.sendKeys(Keys.chord(Keys.CONTROL, "a"));
         startDate.sendKeys(Keys.chord(name));
         return new AddTaskPage(driver);
+    }
+
+    public AddTaskPage inputImage(){
+        uploadImage.sendKeys("D:\\smile.png");
+        return this;
     }
 
     public AddTaskPage inputName(String name){
@@ -80,29 +93,75 @@ public class AddTaskPage extends BasePage {
     }
 
     public AddTaskPage chooseChallenge(String name){
-        getChallengeItem(name).click();
+        openChallengeList()
+                .getChallengeItem(name).click();
         return new AddTaskPage(driver);
     }
 
-    public TaskPage clickSaveButton(String name){
-        saveButton.click();
-        return new TaskPage(driver);
+    public boolean allFieldsAreEmpty(){
+        waitVisibilityOfWebElement(startDate);
+        new AddTaskPage(driver)
+                .openChallengeList()
+                .openChallengeList();
+        return  startDateIsEmpty() &&
+                imageIsEmpty() &&
+                nameIsEmpty() &&
+                headingIsEmpty() &&
+                describeIsEmpty() &&
+                challengeIsEmpty();
+    }
+
+    public boolean startDateIsEmpty(){
+        return startDate.getAttribute("value").isEmpty();
+    }
+
+    public boolean nameIsEmpty(){
+        return inputName.getAttribute("value").isEmpty();
+    }
+
+    public boolean imageIsEmpty(){
+        return imageElements.size() == 0;
+    }
+
+    public boolean headingIsEmpty(){
+        return inputHeading.getText().isEmpty();
+    }
+
+    public boolean describeIsEmpty(){
+        return inputDescribing.getText().isEmpty();
+    }
+
+    public boolean challengeIsEmpty(){
+        return challengeInput.getText().isEmpty();
     }
 
     public boolean errorMessageIsEmptyIsVisible(){
+        waitVisibilityOfElement(By.xpath("//span[contains(text(),'Please')]"));
         return errorMessageIsEmpty.isDisplayed();
     }
 
     public boolean errorMessageInvalidCharactersIsVisible(){
+        waitVisibilityOfElement(By.xpath("//span[contains(text(),'Помилка')]"));
         return errorInvalidCharacters.isDisplayed();
     }
 
     public boolean errorMessageLessThenFortyCharactersIsVisible(){
+        waitVisibilityOfElement(By.xpath("//span[contains(text(),'minimum of 40')]"));
         return errorLessThenFortyCharacters.isDisplayed();
     }
 
     public boolean errorMessageMoreThenThreeThousandCharactersIsVisible(){
+        waitVisibilityOfElement(By.xpath("//span[contains(text(),'minimum of 40')]"));
         return errorLessThenFortyCharacters.isDisplayed();
     }
 
+    public TaskPage clickSaveButton(){
+        saveButton.click();
+        return new TaskPage(driver);
+    }
+
+    public AddTaskPage tryClickSaveButton(){
+        saveButton.click();
+        return new AddTaskPage(driver);
+    }
 }

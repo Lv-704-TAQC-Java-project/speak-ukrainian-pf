@@ -11,14 +11,14 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.List;
 
-public class BasePage {
+public class BaseMethods {
 
     protected final Duration TIMEOUT = Duration.ofSeconds(12);
     protected final Duration SHORT_TIMEOUT = Duration.ofSeconds(3);
     protected WebDriver driver;
 
 
-    public BasePage(WebDriver driver) {
+    public BaseMethods(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
@@ -30,15 +30,6 @@ public class BasePage {
 
     public String readCurrentUrl() {
         return driver.getCurrentUrl();
-    }
-
-    public void waitForPageToLoad() {
-        try {
-            WebDriverWait wait = new WebDriverWait(this.driver, TIMEOUT);
-            wait.until(driver -> ((JavascriptExecutor) driver).executeScript("return document.readyState;").equals("complete")); //"interactive"
-        } catch (Throwable error) {
-            error.printStackTrace();
-        }
     }
 
     public void waitForPageToReload() {
@@ -119,25 +110,4 @@ public class BasePage {
         WebDriverWait wait = new WebDriverWait(driver, SHORT_TIMEOUT);
         wait.until(ExpectedConditions.textToBePresentInElement(element, text));
     }
-
-    public void clickManagingClubsPageElement(WebElement element) {
-        List<CardComponent> cards = new ClubsPage(driver).getCards();
-        element.click();
-        driver.manage().timeouts().implicitlyWait(SHORT_TIMEOUT);
-        for (CardComponent card : cards) {
-            try {
-                waitStalenessOfElement(card.getCardBody());
-            } catch (TimeoutException ignored) {
-            }
-        }
-    }
-
-    public void clickManagingCenterPageElement(WebElement element) {
-        List<CenterComponent> cards = new ClubsPage(driver).getCenters();
-        element.click();
-        driver.manage().timeouts().implicitlyWait(SHORT_TIMEOUT);
-        sleep(2000);
-    }
-
-
 }

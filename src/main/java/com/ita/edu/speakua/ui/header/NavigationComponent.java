@@ -6,10 +6,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import java.util.List;
 
-
-public class NavigationComponent extends BasePage {
+public class NavigationComponent extends BaseMethods {
 
     @FindBy(xpath = "//header//div[contains(@class, 'logo')]/parent::a")
     WebElement homePageLink;
@@ -30,11 +28,10 @@ public class NavigationComponent extends BasePage {
     WebElement servicesBtn;
 
 
-
-
     public NavigationComponent(WebDriver driver) {
         super(driver);
     }
+
 
     public HomePage clickHomePageLink() {
         homePageLink.click();
@@ -65,6 +62,4 @@ public class NavigationComponent extends BasePage {
         servicesBtn.click();
         return new ServicesPage(driver);
     }
-
-
 }

@@ -1,13 +1,16 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent;
 
-import com.ita.edu.speakua.ui.BasePage;
+import com.ita.edu.speakua.ui.BaseMethods;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.addChallenge.AddChallengePage;
+import com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.addChallenge.ChallengePage;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.addTask.AddTaskPage;
+import com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.addTask.TaskPage;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class AdministrationComponent extends BasePage {
+public class AdministrationComponent extends BaseMethods {
 
     @FindBy(xpath = "//a[contains(text(),'Завдання')]")
     WebElement taskBtn;
@@ -18,14 +21,15 @@ public class AdministrationComponent extends BasePage {
         super(driver);
     }
 
-    public AddTaskPage clickTaskBtn(){
+    public TaskPage clickTaskBtn(){
+        waitVisibilityOfWebElement(taskBtn);
         taskBtn.click();
-        return new AddTaskPage(driver);
+        return new TaskPage(driver);
     }
 
-    public AddChallengePage clickChallengeBtn(){
+    public ChallengePage clickChallengeBtn(){
         challengeBtn.click();
-        return new AddChallengePage(driver);
+        return new ChallengePage(driver);
     }
 
 }

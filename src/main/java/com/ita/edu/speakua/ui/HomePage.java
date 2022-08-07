@@ -7,8 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 
-public class HomePage extends BasePage {
-    private HeaderComponent header;
+public class HomePage extends HeaderComponent {
 
     @FindBy(xpath = "//span[contains(@class, 'anticon-search')]")
     private WebElement searchButton;
@@ -19,16 +18,8 @@ public class HomePage extends BasePage {
     @FindBy(xpath = "//span[contains(@class, 'anticon-control')]")
     private WebElement advancedSearchButton;
 
-
     public HomePage(WebDriver driver) {
         super(driver);
-    }
-
-    public HeaderComponent getHeader() {
-        if (header == null) {
-            header = new HeaderComponent(driver);
-        }
-        return header;
     }
 
     public ClubsPage clickAdvancedSearchInput() {
@@ -45,4 +36,6 @@ public class HomePage extends BasePage {
         searchButton.click();
         return new ClubsPage(driver);
     }
+
+
 }

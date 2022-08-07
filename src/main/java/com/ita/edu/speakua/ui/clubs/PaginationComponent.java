@@ -1,6 +1,6 @@
 package com.ita.edu.speakua.ui.clubs;
 
-import com.ita.edu.speakua.ui.BasePage;
+import com.ita.edu.speakua.ui.BaseMethods;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,7 +8,7 @@ import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
-public class PaginationComponent extends BasePage {
+public class PaginationComponent extends ClubsPage {
     @FindBy(xpath = "//div[contains(@class, 'ant-card-body')]")
     private List<WebElement> listOfClubsOnCurrentPage;
 

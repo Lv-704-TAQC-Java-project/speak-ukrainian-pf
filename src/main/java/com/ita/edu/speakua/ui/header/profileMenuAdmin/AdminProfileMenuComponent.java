@@ -1,7 +1,8 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin;
 
-import com.ita.edu.speakua.ui.BasePage;
+import com.ita.edu.speakua.ui.BaseMethods;
 import com.ita.edu.speakua.ui.HomePage;
+import com.ita.edu.speakua.ui.clubs.PaginationComponent;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addCenterComponent.AddCenterMainInfoComponent;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubMainInfoComponent;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.AdministrationComponent;
@@ -10,7 +11,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class AdminProfileMenuComponent extends BasePage {
+public class AdminProfileMenuComponent extends BaseMethods {
+
+    private AddCenterMainInfoComponent addCenterMainInfoComponent;
 
     @FindBy(xpath = "//div[contains(text(),'Додати гурток')]")
     private WebElement addClubComponent;
@@ -24,7 +27,7 @@ public class AdminProfileMenuComponent extends BasePage {
     @FindBy(xpath = "//span[contains(text(), 'Вийти')]")
     private WebElement logOutBtn;
 
-    @FindBy(xpath = "//div[@class='ant-dropdown-menu-submenu-title']")
+    @FindBy(xpath = "//span[contains(text(), 'Адміністрування')]")
     private WebElement administrationBtn;
 
     public AdminProfileMenuComponent(WebDriver driver) {
@@ -52,8 +55,14 @@ public class AdminProfileMenuComponent extends BasePage {
     }
 
     public AdministrationComponent openAdministrationModal() {
+        waitVisibilityOfWebElement(administrationBtn);
         administrationBtn.click();
         return new AdministrationComponent(driver);
+    }
+
+    public AddCenterMainInfoComponent getAddCenterMainInfoComponent() {
+        addCenterMainInfoComponent = new AddCenterMainInfoComponent(driver);
+        return addCenterMainInfoComponent;
     }
 
 

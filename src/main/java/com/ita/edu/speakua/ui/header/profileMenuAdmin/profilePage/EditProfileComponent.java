@@ -1,12 +1,12 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.profilePage;
 
-import com.ita.edu.speakua.ui.BasePage;
+import com.ita.edu.speakua.ui.BaseMethods;
 import com.ita.edu.speakua.ui.HomePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class EditProfileComponent extends BasePage {
+public class EditProfileComponent extends BaseMethods {
 
     @FindBy(xpath = "//input[@value='ROLE_USER']/..")
     private WebElement userButton;
