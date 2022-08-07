@@ -1,4 +1,4 @@
-package com.ita.edu.speakua.ui.advancedSearchPanel.tests;
+package com.ita.edu.speakua.ui.advacedSearch.tests;
 
 import com.ita.edu.speakua.ui.HomePage;
 import com.ita.edu.speakua.ui.clubs.ClubsPage;
