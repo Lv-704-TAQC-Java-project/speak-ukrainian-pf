@@ -27,7 +27,7 @@ public class AdminProfileMenuComponent extends BaseMethods {
     @FindBy(xpath = "//span[contains(text(), 'Вийти')]")
     private WebElement logOutBtn;
 
-    @FindBy(xpath = "//div[@class='ant-dropdown-menu-submenu-title']")
+    @FindBy(xpath = "//span[contains(text(), 'Адміністрування')]")
     private WebElement administrationBtn;
 
     public AdminProfileMenuComponent(WebDriver driver) {
@@ -55,6 +55,7 @@ public class AdminProfileMenuComponent extends BaseMethods {
     }
 
     public AdministrationComponent openAdministrationModal() {
+        waitVisibilityOfWebElement(administrationBtn);
         administrationBtn.click();
         return new AdministrationComponent(driver);
     }

@@ -60,8 +60,9 @@ public class ClubsPage extends HeaderComponent {
         return this.centers;
     }
 
-    public WebElement getAdvancedSearchButton() {
-        return advancedSearchButton;
+    public ClubsPage advancedSearchButtonClick() {
+        clickManagingClubsPageElement(advancedSearchButton);
+        return this;
     }
 
     public PaginationComponent getPaginationComponent() {

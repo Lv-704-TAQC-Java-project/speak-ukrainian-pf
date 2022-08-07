@@ -59,9 +59,12 @@ public class AddClubContactComponent extends AbstractAddClubComponent {
         return new AddClubContactComponent(driver);
     }
 
-    public AddClubContactComponent inputPhoneNumber(String name){
-        inputPhoneNumber.sendKeys(Keys.chord(Keys.CONTROL, "a"));
-        inputPhoneNumber.sendKeys(Keys.chord(name));
+    public AddClubContactComponent inputPhoneNumber(String phone){
+//        inputPhoneNumber.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+//        inputPhoneNumber.sendKeys(Keys.chord(phone));
+        inputPhoneNumber.click();
+        inputPhoneNumber.clear();
+        inputPhoneNumber.sendKeys(phone);
         return new AddClubContactComponent(driver);
     }
 

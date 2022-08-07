@@ -16,4 +16,8 @@ public class CenterComponent extends CardComponent{
     public WebElement getCenterName() {
         return centerName;
     }
+
+    public String getTextCenterName() {
+        return getCenterName().getText();
+    }
 }

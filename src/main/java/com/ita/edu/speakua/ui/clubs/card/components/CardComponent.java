@@ -2,6 +2,7 @@ package com.ita.edu.speakua.ui.clubs.card.components;
 
 import com.ita.edu.speakua.ui.BaseMethods;
 import com.ita.edu.speakua.ui.clubs.ExpandedCardComponent;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -26,7 +27,7 @@ public class CardComponent extends BaseMethods {
     protected List<WebElement> starRatingZeroList;
 
     @FindBy(xpath = ".//li[contains(@class, 'full')]")
-    protected List<WebElement> starRatingRatingFullList;
+    protected List<WebElement> starRatingFullList;
 
     @FindBy(xpath = ".//div[contains(@class, 'club-tags-box')]//span")
     protected List<WebElement> listOfCategoriesOnCard;
@@ -42,6 +43,22 @@ public class CardComponent extends BaseMethods {
 
     public WebElement getCardBody() {
         return cardBody;
+    }
+
+    public WebElement getCardName() {
+        return cardName;
+    }
+
+    public String getTextCardName() {
+        return getCardName().getText();
+    }
+
+    public List<WebElement> getStarRatingFullList() {
+        return starRatingFullList;
+    }
+
+    public List<WebElement> getStarRatingZeroList() {
+        return starRatingZeroList;
     }
 
     public ExpandedCardComponent cardTitleClick() {

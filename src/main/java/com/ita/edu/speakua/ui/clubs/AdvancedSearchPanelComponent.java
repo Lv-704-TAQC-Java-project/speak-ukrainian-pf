@@ -1,8 +1,5 @@
 package com.ita.edu.speakua.ui.clubs;
 
-import com.ita.edu.speakua.ui.BaseMethods;
-import com.ita.edu.speakua.ui.clubs.card.components.CardComponent;
-import com.ita.edu.speakua.ui.clubs.card.components.CenterComponent;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -27,10 +24,10 @@ public class AdvancedSearchPanelComponent extends ClubsPage {
     @FindBy(xpath = "//input[@id='basic_cityName']//ancestor::div[contains(@class, 'selector')]")
     private WebElement citySelector;
 
-    @FindBy(xpath = "//input[@id='basic_districtName']")
+    @FindBy(xpath = "//input[@id='basic_districtName']//ancestor::div[contains(@class, 'selector')]")
     private WebElement districtSelector;
 
-    @FindBy(xpath = "//input[@id='basic_stationName']")
+    @FindBy(xpath = "//input[@id='basic_stationName']//ancestor::div[contains(@class, 'selector')]")
     private WebElement metroSelector;
 
     @FindBy(xpath = "//input[@id='basic_districtName']/../../..//div")
@@ -38,6 +35,9 @@ public class AdvancedSearchPanelComponent extends ClubsPage {
 
     @FindBy(xpath = "//div[@id='basic_categoriesName']")
     private WebElement categoriesCheckList;
+
+    @FindBy(xpath = "//div[@id='basic_categoriesName']")
+    private List<WebElement> categoriesNameList;
 
     @FindBy(xpath = "//label/span[contains(text(),'Гурток')]")
     private WebElement clubRadioButton;
@@ -236,7 +236,7 @@ public class AdvancedSearchPanelComponent extends ClubsPage {
 
     public AdvancedSearchPanelComponent centerRadioButtonClick() {
         waitVisibilityOfWebElement(centerRadioButton);
-        clickManagingClubsPageElement(centerRadioButton);
+        clickManagingCenterPageElement(centerRadioButton);
         return this;
     }
 
@@ -276,6 +276,38 @@ public class AdvancedSearchPanelComponent extends ClubsPage {
         childAgeInput.sendKeys(age.toString());
         clickManagingClubsPageElement(childAgeInput);
         return this;
+    }
+
+    public boolean cityListIsActivated(){
+        return citySelector.isDisplayed() && citySelector.isEnabled();
+    }
+
+    public boolean districtListIsActivated(){
+        return districtSelector.isDisplayed() && districtSelector.isEnabled();
+    }
+
+    public boolean metroListIsActivated(){
+        return metroSelector.isDisplayed() && metroSelector.isEnabled();
+    }
+
+    public boolean checkOnlineIsActivated(){
+        return availableOnline.isDisplayed() && availableOnline.isEnabled();
+    }
+
+    public boolean categoriesListIsActivated(){
+        for (WebElement categoryElement: categoriesNameList) {
+            try {
+                categoryElement.isDisplayed();
+                categoryElement.isEnabled();
+            } catch (Exception e) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean ageChildInputActivated(){
+        return childAgeBlock.isDisplayed() && childAgeBlock.isEnabled();
     }
 
 
