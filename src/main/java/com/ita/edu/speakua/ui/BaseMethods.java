@@ -1,8 +1,5 @@
 package com.ita.edu.speakua.ui;
 
-import com.ita.edu.speakua.ui.clubs.ClubsPage;
-import com.ita.edu.speakua.ui.clubs.card.components.CardComponent;
-import com.ita.edu.speakua.ui.clubs.card.components.CenterComponent;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -81,12 +78,12 @@ public class BaseMethods {
         wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
-    public void waitVisibilityOfElements(By locator) {
+    public void waitVisibilityOfWebElements(By locator) {
         WebDriverWait wait = new WebDriverWait(driver, TIMEOUT);
         wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
     }
 
-    public void waitVisibilityOfElements(List<WebElement> elements) {
+    public void waitVisibilityOfWebElements(List<WebElement> elements) {
         WebDriverWait wait = new WebDriverWait(driver, TIMEOUT);
         wait.until(ExpectedConditions.visibilityOfAllElements(elements));
     }
@@ -109,5 +106,29 @@ public class BaseMethods {
     public void waitForTextPresentInElement(WebElement element, String text) {
         WebDriverWait wait = new WebDriverWait(driver, SHORT_TIMEOUT);
         wait.until(ExpectedConditions.textToBePresentInElement(element, text));
+    }
+
+    public WebElement clearInput(WebElement element) {
+        waitVisibilityOfWebElement(element);
+        element.sendKeys(Keys.chord(Keys.CONTROL, "a"),
+                Keys.chord(Keys.COMMAND, "a"),
+                Keys.BACK_SPACE);
+        return element;
+    }
+
+    public void setNewValueForInput(WebElement element, String value) {
+        clearInput(element).sendKeys(value);
+    }
+
+    public void waitForErrorsRefresh(List<WebElement> errors) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(1));
+        if (errors.size() != 0) {
+            for (WebElement error : errors) {
+                try {
+                    wait.until(ExpectedConditions.stalenessOf(error));
+                } catch (TimeoutException ignore) {
+                }
+            }
+        }
     }
 }

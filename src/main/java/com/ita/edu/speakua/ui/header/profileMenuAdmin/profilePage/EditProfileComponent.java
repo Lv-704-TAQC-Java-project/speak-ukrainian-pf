@@ -2,10 +2,13 @@ package com.ita.edu.speakua.ui.header.profileMenuAdmin.profilePage;
 
 import com.ita.edu.speakua.ui.BaseMethods;
 import com.ita.edu.speakua.ui.HomePage;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import com.ita.edu.speakua.ui.header.PopupMessageComponent;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
+
+import java.time.Duration;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class EditProfileComponent extends BaseMethods {
 
@@ -37,7 +40,7 @@ public class EditProfileComponent extends BaseMethods {
     private WebElement repeatNewPasswordInput;
     @FindBy(xpath = "//input[@id='edit_confirmPassword']/following-sibling::span")
     private WebElement viewRepeatNewPasswordButton;
-    @FindBy(xpath = "//span[text()='Зберегти зміни']/..")
+    @FindBy(xpath = "//span[text()='Зберегти зміни']/ancestor::button")
     private WebElement saveChangesButton;
     @FindBy(xpath = "//button[@class='ant-modal-close']")
     private WebElement closeButton;
@@ -47,12 +50,14 @@ public class EditProfileComponent extends BaseMethods {
     private WebElement firstnameFieldWrapper;
     @FindBy(xpath = "//input[@id='edit_phone']/parent::span")
     private WebElement phoneFieldWrapper;
-    @FindBy(xpath = "//input[@id='edit_lastName']/../../../following-sibling::div/div/div")
+    @FindBy(xpath = "//input[@id='edit_lastName']/ancestor::div[contains(@class, 'row')]//div[contains(@class, 'error')]")
     private WebElement lastnameErrorText;
-    @FindBy(xpath = "//input[@id='edit_firstName']/../../../following-sibling::div/div/div")
+    @FindBy(xpath = "//input[@id='edit_firstName']/ancestor::div[contains(@class, 'row')]//div[contains(@class, 'error')]")
     private WebElement firstnameErrorText;
-    @FindBy(xpath = "//input[@id='edit_phone']/../../../../../following-sibling::div/div/div")
-    private WebElement phoneErrorText;
+    @FindBy(xpath = "//input[@id='edit_firstName']/ancestor::div[contains(@class, 'row')]//div[contains(@class, 'error')]")
+    private List<WebElement> firstNameErrors;
+    @FindBy(xpath = "//input[@id='edit_phone']/ancestor::div[contains(@class, 'row')]//div[contains(@class, 'error')]")
+    private List<WebElement> phoneErrors;
 
     public EditProfileComponent(WebDriver driver) {
         super(driver);
@@ -69,20 +74,19 @@ public class EditProfileComponent extends BaseMethods {
     }
 
     public EditProfileComponent fillInLastName(String lastName) {
-        lastNameInput.sendKeys(lastName);
+        setNewValueForInput(lastNameInput, lastName);
         return this;
     }
 
     public EditProfileComponent fillInFirstName(String firstName) {
-        waitVisibilityOfWebElement(firstNameInput);
-        firstNameInput.sendKeys(Keys.chord(Keys.CONTROL, "a"), "");
-        firstNameInput.sendKeys(firstName);
-        firstNameInput.submit();
+        setNewValueForInput(firstNameInput, firstName);
+        waitForErrorsRefresh(firstNameErrors);
         return this;
     }
 
     public EditProfileComponent fillInPhone(String phone) {
-        phoneInput.sendKeys(phone);
+        setNewValueForInput(phoneInput, phone);
+        waitForErrorsRefresh(phoneErrors);
         return this;
     }
 
@@ -136,13 +140,25 @@ public class EditProfileComponent extends BaseMethods {
         return firstnameErrorText.getText();
     }
 
+    public List<String> getPhoneErrorText() {
+        waitVisibilityOfWebElements(phoneErrors);
+        return phoneErrors.stream().map(WebElement::getText).collect(Collectors.toList());
+    }
+
     public EditProfileComponent saveChangesButtonClick() {
         saveChangesButton.click();
         return this;
     }
 
     public boolean saveChangesButtonIsEnable() {
-        return saveChangesButton.isEnabled();
+        saveChangesButton.click();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
+        try {
+            new PopupMessageComponent(driver).getSuccessPopupMessageText();
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+        return true;
     }
 
     public HomePage closeButtonClick() {
