@@ -4,13 +4,14 @@ import com.ita.edu.speakua.ui.HomePage;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubDescribeComponent;
 import com.ita.edu.speakua.ui.runners.BaseTestRunnerWithLogIn;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 public class AddGroupComponentTest extends BaseTestRunnerWithLogIn {
 
     @Test
-    public void verifyAddClubDescribeFieldValidDataTest(){
+    public void verifyAddClubDescribeFieldValidDataTest() {
         AddClubDescribeComponent addClubDescribeComponent = new HomePage(driver)
                 .openAdminProfileMenu()
                 .openAddGroupModal()
@@ -68,8 +69,16 @@ public class AddGroupComponentTest extends BaseTestRunnerWithLogIn {
         softAssert.assertTrue(verifyBtnFinishIsEnableOneAndHalfThousandChars,"Button should be enabled");
     }
 
-    @Test
-    public void verifyErrorMessageAddClubDescriptionField() {
+    @DataProvider(name = "descriptionErrorWithForbiddenCharacters")
+    public Object[][] errorDescriptionField() {
+        return new Object[][]{
+                {"‘э’, ‘ъ’, ‚ü‘,‘ö‘,‘ä‘\\n 'Ы, ‘э’, ‘ъ’, ‚ü‘,‘ö‘,‘ä‘", "Некоректний опис гуртка",
+                        "Це поле може містити тільки українські та англійські літери, цифри та спеціальні символи"}
+        };
+    }
+
+    @Test(dataProvider = "descriptionErrorWithForbiddenCharacters")
+    public void verifyErrorMessageAddClubDescriptionField(String Description, String FirstError, String SecondError) {
         AddClubDescribeComponent addClubDescribeComponent = new HomePage(driver)
 
                 .openAdminProfileMenu()
@@ -82,12 +91,15 @@ public class AddGroupComponentTest extends BaseTestRunnerWithLogIn {
                 .clickNextStep()
                 .inputPhoneNumber("0672131246")
                 .clickNextStep()
-                .inputDescribe("Verify that description field can contain only Ukrainian and English letters. Just fill in this field with German and Ru‘э’, ‘ъ’, ‚ü‘,‘ö‘,‘ä‘\n" +
-                        "russian language 'Ы, ‘э’, ‘ъ’, ‚ü‘,‘ö‘,‘ä‘");
+                .inputDescribe(Description);
 
-        String errorMessageDescriptionFieldActual = addClubDescribeComponent.getErrorMessageDescriptionField();
-        String errorMessageDescriptionFieldExpected = "Це поле може містити тільки українські та англійські літери, цифри та спеціальні символи";
-        Assert.assertEquals(errorMessageDescriptionFieldActual, errorMessageDescriptionFieldExpected);
+        String FirstActualErrorMessage = addClubDescribeComponent.getErrorMessageDescriptionField().get(0);
+        String SecondActualErrorMessage = addClubDescribeComponent.getErrorMessageDescriptionField().get(1);
+
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertEquals(FirstActualErrorMessage, FirstError);
+        softAssert.assertEquals(SecondActualErrorMessage, SecondError);
+        softAssert.assertAll();
     }
 
     @Test
