@@ -1,6 +1,7 @@
 package com.ita.edu.speakua.ui.addTask.tests;
 
 import com.ita.edu.speakua.ui.runners.AddTaskTestRunner;
+import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -127,13 +128,6 @@ public class AddTaskTest extends AddTaskTestRunner {
 
     @Test
     public void verifyCreateTaskWithoutChallenge(){
-        AddTaskPage addTaskPage = new HomePage(driver)
-                .openAdminProfileMenu()
-                .openAdministrationModal()
-                .clickTaskBtn()
-                .clickAddTaskBtn();
-
-
         addTaskPage = addTaskPage
                 .inputStartDate("2023-01-01")
                 .inputName("Lorem Ipsum")
