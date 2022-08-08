@@ -92,5 +92,6 @@ public class AddTaskTest extends BaseTestRunnerWithLogIn {
                 "characters have been entered");
         softAssert.assertTrue(errorMessageHeadingTooManyChars, "A message should appear stating that too many " +
                 "characters have been entered");
+        softAssert.assertAll();
     }
 }

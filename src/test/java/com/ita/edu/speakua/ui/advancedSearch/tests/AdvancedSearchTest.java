@@ -22,6 +22,8 @@ public class AdvancedSearchTest extends BaseTestRunner {
         softAssert.assertTrue(verify.checkOnlineIsActivated(), "Checkbox is online should be activated");
         softAssert.assertTrue(verify.categoriesListIsActivated(), "Category checkbox list should be activated");
         softAssert.assertTrue(verify.ageChildInputActivated(), "Age input should be activated");
+        
+        softAssert.assertAll();
     }
 
     @Test
