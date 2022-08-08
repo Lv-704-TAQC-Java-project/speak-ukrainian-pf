@@ -1,13 +1,12 @@
 package com.ita.edu.speakua.ui.runners;
 
 import com.ita.edu.speakua.ui.header.HeaderComponent;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeClass;
 
-public class BaseTestRunnerWithLogIn extends BaseTestRunner {
+public class BaseTestRunnerWithLogIn extends BaseTestRunnerOneWindow {
 
-    @BeforeMethod
-    public void setUp() {
-        super.setUp();
+    @BeforeClass
+    public void login() {
         HeaderComponent header = new HeaderComponent(driver);
         header.openGuestProfileMenu()
                 .openLoginModal()
