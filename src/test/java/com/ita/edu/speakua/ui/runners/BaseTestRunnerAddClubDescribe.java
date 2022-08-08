@@ -4,7 +4,7 @@ import com.ita.edu.speakua.ui.HomePage;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubDescribeComponent;
 import org.testng.annotations.BeforeClass;
 
-public class BaseTestRunnerAddTaskDescribe extends BaseTestRunnerWithLogIn{
+public class BaseTestRunnerAddClubDescribe extends BaseTestRunnerWithLogIn{
 
     protected AddClubDescribeComponent addClubDescribeComponent;
 
