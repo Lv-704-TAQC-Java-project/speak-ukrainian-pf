@@ -1,9 +1,7 @@
 package com.ita.edu.speakua.ui.advancedSearch.tests;
 
 import com.ita.edu.speakua.ui.HomePage;
-import com.ita.edu.speakua.ui.clubs.AdvancedSearchPanelComponent;
 import com.ita.edu.speakua.ui.clubs.ClubsPage;
-import com.ita.edu.speakua.ui.clubs.SortClubComponent;
 import com.ita.edu.speakua.ui.clubs.card.components.CardComponent;
 import com.ita.edu.speakua.ui.runners.BaseTestRunner;
 import org.testng.annotations.Test;
