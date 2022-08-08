@@ -61,9 +61,11 @@ public class AddGroupComponentTest extends BaseTestRunnerWithLogIn {
                         "Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin 1");
         boolean verifyBtnFinishIsEnableOneAndHalfThousandChars = addClubDescribeComponent.finishBtnIsEnable();
 
-        Assert.assertTrue(verifyBtnFinishIsEnableFortyChars);
-        Assert.assertTrue(verifyBtnFinishIsEnableThousandChars);
-        Assert.assertTrue(verifyBtnFinishIsEnableOneAndHalfThousandChars);
+        SoftAssert softAssert = new SoftAssert();
+
+        softAssert.assertTrue(verifyBtnFinishIsEnableFortyChars, "Button should be enabled");
+        softAssert.assertTrue(verifyBtnFinishIsEnableThousandChars,"Button should be enabled");
+        softAssert.assertTrue(verifyBtnFinishIsEnableOneAndHalfThousandChars,"Button should be enabled");
     }
 
     @Test

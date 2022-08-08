@@ -5,6 +5,7 @@ import com.ita.edu.speakua.ui.clubs.AdvancedSearchPanelComponent;
 import com.ita.edu.speakua.ui.runners.BaseTestRunner;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 public class AdvancedSearchTest extends BaseTestRunner {
 
@@ -14,12 +15,14 @@ public class AdvancedSearchTest extends BaseTestRunner {
                .clickAdvancedSearchButton()
                .getAdvancedSearchPanelComponent();
 
-        Assert.assertTrue(verify.cityListIsActivated());
-        Assert.assertTrue(verify.districtListIsActivated());
-        Assert.assertTrue(verify.metroListIsActivated());
-        Assert.assertTrue(verify.checkOnlineIsActivated());
-        Assert.assertTrue(verify.categoriesListIsActivated());
-        Assert.assertTrue(verify.ageChildInputActivated());
+        SoftAssert softAssert = new SoftAssert();
+
+        softAssert.assertTrue(verify.cityListIsActivated(),"City selected list should be activated");
+        softAssert.assertTrue(verify.districtListIsActivated(),"District selected list should be activated");
+        softAssert.assertTrue(verify.metroListIsActivated(),"Metro station selected list should be activated");
+        softAssert.assertTrue(verify.checkOnlineIsActivated(),"Checkbox is online should be activated");
+        softAssert.assertTrue(verify.categoriesListIsActivated(),"Category checkbox list should be activated");
+        softAssert.assertTrue(verify.ageChildInputActivated(),"Age input should be activated");
     }
 
 }

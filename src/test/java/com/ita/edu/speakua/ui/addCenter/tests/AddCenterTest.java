@@ -7,12 +7,13 @@ import org.testng.annotations.Test;
 
 public class AddCenterTest extends BaseTestRunnerWithLogIn {
     @Test
-    public void verifyErrorMessageIsDisplay(){
+    public void verifyErrorMessageIsDisplayTest(){
        boolean message = new HomePage(driver)
                 .openAdminProfileMenu()
                 .openAddCenterModal()
                 .tryClickNextStep()
                 .errorMessageCenterName();
-        Assert.assertTrue(message);
+
+        Assert.assertTrue(message, "Error message should be displayed");
     }
 }

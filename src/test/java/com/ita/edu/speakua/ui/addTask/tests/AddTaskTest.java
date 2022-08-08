@@ -5,6 +5,7 @@ import com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.ad
 import com.ita.edu.speakua.ui.runners.BaseTestRunnerWithLogIn;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 public class AddTaskTest extends BaseTestRunnerWithLogIn {
     @Test
@@ -82,13 +83,14 @@ public class AddTaskTest extends BaseTestRunnerWithLogIn {
 
         boolean errorMessageHeadingTooManyChars = addTaskPage.errorMessageMoreThenThreeThousandCharactersIsVisible();
 
-        Assert.assertTrue(allFieldsAreEmpty, "All field should be empty");
-//        Assert.assertTrue(errorMessageDescribeIsEmpty, "A message should appear that the field is empty");
-        Assert.assertTrue(errorMessageDescribeInvalidCharacters, "A message should appear stating that invalid " +
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertTrue(allFieldsAreEmpty, "All field should be empty");
+//        softAssert.assertTrue(errorMessageDescribeIsEmpty, "A message should appear that the field is empty");
+        softAssert.assertTrue(errorMessageDescribeInvalidCharacters, "A message should appear stating that invalid " +
                 "characters have been entered");
-        Assert.assertTrue(errorMessageHeadingNotEnoughChars,"A message should appear stating that not enough " +
+        softAssert.assertTrue(errorMessageHeadingNotEnoughChars,"A message should appear stating that not enough " +
                 "characters have been entered");
-        Assert.assertTrue(errorMessageHeadingTooManyChars, "A message should appear stating that too many " +
+        softAssert.assertTrue(errorMessageHeadingTooManyChars, "A message should appear stating that too many " +
                 "characters have been entered");
     }
 }

@@ -2,7 +2,6 @@ package com.ita.edu.speakua.ui.profilePage.tests.editProfile.tests;
 
 import com.ita.edu.speakua.ui.HomePage;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.profilePage.EditProfileComponent;
-import com.ita.edu.speakua.ui.runners.BaseTestRunnerOpenEditProfile;
 import com.ita.edu.speakua.ui.runners.BaseTestRunnerWithLogIn;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
