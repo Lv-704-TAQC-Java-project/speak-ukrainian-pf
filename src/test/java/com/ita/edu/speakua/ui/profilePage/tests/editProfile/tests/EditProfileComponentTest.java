@@ -30,9 +30,6 @@ public class EditProfileComponentTest extends BaseTestRunnerWithLogIn {
 
     @Test(dataProvider = "test-data")
     public void verifyEditProfileWithInvalidData(String data, String expectedMessage) {
-        String actualMessage;
-        boolean saveChangesBtnIsEnabled;
-
         EditProfileComponent editProfileComponent = new HomePage(driver)
                 .openAdminProfileMenu()
                 .openUserProfilePage()
@@ -40,10 +37,10 @@ public class EditProfileComponentTest extends BaseTestRunnerWithLogIn {
 
         SoftAssert softAssert = new SoftAssert();
 
-        actualMessage = editProfileComponent.fillInFirstName(data).getFirstnameErrorText();
+        String actualMessage = editProfileComponent.fillInFirstName(data).getFirstnameErrorText();
         softAssert.assertEquals(actualMessage, expectedMessage);
 
-        saveChangesBtnIsEnabled = editProfileComponent.saveChangesButtonIsEnable();
+        boolean saveChangesBtnIsEnabled = editProfileComponent.saveChangesButtonIsEnable();
         softAssert.assertTrue(saveChangesBtnIsEnabled);
 
         softAssert.assertAll();
