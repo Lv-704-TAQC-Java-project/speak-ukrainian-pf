@@ -93,10 +93,12 @@ public class AddClubComponentTest extends BaseTestRunnerWithLogIn {
 
         String FirstActualErrorMessage = addClubDescribeComponent.getErrorMessageDescriptionField().get(0);
         String SecondActualErrorMessage = addClubDescribeComponent.getErrorMessageDescriptionField().get(1);
+        int amountOfErrorMessages = addClubDescribeComponent.getErrorMessageDescriptionField().size();
 
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(FirstActualErrorMessage, FirstError);
         softAssert.assertEquals(SecondActualErrorMessage, SecondError);
+        softAssert.assertEquals(amountOfErrorMessages, 2);
         softAssert.assertAll();
     }
 
