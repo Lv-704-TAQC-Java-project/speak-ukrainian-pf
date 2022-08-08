@@ -1,4 +1,4 @@
-package com.ita.edu.speakua.ui.addGroup.tests;
+package com.ita.edu.speakua.ui.addClub.tests;
 
 import com.ita.edu.speakua.ui.HomePage;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubDescribeComponent;
@@ -6,7 +6,7 @@ import com.ita.edu.speakua.ui.runners.BaseTestRunnerWithLogIn;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-public class twoAddGroupComponentTest extends BaseTestRunnerWithLogIn {
+public class TwoAddGroupComponentTest extends BaseTestRunnerWithLogIn {
 
     @Test
     public void verifyDescribeComponentWithValidData(){

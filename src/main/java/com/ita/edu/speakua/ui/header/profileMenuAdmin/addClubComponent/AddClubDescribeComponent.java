@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AddClubDescribeComponent extends AbstractAddClubComponent {
@@ -22,12 +23,6 @@ public class AddClubDescribeComponent extends AbstractAddClubComponent {
 
     @FindBy(xpath = "//div[contains(@class, 'explain-error')]")
     private List<WebElement> errorMessagesForDescriptionField;
-
-    @FindBy(xpath = "//div[contains(@class, 'explain')]//div[1]")
-    private WebElement errorMessageDescriptionFieldPart1;
-
-    @FindBy(xpath = "//div[contains(@class, 'explain')]//div[2]")
-    private WebElement errorMessageDescriptionFieldPart2;
 
     public AddClubDescribeComponent(WebDriver driver) {
         super(driver);
@@ -50,10 +45,13 @@ public class AddClubDescribeComponent extends AbstractAddClubComponent {
         return new HomePage(driver);
     }
 
-    public String getErrorMessageDescriptionField() {
-        waitVisibilityOfWebElement(errorMessageDescriptionFieldPart1);
-        waitVisibilityOfWebElement(errorMessageDescriptionFieldPart2);
-        return errorMessageDescriptionFieldPart1.getText() + errorMessageDescriptionFieldPart2.getText();
+    public List<String> getErrorMessageDescriptionField() {
+        List<String> errorMessages = new ArrayList<>();
+        waitVisibilityOfElements(errorMessagesForDescriptionField);
+        if (errorMessagesForDescriptionField != null & errorMessagesForDescriptionField.size() > 0) {
+            errorMessagesForDescriptionField.stream().forEach((c) -> errorMessages.add(c.getText()));
+        }
+        return errorMessages;
     }
 
     public boolean finishBtnIsEnable() {
