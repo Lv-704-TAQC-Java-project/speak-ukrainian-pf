@@ -3,6 +3,7 @@ package com.ita.edu.speakua.ui.header.profileMenuGuest;
 import com.ita.edu.speakua.ui.BaseMethods;
 import com.ita.edu.speakua.ui.HomePage;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -32,6 +33,8 @@ public class RegistrationModalComponent extends BaseMethods {
     @FindBy(xpath = "//button[@type='submit']")
     private WebElement submitRegistrationFormBtn;
 
+    @FindBy(xpath = "//span[@class='ant-modal-close-x']/parent::button")
+    private WebElement closeRegistrationFormBtn;
 
     public RegistrationModalComponent(WebDriver driver) {
         super(driver);
@@ -39,8 +42,14 @@ public class RegistrationModalComponent extends BaseMethods {
 
 
     public RegistrationModalComponent fillInLastName(String lastName) {
+        waitVisibilityOfWebElement(lastNameInputField);
         lastNameInputField.sendKeys(lastName);
         return this;
+    }
+
+    public String getLastNameValue() {
+        waitVisibilityOfWebElement(lastNameInputField);
+        return lastNameInputField.getAttribute("value");
     }
 
     public RegistrationModalComponent fillInName(String name) {
@@ -48,9 +57,17 @@ public class RegistrationModalComponent extends BaseMethods {
         return this;
     }
 
+    public String getFistNameValue() {
+        return firstNameInputField.getAttribute("value");
+    }
+
     public RegistrationModalComponent fillInPhone(String phone) {
         phoneInputField.sendKeys(phone);
         return this;
+    }
+
+    public String getPhoneValue() {
+        return phoneInputField.getAttribute("value");
     }
 
     public RegistrationModalComponent fillInEmail(String email) {
@@ -58,9 +75,17 @@ public class RegistrationModalComponent extends BaseMethods {
         return this;
     }
 
+    public String getEmailValue() {
+        return emailInputField.getAttribute("value");
+    }
+
     public RegistrationModalComponent fillInPassword(String password) {
         passwordInputField.sendKeys(password);
         return this;
+    }
+
+    public String getPasswordValue() {
+        return passwordInputField.getAttribute("value");
     }
 
     public RegistrationModalComponent fillInConfirmPassword(String confirmPassword) {
@@ -68,9 +93,18 @@ public class RegistrationModalComponent extends BaseMethods {
         return this;
     }
 
+    public String getConfirmPasswordValue() {
+        return confirmPasswordInputField.getAttribute("value");
+    }
+
     public RegistrationModalComponent submitRegistrationForm() {
         submitRegistrationFormBtn.click();
         return this;
+    }
+
+    public HomePage closeRegistrationModal() {
+        closeRegistrationFormBtn.click();
+        return new HomePage(driver);
     }
 
     public String getAllErrorMessages() {
