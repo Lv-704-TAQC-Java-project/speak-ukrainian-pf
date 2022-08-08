@@ -1,22 +1,12 @@
 package com.ita.edu.speakua.ui.addTask.tests;
 
-import com.ita.edu.speakua.ui.HomePage;
-import com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.addTask.AddTaskPage;
-import com.ita.edu.speakua.ui.runners.BaseTestRunnerWithLogIn;
-import org.testng.Assert;
+import com.ita.edu.speakua.ui.runners.BaseTestRunnerAddTask;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-public class AddTaskTest extends BaseTestRunnerWithLogIn {
+public class AddTaskTest extends BaseTestRunnerAddTask {
     @Test
     public void verifyCreateTaskInvalidData(){
-        AddTaskPage addTaskPage = new HomePage(driver)
-                .openAdminProfileMenu()
-                .openAdministrationModal()
-                .clickTaskBtn()
-                .clickAddTaskBtn();
-
-        boolean allFieldsAreEmpty = addTaskPage.allFieldsAreEmpty();
 
         addTaskPage = addTaskPage
                 .inputStartDate("2022-08-23")
