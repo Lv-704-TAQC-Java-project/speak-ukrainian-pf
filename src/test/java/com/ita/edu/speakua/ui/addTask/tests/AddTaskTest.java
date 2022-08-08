@@ -1,12 +1,15 @@
 package com.ita.edu.speakua.ui.addTask.tests;
 
-import com.ita.edu.speakua.ui.runners.BaseTestRunnerAddTask;
+import com.ita.edu.speakua.ui.runners.AddTaskTestRunner;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-public class AddTaskTest extends BaseTestRunnerAddTask {
+public class AddTaskTest extends AddTaskTestRunner {
     @Test
-    public void verifyCreateTaskInvalidData(){
+    public void verifyCreateTaskInvalidData() {
+
+        boolean allFieldsAreEmpty = addTaskPage.allFieldsAreEmpty();
 
         addTaskPage = addTaskPage
                 .inputStartDate("2022-08-23")
@@ -78,10 +81,45 @@ public class AddTaskTest extends BaseTestRunnerAddTask {
 //        softAssert.assertTrue(errorMessageDescribeIsEmpty, "A message should appear that the field is empty");
         softAssert.assertTrue(errorMessageDescribeInvalidCharacters, "A message should appear stating that invalid " +
                 "characters have been entered");
-        softAssert.assertTrue(errorMessageHeadingNotEnoughChars,"A message should appear stating that not enough " +
+        softAssert.assertTrue(errorMessageHeadingNotEnoughChars, "A message should appear stating that not enough " +
                 "characters have been entered");
         softAssert.assertTrue(errorMessageHeadingTooManyChars, "A message should appear stating that too many " +
                 "characters have been entered");
+        softAssert.assertAll();
+    }
+
+    @DataProvider(name = "invalidHeaderData")
+    public static Object[][] invalidHeaderData() {
+        return new Object[][]{
+                {"", "headerText не може бути пустим"},
+                {"ъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ð",
+                        "headerText Помилка. Текст містить недопустимі символи"},
+                {"Lorem Ipsum 5% ",
+                        "headerText must contain a minimum of 40 and a maximum of 3000 letters"},
+                {new String(new char[400]).replace("\0", "Lorem 56№*"),
+                        "headerText must contain a minimum of 40 and a maximum of 3000 letters"}
+        };
+    }
+
+    @Test(dataProvider = "invalidHeaderData")
+    public void verifyImpossibilityOfCreatingTaskWithInvalidData(String invalidData, String expectedMessage) {
+        String descriptionInput = new String(new char[150]).replace("\0", "Lorem 56№*");
+        String actualErrorMessage;
+//        boolean isAllFieldsAreEmptyByDefault = addTaskPage.allFieldsAreEmpty();
+
+        addTaskPage.inputStartDate("2022-10-19")
+                .inputImage()
+                .inputName("Test task # 5/")
+                .inputDescribing(descriptionInput)
+                .chooseChallenge("Example name")
+                .tryClickSaveButton();
+
+        SoftAssert softAssert = new SoftAssert();
+
+        addTaskPage.inputHeading(invalidData).tryClickSaveButton();
+        actualErrorMessage = addTaskPage.getErrorMessage();
+        softAssert.assertEquals(actualErrorMessage, expectedMessage);
+
         softAssert.assertAll();
     }
 }

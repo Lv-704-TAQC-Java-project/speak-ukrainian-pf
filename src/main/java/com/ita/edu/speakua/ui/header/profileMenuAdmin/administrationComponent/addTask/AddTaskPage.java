@@ -1,10 +1,7 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.addTask;
 
 import com.ita.edu.speakua.ui.header.HeaderComponent;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
@@ -34,6 +31,9 @@ public class AddTaskPage extends HeaderComponent {
 
     @FindBy(xpath = "//span[contains(text(),'Зберегти')]/ancestor::button")
     WebElement saveButton;
+
+    @FindBy(xpath = "//div[contains(@class, 'warning')]//span[text()]")
+    WebElement errorMessage;
 
     @FindBy(xpath = "//span[contains(text(),'Please')]")
     WebElement errorMessageIsEmpty;
@@ -72,8 +72,8 @@ public class AddTaskPage extends HeaderComponent {
     }
 
     public AddTaskPage inputHeading(String name){
-        inputHeading.sendKeys(Keys.chord(Keys.CONTROL, "a"));
-        inputHeading.sendKeys(Keys.chord(name));
+        inputHeading.sendKeys(Keys.chord(Keys.CONTROL, "a"), "");
+        inputHeading.sendKeys(name);
         return new AddTaskPage(driver);
     }
 
@@ -135,6 +135,10 @@ public class AddTaskPage extends HeaderComponent {
         return challengeInput.getText().isEmpty();
     }
 
+    public String getErrorMessage() {
+        return errorMessage.getText();
+    }
+
     public boolean errorMessageIsEmptyIsVisible(){
         waitVisibilityOfElement(By.xpath("//span[contains(text(),'Please')]"));
         return errorMessageIsEmpty.isDisplayed();
@@ -155,12 +159,22 @@ public class AddTaskPage extends HeaderComponent {
         return errorLessThenFortyCharacters.isDisplayed();
     }
 
+    public boolean errorMessageIsDisplayed(){
+        try {
+            return errorMessage.isDisplayed();
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
     public TaskPage clickSaveButton(){
         saveButton.click();
         return new TaskPage(driver);
     }
 
     public AddTaskPage tryClickSaveButton(){
+        if (errorMessageIsDisplayed())
+            waitStalenessOfElement(errorMessage);
         saveButton.click();
         return new AddTaskPage(driver);
     }
