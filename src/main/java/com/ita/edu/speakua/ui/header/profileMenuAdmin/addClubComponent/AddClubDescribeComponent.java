@@ -47,7 +47,7 @@ public class AddClubDescribeComponent extends AbstractAddClubComponent {
 
     public List<String> getErrorMessageDescriptionField() {
         List<String> errorMessages = new ArrayList<>();
-        waitVisibilityOfElements(errorMessagesForDescriptionField);
+        waitVisibilityOfWebElements(errorMessagesForDescriptionField);
         if (errorMessagesForDescriptionField != null & errorMessagesForDescriptionField.size() > 0) {
             errorMessagesForDescriptionField.stream().forEach((c) -> errorMessages.add(c.getText()));
         }
