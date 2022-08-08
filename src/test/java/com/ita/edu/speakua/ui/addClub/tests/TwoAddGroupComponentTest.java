@@ -1,4 +1,4 @@
-package com.ita.edu.speakua.ui.addGroup.tests;
+package com.ita.edu.speakua.ui.addClub.tests;
 
 import com.ita.edu.speakua.ui.HomePage;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubDescribeComponent;
