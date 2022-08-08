@@ -5,6 +5,7 @@ import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubDe
 import com.ita.edu.speakua.ui.runners.BaseTestRunnerWithLogIn;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 public class AddGroupComponentTest extends BaseTestRunnerWithLogIn {
 
@@ -85,5 +86,37 @@ public class AddGroupComponentTest extends BaseTestRunnerWithLogIn {
         String errorMessageDescriptionFieldActual = addClubDescribeComponent.getErrorMessageDescriptionField();
         String errorMessageDescriptionFieldExpected = "Це поле може містити тільки українські та англійські літери, цифри та спеціальні символи";
         Assert.assertEquals(errorMessageDescriptionFieldActual, errorMessageDescriptionFieldExpected);
+    }
+
+    @Test
+    public void verifyLengthErrorMessageForDescriptionFieldWhenAddClub() {
+        String descriptionInput = new String(new char[150]).replace("\0", "Lorem Ipsu");
+
+        AddClubDescribeComponent addClubDescribeComponent = new HomePage(driver)
+                .openAdminProfileMenu()
+                .openUserProfilePage()
+                .openAddClubModal()
+                .inputNameOfClub("Спортивні танці")
+                .chooseCategoryClub("Спортивні секції")
+                .inputAgeFrom(4)
+                .inputAgeTo(8)
+                .clickNextStep()
+                .inputPhoneNumber("0672131246")
+                .clickNextStep()
+                .inputDescribe(descriptionInput);
+
+        SoftAssert softAssert = new SoftAssert();
+        String lengthErrorText = "Опис гуртка може містити від 40 до 1500 символів.";
+        softAssert.assertFalse(addClubDescribeComponent.errorMessageForDescriptionFieldContainsText(lengthErrorText));
+
+        addClubDescribeComponent.inputDescribe(descriptionInput.substring(0, 1498));
+        softAssert.assertFalse(addClubDescribeComponent.errorMessageForDescriptionFieldContainsText(lengthErrorText));
+
+        addClubDescribeComponent.inputDescribe(descriptionInput + "m");
+        softAssert.assertTrue(addClubDescribeComponent.errorMessageForDescriptionFieldContainsText(lengthErrorText));
+
+        addClubDescribeComponent.inputDescribe(descriptionInput + "Hello world");
+        softAssert.assertTrue(addClubDescribeComponent.errorMessageForDescriptionFieldContainsText(lengthErrorText));
+        softAssert.assertAll();
     }
 }

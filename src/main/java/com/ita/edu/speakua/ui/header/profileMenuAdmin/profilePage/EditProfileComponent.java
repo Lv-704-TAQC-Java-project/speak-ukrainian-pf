@@ -2,6 +2,7 @@ package com.ita.edu.speakua.ui.header.profileMenuAdmin.profilePage;
 
 import com.ita.edu.speakua.ui.BaseMethods;
 import com.ita.edu.speakua.ui.HomePage;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -41,16 +42,16 @@ public class EditProfileComponent extends BaseMethods {
     @FindBy(xpath = "//button[@class='ant-modal-close']")
     private WebElement closeButton;
     @FindBy(xpath = "//input[@id='edit_lastName']/parent::span")
-    private  WebElement lastnameFieldWrapper;
+    private WebElement lastnameFieldWrapper;
     @FindBy(xpath = "//input[@id='edit_firstName']/parent::span")
     private WebElement firstnameFieldWrapper;
     @FindBy(xpath = "//input[@id='edit_phone']/parent::span")
     private WebElement phoneFieldWrapper;
-    @FindBy(xpath = "//input[@id='edit_lastName']/../../../following-sibling::div/div")
-    private  WebElement lastnameErrorText;
-    @FindBy(xpath = "//input[@id='edit_firstName']/../../../following-sibling::div/div")
+    @FindBy(xpath = "//input[@id='edit_lastName']/../../../following-sibling::div/div/div")
+    private WebElement lastnameErrorText;
+    @FindBy(xpath = "//input[@id='edit_firstName']/../../../following-sibling::div/div/div")
     private WebElement firstnameErrorText;
-    @FindBy(xpath = "//input[@id='edit_phone']/../../../../../following-sibling::div/div")
+    @FindBy(xpath = "//input[@id='edit_phone']/../../../../../following-sibling::div/div/div")
     private WebElement phoneErrorText;
 
     public EditProfileComponent(WebDriver driver) {
@@ -73,7 +74,10 @@ public class EditProfileComponent extends BaseMethods {
     }
 
     public EditProfileComponent fillInFirstName(String firstName) {
+        waitVisibilityOfWebElement(firstNameInput);
+        firstNameInput.sendKeys(Keys.chord(Keys.CONTROL, "a"), "");
         firstNameInput.sendKeys(firstName);
+        firstNameInput.submit();
         return this;
     }
 
@@ -127,9 +131,18 @@ public class EditProfileComponent extends BaseMethods {
         return this;
     }
 
-    public EditProfileComponent saveChangesClick() {
+    public String getFirstnameErrorText() {
+        waitVisibilityOfWebElement(firstnameErrorText);
+        return firstnameErrorText.getText();
+    }
+
+    public EditProfileComponent saveChangesButtonClick() {
         saveChangesButton.click();
         return this;
+    }
+
+    public boolean saveChangesButtonIsEnable() {
+        return saveChangesButton.isEnabled();
     }
 
     public HomePage closeButtonClick() {
