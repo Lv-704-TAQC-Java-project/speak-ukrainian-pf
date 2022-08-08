@@ -1,4 +1,4 @@
-package com.ita.edu.speakua.ui.addGroup.tests;
+package com.ita.edu.speakua.ui.addClub.tests;
 
 import com.ita.edu.speakua.ui.HomePage;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubDescribeComponent;
@@ -7,7 +7,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-public class AddGroupComponentTest extends BaseTestRunnerWithLogIn {
+public class AddClubComponentTest extends BaseTestRunnerWithLogIn {
 
     @Test
     public void verifyAddClubDescribeFieldValidDataTest() {
@@ -25,7 +25,6 @@ public class AddGroupComponentTest extends BaseTestRunnerWithLogIn {
         boolean verifyBtnFinishIsEnableFortyChars = addClubDescribeComponent.finishBtnIsEnable();
 
         addClubDescribeComponent
-                .clearDescribeField()
                 .inputDescribe("Lorem Ipsum is simply dummy text of the printing and typesetting industry. " +
                         "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, " +
                         "when an unknown printer took a galley of type and scrambled it to make a type specimen book. " +
@@ -41,7 +40,6 @@ public class AddGroupComponentTest extends BaseTestRunnerWithLogIn {
         boolean verifyBtnFinishIsEnableThousandChars = addClubDescribeComponent.finishBtnIsEnable();
 
         addClubDescribeComponent
-                .clearDescribeField()
                 .inputDescribe("Lorem Ipsum is simply dummy text of the printing and typesetting industry. " +
                         "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, " +
                         "when an unknown printer took a galley of type and scrambled it to make a type specimen book. " +
@@ -64,8 +62,9 @@ public class AddGroupComponentTest extends BaseTestRunnerWithLogIn {
         SoftAssert softAssert = new SoftAssert();
 
         softAssert.assertTrue(verifyBtnFinishIsEnableFortyChars, "Button should be enabled");
-        softAssert.assertTrue(verifyBtnFinishIsEnableThousandChars, "Button should be enabled");
-        softAssert.assertTrue(verifyBtnFinishIsEnableOneAndHalfThousandChars, "Button should be enabled");
+        softAssert.assertTrue(verifyBtnFinishIsEnableThousandChars,"Button should be enabled");
+        softAssert.assertTrue(verifyBtnFinishIsEnableOneAndHalfThousandChars,"Button should be enabled");
+        softAssert.assertAll();
     }
 
     @DataProvider(name = "descriptionErrorWithForbiddenCharacters")
@@ -77,7 +76,7 @@ public class AddGroupComponentTest extends BaseTestRunnerWithLogIn {
     }
 
     @Test(dataProvider = "descriptionErrorWithForbiddenCharacters")
-    public void verifyErrorMessageAddClubDescriptionField(String Description, String FirstError, String SecondError) {
+    public void verifyErrorMessageAddClubDescriptionField(String description, String firstError, String secondError) {
         AddClubDescribeComponent addClubDescribeComponent = new HomePage(driver)
 
                 .openAdminProfileMenu()
@@ -90,14 +89,16 @@ public class AddGroupComponentTest extends BaseTestRunnerWithLogIn {
                 .clickNextStep()
                 .inputPhoneNumber("0672131246")
                 .clickNextStep()
-                .inputDescribe(Description);
+                .inputDescribe(description);
 
-        String FirstActualErrorMessage = addClubDescribeComponent.getErrorMessageDescriptionField().get(0);
-        String SecondActualErrorMessage = addClubDescribeComponent.getErrorMessageDescriptionField().get(1);
+        String firstActualErrorMessage = addClubDescribeComponent.getErrorMessageDescriptionField().get(0);
+        String secondActualErrorMessage = addClubDescribeComponent.getErrorMessageDescriptionField().get(1);
+        int amountOfErrorMessages = addClubDescribeComponent.getErrorMessageDescriptionField().size();
 
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(FirstActualErrorMessage, FirstError);
-        softAssert.assertEquals(SecondActualErrorMessage, SecondError);
+        softAssert.assertEquals(firstActualErrorMessage, firstError);
+        softAssert.assertEquals(secondActualErrorMessage, secondError);
+        softAssert.assertEquals(amountOfErrorMessages, 2);
         softAssert.assertAll();
     }
 
