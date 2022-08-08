@@ -16,17 +16,17 @@ public class RegistrationTest extends BaseTestRunner {
     }
 
     @Test(dataProvider = "registrationFormInputData")
-    public void verifyThatRegistrationDataAreRememberedTest(String LastName, String FirstName, String Phone, String Email, String Password) {
+    public void verifyThatRegistrationDataAreRememberedTest(String lastName, String firstName, String phone, String email, String password) {
         HeaderComponent header = new HeaderComponent(driver);
         header
                 .openGuestProfileMenu()
                 .openRegistrationModal()
-                .fillInLastName(LastName)
-                .fillInName(FirstName)
-                .fillInPhone(Phone)
-                .fillInEmail(Email)
-                .fillInPassword(Password)
-                .fillInConfirmPassword(Password);
+                .fillInLastName(lastName)
+                .fillInName(firstName)
+                .fillInPhone(phone)
+                .fillInEmail(email)
+                .fillInPassword(password)
+                .fillInConfirmPassword(password);
 
         header
                 .getGuestProfileMenuComponent()
@@ -34,20 +34,20 @@ public class RegistrationTest extends BaseTestRunner {
                 .openGuestProfileMenu()
                 .openRegistrationModal();
 
-        String LastNameValue = header.getGuestProfileMenuComponent().getRegistrationModal().getLastNameValue();
-        String FirstNameValue = header.getGuestProfileMenuComponent().getRegistrationModal().getFistNameValue();
-        String PhoneValue = header.getGuestProfileMenuComponent().getRegistrationModal().getPhoneValue();
-        String EmailValue = header.getGuestProfileMenuComponent().getRegistrationModal().getEmailValue();
-        String PasswordValue = header.getGuestProfileMenuComponent().getRegistrationModal().getPasswordValue();
-        String ConfirmPasswordValue = header.getGuestProfileMenuComponent().getRegistrationModal().getConfirmPasswordValue();
+        String lastNameValue = header.getGuestProfileMenuComponent().getRegistrationModal().getLastNameValue();
+        String firstNameValue = header.getGuestProfileMenuComponent().getRegistrationModal().getFistNameValue();
+        String phoneValue = header.getGuestProfileMenuComponent().getRegistrationModal().getPhoneValue();
+        String emailValue = header.getGuestProfileMenuComponent().getRegistrationModal().getEmailValue();
+        String passwordValue = header.getGuestProfileMenuComponent().getRegistrationModal().getPasswordValue();
+        String confirmPasswordValue = header.getGuestProfileMenuComponent().getRegistrationModal().getConfirmPasswordValue();
 
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(LastNameValue, LastName);
-        softAssert.assertEquals(FirstNameValue, FirstName);
-        softAssert.assertEquals(PhoneValue, Phone);
-        softAssert.assertEquals(EmailValue, Email);
-        softAssert.assertEquals(PasswordValue, Password);
-        softAssert.assertEquals(ConfirmPasswordValue, Password);
+        softAssert.assertEquals(lastNameValue, lastName);
+        softAssert.assertEquals(firstNameValue, firstName);
+        softAssert.assertEquals(phoneValue, phone);
+        softAssert.assertEquals(emailValue, email);
+        softAssert.assertEquals(passwordValue, password);
+        softAssert.assertEquals(confirmPasswordValue, password);
         softAssert.assertAll();
 
     }
