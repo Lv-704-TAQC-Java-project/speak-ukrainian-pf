@@ -38,6 +38,7 @@ public class AddClubMainInfoComponent extends AbstractAddClubComponent {
     }
 
     public AddClubMainInfoComponent inputNameOfClub(String name){
+        waitVisibilityOfWebElement(inputNameOfClub);
         inputNameOfClub.click();
         inputNameOfClub.clear();
         inputNameOfClub.sendKeys(name);

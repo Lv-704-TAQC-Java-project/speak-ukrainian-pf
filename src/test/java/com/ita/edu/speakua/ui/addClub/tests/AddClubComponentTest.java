@@ -76,7 +76,7 @@ public class AddClubComponentTest extends BaseTestRunnerWithLogIn {
     }
 
     @Test(dataProvider = "descriptionErrorWithForbiddenCharacters")
-    public void verifyErrorMessageAddClubDescriptionField(String Description, String FirstError, String SecondError) {
+    public void verifyErrorMessageAddClubDescriptionField(String description, String firstError, String secondError) {
         AddClubDescribeComponent addClubDescribeComponent = new HomePage(driver)
 
                 .openAdminProfileMenu()
@@ -89,14 +89,16 @@ public class AddClubComponentTest extends BaseTestRunnerWithLogIn {
                 .clickNextStep()
                 .inputPhoneNumber("0672131246")
                 .clickNextStep()
-                .inputDescribe(Description);
+                .inputDescribe(description);
 
-        String FirstActualErrorMessage = addClubDescribeComponent.getErrorMessageDescriptionField().get(0);
-        String SecondActualErrorMessage = addClubDescribeComponent.getErrorMessageDescriptionField().get(1);
+        String firstActualErrorMessage = addClubDescribeComponent.getErrorMessageDescriptionField().get(0);
+        String secondActualErrorMessage = addClubDescribeComponent.getErrorMessageDescriptionField().get(1);
+        int amountOfErrorMessages = addClubDescribeComponent.getErrorMessageDescriptionField().size();
 
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(FirstActualErrorMessage, FirstError);
-        softAssert.assertEquals(SecondActualErrorMessage, SecondError);
+        softAssert.assertEquals(firstActualErrorMessage, firstError);
+        softAssert.assertEquals(secondActualErrorMessage, secondError);
+        softAssert.assertEquals(amountOfErrorMessages, 2);
         softAssert.assertAll();
     }
 
