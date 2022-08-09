@@ -200,5 +200,4 @@ public class AddClubComponentTest extends BaseTestRunnerWithLogIn {
         softAssert.assertTrue(addClubDescribeComponent.errorMessageForDescriptionFieldContainsText(lengthErrorText));
         softAssert.assertAll();
     }
-
 }
