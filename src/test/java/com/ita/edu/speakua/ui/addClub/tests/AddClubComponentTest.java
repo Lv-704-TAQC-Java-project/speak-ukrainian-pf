@@ -165,4 +165,40 @@ public class AddClubComponentTest extends BaseTestRunnerWithLogIn {
 
         softAssert.assertAll();
     }
+    @Test
+    public void verifyInvalidLengthErrorMessageForDescriptionFieldWhenAddClub() {
+        String descriptionInput = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. " +
+                "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, " +
+                "when an unknown printer took a galley of type and scrambled it to make a type specimen book. " +
+                "It has survived not only five centuries, but also the leap into electronic typesetting, " +
+                "remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset " +
+                "sheets containing Lorem Ipsum passages, and more recently with desktop publishing software ";
+
+        AddClubDescribeComponent addClubDescribeComponent = new HomePage(driver)
+                .openAdminProfileMenu()
+                .openUserProfilePage()
+                .openAddClubModal()
+                .inputNameOfClub("Спортивні танці")
+                .chooseCategoryClub("Спортивні секції")
+                .inputAgeFrom(4)
+                .inputAgeTo(8)
+                .clickNextStep()
+                .inputPhoneNumber("0672131246")
+                .clickNextStep()
+                .inputDescribe(descriptionInput);
+
+        SoftAssert softAssert = new SoftAssert();
+        String lengthErrorText = "Опис гуртка закороткий.";
+
+        addClubDescribeComponent.inputDescribe(descriptionInput.substring(0, 20));
+        softAssert.assertTrue(addClubDescribeComponent.errorMessageForDescriptionFieldContainsText(lengthErrorText));
+
+        addClubDescribeComponent.inputDescribe(descriptionInput.substring(0, 1));
+        softAssert.assertTrue(addClubDescribeComponent.errorMessageForDescriptionFieldContainsText(lengthErrorText));
+
+        addClubDescribeComponent.inputDescribe(descriptionInput.substring(0, 39));
+        softAssert.assertTrue(addClubDescribeComponent.errorMessageForDescriptionFieldContainsText(lengthErrorText));
+        softAssert.assertAll();
+    }
+
 }
