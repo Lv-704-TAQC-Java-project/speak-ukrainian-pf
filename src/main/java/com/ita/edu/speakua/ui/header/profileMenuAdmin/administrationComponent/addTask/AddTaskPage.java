@@ -91,6 +91,7 @@ public class AddTaskPage extends HeaderComponent {
     }
 
     public WebElement getChallengeItem(String name) {
+        waitVisibilityOfWebElement(challengeList);
         return challengeList.findElement(By.xpath(String.format(".//div[contains(text(),'%s')]", name)));
     }
 
@@ -135,6 +136,7 @@ public class AddTaskPage extends HeaderComponent {
     }
 
     public String getErrorMessageText() {
+        waitVisibilityOfWebElement(errorMessage);
         return errorMessage.getText();
     }
 
@@ -172,7 +174,6 @@ public class AddTaskPage extends HeaderComponent {
     }
 
     public AddTaskPage tryClickSaveButton() {
-        waitForErrorsRefresh(errorMessages);
         saveButton.click();
         return this;
     }
