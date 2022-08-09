@@ -12,17 +12,17 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
     @DataProvider(name = "invalidFirstNameData")
     public static Object[][] invalidFirstNameData() {
         return new Object[][]{
-                {"", "Введіть ім'я"},
+                {"", "Будь ласка введіть Ваше ім'я"},
                 {"AfBbCcDdEeFfGgHhIiJjKkLlMmNn", "Ім'я не може містити більше, ніж 25 символів"},
                 {"AfBbCcDdEeFfGgHhIiJjKkLlMm", "Ім'я не може містити більше, ніж 25 символів"},
                 {"!@#$%^&,", "Ім'я не може містити спеціальні символи"},
                 {"1234", "Ім'я не може містити цифри"},
-                {"-Name", "Ім'я повинно починатися та закінчуватися літерою"},
-                {"< Name>", "Ім'я повинно починатися та закінчуватися літерою"},
-                {"'Name", "Ім'я повинно починатися та закінчуватися літерою"},
-                {"Name-", "Ім'я повинно починатися та закінчуватися літерою"},
-                {"<Name >", "Ім'я повинно починатися та закінчуватися літерою"},
-                {"Name'", "Ім'я повинно починатися та закінчуватися літерою"}
+                {"-Name", "Ім'я повинно починатися і закінчуватися літерою"},
+                {"< Name>", "Ім'я повинно починатися і закінчуватися літерою"},
+                {"'Name", "Ім'я повинно починатися і закінчуватися літерою"},
+                {"Name-", "Ім'я повинно починатися і закінчуватися літерою"},
+                {"<Name >", "Ім'я повинно починатися і закінчуватися літерою"},
+                {"Name'", "Ім'я повинно починатися і закінчуватися літерою"}
         };
     }
 
@@ -33,10 +33,10 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
         SoftAssert softAssert = new SoftAssert();
 
         actualMessage = editProfileComponent.fillInFirstName(data).getFirstnameErrorText();
-        softAssert.assertEquals(actualMessage, expectedMessage);
+        softAssert.assertEquals(actualMessage, expectedMessage, "Expected error message did not appear");
 
         saveChangesBtnIsEnabled = editProfileComponent.saveChangesButtonIsEnable();
-        softAssert.assertFalse(saveChangesBtnIsEnabled);
+        softAssert.assertFalse(saveChangesBtnIsEnabled, "SaveChanges button is enabled");
 
         softAssert.assertAll();
     }
