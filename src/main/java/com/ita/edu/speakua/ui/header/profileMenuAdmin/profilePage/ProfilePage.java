@@ -1,6 +1,5 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.profilePage;
 
-import com.ita.edu.speakua.ui.BaseMethods;
 import com.ita.edu.speakua.ui.header.HeaderComponent;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubMainInfoComponent;
 import org.openqa.selenium.WebDriver;
@@ -35,6 +34,7 @@ public class ProfilePage extends HeaderComponent {
     public AddClubMainInfoComponent openAddClubModal() {
         waitVisibilityOfWebElement(addButton);
         addButton.click();
+        waitVisibilityOfWebElement(addClubButton);
         addClubButton.click();
         return new AddClubMainInfoComponent(driver);
     }
