@@ -13,7 +13,7 @@ public class AddTaskTest extends AddTaskTestRunner {
 
         addTaskPage = addTaskPage
                 .inputStartDate("2022-08-23")
-                .inputImage()
+                .inputImage("D:\\smile.png")
                 .inputName("Yaroslav test")
                 .inputHeading("Lorem Ipsum is simply dummy text of the printing and typesetting industry. " +
                         "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s," +
@@ -103,21 +103,23 @@ public class AddTaskTest extends AddTaskTestRunner {
 
     @Test(dataProvider = "invalidHeaderData")
     public void verifyImpossibilityOfCreatingTaskWithInvalidData(String invalidData, String expectedMessage) {
-        String descriptionInput = new String(new char[150]).replace("\0", "Lorem 56№*");
+        String descriptionInput = new String(new char[10]).replace("\0", "Lorem 56№*");
         String actualErrorMessage;
-//        boolean isAllFieldsAreEmptyByDefault = addTaskPage.allFieldsAreEmpty();
+
+        boolean isAllFieldsAreEmptyByDefault = addTaskPage.allFieldsAreEmpty();
 
         addTaskPage.inputStartDate("2022-10-19")
-                .inputImage()
+                .inputImage("D:\\image.png")
                 .inputName("Test task # 5/")
+                .inputHeading(invalidData)
                 .inputDescribing(descriptionInput)
                 .chooseChallenge("Example name")
                 .tryClickSaveButton();
 
         SoftAssert softAssert = new SoftAssert();
 
-        addTaskPage.inputHeading(invalidData).tryClickSaveButton();
-        actualErrorMessage = addTaskPage.getErrorMessage();
+        softAssert.assertTrue(isAllFieldsAreEmptyByDefault);
+        actualErrorMessage = addTaskPage.getErrorMessageText();
         softAssert.assertEquals(actualErrorMessage, expectedMessage);
 
         softAssert.assertAll();
