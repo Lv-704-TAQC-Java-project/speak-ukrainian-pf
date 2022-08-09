@@ -139,6 +139,10 @@ public class EditProfileComponent extends BaseMethods {
         waitVisibilityOfWebElement(firstnameErrorText);
         return firstnameErrorText.getText();
     }
+    public String getLastNameErrorText() {
+        waitVisibilityOfWebElement(lastnameErrorText);
+        return lastnameErrorText.getText();
+    }
 
     public List<String> getPhoneErrorText() {
         waitVisibilityOfWebElements(phoneErrors);

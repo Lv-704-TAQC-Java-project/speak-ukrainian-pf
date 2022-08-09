@@ -99,7 +99,7 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
         boolean saveChangesBtnIsEnabled;
         SoftAssert softAssert = new SoftAssert();
 
-        actualMessage = editProfileComponent.fillInFirstName(data).getFirstnameErrorText();
+        actualMessage = editProfileComponent.fillInLastName(data).getLastNameErrorText();
         softAssert.assertEquals(actualMessage, expectedMessage);
 
         saveChangesBtnIsEnabled = editProfileComponent.saveChangesButtonIsEnable();
