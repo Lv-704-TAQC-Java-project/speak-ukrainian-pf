@@ -75,4 +75,36 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
 
         softAssert.assertAll();
     }
+    @DataProvider(name = "invalidLastNameData")
+    public static Object[][] invalidLastNameData() {
+        return new Object[][]{
+
+                {"AfBbCcDdEeFfGgHhIiJjKkLlMmNn", "Прізвище не може містити більше, ніж 25 символів"},
+                {"AfBbCcDdEeFfGgHhIiJjKkLlMm", "Прізвище не може містити більше, ніж 25 символів"},
+                {"!@#$%^&,", "Прізвище не може містити спеціальні символи"},
+                {"1234", "Прізвище не може містити цифри"},
+                {"-Lastname", "Прізвище повинно починатися та закінчуватися літерою"},
+                {"< Lastname>", "Прізвище повинно починатися та закінчуватися літерою"},
+                {"'Lastname", "Прізвище повинно починатися та закінчуватися літерою"},
+                {"Lastname-", "Прізвище повинно починатися та закінчуватися літерою"},
+                {"<Lastname >", "Прізвище повинно починатися та закінчуватися літерою"},
+                {"Lastname'", "Прізвище повинно починатися та закінчуватися літерою"},
+                {"", "Введіть прізвище"}
+        };
+    }
+
+    @Test(dataProvider = "invalidLastNameData")
+    public void verifyEditProfileWithInvalidLastNamedData(String data, String expectedMessage) {
+        String actualMessage;
+        boolean saveChangesBtnIsEnabled;
+        SoftAssert softAssert = new SoftAssert();
+
+        actualMessage = editProfileComponent.fillInFirstName(data).getFirstnameErrorText();
+        softAssert.assertEquals(actualMessage, expectedMessage);
+
+        saveChangesBtnIsEnabled = editProfileComponent.saveChangesButtonIsEnable();
+        softAssert.assertFalse(saveChangesBtnIsEnabled);
+
+        softAssert.assertAll();
+    }
 }
