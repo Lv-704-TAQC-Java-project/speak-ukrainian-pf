@@ -162,7 +162,6 @@ public class AddClubComponentTest extends BaseTestRunnerWithLogIn {
             btnFinishIsEnable = addClubDescribeComponent.finishBtnIsEnable();
             softAssert.assertTrue(btnFinishIsEnable);
         }
-
         softAssert.assertAll();
     }
     @Test
