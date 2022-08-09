@@ -1,6 +1,10 @@
 package com.ita.edu.speakua.ui.profilePage.tests.editProfile.tests;
 
 import com.ita.edu.speakua.ui.runners.EditProfileTestRunner;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -78,7 +82,7 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
     @DataProvider(name = "invalidLastNameData")
     public static Object[][] invalidLastNameData() {
         return new Object[][]{
-
+                {"", "Введіть прізвище"},
                 {"AfBbCcDdEeFfGgHhIiJjKkLlMmNn", "Прізвище не може містити більше, ніж 25 символів"},
                 {"AfBbCcDdEeFfGgHhIiJjKkLlMm", "Прізвище не може містити більше, ніж 25 символів"},
                 {"!@#$%^&,", "Прізвище не може містити спеціальні символи"},
@@ -88,23 +92,71 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
                 {"'Lastname", "Прізвище повинно починатися та закінчуватися літерою"},
                 {"Lastname-", "Прізвище повинно починатися та закінчуватися літерою"},
                 {"<Lastname >", "Прізвище повинно починатися та закінчуватися літерою"},
-                {"Lastname'", "Прізвище повинно починатися та закінчуватися літерою"},
-                {"", "Введіть прізвище"}
+                {"Lastname'", "Прізвище повинно починатися та закінчуватися літерою"}
         };
     }
 
     @Test(dataProvider = "invalidLastNameData")
     public void verifyEditProfileWithInvalidLastNamedData(String data, String expectedMessage) {
-        String actualMessage;
+        List<String> errorMessages;
+        boolean expectedMessageIsPresent = false;
         boolean saveChangesBtnIsEnabled;
         SoftAssert softAssert = new SoftAssert();
 
-        actualMessage = editProfileComponent.fillInLastName(data).getLastNameErrorText();
-        softAssert.assertEquals(actualMessage, expectedMessage);
+        errorMessages = editProfileComponent.fillInLastName(data).getLastNameErrorText();
+        for (String errorMessage: errorMessages) {
+            if (errorMessage.equals(expectedMessage)) {
+                expectedMessageIsPresent = true;
+                break;
+            }
+        }
+        softAssert.assertTrue(expectedMessageIsPresent, "Expected error message is not present.");
 
         saveChangesBtnIsEnabled = editProfileComponent.saveChangesButtonIsEnable();
-        softAssert.assertFalse(saveChangesBtnIsEnabled);
+        softAssert.assertFalse(saveChangesBtnIsEnabled, "SaveChanges button is enabled.");
 
         softAssert.assertAll();
+    }
+    @Test
+    public void verifyEditProfileWithEmptyNewRepeatPasswordData(){
+        boolean actualMessage;
+        boolean expectedMessageIsPresent = false;
+
+        SoftAssert softAssert = new SoftAssert();
+        actualMessage = editProfileComponent
+                .changePasswordClick()
+                .inputOldPassword("admin")
+                .inputNewPassword("uyyyyuyu45ytty@")
+                .saveChangesButtonClick()
+                .saveChangesButtonIsEnable();
+
+        String xPathErrorMessageText = "//div[@class='ant-form-item-explain ant-form-item-explain-connected']";
+        WebElement item = driver.findElement(By.xpath(xPathErrorMessageText));
+
+        if(item.isDisplayed()){
+            expectedMessageIsPresent = true;
+        }
+        softAssert.assertEquals(actualMessage, expectedMessageIsPresent);
+    }
+
+    @Test
+    public void verifyEditProfileWithEmptyNewPasswordData(){
+        boolean actualMessage;
+        boolean expectedMessageIsPresent = false;
+
+        SoftAssert softAssert = new SoftAssert();
+        actualMessage = editProfileComponent
+                .changePasswordClick()
+                .inputOldPassword("admin")
+                .saveChangesButtonClick()
+                .saveChangesButtonIsEnable();
+
+        String xPathErrorMessageText = "//div[@class='ant-form-item-explain-error']";
+        WebElement item = driver.findElement(By.xpath(xPathErrorMessageText));
+
+        if(item.isDisplayed()){
+            expectedMessageIsPresent = true;
+        }
+        softAssert.assertEquals(actualMessage, expectedMessageIsPresent);
     }
 }

@@ -58,6 +58,8 @@ public class EditProfileComponent extends BaseMethods {
     private List<WebElement> firstNameErrors;
     @FindBy(xpath = "//input[@id='edit_phone']/ancestor::div[contains(@class, 'row')]//div[contains(@class, 'error')]")
     private List<WebElement> phoneErrors;
+    @FindBy(xpath = "//input[@id='edit_lastName']/ancestor::div[contains(@class, 'row')]//div[contains(@class, 'error')]")
+    private List<WebElement> lastnameErrors;
 
     public EditProfileComponent(WebDriver driver) {
         super(driver);
@@ -139,9 +141,10 @@ public class EditProfileComponent extends BaseMethods {
         waitVisibilityOfWebElement(firstnameErrorText);
         return firstnameErrorText.getText();
     }
-    public String getLastNameErrorText() {
-        waitVisibilityOfWebElement(lastnameErrorText);
-        return lastnameErrorText.getText();
+
+    public List<String> getLastNameErrorText() {
+        waitVisibilityOfWebElements(lastnameErrors);
+        return lastnameErrors.stream().map(WebElement::getText).collect(Collectors.toList());
     }
 
     public List<String> getPhoneErrorText() {
@@ -164,7 +167,6 @@ public class EditProfileComponent extends BaseMethods {
         }
         return true;
     }
-
     public HomePage closeButtonClick() {
         closeButton.click();
         return new HomePage(driver);
