@@ -88,4 +88,8 @@ public class AddLocationComponent extends BaseMethods {
         addButton.click();
         return this;
     }
+
+    public boolean isAddButtonEnabled(){
+        return addButton.isEnabled();
+    }
 }

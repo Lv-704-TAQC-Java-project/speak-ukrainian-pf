@@ -1,19 +1,14 @@
 package com.ita.edu.speakua.ui.addTask.tests;
 
-import com.ita.edu.speakua.ui.HomePage;
-import com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.addTask.AddTaskPage;
-import com.ita.edu.speakua.ui.runners.BaseTestRunnerWithLogIn;
+import com.ita.edu.speakua.ui.runners.AddTaskTestRunner;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
-public class AddTaskTest extends BaseTestRunnerWithLogIn {
+public class AddTaskTest extends AddTaskTestRunner {
     @Test
-    public void verifyCreateTaskInvalidData(){
-        AddTaskPage addTaskPage = new HomePage(driver)
-                .openAdminProfileMenu()
-                .openAdministrationModal()
-                .clickTaskBtn()
-                .clickAddTaskBtn();
+    public void verifyCreateTaskInvalidData() {
 
         boolean allFieldsAreEmpty = addTaskPage.allFieldsAreEmpty();
 
@@ -82,13 +77,72 @@ public class AddTaskTest extends BaseTestRunnerWithLogIn {
 
         boolean errorMessageHeadingTooManyChars = addTaskPage.errorMessageMoreThenThreeThousandCharactersIsVisible();
 
-        Assert.assertTrue(allFieldsAreEmpty, "All field should be empty");
-//        Assert.assertTrue(errorMessageDescribeIsEmpty, "A message should appear that the field is empty");
-        Assert.assertTrue(errorMessageDescribeInvalidCharacters, "A message should appear stating that invalid " +
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertTrue(allFieldsAreEmpty, "All field should be empty");
+//        softAssert.assertTrue(errorMessageDescribeIsEmpty, "A message should appear that the field is empty");
+        softAssert.assertTrue(errorMessageDescribeInvalidCharacters, "A message should appear stating that invalid " +
                 "characters have been entered");
-        Assert.assertTrue(errorMessageHeadingNotEnoughChars,"A message should appear stating that not enough " +
+        softAssert.assertTrue(errorMessageHeadingNotEnoughChars, "A message should appear stating that not enough " +
                 "characters have been entered");
-        Assert.assertTrue(errorMessageHeadingTooManyChars, "A message should appear stating that too many " +
+        softAssert.assertTrue(errorMessageHeadingTooManyChars, "A message should appear stating that too many " +
                 "characters have been entered");
+        softAssert.assertAll();
+    }
+
+    @DataProvider(name = "invalidHeaderData")
+    public static Object[][] invalidHeaderData() {
+        return new Object[][]{
+                {"", "headerText не може бути пустим"},
+                {"ъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ð",
+                        "headerText Помилка. Текст містить недопустимі символи"},
+                {"Lorem Ipsum 5% ",
+                        "headerText must contain a minimum of 40 and a maximum of 3000 letters"},
+                {new String(new char[400]).replace("\0", "Lorem 56№*"),
+                        "headerText must contain a minimum of 40 and a maximum of 3000 letters"}
+        };
+    }
+
+    @Test(dataProvider = "invalidHeaderData")
+    public void verifyImpossibilityOfCreatingTaskWithInvalidData(String invalidData, String expectedMessage) {
+        String descriptionInput = new String(new char[150]).replace("\0", "Lorem 56№*");
+        String actualErrorMessage;
+//        boolean isAllFieldsAreEmptyByDefault = addTaskPage.allFieldsAreEmpty();
+
+        addTaskPage.inputStartDate("2022-10-19")
+                .inputImage()
+                .inputName("Test task # 5/")
+                .inputDescribing(descriptionInput)
+                .chooseChallenge("Example name")
+                .tryClickSaveButton();
+
+        SoftAssert softAssert = new SoftAssert();
+
+        addTaskPage.inputHeading(invalidData).tryClickSaveButton();
+        actualErrorMessage = addTaskPage.getErrorMessage();
+        softAssert.assertEquals(actualErrorMessage, expectedMessage);
+
+        softAssert.assertAll();
+    }
+
+
+
+    @Test
+    public void verifyCreateTaskWithoutChallenge(){
+        addTaskPage = addTaskPage
+                .inputStartDate("2023-01-01")
+                .inputName("Lorem Ipsum")
+                .inputHeading("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has " +
+                        "been the industry's standard dummy text ever since the 1500s, when an unknown printer took a " +
+                        "galley of type and scrambled it to make a type specimen book. It has survived not only five " +
+                        "centuries, but also the leap into electronic typesetting, remaining essentially unchanged. " +
+                        "It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum " +
+                        "passages, and more recently with desktop publishing software like Aldus PageMaker including " +
+                        "versions of Lorem Ipsum")
+                .inputDescribing("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has " +
+                        "been the industry's standard dummy text ever since the 1500s, when an unknown printer took a ")
+                .tryClickSaveButton();
+
+
+        Assert.assertTrue(addTaskPage.errorMessageIsEmptyIsVisible(), "Error message didn't find");
     }
 }

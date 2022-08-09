@@ -1,17 +1,16 @@
 package com.ita.edu.speakua.ui.profilePage.tests.editProfile.tests;
 
-import com.ita.edu.speakua.ui.HomePage;
-import com.ita.edu.speakua.ui.header.profileMenuAdmin.profilePage.EditProfileComponent;
-import com.ita.edu.speakua.ui.runners.BaseTestRunnerOpenEditProfile;
-import com.ita.edu.speakua.ui.runners.BaseTestRunnerWithLogIn;
+import com.ita.edu.speakua.ui.runners.EditProfileTestRunner;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-public class EditProfileComponentTest extends BaseTestRunnerWithLogIn {
+import java.util.List;
 
-    @DataProvider(name = "test-data")
-    public static Object[][] testData() {
+public class EditProfileComponentTest extends EditProfileTestRunner {
+
+    @DataProvider(name = "invalidFirstNameData")
+    public static Object[][] invalidFirstNameData() {
         return new Object[][]{
                 {"", "Введіть ім'я"},
                 {"AfBbCcDdEeFfGgHhIiJjKkLlMmNn", "Ім'я не може містити більше, ніж 25 символів"},
@@ -24,24 +23,55 @@ public class EditProfileComponentTest extends BaseTestRunnerWithLogIn {
                 {"Name-", "Ім'я повинно починатися та закінчуватися літерою"},
                 {"<Name >", "Ім'я повинно починатися та закінчуватися літерою"},
                 {"Name'", "Ім'я повинно починатися та закінчуватися літерою"}
-
         };
     }
 
-    @Test(dataProvider = "test-data")
+    @Test(dataProvider = "invalidFirstNameData")
     public void verifyEditProfileWithInvalidData(String data, String expectedMessage) {
-        EditProfileComponent editProfileComponent = new HomePage(driver)
-                .openAdminProfileMenu()
-                .openUserProfilePage()
-                .clickEditProfileButton();
-
+        String actualMessage;
+        boolean saveChangesBtnIsEnabled;
         SoftAssert softAssert = new SoftAssert();
 
-        String actualMessage = editProfileComponent.fillInFirstName(data).getFirstnameErrorText();
+        actualMessage = editProfileComponent.fillInFirstName(data).getFirstnameErrorText();
         softAssert.assertEquals(actualMessage, expectedMessage);
 
-        boolean saveChangesBtnIsEnabled = editProfileComponent.saveChangesButtonIsEnable();
-        softAssert.assertTrue(saveChangesBtnIsEnabled);
+        saveChangesBtnIsEnabled = editProfileComponent.saveChangesButtonIsEnable();
+        softAssert.assertFalse(saveChangesBtnIsEnabled);
+
+        softAssert.assertAll();
+    }
+
+    @DataProvider(name = "invalidPhoneData")
+    public static Object[][] invalidPhoneData() {
+        return new Object[][]{
+                {"06895", "Телефон не відповідає вказаному формату"},
+                {"065987458", "Телефон не відповідає вказаному формату"},
+                {"06593859632586", "Телефон не відповідає вказаному формату"},
+                {"06598521475", "Телефон не відповідає вказаному формату"},
+                {"jngeoлщшогнеп", "Телефон не може містити літери"},
+                {"", "Будь ласка введіть Ваш номер телефону"},
+                {"!@#$%^&*(_+.:", "Телефон не може містити спеціальні символи"},
+        };
+    }
+
+    @Test(dataProvider = "invalidPhoneData")
+    public void verifyPhoneErrorMessageWhenEditProfileTest(String phone, String expectedMessage) {
+        List<String> errorMessages;
+        boolean expectedMessageIsPresent = false;
+        boolean saveChangesBtnIsEnabled;
+        SoftAssert softAssert = new SoftAssert();
+
+        errorMessages = editProfileComponent.fillInPhone(phone).getPhoneErrorText();
+        for (String errorMessage: errorMessages) {
+            if (errorMessage.equals(expectedMessage)) {
+                expectedMessageIsPresent = true;
+                break;
+            }
+        }
+        softAssert.assertTrue(expectedMessageIsPresent, "Expected error message is not present.");
+
+        saveChangesBtnIsEnabled = editProfileComponent.saveChangesButtonIsEnable();
+        softAssert.assertFalse(saveChangesBtnIsEnabled, "SaveChanges button is enabled.");
 
         softAssert.assertAll();
     }

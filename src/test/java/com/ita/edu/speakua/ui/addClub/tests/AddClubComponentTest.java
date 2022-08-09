@@ -1,16 +1,16 @@
-package com.ita.edu.speakua.ui.addGroup.tests;
+package com.ita.edu.speakua.ui.addClub.tests;
 
 import com.ita.edu.speakua.ui.HomePage;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubDescribeComponent;
 import com.ita.edu.speakua.ui.runners.BaseTestRunnerWithLogIn;
-import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-public class AddGroupComponentTest extends BaseTestRunnerWithLogIn {
+public class AddClubComponentTest extends BaseTestRunnerWithLogIn {
 
     @Test
-    public void verifyAddClubDescribeFieldValidDataTest(){
+    public void verifyAddClubDescribeFieldValidDataTest() {
         AddClubDescribeComponent addClubDescribeComponent = new HomePage(driver)
                 .openAdminProfileMenu()
                 .openAddGroupModal()
@@ -25,7 +25,6 @@ public class AddGroupComponentTest extends BaseTestRunnerWithLogIn {
         boolean verifyBtnFinishIsEnableFortyChars = addClubDescribeComponent.finishBtnIsEnable();
 
         addClubDescribeComponent
-                .clearDescribeField()
                 .inputDescribe("Lorem Ipsum is simply dummy text of the printing and typesetting industry. " +
                         "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, " +
                         "when an unknown printer took a galley of type and scrambled it to make a type specimen book. " +
@@ -41,7 +40,6 @@ public class AddGroupComponentTest extends BaseTestRunnerWithLogIn {
         boolean verifyBtnFinishIsEnableThousandChars = addClubDescribeComponent.finishBtnIsEnable();
 
         addClubDescribeComponent
-                .clearDescribeField()
                 .inputDescribe("Lorem Ipsum is simply dummy text of the printing and typesetting industry. " +
                         "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, " +
                         "when an unknown printer took a galley of type and scrambled it to make a type specimen book. " +
@@ -61,13 +59,24 @@ public class AddGroupComponentTest extends BaseTestRunnerWithLogIn {
                         "Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin 1");
         boolean verifyBtnFinishIsEnableOneAndHalfThousandChars = addClubDescribeComponent.finishBtnIsEnable();
 
-        Assert.assertTrue(verifyBtnFinishIsEnableFortyChars);
-        Assert.assertTrue(verifyBtnFinishIsEnableThousandChars);
-        Assert.assertTrue(verifyBtnFinishIsEnableOneAndHalfThousandChars);
+        SoftAssert softAssert = new SoftAssert();
+
+        softAssert.assertTrue(verifyBtnFinishIsEnableFortyChars, "Button should be enabled");
+        softAssert.assertTrue(verifyBtnFinishIsEnableThousandChars,"Button should be enabled");
+        softAssert.assertTrue(verifyBtnFinishIsEnableOneAndHalfThousandChars,"Button should be enabled");
+        softAssert.assertAll();
     }
 
-    @Test
-    public void verifyErrorMessageAddClubDescriptionField() {
+    @DataProvider(name = "descriptionErrorWithForbiddenCharacters")
+    public Object[][] errorDescriptionField() {
+        return new Object[][]{
+                {"‘э’, ‘ъ’, ‚ü‘,‘ö‘,‘ä‘\\n 'Ы, ‘э’, ‘ъ’, ‚ü‘,‘ö‘,‘ä‘", "Некоректний опис гуртка",
+                        "Це поле може містити тільки українські та англійські літери, цифри та спеціальні символи"}
+        };
+    }
+
+    @Test(dataProvider = "descriptionErrorWithForbiddenCharacters")
+    public void verifyErrorMessageAddClubDescriptionField(String description, String firstError, String secondError) {
         AddClubDescribeComponent addClubDescribeComponent = new HomePage(driver)
 
                 .openAdminProfileMenu()
@@ -80,12 +89,17 @@ public class AddGroupComponentTest extends BaseTestRunnerWithLogIn {
                 .clickNextStep()
                 .inputPhoneNumber("0672131246")
                 .clickNextStep()
-                .inputDescribe("Verify that description field can contain only Ukrainian and English letters. Just fill in this field with German and Ru‘э’, ‘ъ’, ‚ü‘,‘ö‘,‘ä‘\n" +
-                        "russian language 'Ы, ‘э’, ‘ъ’, ‚ü‘,‘ö‘,‘ä‘");
+                .inputDescribe(description);
 
-        String errorMessageDescriptionFieldActual = addClubDescribeComponent.getErrorMessageDescriptionField();
-        String errorMessageDescriptionFieldExpected = "Це поле може містити тільки українські та англійські літери, цифри та спеціальні символи";
-        Assert.assertEquals(errorMessageDescriptionFieldActual, errorMessageDescriptionFieldExpected);
+        String firstActualErrorMessage = addClubDescribeComponent.getErrorMessageDescriptionField().get(0);
+        String secondActualErrorMessage = addClubDescribeComponent.getErrorMessageDescriptionField().get(1);
+        int amountOfErrorMessages = addClubDescribeComponent.getErrorMessageDescriptionField().size();
+
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertEquals(firstActualErrorMessage, firstError);
+        softAssert.assertEquals(secondActualErrorMessage, secondError);
+        softAssert.assertEquals(amountOfErrorMessages, 2);
+        softAssert.assertAll();
     }
 
     @Test
@@ -117,6 +131,38 @@ public class AddGroupComponentTest extends BaseTestRunnerWithLogIn {
 
         addClubDescribeComponent.inputDescribe(descriptionInput + "Hello world");
         softAssert.assertTrue(addClubDescribeComponent.errorMessageForDescriptionFieldContainsText(lengthErrorText));
+        softAssert.assertAll();
+    }
+
+    @Test
+    public void verifyDescribeComponentWithValidData() {
+        boolean btnFinishIsEnable;
+        String[] testData = new String[]{"Education, students, Школа балету, Teachers",
+                "1234567890123456789012345678901234567890",
+                "!\"#$%&'()*+,-./:;<=>?@[]^_`{}~"};
+
+        AddClubDescribeComponent addClubDescribeComponent = new HomePage(driver)
+                .openAdminProfileMenu()
+                .openUserProfilePage()
+                .openAddClubModal()
+                .inputNameOfClub("Club3")
+                .chooseCategoryClub("Основи")
+                .inputAgeFrom(4)
+                .inputAgeTo(9)
+                .clickNextStep()
+                .inputPhoneNumber("0973756135")
+                .clickNextStep();
+
+        SoftAssert softAssert = new SoftAssert();
+
+        for (String data : testData) {
+            addClubDescribeComponent
+                    .inputDescribe(data);
+
+            btnFinishIsEnable = addClubDescribeComponent.finishBtnIsEnable();
+            softAssert.assertTrue(btnFinishIsEnable);
+        }
+
         softAssert.assertAll();
     }
 }

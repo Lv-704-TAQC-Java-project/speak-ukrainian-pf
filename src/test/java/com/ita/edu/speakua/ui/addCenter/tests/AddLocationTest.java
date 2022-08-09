@@ -19,18 +19,18 @@ public class AddLocationTest extends BaseTestRunnerWithLogIn {
     }
 
     @Test(dataProvider = "cityFromDropDownAddLocationMenu")
-    public void addLocationTest(String Name, String City, String Region, String Address, String PhoneNumber) {
+    public void addLocationTest(String name, String city, String region, String address, String phoneNumber) {
 
         HeaderComponent header = new HeaderComponent(driver);
         header
                 .openAdminProfileMenu()
                 .openAddCenterModal()
                 .clickAddLocationButton()
-                .fillInLocationNameField(Name)
-                .selectCityByName(City)
-                .selectRegionByName(Region)
-                .fillInAddressField(Address)
-                .fillInPhoneNumberField(PhoneNumber);
+                .fillInLocationNameField(name)
+                .selectCityByName(city)
+                .selectRegionByName(region)
+                .fillInAddressField(address)
+                .fillInPhoneNumberField(phoneNumber);
 //         .addButtonClick();
 //
 //        boolean newLocationIsAdded = header

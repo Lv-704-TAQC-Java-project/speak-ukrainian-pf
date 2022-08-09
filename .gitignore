@@ -19,3 +19,4 @@ buildNumber.properties
 test-output
 
 /src/test/resources/config.properties
+*.iml

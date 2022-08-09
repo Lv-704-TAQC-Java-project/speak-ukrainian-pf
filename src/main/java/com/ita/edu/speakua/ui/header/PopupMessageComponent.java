@@ -8,21 +8,21 @@ import org.openqa.selenium.support.FindBy;
 
 public class PopupMessageComponent extends BaseMethods {
 
-    @FindBy(xpath = "//div[@class='ant-message']//span[contains(text(), 'успішно')]")
+    @FindBy(xpath = "//div[@class='message']//span[contains(text(), 'успішно')]")
     WebElement loginSuccessPopupMessage;
 
-    @FindBy(xpath = "//div[@class='ant-message']//span[contains(text(), 'невірний')]")
+    @FindBy(xpath = "//div[@class='message']//span[contains(text(), 'невірний')]")
     WebElement loginErrorPopupMessage;
 
     public PopupMessageComponent(WebDriver driver) {
         super(driver);
     }
 
-    public String getLoginSuccessPopupMessageText() {
+    public String getSuccessPopupMessageText() {
         return loginSuccessPopupMessage.getText();
     }
 
-    public String getLoginErrorPopupMessageText() {
+    public String getErrorPopupMessageText() {
         return loginErrorPopupMessage.getText();
     }
 
