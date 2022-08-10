@@ -11,7 +11,7 @@ public class ProfilePage extends HeaderComponent {
     @FindBy(xpath = "//div[@class='user-email-data']")
     private WebElement currentUserEmailField;
 
-    @FindBy(xpath = "//button[contains(@class, 'ant-btn-text button')]")
+    @FindBy(xpath = "//div[@class='edit-button']//button")
     private WebElement editProfileButton;
 
     @FindBy(xpath = "//span[contains(text(),'Додати')]/parent::button")
@@ -27,6 +27,7 @@ public class ProfilePage extends HeaderComponent {
     }
 
     public EditProfileComponent clickEditProfileButton() {
+        waitElementIsClickable(editProfileButton);
         editProfileButton.click();
         return new EditProfileComponent(driver);
     }
