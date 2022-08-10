@@ -8,19 +8,21 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 
-public class SortCentersTest extends BaseTestRunner {
+public class SortCentersAlphabeticalOrderTest extends BaseTestRunner {
     @Test
     public void verifySortAcsDescWorksForCenterCards() {
         new HomePage(driver)
                 .clickAdvancedSearchButton()
                 .getAdvancedSearchPanelComponent()
-                .centerRadioButtonClick();
+                .centerRadioButtonClick()
+                .getSortClubComponent()
+                .sortByABCButtonClick();
 
         ClubsPage clubsPage = new ClubsPage(driver);
 
         String[] actualCenterNamesAscOrder = clubsPage.getCards().stream().map(CardComponent::getTextCardName).toArray(String[]::new);
-        String[] expectedAscSortCenterNames = new String[]{
-                "API testing2 ",
+        String[] expectedCenterNamesAscOrder = new String[]{
+                "API testing2",
                 "BabyClub",
                 "Ccccc1",
                 "center1",
@@ -29,15 +31,15 @@ public class SortCentersTest extends BaseTestRunner {
         };
 
         SoftAssert softAssert = new SoftAssert();
-        for (int i = 0; i < expectedAscSortCenterNames.length; i++) {
-            softAssert.assertEquals(actualCenterNamesAscOrder[i], expectedAscSortCenterNames[i]);
+        for (int i = 0; i < expectedCenterNamesAscOrder.length; i++) {
+            softAssert.assertEquals(actualCenterNamesAscOrder[i], expectedCenterNamesAscOrder[i]);
         }
 
         clubsPage.getSortClubComponent().arrowUpButtonClick();
 
         String[] actualCenterNamesDescOrder = clubsPage.getCards().stream().map(CardComponent::getTextCardName).toArray(String[]::new);
-        String[] expectedDescSortCenterNames = new String[]{
-                "Школа мистецтв імені Мик…Дмитровича  Леонтовича ",
+        String[] expectedCenterNamesDescOrder = new String[]{
+                "Школа мистецтв імені Миколи Дмитровича Леонтовича",
                 "Центр творчості дітей та юнацтва",
                 "Центр розвитку",
                 "Центр позашкільної роботи Святошинського району",
@@ -45,8 +47,8 @@ public class SortCentersTest extends BaseTestRunner {
                 "Фольк-студія \"Правиця\""
         };
 
-        for (int i = 0; i < expectedDescSortCenterNames.length; i++) {
-            softAssert.assertEquals(actualCenterNamesDescOrder[i], expectedDescSortCenterNames[i]);
+        for (int i = 0; i < expectedCenterNamesDescOrder.length; i++) {
+            softAssert.assertEquals(actualCenterNamesDescOrder[i], expectedCenterNamesDescOrder[i]);
         }
 
         softAssert.assertAll();
