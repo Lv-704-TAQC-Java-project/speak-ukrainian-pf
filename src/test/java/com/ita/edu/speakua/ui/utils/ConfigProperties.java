@@ -29,8 +29,4 @@ public class ConfigProperties {
         return properties.getProperty("BASE_URL");
     }
 
-    public String getImage() {
-        return properties.getProperty("PATH_TO_IMAGE");
-    }
-
 }

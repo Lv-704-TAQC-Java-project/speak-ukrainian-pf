@@ -11,18 +11,19 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
 
     @DataProvider(name = "invalidFirstNameData")
     public static Object[][] invalidFirstNameData() {
+        String errorMessage = "Ім'я повинно починатися і закінчуватися літерою";
         return new Object[][]{
                 {"", "Будь ласка введіть Ваше ім'я"},
                 {"AfBbCcDdEeFfGgHhIiJjKkLlMmNn", "Ім'я не може містити більше, ніж 25 символів"},
                 {"AfBbCcDdEeFfGgHhIiJjKkLlMm", "Ім'я не може містити більше, ніж 25 символів"},
                 {"!@#$%^&,", "Ім'я не може містити спеціальні символи"},
                 {"1234", "Ім'я не може містити цифри"},
-                {"-Name", "Ім'я повинно починатися і закінчуватися літерою"},
-                {"< Name>", "Ім'я повинно починатися і закінчуватися літерою"},
-                {"'Name", "Ім'я повинно починатися і закінчуватися літерою"},
-                {"Name-", "Ім'я повинно починатися і закінчуватися літерою"},
-                {"<Name >", "Ім'я повинно починатися і закінчуватися літерою"},
-                {"Name'", "Ім'я повинно починатися і закінчуватися літерою"}
+                {"-Name", errorMessage},
+                {"< Name>", errorMessage},
+                {"'Name", errorMessage},
+                {"Name-", errorMessage},
+                {"<Name >", errorMessage},
+                {"Name'", errorMessage}
         };
     }
 

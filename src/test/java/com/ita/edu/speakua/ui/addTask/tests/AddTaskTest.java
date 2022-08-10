@@ -6,7 +6,13 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.nio.file.Paths;
+
 public class AddTaskTest extends AddTaskTestRunner {
+    private final String pathToImage = Paths.get(Paths.get(System.getProperty("user.dir")).toString(),
+                    "src", "test", "resources", "image.png")
+            .toString();
+
     @Test
     public void verifyCreateTaskInvalidData() {
 
@@ -14,7 +20,7 @@ public class AddTaskTest extends AddTaskTestRunner {
 
         addTaskPage = addTaskPage
                 .inputStartDate("2022-08-23")
-                .inputImage(configProps.getImage())
+                .inputImage(pathToImage)
                 .inputName("Yaroslav test")
                 .inputHeading("Lorem Ipsum is simply dummy text of the printing and typesetting industry. " +
                         "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s," +
@@ -110,7 +116,7 @@ public class AddTaskTest extends AddTaskTestRunner {
         boolean isAllFieldsAreEmptyByDefault = addTaskPage.allFieldsAreEmpty();
 
         addTaskPage.inputStartDate("2022-10-19")
-                .inputImage(configProps.getImage())
+                .inputImage(pathToImage)
                 .inputName("Test task # 5/")
                 .inputHeading(invalidData)
                 .inputDescribing(descriptionInput)
