@@ -92,6 +92,11 @@ public class BaseMethods {
         wait.until(ExpectedConditions.invisibilityOf(element));
     }
 
+    public void waitInvisibilityOfElement(WebElement element, long seconds) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(seconds));
+        wait.until(ExpectedConditions.invisibilityOf(element));
+    }
+
     public void waitStalenessOfElement(WebElement element) {
         WebDriverWait wait = new WebDriverWait(driver, TIMEOUT);
         wait.until(ExpectedConditions.stalenessOf(element));
