@@ -58,6 +58,8 @@ public class EditProfileComponent extends BaseMethods {
     private List<WebElement> firstNameErrors;
     @FindBy(xpath = "//input[@id='edit_phone']/ancestor::div[contains(@class, 'row')]//div[contains(@class, 'error')]")
     private List<WebElement> phoneErrors;
+    @FindBy(xpath = "//div[contains(@class, 'modal-body')]")
+    private WebElement editProfileModalBody;
 
     public EditProfileComponent(WebDriver driver) {
         super(driver);
@@ -153,10 +155,9 @@ public class EditProfileComponent extends BaseMethods {
 
     public boolean saveChangesButtonIsEnable() {
         saveChangesButton.click();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
         try {
-            new PopupMessageComponent(driver).getSuccessPopupMessageText();
-        } catch (NoSuchElementException e) {
+            waitInvisibilityOfElement(editProfileModalBody, 1);
+        } catch (TimeoutException e) {
             return false;
         }
         return true;

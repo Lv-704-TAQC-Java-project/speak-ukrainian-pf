@@ -1,6 +1,5 @@
 package com.ita.edu.speakua.ui.clubs;
 
-import com.ita.edu.speakua.ui.BaseMethods;
 import com.ita.edu.speakua.ui.clubs.card.components.CardComponent;
 import com.ita.edu.speakua.ui.clubs.card.components.CenterComponent;
 import com.ita.edu.speakua.ui.header.HeaderComponent;
@@ -98,6 +97,10 @@ public class ClubsPage extends HeaderComponent {
         element.click();
         driver.manage().timeouts().implicitlyWait(SHORT_TIMEOUT);
         sleep(2000);
+    }
+
+    public boolean isDisappearsAdvancedSearchPanelComponent() {
+        return advancedSearchButton == null;
     }
 
 }

@@ -57,22 +57,14 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
 
     @Test(dataProvider = "invalidPhoneData")
     public void verifyPhoneErrorMessageWhenEditProfileTest(String phone, String expectedMessage) {
-        List<String> errorMessages;
-        boolean expectedMessageIsPresent = false;
-        boolean saveChangesBtnIsEnabled;
+        List<String> errorMessages = editProfileComponent.fillInPhone(phone).getPhoneErrorText();
+        boolean expectedMessageIsPresent = errorMessages.contains(expectedMessage);
+
         SoftAssert softAssert = new SoftAssert();
+        softAssert.assertTrue(expectedMessageIsPresent, "Expected error message is present.");
 
-        errorMessages = editProfileComponent.fillInPhone(phone).getPhoneErrorText();
-        for (String errorMessage : errorMessages) {
-            if (errorMessage.equals(expectedMessage)) {
-                expectedMessageIsPresent = true;
-                break;
-            }
-        }
-        softAssert.assertTrue(expectedMessageIsPresent, "Expected error message is not present.");
-
-        saveChangesBtnIsEnabled = editProfileComponent.saveChangesButtonIsEnable();
-        softAssert.assertFalse(saveChangesBtnIsEnabled, "SaveChanges button is enabled.");
+        boolean saveChangesBtnIsEnabled = editProfileComponent.saveChangesButtonIsEnable();
+        softAssert.assertFalse(saveChangesBtnIsEnabled, "SaveChanges button is not enabled.");
 
         softAssert.assertAll();
     }
