@@ -3,6 +3,10 @@ package com.ita.edu.speakua.ui.addClub.tests;
 import com.ita.edu.speakua.ui.HomePage;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubDescribeComponent;
 import com.ita.edu.speakua.ui.runners.AddClubDescribeTestRunner;
+import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -15,17 +19,17 @@ public class AddClubComponentTest extends AddClubDescribeTestRunner {
                 .openAdminProfileMenu()
                 .openAddGroupModal()
                 .inputNameOfClub("Спортивні танці")
-                .chooseCategoryClub("Спортивні секції")
+                .selectCategoryClub("Спортивні секції")
                 .inputAgeFrom(4)
                 .inputAgeTo(8)
                 .clickNextStep()
                 .inputPhoneNumber("0672131246")
                 .clickNextStep()
-                .inputDescribe("Lorem Ipsum is simply dummy text of the ");
-        boolean verifyBtnFinishIsEnableFortyChars = addClubDescribeComponent.finishBtnIsEnable();
+                .inputDescription("Lorem Ipsum is simply dummy text of the ");
+        boolean verifyBtnFinishIsEnableFortyChars = addClubDescribeComponent.isFinishButtonEnable();
 
         addClubDescribeComponent
-                .inputDescribe("Lorem Ipsum is simply dummy text of the printing and typesetting industry. " +
+                .inputDescription("Lorem Ipsum is simply dummy text of the printing and typesetting industry. " +
                         "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, " +
                         "when an unknown printer took a galley of type and scrambled it to make a type specimen book. " +
                         "It has survived not only five centuries, but also the leap into electronic typesetting, " +
@@ -37,10 +41,10 @@ public class AddClubComponentTest extends AddClubDescribeTestRunner {
                         "as opposed to using 'Content here, content here', making it look like readable English. " +
                         "Many desktop publishing packages and web page editors now use Lorem Ipsum as their default " +
                         "model text, and a search for");
-        boolean verifyBtnFinishIsEnableThousandChars = addClubDescribeComponent.finishBtnIsEnable();
+        boolean verifyBtnFinishIsEnableThousandChars = addClubDescribeComponent.isFinishButtonEnable();
 
         addClubDescribeComponent
-                .inputDescribe("Lorem Ipsum is simply dummy text of the printing and typesetting industry. " +
+                .inputDescription("Lorem Ipsum is simply dummy text of the printing and typesetting industry. " +
                         "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, " +
                         "when an unknown printer took a galley of type and scrambled it to make a type specimen book. " +
                         "It has survived not only five centuries, but also the leap into electronic typesetting, " +
@@ -57,7 +61,7 @@ public class AddClubComponentTest extends AddClubDescribeTestRunner {
                         "sometimes by accident, sometimes on purpose (injected humour and the like) Contrary to " +
                         "popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical " +
                         "Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin 1");
-        boolean verifyBtnFinishIsEnableOneAndHalfThousandChars = addClubDescribeComponent.finishBtnIsEnable();
+        boolean verifyBtnFinishIsEnableOneAndHalfThousandChars = addClubDescribeComponent.isFinishButtonEnable();
 
         SoftAssert softAssert = new SoftAssert();
 
@@ -77,7 +81,7 @@ public class AddClubComponentTest extends AddClubDescribeTestRunner {
 
     @Test(dataProvider = "descriptionErrorWithForbiddenCharacters")
     public void verifyErrorMessageAddClubDescriptionField(String description, String firstError, String secondError) {
-        addClubDescribeComponent.inputDescribe(description);
+        addClubDescribeComponent.inputDescription(description);
 
         String firstActualErrorMessage = addClubDescribeComponent.getErrorMessageDescriptionField().get(0);
         String secondActualErrorMessage = addClubDescribeComponent.getErrorMessageDescriptionField().get(1);
@@ -102,25 +106,25 @@ public class AddClubComponentTest extends AddClubDescribeTestRunner {
                 .openUserProfilePage()
                 .openAddClubModal()
                 .inputNameOfClub("Спортивні танці")
-                .chooseCategoryClub("Спортивні секції")
+                .selectCategoryClub("Спортивні секції")
                 .inputAgeFrom(4)
                 .inputAgeTo(8)
                 .clickNextStep()
                 .inputPhoneNumber("0672131246")
                 .clickNextStep()
-                .inputDescribe(descriptionInput);
+                .inputDescription(descriptionInput);
 
         SoftAssert softAssert = new SoftAssert();
         String lengthErrorText = "Опис гуртка може містити від 40 до 1500 символів.";
         softAssert.assertFalse(addClubDescribeComponent.errorMessageForDescriptionFieldContainsText(lengthErrorText));
 
-        addClubDescribeComponent.inputDescribe(descriptionInput.substring(0, 1498));
+        addClubDescribeComponent.inputDescription(descriptionInput.substring(0, 1498));
         softAssert.assertFalse(addClubDescribeComponent.errorMessageForDescriptionFieldContainsText(lengthErrorText));
 
-        addClubDescribeComponent.inputDescribe(descriptionInput + "m");
+        addClubDescribeComponent.inputDescription(descriptionInput + "m");
         softAssert.assertTrue(addClubDescribeComponent.errorMessageForDescriptionFieldContainsText(lengthErrorText));
 
-        addClubDescribeComponent.inputDescribe(descriptionInput + "Hello world");
+        addClubDescribeComponent.inputDescription(descriptionInput + "Hello world");
         softAssert.assertTrue(addClubDescribeComponent.errorMessageForDescriptionFieldContainsText(lengthErrorText));
         softAssert.assertAll();
     }
@@ -134,14 +138,17 @@ public class AddClubComponentTest extends AddClubDescribeTestRunner {
         };
     }
 
+    @Issue("TUA-173")
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("Verify the description field is filled in with valid data and The 'Завершити' button is enable")
     @Test(dataProvider = "validDescriptionData")
-    public void verifyDescribeComponentWithValidData(String testData) {
+    public void verifyCreatingClubWithDescribeValidData(String testData) {
         boolean btnFinishIsEnable;
 
         SoftAssert softAssert = new SoftAssert();
 
-        addClubDescribeComponent.inputDescribe(testData);
-        btnFinishIsEnable = addClubDescribeComponent.finishBtnIsEnable();
+        addClubDescribeComponent.inputDescription(testData);
+        btnFinishIsEnable = addClubDescribeComponent.isFinishButtonEnable();
         softAssert.assertTrue(btnFinishIsEnable);
 
         softAssert.assertAll();

@@ -46,6 +46,7 @@ public class AdminProfileMenuComponent extends BaseMethods {
         return new AddCenterMainInfoComponent(driver);
     }
 
+    @Step("Open admin profile page")
     public ProfilePage openUserProfilePage() {
         waitElementIsClickable(userProfileBtn);
         userProfileBtn.click();
@@ -57,6 +58,7 @@ public class AdminProfileMenuComponent extends BaseMethods {
         return new HomePage(driver);
     }
 
+    @Step("Open administration modal")
     public AdministrationComponent openAdministrationModal() {
         waitVisibilityOfWebElement(administrationBtn);
         administrationBtn.click();

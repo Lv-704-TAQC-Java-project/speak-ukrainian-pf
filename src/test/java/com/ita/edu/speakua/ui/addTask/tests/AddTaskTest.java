@@ -1,6 +1,10 @@
 package com.ita.edu.speakua.ui.addTask.tests;
 
 import com.ita.edu.speakua.ui.runners.AddTaskTestRunner;
+import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -25,20 +29,20 @@ public class AddTaskTest extends AddTaskTestRunner {
                         "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s," +
                         " when an unknown printer took a galley of type and scrambled " +
                         "it to make a type specimen book.")
-                .chooseChallenge("Example name");
-//                .tryClickSaveButton();
+                .selectChallenge("Example name");
+//                .blockedClickSaveButton();
 
 //        boolean errorMessageDescribeIsEmpty = addTaskPage.errorMessageIsEmptyIsVisible();
 
         addTaskPage = addTaskPage
-                .inputDescribing("ъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ð")
-                .tryClickSaveButton();
+                .inputDescription("ъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ð")
+                .blockedClickSaveButton();
 
         boolean errorMessageDescribeInvalidCharacters = addTaskPage.errorMessageInvalidCharactersIsVisible();
 
         addTaskPage = addTaskPage
                 .inputHeading("Lorem Ipsum is simply ")
-                .tryClickSaveButton();
+                .blockedClickSaveButton();
 
         boolean errorMessageHeadingNotEnoughChars = addTaskPage.errorMessageLessThenFortyCharactersIsVisible();
 
@@ -78,7 +82,7 @@ public class AddTaskTest extends AddTaskTestRunner {
                         "reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum " +
                         "et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by " +
                         "English versions from the 1914 translation")
-                .tryClickSaveButton();
+                .blockedClickSaveButton();
 
         boolean errorMessageHeadingTooManyChars = addTaskPage.errorMessageMoreThenThreeThousandCharactersIsVisible();
 
@@ -107,8 +111,11 @@ public class AddTaskTest extends AddTaskTestRunner {
         };
     }
 
+    @Issue("TUA-524")
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("Verify impossibility of creating task with heading invalid data")
     @Test(dataProvider = "invalidHeaderData")
-    public void verifyImpossibilityOfCreatingTaskWithInvalidData(String invalidData, String expectedMessage) {
+    public void verifyCreatingTaskWithHeadingInvalidData(String invalidData, String expectedMessage) {
         String descriptionInput = new String(new char[10]).replace("\0", "Lorem 56№*");
         String actualErrorMessage;
 
@@ -118,9 +125,9 @@ public class AddTaskTest extends AddTaskTestRunner {
                 .inputImage(pathToImage)
                 .inputName("Test task # 5/")
                 .inputHeading(invalidData)
-                .inputDescribing(descriptionInput)
-                .chooseChallenge("Example name")
-                .tryClickSaveButton();
+                .inputDescription(descriptionInput)
+                .selectChallenge("Example name")
+                .blockedClickSaveButton();
 
         SoftAssert softAssert = new SoftAssert();
 
@@ -144,9 +151,9 @@ public class AddTaskTest extends AddTaskTestRunner {
                         "It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum " +
                         "passages, and more recently with desktop publishing software like Aldus PageMaker including " +
                         "versions of Lorem Ipsum")
-                .inputDescribing("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has " +
+                .inputDescription("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has " +
                         "been the industry's standard dummy text ever since the 1500s, when an unknown printer took a ")
-                .tryClickSaveButton();
+                .blockedClickSaveButton();
 
 
         Assert.assertTrue(addTaskPage.errorMessageIsEmptyIsVisible(), "Error message didn't find");

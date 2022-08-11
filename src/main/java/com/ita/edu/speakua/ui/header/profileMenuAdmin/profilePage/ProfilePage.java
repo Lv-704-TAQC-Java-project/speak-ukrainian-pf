@@ -2,6 +2,7 @@ package com.ita.edu.speakua.ui.header.profileMenuAdmin.profilePage;
 
 import com.ita.edu.speakua.ui.header.HeaderComponent;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubMainInfoComponent;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -26,12 +27,14 @@ public class ProfilePage extends HeaderComponent {
         super(driver);
     }
 
+    @Step("Click on 'edit profile' button")
     public EditProfileComponent clickEditProfileButton() {
         waitElementIsClickable(editProfileButton);
         editProfileButton.click();
         return new EditProfileComponent(driver);
     }
 
+    @Step("Open 'add club' modal")
     public AddClubMainInfoComponent openAddClubModal() {
         waitVisibilityOfWebElement(addButton);
         addButton.click();

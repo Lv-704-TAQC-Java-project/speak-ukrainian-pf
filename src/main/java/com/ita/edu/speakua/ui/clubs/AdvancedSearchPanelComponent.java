@@ -1,5 +1,6 @@
 package com.ita.edu.speakua.ui.clubs;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -110,6 +111,7 @@ public class AdvancedSearchPanelComponent extends ClubsPage {
         return this;
     }
 
+    @Step("Check is availableOnlineCheckbox displayed")
     public boolean availableOnlineCheckboxIsDisplayed() {
         try {
             return availableOnline.isDisplayed();
@@ -118,6 +120,7 @@ public class AdvancedSearchPanelComponent extends ClubsPage {
         }
     }
 
+    @Step("Check is categoriesBlock displayed")
     public boolean categoriesBlockIsDisplayed() {
         try {
             return categoriesBlock.isDisplayed();
@@ -126,6 +129,7 @@ public class AdvancedSearchPanelComponent extends ClubsPage {
         }
     }
 
+    @Step("Check is childAgeBlock displayed")
     public boolean childAgeBlockIsDisplayed() {
         try {
             return childAgeBlock.isDisplayed();
@@ -234,6 +238,7 @@ public class AdvancedSearchPanelComponent extends ClubsPage {
         return this;
     }
 
+    @Step("Click on 'center' radioButton")
     public AdvancedSearchPanelComponent centerRadioButtonClick() {
         waitVisibilityOfWebElement(centerRadioButton);
         clickManagingCenterPageElement(centerRadioButton);

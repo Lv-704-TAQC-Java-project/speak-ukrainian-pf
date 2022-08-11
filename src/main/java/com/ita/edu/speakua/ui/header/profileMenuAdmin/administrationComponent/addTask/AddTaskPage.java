@@ -1,6 +1,7 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.addTask;
 
 import com.ita.edu.speakua.ui.header.HeaderComponent;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -60,27 +61,32 @@ public class AddTaskPage extends HeaderComponent {
         super(driver);
     }
 
+    @Step("Set startDate {date}")
     public AddTaskPage inputStartDate(String date) {
         setNewValueForInput(startDate, date);
         return this;
     }
 
+    @Step("Set image {imagePath}")
     public AddTaskPage inputImage(String imagePath) {
         uploadImage.sendKeys(imagePath);
         return this;
     }
 
+    @Step("Set name {name}")
     public AddTaskPage inputName(String name) {
         setNewValueForInput(inputName, name);
         return this;
     }
 
+    @Step("Set heading {value}")
     public AddTaskPage inputHeading(String value) {
         setNewValueForInput(inputHeading, value);
         return this;
     }
 
-    public AddTaskPage inputDescribing(String value) {
+    @Step("Set description {value}")
+    public AddTaskPage inputDescription(String value) {
         setNewValueForInput(inputDescribing, value);
         return this;
     }
@@ -95,12 +101,14 @@ public class AddTaskPage extends HeaderComponent {
         return challengeList.findElement(By.xpath(String.format(".//div[contains(text(),'%s')]", name)));
     }
 
-    public AddTaskPage chooseChallenge(String name) {
+    @Step("Select challenge")
+    public AddTaskPage selectChallenge(String name) {
         openChallengeList()
                 .getChallengeItem(name).click();
         return this;
     }
 
+    @Step("Check are allFields empty")
     public boolean allFieldsAreEmpty() {
         waitVisibilityOfWebElement(startDate);
         return startDateIsEmpty() &&
@@ -135,6 +143,7 @@ public class AddTaskPage extends HeaderComponent {
         return challengeInput.getText().equals("Оберіть челендж");
     }
 
+    @Step("Get error message")
     public String getErrorMessageText() {
         waitVisibilityOfWebElement(errorMessage);
         return errorMessage.getText();
@@ -168,12 +177,14 @@ public class AddTaskPage extends HeaderComponent {
         }
     }
 
+    @Step("Click on 'save' button")
     public TaskPage clickSaveButton() {
         saveButton.click();
         return new TaskPage(driver);
     }
 
-    public AddTaskPage tryClickSaveButton() {
+    @Step("Click on 'save' button")
+    public AddTaskPage blockedClickSaveButton() {
         saveButton.click();
         return this;
     }
