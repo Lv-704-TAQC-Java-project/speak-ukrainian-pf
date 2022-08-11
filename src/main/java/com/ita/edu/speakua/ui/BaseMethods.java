@@ -14,6 +14,7 @@ public class BaseMethods {
     protected final Duration TIMEOUT = Duration.ofSeconds(12);
     protected final Duration SHORT_TIMEOUT = Duration.ofSeconds(3);
     protected WebDriver driver;
+    private Actions actions;
 
     public BaseMethods(WebDriver driver) {
         this.driver = driver;
@@ -123,8 +124,13 @@ public class BaseMethods {
     }
 
     public void actionsClickOnElement(WebElement element) {
-        Actions actions = new Actions(driver);
+        actions = new Actions(driver);
         actions.moveToElement(element).click().perform();
+    }
+
+    public void actionsMoveTo(WebElement element) {
+        actions = new Actions(driver);
+        actions.moveToElement(element).perform();
     }
 
     public void waitStalenessOfPreviousErrors(List<WebElement> errors) {

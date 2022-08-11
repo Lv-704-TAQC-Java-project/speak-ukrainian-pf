@@ -77,28 +77,19 @@ public class AddClubComponentTest extends AddClubDescribeTestRunner {
 
     @Test(dataProvider = "descriptionErrorWithForbiddenCharacters")
     public void verifyErrorMessageAddClubDescriptionField(String description, String firstError, String secondError) {
-        AddClubDescribeComponent addClubDescribeComponent = new HomePage(driver)
-
-                .openAdminProfileMenu()
-                .openUserProfilePage()
-                .openAddClubModal()
-                .inputNameOfClub("Спортивні танці")
-                .chooseCategoryClub("Спортивні секції")
-                .inputAgeFrom(4)
-                .inputAgeTo(8)
-                .clickNextStep()
-                .inputPhoneNumber("0672131246")
-                .clickNextStep()
-                .inputDescribe(description);
+        addClubDescribeComponent.inputDescribe(description);
 
         String firstActualErrorMessage = addClubDescribeComponent.getErrorMessageDescriptionField().get(0);
         String secondActualErrorMessage = addClubDescribeComponent.getErrorMessageDescriptionField().get(1);
         int amountOfErrorMessages = addClubDescribeComponent.getErrorMessageDescriptionField().size();
 
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(firstActualErrorMessage, firstError);
-        softAssert.assertEquals(secondActualErrorMessage, secondError);
-        softAssert.assertEquals(amountOfErrorMessages, 2);
+        softAssert.assertEquals(firstActualErrorMessage, firstError,
+                "first error message does not correspond expected");
+        softAssert.assertEquals(secondActualErrorMessage, secondError,
+                "second error message does not correspond expected");
+        softAssert.assertEquals(amountOfErrorMessages, 2,
+                "There are more than 2 error messages");
         softAssert.assertAll();
     }
 

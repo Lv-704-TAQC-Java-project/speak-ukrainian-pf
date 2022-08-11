@@ -40,8 +40,8 @@ public class AddCenterMainInfoComponent extends AbstractAddCenterComponent{
     }
 
     public boolean isLocationAdded(String name) {
-        waitVisibilityOfWebElement(getLocationItem(name));
         try {
+            actionsMoveTo(getLocationItem(name));
             return getLocationItem(name).isDisplayed();
         } catch (NoSuchElementException e) {
             return false;

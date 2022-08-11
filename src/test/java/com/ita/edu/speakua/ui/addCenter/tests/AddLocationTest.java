@@ -38,6 +38,7 @@ public class AddLocationTest extends LoginTestRunner {
         Assert.assertTrue(header
                 .getAdminProfileMenuComponent()
                 .getAddCenterMainInfoComponent()
-                .isLocationAdded(name));
+                .isLocationAdded(name),
+                "New Location is not added");
     }
 }
