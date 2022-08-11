@@ -10,8 +10,7 @@ import java.nio.file.Paths;
 
 public class AddTaskTest extends AddTaskTestRunner {
     private final String pathToImage = Paths.get(Paths.get(System.getProperty("user.dir")).toString(),
-                    "src", "test", "resources", "image.png")
-            .toString();
+            "src", "test", "resources", "image.png").toString();
 
     @Test
     public void verifyCreateTaskInvalidData() {
@@ -133,9 +132,8 @@ public class AddTaskTest extends AddTaskTestRunner {
     }
 
 
-
     @Test
-    public void verifyCreateTaskWithoutChallenge(){
+    public void verifyCreateTaskWithoutChallenge() {
         addTaskPage = addTaskPage
                 .inputStartDate("2023-01-01")
                 .inputName("Lorem Ipsum")
