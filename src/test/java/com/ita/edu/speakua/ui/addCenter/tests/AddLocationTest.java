@@ -1,7 +1,7 @@
 package com.ita.edu.speakua.ui.addCenter.tests;
 
 import com.ita.edu.speakua.ui.header.HeaderComponent;
-import com.ita.edu.speakua.ui.runners.BaseTestRunnerWithLogIn;
+import com.ita.edu.speakua.ui.runners.LoginTestRunner;
 
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class AddLocationTest extends BaseTestRunnerWithLogIn {
+public class AddLocationTest extends LoginTestRunner {
 
     @DataProvider(name = "cityFromDropDownAddLocationMenu")
     public Object[][] cityFromDropDownAddLocationMenu() {

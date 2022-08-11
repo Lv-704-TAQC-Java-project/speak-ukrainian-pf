@@ -2,12 +2,12 @@ package com.ita.edu.speakua.ui.addClub.tests;
 
 import com.ita.edu.speakua.ui.HomePage;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubDescribeComponent;
-import com.ita.edu.speakua.ui.runners.BaseTestRunnerWithLogIn;
+import com.ita.edu.speakua.ui.runners.AddClubDescribeTestRunner;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-public class AddClubComponentTest extends BaseTestRunnerWithLogIn {
+public class AddClubComponentTest extends AddClubDescribeTestRunner {
 
     @Test
     public void verifyAddClubDescribeFieldValidDataTest() {
@@ -146,17 +146,6 @@ public class AddClubComponentTest extends BaseTestRunnerWithLogIn {
     @Test(dataProvider = "validDescriptionData")
     public void verifyDescribeComponentWithValidData(String testData) {
         boolean btnFinishIsEnable;
-        AddClubDescribeComponent addClubDescribeComponent = new HomePage(driver)
-                .openAdminProfileMenu()
-                .openUserProfilePage()
-                .openAddClubModal()
-                .inputNameOfClub("Club3")
-                .chooseCategoryClub("Основи")
-                .inputAgeFrom(4)
-                .inputAgeTo(9)
-                .clickNextStep()
-                .inputPhoneNumber("0973756135")
-                .clickNextStep();
 
         SoftAssert softAssert = new SoftAssert();
 
