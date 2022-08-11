@@ -3,6 +3,7 @@ package com.ita.edu.speakua.ui.header;
 import com.ita.edu.speakua.ui.BaseMethods;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.AdminProfileMenuComponent;
 import com.ita.edu.speakua.ui.header.profileMenuGuest.GuestProfileMenuComponent;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -47,6 +48,7 @@ public class HeaderComponent extends BaseMethods {
         return new AdminProfileMenuComponent(driver);
     }
 
+    @Step(" open Profile Menu")
     public GuestProfileMenuComponent openGuestProfileMenu() {
         profileMenuButton.click();
         return getGuestProfileMenuComponent();

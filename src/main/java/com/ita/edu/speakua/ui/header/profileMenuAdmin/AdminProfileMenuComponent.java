@@ -45,6 +45,7 @@ public class AdminProfileMenuComponent extends BaseMethods {
     }
 
     public ProfilePage openUserProfilePage() {
+        waitElementIsClickable(userProfileBtn);
         userProfileBtn.click();
         return new ProfilePage(driver);
     }

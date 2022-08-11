@@ -1,6 +1,7 @@
 package com.ita.edu.speakua.ui;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -14,12 +15,10 @@ public class BaseMethods {
     protected final Duration SHORT_TIMEOUT = Duration.ofSeconds(3);
     protected WebDriver driver;
 
-
     public BaseMethods(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
-
 
     public void openUrl(String url) {
         driver.get(url);
@@ -93,6 +92,11 @@ public class BaseMethods {
         wait.until(ExpectedConditions.invisibilityOf(element));
     }
 
+    public void waitInvisibilityOfElement(WebElement element, long seconds) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(seconds));
+        wait.until(ExpectedConditions.invisibilityOf(element));
+    }
+
     public void waitStalenessOfElement(WebElement element) {
         WebDriverWait wait = new WebDriverWait(driver, TIMEOUT);
         wait.until(ExpectedConditions.stalenessOf(element));
@@ -109,9 +113,7 @@ public class BaseMethods {
     }
 
     public WebElement clearInput(WebElement element) {
-        waitVisibilityOfWebElement(element);
         element.sendKeys(Keys.chord(Keys.CONTROL, "a"),
-                Keys.chord(Keys.COMMAND, "a"),
                 Keys.BACK_SPACE);
         return element;
     }
@@ -120,7 +122,12 @@ public class BaseMethods {
         clearInput(element).sendKeys(value);
     }
 
-    public void waitForErrorsRefresh(List<WebElement> errors) {
+    public void actionsClickOnElement(WebElement element) {
+        Actions actions = new Actions(driver);
+        actions.moveToElement(element).click().perform();
+    }
+
+    public void waitStalenessOfPreviousErrors(List<WebElement> errors) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(1));
         if (errors.size() != 0) {
             for (WebElement error : errors) {

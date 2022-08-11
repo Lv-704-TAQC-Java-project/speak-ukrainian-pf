@@ -1,9 +1,6 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.addCenterComponent;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 
 public class AddCenterMainInfoComponent extends AbstractAddCenterComponent{
@@ -40,6 +37,15 @@ public class AddCenterMainInfoComponent extends AbstractAddCenterComponent{
 
     public WebElement getLocationItem(String name){
         return locationsList.findElement(By.xpath(String.format(".//span[contains(text(),'%s')]",name)));
+    }
+
+    public boolean isLocationAdded(String name) {
+        waitVisibilityOfWebElement(getLocationItem(name));
+        try {
+            return getLocationItem(name).isDisplayed();
+        } catch (NoSuchElementException e) {
+            return false;
+        }
     }
 
     public AddCenterMainInfoComponent chooseLocation(String name){

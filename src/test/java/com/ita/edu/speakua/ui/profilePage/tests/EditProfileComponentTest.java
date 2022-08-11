@@ -13,21 +13,25 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
 
     @DataProvider(name = "invalidFirstNameData")
     public static Object[][] invalidFirstNameData() {
+        String errorMessage = "Ім'я повинно починатися і закінчуватися літерою";
         return new Object[][]{
-                {"", "Введіть ім'я"},
+                {"", "Будь ласка введіть Ваше ім'я"},
                 {"AfBbCcDdEeFfGgHhIiJjKkLlMmNn", "Ім'я не може містити більше, ніж 25 символів"},
                 {"AfBbCcDdEeFfGgHhIiJjKkLlMm", "Ім'я не може містити більше, ніж 25 символів"},
                 {"!@#$%^&,", "Ім'я не може містити спеціальні символи"},
                 {"1234", "Ім'я не може містити цифри"},
-                {"-Name", "Ім'я повинно починатися та закінчуватися літерою"},
-                {"< Name>", "Ім'я повинно починатися та закінчуватися літерою"},
-                {"'Name", "Ім'я повинно починатися та закінчуватися літерою"},
-                {"Name-", "Ім'я повинно починатися та закінчуватися літерою"},
-                {"<Name >", "Ім'я повинно починатися та закінчуватися літерою"},
-                {"Name'", "Ім'я повинно починатися та закінчуватися літерою"}
+                {"-Name", errorMessage},
+                {"< Name>", errorMessage},
+                {"'Name", errorMessage},
+                {"Name-", errorMessage},
+                {"<Name >", errorMessage},
+                {"Name'", errorMessage}
         };
     }
 
+    @Issue("TUA-177")
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("My verify EditProfile")
     @Test(dataProvider = "invalidFirstNameData")
     public void verifyEditProfileWithInvalidData(String data, String expectedMessage) {
         String actualMessage;
@@ -35,11 +39,10 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
         SoftAssert softAssert = new SoftAssert();
 
         actualMessage = editProfileComponent.fillInFirstName(data).getFirstnameErrorText();
-        softAssert.assertEquals(actualMessage, expectedMessage);
+        softAssert.assertEquals(actualMessage, expectedMessage, "Expected error message did not appear");
 
         saveChangesBtnIsEnabled = editProfileComponent.saveChangesButtonIsEnable();
-        softAssert.assertFalse(saveChangesBtnIsEnabled);
-
+        softAssert.assertFalse(saveChangesBtnIsEnabled, "SaveChanges button is enabled");
         softAssert.assertAll();
     }
 
@@ -58,22 +61,14 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
 
     @Test(dataProvider = "invalidPhoneData")
     public void verifyPhoneErrorMessageWhenEditProfileTest(String phone, String expectedMessage) {
-        List<String> errorMessages;
-        boolean expectedMessageIsPresent = false;
-        boolean saveChangesBtnIsEnabled;
+        List<String> errorMessages = editProfileComponent.fillInPhone(phone).getPhoneErrorText();
+        boolean expectedMessageIsPresent = errorMessages.contains(expectedMessage);
+
         SoftAssert softAssert = new SoftAssert();
+        softAssert.assertTrue(expectedMessageIsPresent, "Expected error message is present.");
 
-        errorMessages = editProfileComponent.fillInPhone(phone).getPhoneErrorText();
-        for (String errorMessage: errorMessages) {
-            if (errorMessage.equals(expectedMessage)) {
-                expectedMessageIsPresent = true;
-                break;
-            }
-        }
-        softAssert.assertTrue(expectedMessageIsPresent, "Expected error message is not present.");
-
-        saveChangesBtnIsEnabled = editProfileComponent.saveChangesButtonIsEnable();
-        softAssert.assertFalse(saveChangesBtnIsEnabled, "SaveChanges button is enabled.");
+        boolean saveChangesBtnIsEnabled = editProfileComponent.saveChangesButtonIsEnable();
+        softAssert.assertFalse(saveChangesBtnIsEnabled, "SaveChanges button is not enabled.");
 
         softAssert.assertAll();
     }

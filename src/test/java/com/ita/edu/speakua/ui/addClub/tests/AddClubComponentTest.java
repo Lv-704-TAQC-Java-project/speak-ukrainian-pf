@@ -2,12 +2,12 @@ package com.ita.edu.speakua.ui.addClub.tests;
 
 import com.ita.edu.speakua.ui.HomePage;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubDescribeComponent;
-import com.ita.edu.speakua.ui.runners.BaseTestRunnerWithLogIn;
+import com.ita.edu.speakua.ui.runners.AddClubDescribeTestRunner;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-public class AddClubComponentTest extends BaseTestRunnerWithLogIn {
+public class AddClubComponentTest extends AddClubDescribeTestRunner {
 
     @Test
     public void verifyAddClubDescribeFieldValidDataTest() {
@@ -62,8 +62,8 @@ public class AddClubComponentTest extends BaseTestRunnerWithLogIn {
         SoftAssert softAssert = new SoftAssert();
 
         softAssert.assertTrue(verifyBtnFinishIsEnableFortyChars, "Button should be enabled");
-        softAssert.assertTrue(verifyBtnFinishIsEnableThousandChars,"Button should be enabled");
-        softAssert.assertTrue(verifyBtnFinishIsEnableOneAndHalfThousandChars,"Button should be enabled");
+        softAssert.assertTrue(verifyBtnFinishIsEnableThousandChars, "Button should be enabled");
+        softAssert.assertTrue(verifyBtnFinishIsEnableOneAndHalfThousandChars, "Button should be enabled");
         softAssert.assertAll();
     }
 
@@ -71,7 +71,7 @@ public class AddClubComponentTest extends BaseTestRunnerWithLogIn {
     public Object[][] errorDescriptionField() {
         return new Object[][]{
                 {"‘э’, ‘ъ’, ‚ü‘,‘ö‘,‘ä‘\\n 'Ы, ‘э’, ‘ъ’, ‚ü‘,‘ö‘,‘ä‘", "Некоректний опис гуртка",
-                        "Це поле може містити тільки українські та англійські літери, цифри та спеціальні символи"}
+                        "Опис гуртка не може містити російські літери"}
         };
     }
 
@@ -134,69 +134,25 @@ public class AddClubComponentTest extends BaseTestRunnerWithLogIn {
         softAssert.assertAll();
     }
 
-    @Test
-    public void verifyDescribeComponentWithValidData() {
-        boolean btnFinishIsEnable;
-        String[] testData = new String[]{"Education, students, Школа балету, Teachers",
-                "1234567890123456789012345678901234567890",
-                "!\"#$%&'()*+,-./:;<=>?@[]^_`{}~"};
-
-        AddClubDescribeComponent addClubDescribeComponent = new HomePage(driver)
-                .openAdminProfileMenu()
-                .openUserProfilePage()
-                .openAddClubModal()
-                .inputNameOfClub("Club3")
-                .chooseCategoryClub("Основи")
-                .inputAgeFrom(4)
-                .inputAgeTo(9)
-                .clickNextStep()
-                .inputPhoneNumber("0973756135")
-                .clickNextStep();
-
-        SoftAssert softAssert = new SoftAssert();
-
-        for (String data : testData) {
-            addClubDescribeComponent
-                    .inputDescribe(data);
-
-            btnFinishIsEnable = addClubDescribeComponent.finishBtnIsEnable();
-            softAssert.assertTrue(btnFinishIsEnable);
-        }
-        softAssert.assertAll();
+    @DataProvider(name = "validDescriptionData")
+    public static Object[][] validDescriptionData() {
+        return new Object[][]{
+                {"Education, students, Школа балету, Teachers"},
+                {"1234567890123456789012345678901234567890"},
+                {"!\"#$%&'()*+,-./:;<=>?@[]^_`{}~"}
+        };
     }
-    @Test
-    public void verifyInvalidLengthErrorMessageForDescriptionFieldWhenAddClub() {
-        String descriptionInput = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. " +
-                "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, " +
-                "when an unknown printer took a galley of type and scrambled it to make a type specimen book. " +
-                "It has survived not only five centuries, but also the leap into electronic typesetting, " +
-                "remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset " +
-                "sheets containing Lorem Ipsum passages, and more recently with desktop publishing software ";
 
-        AddClubDescribeComponent addClubDescribeComponent = new HomePage(driver)
-                .openAdminProfileMenu()
-                .openUserProfilePage()
-                .openAddClubModal()
-                .inputNameOfClub("Спортивні танці")
-                .chooseCategoryClub("Спортивні секції")
-                .inputAgeFrom(4)
-                .inputAgeTo(8)
-                .clickNextStep()
-                .inputPhoneNumber("0672131246")
-                .clickNextStep()
-                .inputDescribe(descriptionInput);
+    @Test(dataProvider = "validDescriptionData")
+    public void verifyDescribeComponentWithValidData(String testData) {
+        boolean btnFinishIsEnable;
 
         SoftAssert softAssert = new SoftAssert();
-        String lengthErrorText = "Опис гуртка закороткий.";
 
-        addClubDescribeComponent.inputDescribe(descriptionInput.substring(0, 20));
-        softAssert.assertTrue(addClubDescribeComponent.errorMessageForDescriptionFieldContainsText(lengthErrorText));
+        addClubDescribeComponent.inputDescribe(testData);
+        btnFinishIsEnable = addClubDescribeComponent.finishBtnIsEnable();
+        softAssert.assertTrue(btnFinishIsEnable);
 
-        addClubDescribeComponent.inputDescribe(descriptionInput.substring(0, 1));
-        softAssert.assertTrue(addClubDescribeComponent.errorMessageForDescriptionFieldContainsText(lengthErrorText));
-
-        addClubDescribeComponent.inputDescribe(descriptionInput.substring(0, 39));
-        softAssert.assertTrue(addClubDescribeComponent.errorMessageForDescriptionFieldContainsText(lengthErrorText));
         softAssert.assertAll();
     }
 }
