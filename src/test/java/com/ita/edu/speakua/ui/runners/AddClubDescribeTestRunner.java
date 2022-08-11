@@ -9,7 +9,7 @@ public class AddClubDescribeTestRunner extends LoginTestRunner {
     protected AddClubDescribeComponent addClubDescribeComponent;
 
     @BeforeClass
-    public void openAddClubDescribeComponent(){
+    public void openAddClubDescribeComponent() {
         addClubDescribeComponent = new HomePage(driver)
                 .openAdminProfileMenu()
                 .openUserProfilePage()
