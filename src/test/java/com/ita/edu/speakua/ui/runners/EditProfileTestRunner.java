@@ -13,6 +13,6 @@ public class EditProfileTestRunner extends LoginTestRunner {
         editProfileComponent = new HomePage(driver)
                 .openAdminProfileMenu()
                 .openUserProfilePage()
-                .clickEditProfileButton();
+                .openEditProfilePage();
     }
 }

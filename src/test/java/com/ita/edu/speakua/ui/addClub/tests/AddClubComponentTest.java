@@ -13,16 +13,16 @@ public class AddClubComponentTest extends AddClubDescribeTestRunner {
     public void verifyAddClubDescribeFieldValidDataTest() {
         AddClubDescribeComponent addClubDescribeComponent = new HomePage(driver)
                 .openAdminProfileMenu()
-                .openAddGroupModal()
+                .openAddClubModal()
                 .inputNameOfClub("Спортивні танці")
-                .chooseCategoryClub("Спортивні секції")
+                .chooseClubCategory("Спортивні секції")
                 .inputAgeFrom(4)
                 .inputAgeTo(8)
-                .clickNextStep()
+                .openNextStep()
                 .inputPhoneNumber("0672131246")
-                .clickNextStep()
+                .openNextStep()
                 .inputDescribe("Lorem Ipsum is simply dummy text of the ");
-        boolean verifyBtnFinishIsEnableFortyChars = addClubDescribeComponent.finishBtnIsEnable();
+        boolean verifyBtnFinishIsEnableFortyChars = addClubDescribeComponent.isButtonEnable();
 
         addClubDescribeComponent
                 .inputDescribe("Lorem Ipsum is simply dummy text of the printing and typesetting industry. " +
@@ -37,7 +37,7 @@ public class AddClubComponentTest extends AddClubDescribeTestRunner {
                         "as opposed to using 'Content here, content here', making it look like readable English. " +
                         "Many desktop publishing packages and web page editors now use Lorem Ipsum as their default " +
                         "model text, and a search for");
-        boolean verifyBtnFinishIsEnableThousandChars = addClubDescribeComponent.finishBtnIsEnable();
+        boolean verifyBtnFinishIsEnableThousandChars = addClubDescribeComponent.isButtonEnable();
 
         addClubDescribeComponent
                 .inputDescribe("Lorem Ipsum is simply dummy text of the printing and typesetting industry. " +
@@ -57,7 +57,7 @@ public class AddClubComponentTest extends AddClubDescribeTestRunner {
                         "sometimes by accident, sometimes on purpose (injected humour and the like) Contrary to " +
                         "popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical " +
                         "Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin 1");
-        boolean verifyBtnFinishIsEnableOneAndHalfThousandChars = addClubDescribeComponent.finishBtnIsEnable();
+        boolean verifyBtnFinishIsEnableOneAndHalfThousandChars = addClubDescribeComponent.isButtonEnable();
 
         SoftAssert softAssert = new SoftAssert();
 
@@ -83,12 +83,12 @@ public class AddClubComponentTest extends AddClubDescribeTestRunner {
                 .openUserProfilePage()
                 .openAddClubModal()
                 .inputNameOfClub("Спортивні танці")
-                .chooseCategoryClub("Спортивні секції")
+                .chooseClubCategory("Спортивні секції")
                 .inputAgeFrom(4)
                 .inputAgeTo(8)
-                .clickNextStep()
+                .openNextStep()
                 .inputPhoneNumber("0672131246")
-                .clickNextStep()
+                .openNextStep()
                 .inputDescribe(description);
 
         String firstActualErrorMessage = addClubDescribeComponent.getErrorMessageDescriptionField().get(0);
@@ -111,12 +111,12 @@ public class AddClubComponentTest extends AddClubDescribeTestRunner {
                 .openUserProfilePage()
                 .openAddClubModal()
                 .inputNameOfClub("Спортивні танці")
-                .chooseCategoryClub("Спортивні секції")
+                .chooseClubCategory("Спортивні секції")
                 .inputAgeFrom(4)
                 .inputAgeTo(8)
-                .clickNextStep()
+                .openNextStep()
                 .inputPhoneNumber("0672131246")
-                .clickNextStep()
+                .openNextStep()
                 .inputDescribe(descriptionInput);
 
         SoftAssert softAssert = new SoftAssert();
@@ -150,7 +150,7 @@ public class AddClubComponentTest extends AddClubDescribeTestRunner {
         SoftAssert softAssert = new SoftAssert();
 
         addClubDescribeComponent.inputDescribe(testData);
-        btnFinishIsEnable = addClubDescribeComponent.finishBtnIsEnable();
+        btnFinishIsEnable = addClubDescribeComponent.isButtonEnable();
         softAssert.assertTrue(btnFinishIsEnable);
 
         softAssert.assertAll();

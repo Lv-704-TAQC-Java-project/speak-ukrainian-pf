@@ -1,6 +1,7 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent;
 
 import com.ita.edu.speakua.ui.HomePage;
+import io.qameta.allure.Step;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,13 +14,13 @@ import java.util.List;
 public class AddClubDescribeComponent extends AbstractAddClubComponent {
 
     @FindBy(xpath = "//textarea[@id='basic_description']")
-    WebElement describeArea;
+    private WebElement describeArea;
 
     @FindBy(xpath = "//span[contains(text(),'Назад')]/ancestor::button")
-    WebElement previousStep;
+    private WebElement previousStepButton;
 
     @FindBy(xpath = "//span[contains(text(),'Завершити')]/ancestor::button")
-    WebElement finishBtn;
+    private WebElement finishButton;
 
     @FindBy(xpath = "//div[contains(@class, 'explain-error')]")
     private List<WebElement> errorMessagesForDescriptionField;
@@ -28,6 +29,7 @@ public class AddClubDescribeComponent extends AbstractAddClubComponent {
         super(driver);
     }
 
+    @Step("Add a description of club")
     public AddClubDescribeComponent inputDescribe(String text) {
         describeArea.click();
         describeArea.clear();
@@ -35,13 +37,15 @@ public class AddClubDescribeComponent extends AbstractAddClubComponent {
         return new AddClubDescribeComponent(driver);
     }
 
-    public AddClubContactComponent clickPreviousStep() {
-        previousStep.click();
+    @Step("Go back to previous modal 'Contact'")
+    public AddClubContactComponent openPreviousStep() {
+        previousStepButton.click();
         return new AddClubContactComponent(driver);
     }
 
-    public HomePage clickFinishStep() {
-        finishBtn.click();
+    @Step("Add club")
+    public HomePage addClub() {
+        finishButton.click();
         return new HomePage(driver);
     }
 
@@ -54,19 +58,14 @@ public class AddClubDescribeComponent extends AbstractAddClubComponent {
         return errorMessages;
     }
 
-    public boolean finishBtnIsEnable() {
-        return finishBtn.isEnabled();
-    }
-
-    public AddClubDescribeComponent clearDescribeField() {
-        describeArea.sendKeys(Keys.chord(Keys.CONTROL, "a"));
-        return this;
+    public boolean isButtonEnable() {
+        return finishButton.isEnabled();
     }
 
     public boolean errorMessageForDescriptionFieldContainsText(String errorMsg) {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
         if (errorMessagesForDescriptionField != null && errorMessagesForDescriptionField.size() > 0) {
-            for (WebElement error: errorMessagesForDescriptionField) {
+            for (WebElement error : errorMessagesForDescriptionField) {
                 waitVisibilityOfWebElement(error);
                 if (error.getText().equals(errorMsg)) {
                     return true;

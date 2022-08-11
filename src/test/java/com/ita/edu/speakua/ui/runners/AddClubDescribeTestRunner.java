@@ -15,11 +15,11 @@ public class AddClubDescribeTestRunner extends LoginTestRunner {
                 .openUserProfilePage()
                 .openAddClubModal()
                 .inputNameOfClub("Спортивні танці")
-                .chooseCategoryClub("Спортивні секції")
+                .chooseClubCategory("Спортивні секції")
                 .inputAgeFrom(4)
                 .inputAgeTo(8)
-                .clickNextStep()
+                .openNextStep()
                 .inputPhoneNumber("0672131246")
-                .clickNextStep();
+                .openNextStep();
     }
 }
