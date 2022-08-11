@@ -81,7 +81,7 @@ public class EditProfileComponent extends BaseMethods {
         return this;
     }
 
-    @Step("set FirstName {firstName}")
+    @Step("Set firstName {firstName}")
     public EditProfileComponent fillInFirstName(String firstName) {
         setNewValueForInput(firstNameInput, firstName);
         firstNameInput.submit();
@@ -140,6 +140,7 @@ public class EditProfileComponent extends BaseMethods {
         return this;
     }
 
+    @Step("Пet firstname error text")
     public String getFirstnameErrorText() {
         waitVisibilityOfWebElement(firstnameErrorText);
         return firstnameErrorText.getText();
@@ -155,6 +156,7 @@ public class EditProfileComponent extends BaseMethods {
         return this;
     }
 
+    @Step("Check is 'save changes' button enabled")
     public boolean saveChangesButtonIsEnable() {
         saveChangesButton.click();
         try {

@@ -1,5 +1,6 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -59,6 +60,7 @@ public class AddClubContactComponent extends AbstractAddClubComponent {
         return new AddClubContactComponent(driver);
     }
 
+    @Step("set PhoneNumber {phone}")
     public AddClubContactComponent inputPhoneNumber(String phone){
 //        inputPhoneNumber.sendKeys(Keys.chord(Keys.CONTROL, "a"));
 //        inputPhoneNumber.sendKeys(Keys.chord(phone));
@@ -74,6 +76,7 @@ public class AddClubContactComponent extends AbstractAddClubComponent {
         return new AddClubMainInfoComponent(driver);
     }
 
+    @Step("Click 'next step' button")
     public AddClubDescribeComponent clickNextStep(){
         nextStepBtn.click();
         return new AddClubDescribeComponent(driver);

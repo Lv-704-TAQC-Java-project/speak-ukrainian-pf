@@ -29,20 +29,20 @@ public class AddTaskTest extends AddTaskTestRunner {
                         "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s," +
                         " when an unknown printer took a galley of type and scrambled " +
                         "it to make a type specimen book.")
-                .chooseChallenge("Example name");
-//                .tryClickSaveButton();
+                .selectChallenge("Example name");
+//                .blockedClickSaveButton();
 
 //        boolean errorMessageDescribeIsEmpty = addTaskPage.errorMessageIsEmptyIsVisible();
 
         addTaskPage = addTaskPage
-                .inputDescribing("ъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ð")
-                .tryClickSaveButton();
+                .inputDescription("ъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ð")
+                .blockedClickSaveButton();
 
         boolean errorMessageDescribeInvalidCharacters = addTaskPage.errorMessageInvalidCharactersIsVisible();
 
         addTaskPage = addTaskPage
                 .inputHeading("Lorem Ipsum is simply ")
-                .tryClickSaveButton();
+                .blockedClickSaveButton();
 
         boolean errorMessageHeadingNotEnoughChars = addTaskPage.errorMessageLessThenFortyCharactersIsVisible();
 
@@ -82,7 +82,7 @@ public class AddTaskTest extends AddTaskTestRunner {
                         "reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum " +
                         "et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by " +
                         "English versions from the 1914 translation")
-                .tryClickSaveButton();
+                .blockedClickSaveButton();
 
         boolean errorMessageHeadingTooManyChars = addTaskPage.errorMessageMoreThenThreeThousandCharactersIsVisible();
 
@@ -125,9 +125,9 @@ public class AddTaskTest extends AddTaskTestRunner {
                 .inputImage(pathToImage)
                 .inputName("Test task # 5/")
                 .inputHeading(invalidData)
-                .inputDescribing(descriptionInput)
-                .chooseChallenge("Example name")
-                .tryClickSaveButton();
+                .inputDescription(descriptionInput)
+                .selectChallenge("Example name")
+                .blockedClickSaveButton();
 
         SoftAssert softAssert = new SoftAssert();
 
@@ -151,9 +151,9 @@ public class AddTaskTest extends AddTaskTestRunner {
                         "It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum " +
                         "passages, and more recently with desktop publishing software like Aldus PageMaker including " +
                         "versions of Lorem Ipsum")
-                .inputDescribing("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has " +
+                .inputDescription("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has " +
                         "been the industry's standard dummy text ever since the 1500s, when an unknown printer took a ")
-                .tryClickSaveButton();
+                .blockedClickSaveButton();
 
 
         Assert.assertTrue(addTaskPage.errorMessageIsEmptyIsVisible(), "Error message didn't find");

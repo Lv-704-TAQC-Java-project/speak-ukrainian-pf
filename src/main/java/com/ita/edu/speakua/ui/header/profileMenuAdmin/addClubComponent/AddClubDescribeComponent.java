@@ -1,6 +1,7 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent;
 
 import com.ita.edu.speakua.ui.HomePage;
+import io.qameta.allure.Step;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -19,7 +20,7 @@ public class AddClubDescribeComponent extends AbstractAddClubComponent {
     WebElement previousStep;
 
     @FindBy(xpath = "//span[contains(text(),'Завершити')]/ancestor::button")
-    WebElement finishBtn;
+    WebElement finishButton;
 
     @FindBy(xpath = "//div[contains(@class, 'explain-error')]")
     private List<WebElement> errorMessagesForDescriptionField;
@@ -28,10 +29,9 @@ public class AddClubDescribeComponent extends AbstractAddClubComponent {
         super(driver);
     }
 
-    public AddClubDescribeComponent inputDescribe(String text) {
-        describeArea.click();
-        describeArea.clear();
-        describeArea.sendKeys(text);
+    @Step("Set description {text}")
+    public AddClubDescribeComponent inputDescription(String text) {
+        setNewValueForInput(describeArea, text);
         return new AddClubDescribeComponent(driver);
     }
 
@@ -41,7 +41,7 @@ public class AddClubDescribeComponent extends AbstractAddClubComponent {
     }
 
     public HomePage clickFinishStep() {
-        finishBtn.click();
+        finishButton.click();
         return new HomePage(driver);
     }
 
@@ -54,8 +54,9 @@ public class AddClubDescribeComponent extends AbstractAddClubComponent {
         return errorMessages;
     }
 
-    public boolean finishBtnIsEnable() {
-        return finishBtn.isEnabled();
+    @Step("Check is 'finish' button enable")
+    public boolean isFinishButtonEnable() {
+        return finishButton.isEnabled();
     }
 
     public AddClubDescribeComponent clearDescribeField() {
