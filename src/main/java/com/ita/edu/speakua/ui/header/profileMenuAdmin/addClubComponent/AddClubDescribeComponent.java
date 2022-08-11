@@ -67,7 +67,7 @@ public class AddClubDescribeComponent extends AbstractAddClubComponent {
     public boolean errorMessageForDescriptionFieldContainsText(String errorMsg) {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
         if (errorMessagesForDescriptionField != null && errorMessagesForDescriptionField.size() > 0) {
-            for (WebElement error: errorMessagesForDescriptionField) {
+            for (WebElement error : errorMessagesForDescriptionField) {
                 waitVisibilityOfWebElement(error);
                 if (error.getText().equals(errorMsg)) {
                     return true;
