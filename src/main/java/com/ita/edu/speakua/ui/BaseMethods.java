@@ -127,7 +127,7 @@ public class BaseMethods {
         actions.moveToElement(element).click().perform();
     }
 
-    public void waitForErrorsRefresh(List<WebElement> errors) {
+    public void waitStalenessOfPreviousErrors(List<WebElement> errors) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(1));
         if (errors.size() != 0) {
             for (WebElement error : errors) {
