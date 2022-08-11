@@ -12,6 +12,10 @@ import java.util.stream.Collectors;
 
 public class EditProfileComponent extends BaseMethods {
 
+    private WebElement oldPasswordField;
+    private WebElement oldPasswordFieldWrapper;
+    private WebElement newPasswordField;
+    private WebElement newPasswordFieldWrapper;
     @FindBy(xpath = "//input[@value='ROLE_USER']/..")
     private WebElement userButton;
     @FindBy(xpath = "//input[@value='ROLE_MANAGER']/..")
@@ -167,10 +171,60 @@ public class EditProfileComponent extends BaseMethods {
         }
         return true;
     }
+    public WebElement getOldPasswordField() {
+        if (oldPasswordField == null) {
+            oldPasswordField = driver.findElement(By.xpath("//input[@id='edit_currentPassword']"));
+        }
+        return oldPasswordField;
+    }
+
+    public WebElement getOldPasswordFieldWrapper(String color) {
+        if (oldPasswordFieldWrapper == null) {
+            waitAttributeOfElementContains(By.xpath("//input[@id='edit_currentPassword']/parent::span"), "border-color", color);
+            oldPasswordFieldWrapper = getOldPasswordField().findElement(By.xpath("./parent::span"));
+        }
+        return oldPasswordFieldWrapper;
+    }
+
+    public WebElement getNewPasswordField() {
+        if (newPasswordField == null) {
+            newPasswordField = driver.findElement(By.xpath("//input[@id='edit_password']"));
+        }
+        return newPasswordField;
+    }
+
+    public WebElement getNewPasswordFieldWrapper(String color) {
+        if (newPasswordFieldWrapper == null) {
+            waitAttributeOfElementContains(By.xpath("//input[@id='edit_password']/parent::span"), "border-color", color);
+            newPasswordFieldWrapper = getNewPasswordField().findElement(By.xpath("./parent::span"));
+        }
+        return newPasswordFieldWrapper;
+    }
+    public WebElement getRepeatNewPasswordField() {
+        if (newPasswordField == null) {
+            newPasswordField = driver.findElement(By.xpath("//input[@id='edit_confirmPassword']"));
+        }
+        return newPasswordField;
+    }
+
+    public WebElement getRepeatNewPasswordFieldWrapper(String color) {
+        if (newPasswordFieldWrapper == null) {
+            waitAttributeOfElementContains(By.xpath("//input[@id='edit_confirmPassword']/parent::span"), "border-color", color);
+            newPasswordFieldWrapper = getNewPasswordField().findElement(By.xpath("./parent::span"));
+        }
+        return newPasswordFieldWrapper;
+    }
+
     public HomePage closeButtonClick() {
         closeButton.click();
         return new HomePage(driver);
     }
+    public WebElement getCloseEditProfileButton() {
+        return driver.findElement(By.xpath("//button[contains(@class, 'modal-close')]"));
+    }
 
+    public void closeLoginModal() {
+        getCloseEditProfileButton().click();
+    }
 
 }

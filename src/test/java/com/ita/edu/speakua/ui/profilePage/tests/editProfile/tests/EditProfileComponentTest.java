@@ -2,9 +2,7 @@ package com.ita.edu.speakua.ui.profilePage.tests.editProfile.tests;
 
 import com.ita.edu.speakua.ui.runners.EditProfileTestRunner;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
