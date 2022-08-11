@@ -5,7 +5,7 @@ import com.ita.edu.speakua.ui.header.profileMenuAdmin.profilePage.EditProfileCom
 import org.testng.annotations.BeforeClass;
 
 
-public class EditProfileTestRunner extends BaseTestRunnerWithLogIn {
+public class EditProfileTestRunner extends LoginTestRunner {
     protected EditProfileComponent editProfileComponent;
 
     @BeforeClass

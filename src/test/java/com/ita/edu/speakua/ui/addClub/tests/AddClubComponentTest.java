@@ -2,12 +2,12 @@ package com.ita.edu.speakua.ui.addClub.tests;
 
 import com.ita.edu.speakua.ui.HomePage;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubDescribeComponent;
-import com.ita.edu.speakua.ui.runners.BaseTestRunnerWithLogIn;
+import com.ita.edu.speakua.ui.runners.AddClubDescribeTestRunner;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-public class AddClubComponentTest extends BaseTestRunnerWithLogIn {
+public class AddClubComponentTest extends AddClubDescribeTestRunner {
 
     @Test
     public void verifyAddClubDescribeFieldValidDataTest() {
@@ -62,8 +62,8 @@ public class AddClubComponentTest extends BaseTestRunnerWithLogIn {
         SoftAssert softAssert = new SoftAssert();
 
         softAssert.assertTrue(verifyBtnFinishIsEnableFortyChars, "Button should be enabled");
-        softAssert.assertTrue(verifyBtnFinishIsEnableThousandChars,"Button should be enabled");
-        softAssert.assertTrue(verifyBtnFinishIsEnableOneAndHalfThousandChars,"Button should be enabled");
+        softAssert.assertTrue(verifyBtnFinishIsEnableThousandChars, "Button should be enabled");
+        softAssert.assertTrue(verifyBtnFinishIsEnableOneAndHalfThousandChars, "Button should be enabled");
         softAssert.assertAll();
     }
 
@@ -134,34 +134,24 @@ public class AddClubComponentTest extends BaseTestRunnerWithLogIn {
         softAssert.assertAll();
     }
 
-    @Test
-    public void verifyDescribeComponentWithValidData() {
-        boolean btnFinishIsEnable;
-        String[] testData = new String[]{"Education, students, Школа балету, Teachers",
-                "1234567890123456789012345678901234567890",
-                "!\"#$%&'()*+,-./:;<=>?@[]^_`{}~"};
+    @DataProvider(name = "validDescriptionData")
+    public static Object[][] validDescriptionData() {
+        return new Object[][]{
+                {"Education, students, Школа балету, Teachers"},
+                {"1234567890123456789012345678901234567890"},
+                {"!\"#$%&'()*+,-./:;<=>?@[]^_`{}~"}
+        };
+    }
 
-        AddClubDescribeComponent addClubDescribeComponent = new HomePage(driver)
-                .openAdminProfileMenu()
-                .openUserProfilePage()
-                .openAddClubModal()
-                .inputNameOfClub("Club3")
-                .chooseCategoryClub("Основи")
-                .inputAgeFrom(4)
-                .inputAgeTo(9)
-                .clickNextStep()
-                .inputPhoneNumber("0973756135")
-                .clickNextStep();
+    @Test(dataProvider = "validDescriptionData")
+    public void verifyDescribeComponentWithValidData(String testData) {
+        boolean btnFinishIsEnable;
 
         SoftAssert softAssert = new SoftAssert();
 
-        for (String data : testData) {
-            addClubDescribeComponent
-                    .inputDescribe(data);
-
-            btnFinishIsEnable = addClubDescribeComponent.finishBtnIsEnable();
-            softAssert.assertTrue(btnFinishIsEnable);
-        }
+        addClubDescribeComponent.inputDescribe(testData);
+        btnFinishIsEnable = addClubDescribeComponent.finishBtnIsEnable();
+        softAssert.assertTrue(btnFinishIsEnable);
 
         softAssert.assertAll();
     }

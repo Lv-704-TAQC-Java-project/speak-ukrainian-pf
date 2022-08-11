@@ -4,7 +4,7 @@ import com.ita.edu.speakua.ui.HomePage;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.addTask.AddTaskPage;
 import org.testng.annotations.BeforeMethod;
 
-public class AddTaskTestRunner extends BaseTestRunnerWithLogIn {
+public class AddTaskTestRunner extends LoginTestRunner {
     protected AddTaskPage addTaskPage;
 
     @BeforeMethod

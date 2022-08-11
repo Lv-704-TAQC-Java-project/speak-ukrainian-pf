@@ -2,15 +2,14 @@ package com.ita.edu.speakua.ui.advancedSearch.tests;
 
 import com.ita.edu.speakua.ui.clubs.ClubsPage;
 import com.ita.edu.speakua.ui.clubs.SortClubComponent;
-import com.ita.edu.speakua.ui.header.HeaderComponent;
-import com.ita.edu.speakua.ui.runners.BaseTestRunnerSortingFunctional;
+import com.ita.edu.speakua.ui.runners.AdvancedSearchTestRunner;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdvancedSearchSortingTest extends BaseTestRunnerSortingFunctional {
+public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
 
     @Test
     public void advancedSearchABCSortingClubTest() {

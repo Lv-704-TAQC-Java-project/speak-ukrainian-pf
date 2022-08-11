@@ -12,7 +12,7 @@ import org.testng.annotations.*;
 import java.time.Duration;
 
 @Listeners(TestNgListener.class)
-public class BaseTestRunnerOneWindow {
+public class SameWindowTestRunner {
     protected static ConfigProperties configProps;
     protected WebDriver driver;
 
