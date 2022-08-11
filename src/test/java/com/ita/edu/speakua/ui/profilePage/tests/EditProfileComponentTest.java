@@ -1,6 +1,10 @@
-package com.ita.edu.speakua.ui.profilePage.tests.editProfile.tests;
+package com.ita.edu.speakua.ui.profilePage.tests;
 
 import com.ita.edu.speakua.ui.runners.EditProfileTestRunner;
+import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.DataProvider;

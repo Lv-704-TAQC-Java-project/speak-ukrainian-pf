@@ -1,56 +1,32 @@
-package com.ita.edu.speakua.ui.profilePage.tests.editProfile.tests;
+package com.ita.edu.speakua.ui.profilePage.tests;
 
-import com.ita.edu.speakua.ui.HomePage;
-import com.ita.edu.speakua.ui.header.profileMenuGuest.LoginModalComponent;
 import com.ita.edu.speakua.ui.runners.EditProfileTestRunner;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 public class PasswordInputFieldsBorderTest extends EditProfileTestRunner {
 
-    @DataProvider(name = "loginInputFieldsBordersTestData")
-    public Object[][] loginInputFieldsBordersTestData() {
-        return new Object[][]{
-                {"", "","", true, true,true},
-                {"some", "a","d", true, true,true},
-        };
-    }
+    @Test
+    public void checkEditPasswordInputFieldsBorders() {
+        String errorBorderColor = "rgb(255, 77, 79)";
 
-    @Test(dataProvider = "loginInputFieldsBordersTestData", priority = 1)
-    public void checkEditPasswordInputFieldsBorders(String oldPassword, String newPassword,String newRepeatPassword, boolean oldPasswordError,boolean newPasswordError,boolean repeatPasswordError){
+        editProfileComponent.changePasswordClick().saveChangesButtonClick().saveChangesButtonIsEnable();
 
-         editProfileComponent
-                .changePasswordClick()
-                 .inputOldPassword(oldPassword)
-                 .inputNewPassword(newPassword)
-                 .inputNewPasswordRepeat(newRepeatPassword )
-                .saveChangesButtonClick()
-                .saveChangesButtonIsEnable();
-
-
-        String expectedOldPasswordBorderColor = oldPasswordError ? "rgb(255, 77, 79)" : "rgb(217, 217, 217)";
-        String expectedNewPasswordBorderColor = newPasswordError ? "rgb(255, 77, 79)" : "rgb(217, 217, 217)";
-        String expectedRepeatNewPasswordBorderColor = repeatPasswordError ? "rgb(255, 77, 79)" : "rgb(217, 217, 217)";
-
-
-        String getBorderColorOfOldPasswordWrapper = editProfileComponent.getOldPasswordFieldWrapper(expectedOldPasswordBorderColor).getCssValue("border-color");
-        String getBorderColorOfNewPasswordWrapper = editProfileComponent.getNewPasswordFieldWrapper(expectedNewPasswordBorderColor).getCssValue("border-color");
-        String getBorderColorOfRepeatNewPasswordWrapper = editProfileComponent.getRepeatNewPasswordFieldWrapper(expectedRepeatNewPasswordBorderColor).getCssValue("border-color");
+        String oldPasswordBorderColor = editProfileComponent.getOldPasswordFieldBorderColor(errorBorderColor);
+        String newPasswordBorderColor = editProfileComponent.getOldPasswordFieldBorderColor(errorBorderColor);
+        String repeatNewPasswordBorderColor = editProfileComponent.getOldPasswordFieldBorderColor(errorBorderColor);
 
 
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertTrue(getBorderColorOfOldPasswordWrapper.contains(expectedOldPasswordBorderColor),
+        softAssert.assertTrue(oldPasswordBorderColor.contains(errorBorderColor),
                 String.format("Border color of email field border is expected to be %s, but was %s.",
-                        expectedOldPasswordBorderColor, getBorderColorOfOldPasswordWrapper));
-        softAssert.assertTrue(getBorderColorOfNewPasswordWrapper.contains(expectedNewPasswordBorderColor),
+                        errorBorderColor, oldPasswordBorderColor));
+        softAssert.assertTrue(newPasswordBorderColor.contains(errorBorderColor),
                 String.format("Border color of password field border is expected to be %s, but was %s.",
-                        expectedNewPasswordBorderColor, getBorderColorOfNewPasswordWrapper));
-        softAssert.assertTrue(getBorderColorOfRepeatNewPasswordWrapper.contains(expectedRepeatNewPasswordBorderColor),
+                        errorBorderColor, newPasswordBorderColor));
+        softAssert.assertTrue(repeatNewPasswordBorderColor.contains(errorBorderColor),
                 String.format("Border color of password field border is expected to be %s, but was %s.",
-                        expectedRepeatNewPasswordBorderColor, getBorderColorOfRepeatNewPasswordWrapper));
+                        errorBorderColor, repeatNewPasswordBorderColor));
         softAssert.assertAll();
         editProfileComponent.getCloseEditProfileButton();
     }

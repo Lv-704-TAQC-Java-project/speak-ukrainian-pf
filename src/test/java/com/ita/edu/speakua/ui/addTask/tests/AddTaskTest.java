@@ -158,7 +158,8 @@ public class AddTaskTest extends AddTaskTestRunner {
 
         addTaskPage = addTaskPage
                 .inputStartDate("2023-12-11")
-                .inputImageSecondPhoto()
+                .inputImage(pathToImage)
+//                .inputImageSecondPhoto()
                 .inputHeading("first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section " +
                         "1.10.32. There are many variations of passages of Lorem Ipsum available, but the majority " +
                         "have suffered alteration in some form,by injected humour, or randomised words which don't " +

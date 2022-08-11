@@ -72,6 +72,11 @@ public class BaseMethods {
         wait.until(ExpectedConditions.attributeContains(locator, attribute, value));
     }
 
+    public void waitAttributeOfElementContains(WebElement element, String attribute, String value) {
+        WebDriverWait wait = new WebDriverWait(driver, SHORT_TIMEOUT);
+        wait.until(ExpectedConditions.attributeContains(element, attribute, value));
+    }
+
     public void waitVisibilityOfElement(By locator, Duration timeout) {
         WebDriverWait wait = new WebDriverWait(driver, timeout);
         wait.until(ExpectedConditions.visibilityOfElementLocated(locator));

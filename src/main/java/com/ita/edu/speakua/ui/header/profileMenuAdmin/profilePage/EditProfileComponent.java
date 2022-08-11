@@ -3,6 +3,7 @@ package com.ita.edu.speakua.ui.header.profileMenuAdmin.profilePage;
 import com.ita.edu.speakua.ui.BaseMethods;
 import com.ita.edu.speakua.ui.HomePage;
 import com.ita.edu.speakua.ui.header.PopupMessageComponent;
+import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 
@@ -12,9 +13,11 @@ import java.util.stream.Collectors;
 
 public class EditProfileComponent extends BaseMethods {
 
-    private WebElement oldPasswordField;
+    @FindBy(xpath = "//input[@id='edit_currentPassword']/parent::span")
     private WebElement oldPasswordFieldWrapper;
+    @FindBy(xpath = "//input[@id='edit_password']/parent::span")
     private WebElement newPasswordField;
+    @FindBy(xpath = "//input[@id='edit_confirmPassword']/parent::span")
     private WebElement newPasswordFieldWrapper;
     @FindBy(xpath = "//input[@value='ROLE_USER']/..")
     private WebElement userButton;
@@ -174,54 +177,33 @@ public class EditProfileComponent extends BaseMethods {
         }
         return true;
     }
-    public WebElement getOldPasswordField() {
-        if (oldPasswordField == null) {
-            oldPasswordField = driver.findElement(By.xpath("//input[@id='edit_currentPassword']"));
-        }
-        return oldPasswordField;
+
+    public String getOldPasswordFieldBorderColor(String color) {
+        try {
+            waitAttributeOfElementContains(oldPasswordFieldWrapper, "border-color", color);
+        } catch (TimeoutException ignore) {}
+        return oldPasswordFieldWrapper.getCssValue("border-color");
     }
 
-    public WebElement getOldPasswordFieldWrapper(String color) {
-        if (oldPasswordFieldWrapper == null) {
-            waitAttributeOfElementContains(By.xpath("//input[@id='edit_currentPassword']/parent::span"), "border-color", color);
-            oldPasswordFieldWrapper = getOldPasswordField().findElement(By.xpath("./parent::span"));
-        }
-        return oldPasswordFieldWrapper;
+    public String getNewPasswordFieldBorderColor(String color) {
+        try {
+            waitAttributeOfElementContains(newPasswordFieldWrapper, "border-color", color);
+        } catch (TimeoutException ignore) {}
+        return newPasswordFieldWrapper.getCssValue("border-color");
     }
 
-    public WebElement getNewPasswordField() {
-        if (newPasswordField == null) {
-            newPasswordField = driver.findElement(By.xpath("//input[@id='edit_password']"));
-        }
-        return newPasswordField;
-    }
-
-    public WebElement getNewPasswordFieldWrapper(String color) {
-        if (newPasswordFieldWrapper == null) {
-            waitAttributeOfElementContains(By.xpath("//input[@id='edit_password']/parent::span"), "border-color", color);
-            newPasswordFieldWrapper = getNewPasswordField().findElement(By.xpath("./parent::span"));
-        }
-        return newPasswordFieldWrapper;
-    }
-    public WebElement getRepeatNewPasswordField() {
-        if (newPasswordField == null) {
-            newPasswordField = driver.findElement(By.xpath("//input[@id='edit_confirmPassword']"));
-        }
-        return newPasswordField;
-    }
-
-    public WebElement getRepeatNewPasswordFieldWrapper(String color) {
-        if (newPasswordFieldWrapper == null) {
-            waitAttributeOfElementContains(By.xpath("//input[@id='edit_confirmPassword']/parent::span"), "border-color", color);
-            newPasswordFieldWrapper = getNewPasswordField().findElement(By.xpath("./parent::span"));
-        }
-        return newPasswordFieldWrapper;
+    public String getRepeatNewPasswordFieldBorderColor(String color) {
+        try {
+            waitAttributeOfElementContains(newPasswordFieldWrapper, "border-color", color);
+        } catch (TimeoutException ignore) {}
+        return newPasswordFieldWrapper.getCssValue("border-color");
     }
 
     public HomePage closeButtonClick() {
         closeButton.click();
         return new HomePage(driver);
     }
+
     public WebElement getCloseEditProfileButton() {
         return driver.findElement(By.xpath("//button[contains(@class, 'modal-close')]"));
     }
