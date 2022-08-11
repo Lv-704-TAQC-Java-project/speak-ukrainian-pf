@@ -71,7 +71,7 @@ public class AddClubComponentTest extends BaseTestRunnerWithLogIn {
     public Object[][] errorDescriptionField() {
         return new Object[][]{
                 {"‘э’, ‘ъ’, ‚ü‘,‘ö‘,‘ä‘\\n 'Ы, ‘э’, ‘ъ’, ‚ü‘,‘ö‘,‘ä‘", "Некоректний опис гуртка",
-                        "Це поле може містити тільки українські та англійські літери, цифри та спеціальні символи"}
+                        "Опис гуртка не може містити російські літери"}
         };
     }
 

@@ -29,11 +29,13 @@ public class SortClubComponent extends ClubsPage {
     }
 
     public SortClubComponent sortByABCButtonClick() {
+        waitVisibilityOfWebElement(sortByABCButton);
         clickManagingClubsPageElement(sortByABCButton);
         return this;
     }
 
     public SortClubComponent sortByRatingButtonClick() {
+        waitVisibilityOfWebElement(sortByRatingButton);
         clickManagingClubsPageElement(sortByRatingButton);
         return this;
     }

@@ -1,7 +1,10 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.addTask;
 
 import com.ita.edu.speakua.ui.header.HeaderComponent;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
@@ -35,6 +38,9 @@ public class AddTaskPage extends HeaderComponent {
     @FindBy(xpath = "//div[contains(@class, 'warning')]//span[text()]")
     WebElement errorMessage;
 
+    @FindBy(xpath = "//div[contains(@class, 'warning')]//span[text()]")
+    List<WebElement> errorMessages;
+
     @FindBy(xpath = "//span[contains(text(),'Please')]")
     WebElement errorMessageIsEmpty;
 
@@ -47,63 +53,57 @@ public class AddTaskPage extends HeaderComponent {
     @FindBy(xpath = "//span[@class='ant-upload-list-item-actions']")
     List<WebElement> imageElements;
 
-    @FindBy(xpath = "//span[@aria-live='polite']")
+    @FindBy(xpath = "//div[@name='id']//span[text()]")
     WebElement challengeInput;
 
     public AddTaskPage(WebDriver driver) {
         super(driver);
     }
 
-    public AddTaskPage inputStartDate(String name){
-        startDate.sendKeys(Keys.chord(Keys.CONTROL, "a"));
-        startDate.sendKeys(Keys.chord(name));
-        return new AddTaskPage(driver);
-    }
-
-    public AddTaskPage inputImage(){
-        uploadImage.sendKeys("D:\\smile.png");
+    public AddTaskPage inputStartDate(String date) {
+        setNewValueForInput(startDate, date);
         return this;
     }
 
-    public AddTaskPage inputName(String name){
-        inputName.sendKeys(Keys.chord(Keys.CONTROL, "a"));
-        inputName.sendKeys(Keys.chord(name));
-        return new AddTaskPage(driver);
+    public AddTaskPage inputImage(String imagePath) {
+        uploadImage.sendKeys(imagePath);
+        return this;
     }
 
-    public AddTaskPage inputHeading(String name){
-        inputHeading.sendKeys(Keys.chord(Keys.CONTROL, "a"), "");
-        inputHeading.sendKeys(name);
-        return new AddTaskPage(driver);
+    public AddTaskPage inputName(String name) {
+        setNewValueForInput(inputName, name);
+        return this;
     }
 
-    public AddTaskPage inputDescribing(String name){
-        inputDescribing.sendKeys(Keys.chord(Keys.CONTROL, "a"));
-        inputDescribing.sendKeys(Keys.chord(name));
-        return new AddTaskPage(driver);
+    public AddTaskPage inputHeading(String value) {
+        setNewValueForInput(inputHeading, value);
+        return this;
     }
 
-    public AddTaskPage openChallengeList(){
-        openChallenge.click();
-        return new AddTaskPage(driver);
+    public AddTaskPage inputDescribing(String value) {
+        setNewValueForInput(inputDescribing, value);
+        return this;
     }
 
-    public WebElement getChallengeItem(String name){
-        return challengeList.findElement(By.xpath(String.format(".//div[contains(text(),'%s')]",name)));
+    public AddTaskPage openChallengeList() {
+        actionsClickOnElement(openChallenge);
+        return this;
     }
 
-    public AddTaskPage chooseChallenge(String name){
+    public WebElement getChallengeItem(String name) {
+        waitVisibilityOfWebElement(challengeList);
+        return challengeList.findElement(By.xpath(String.format(".//div[contains(text(),'%s')]", name)));
+    }
+
+    public AddTaskPage chooseChallenge(String name) {
         openChallengeList()
                 .getChallengeItem(name).click();
-        return new AddTaskPage(driver);
+        return this;
     }
 
-    public boolean allFieldsAreEmpty(){
+    public boolean allFieldsAreEmpty() {
         waitVisibilityOfWebElement(startDate);
-        new AddTaskPage(driver)
-                .openChallengeList()
-                .openChallengeList();
-        return  startDateIsEmpty() &&
+        return startDateIsEmpty() &&
                 imageIsEmpty() &&
                 nameIsEmpty() &&
                 headingIsEmpty() &&
@@ -111,55 +111,56 @@ public class AddTaskPage extends HeaderComponent {
                 challengeIsEmpty();
     }
 
-    public boolean startDateIsEmpty(){
+    public boolean startDateIsEmpty() {
         return startDate.getAttribute("value").isEmpty();
     }
 
-    public boolean nameIsEmpty(){
+    public boolean nameIsEmpty() {
         return inputName.getAttribute("value").isEmpty();
     }
 
-    public boolean imageIsEmpty(){
+    public boolean imageIsEmpty() {
         return imageElements.size() == 0;
     }
 
-    public boolean headingIsEmpty(){
+    public boolean headingIsEmpty() {
         return inputHeading.getText().isEmpty();
     }
 
-    public boolean describeIsEmpty(){
+    public boolean describeIsEmpty() {
         return inputDescribing.getText().isEmpty();
     }
 
-    public boolean challengeIsEmpty(){
-        return challengeInput.getText().isEmpty();
+    public boolean challengeIsEmpty() {
+        return challengeInput.getText().equals("Оберіть челендж");
     }
 
-    public String getErrorMessage() {
+    public String getErrorMessageText() {
+        waitVisibilityOfWebElement(errorMessage);
         return errorMessage.getText();
     }
 
-    public boolean errorMessageIsEmptyIsVisible(){
+    public boolean errorMessageIsEmptyIsVisible() {
         waitVisibilityOfElement(By.xpath("//span[contains(text(),'Please')]"));
         return errorMessageIsEmpty.isDisplayed();
     }
 
-    public boolean errorMessageInvalidCharactersIsVisible(){
+    public boolean errorMessageInvalidCharactersIsVisible() {
         waitVisibilityOfElement(By.xpath("//span[contains(text(),'Помилка')]"));
         return errorInvalidCharacters.isDisplayed();
     }
 
-    public boolean errorMessageLessThenFortyCharactersIsVisible(){
+    public boolean errorMessageLessThenFortyCharactersIsVisible() {
         waitVisibilityOfElement(By.xpath("//span[contains(text(),'minimum of 40')]"));
         return errorLessThenFortyCharacters.isDisplayed();
     }
 
-    public boolean errorMessageMoreThenThreeThousandCharactersIsVisible(){
+    public boolean errorMessageMoreThenThreeThousandCharactersIsVisible() {
         waitVisibilityOfElement(By.xpath("//span[contains(text(),'minimum of 40')]"));
         return errorLessThenFortyCharacters.isDisplayed();
     }
 
-    public boolean errorMessageIsDisplayed(){
+    public boolean errorMessageIsDisplayed() {
         try {
             return errorMessage.isDisplayed();
         } catch (NoSuchElementException e) {
@@ -167,15 +168,13 @@ public class AddTaskPage extends HeaderComponent {
         }
     }
 
-    public TaskPage clickSaveButton(){
+    public TaskPage clickSaveButton() {
         saveButton.click();
         return new TaskPage(driver);
     }
 
-    public AddTaskPage tryClickSaveButton(){
-        if (errorMessageIsDisplayed())
-            waitStalenessOfElement(errorMessage);
+    public AddTaskPage tryClickSaveButton() {
         saveButton.click();
-        return new AddTaskPage(driver);
+        return this;
     }
 }
