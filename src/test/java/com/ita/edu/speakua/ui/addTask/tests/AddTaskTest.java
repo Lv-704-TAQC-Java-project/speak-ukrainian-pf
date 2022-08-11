@@ -1,6 +1,10 @@
 package com.ita.edu.speakua.ui.addTask.tests;
 
 import com.ita.edu.speakua.ui.runners.AddTaskTestRunner;
+import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -107,8 +111,11 @@ public class AddTaskTest extends AddTaskTestRunner {
         };
     }
 
+    @Issue("TUA-524")
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("Verify impossibility of creating task with heading invalid data")
     @Test(dataProvider = "invalidHeaderData")
-    public void verifyImpossibilityOfCreatingTaskWithInvalidData(String invalidData, String expectedMessage) {
+    public void verifyCreatingTaskWithHeadingInvalidData(String invalidData, String expectedMessage) {
         String descriptionInput = new String(new char[10]).replace("\0", "Lorem 56№*");
         String actualErrorMessage;
 

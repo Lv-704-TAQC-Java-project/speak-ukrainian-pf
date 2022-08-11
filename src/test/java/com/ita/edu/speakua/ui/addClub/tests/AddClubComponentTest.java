@@ -3,6 +3,10 @@ package com.ita.edu.speakua.ui.addClub.tests;
 import com.ita.edu.speakua.ui.HomePage;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubDescribeComponent;
 import com.ita.edu.speakua.ui.runners.AddClubDescribeTestRunner;
+import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -143,8 +147,11 @@ public class AddClubComponentTest extends AddClubDescribeTestRunner {
         };
     }
 
+    @Issue("TUA-173")
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("Verify the description field is filled in with valid data and The 'Завершити' button is enable")
     @Test(dataProvider = "validDescriptionData")
-    public void verifyDescribeComponentWithValidData(String testData) {
+    public void verifyCreatingClubWithDescribeValidData(String testData) {
         boolean btnFinishIsEnable;
 
         SoftAssert softAssert = new SoftAssert();
