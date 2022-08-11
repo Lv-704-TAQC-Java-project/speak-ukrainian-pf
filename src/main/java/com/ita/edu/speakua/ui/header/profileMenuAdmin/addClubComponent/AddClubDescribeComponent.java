@@ -22,6 +22,9 @@ public class AddClubDescribeComponent extends AbstractAddClubComponent {
     @FindBy(xpath = "//span[contains(text(),'Завершити')]/ancestor::button")
     private WebElement finishButton;
 
+    @FindBy(css = "div.ant-form-item-has-success")
+    private WebElement successArea;
+
     @FindBy(xpath = "//div[contains(@class, 'explain-error')]")
     private List<WebElement> errorMessagesForDescriptionField;
 
@@ -59,7 +62,7 @@ public class AddClubDescribeComponent extends AbstractAddClubComponent {
     }
 
     public boolean isButtonEnable() {
-        return finishButton.isEnabled();
+        return successArea.isDisplayed();
     }
 
     public boolean errorMessageForDescriptionFieldContainsText(String errorMsg) {
