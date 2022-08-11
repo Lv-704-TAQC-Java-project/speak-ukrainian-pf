@@ -31,6 +31,9 @@ public class ClubsPage extends HeaderComponent {
     @FindBy(xpath = ".//div[contains(@class, 'card-body')]")
     private List<WebElement> cardsBody;
 
+    @FindBy(xpath = "//input[contains(@id, 'rc_select')]")
+    private WebElement searchInput;
+
     public ClubsPage(WebDriver driver) {
         super(driver);
     }
@@ -103,4 +106,12 @@ public class ClubsPage extends HeaderComponent {
         return advancedSearchButton == null;
     }
 
+    public ClubsPage fillInSearch(String query) {
+        setNewValueForInput(searchInput, query);
+        return this;
+    }
+
+    public int getSearchInputLength() {
+        return searchInput.getAttribute("value").length();
+    }
 }
