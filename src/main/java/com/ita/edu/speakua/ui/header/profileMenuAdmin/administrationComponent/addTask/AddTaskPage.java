@@ -64,6 +64,10 @@ public class AddTaskPage extends HeaderComponent {
         uploadImage.sendKeys("D:\\smile.png");
         return this;
     }
+    public AddTaskPage inputImageSecondPhoto(){
+        uploadImage.sendKeys("C:\\Users\\User\\IdeaProjects\\speak-ukrainian-pf\\smile-png.png");
+        return this;
+    }
 
     public AddTaskPage inputName(String name){
         inputName.sendKeys(Keys.chord(Keys.CONTROL, "a"));
@@ -154,11 +158,19 @@ public class AddTaskPage extends HeaderComponent {
         return errorLessThenFortyCharacters.isDisplayed();
     }
 
+    public boolean errorMessageLessThenFiveCharactersIsVisible(){
+        waitVisibilityOfElement(By.xpath("//span[contains(text(),'minimum of 5')]"));
+        return errorLessThenFortyCharacters.isDisplayed();
+    }
     public boolean errorMessageMoreThenThreeThousandCharactersIsVisible(){
         waitVisibilityOfElement(By.xpath("//span[contains(text(),'minimum of 40')]"));
         return errorLessThenFortyCharacters.isDisplayed();
     }
 
+    public boolean errorMessageMoreThenOneHundredCharactersIsVisible(){
+        waitVisibilityOfElement(By.xpath("//span[contains(text(),'minimum of 100')]"));
+        return errorLessThenFortyCharacters.isDisplayed();
+    }
     public boolean errorMessageIsDisplayed(){
         try {
             return errorMessage.isDisplayed();
