@@ -151,47 +151,38 @@ public class AddTaskTest extends AddTaskTestRunner {
 
         Assert.assertTrue(addTaskPage.errorMessageIsEmptyIsVisible(), "Error message didn't find");
     }
+    @DataProvider(name = "invalidNameData")
+    public static Object[][] invalidNameData() {
+        return new Object[][]{
+                {"", "headerText не може бути пустим"},
+                {"Lor",
+                        "headerText must contain a minimum of 5 and a maximum of 100 letters"},
+                {new String(new char[400]).replace("\0", "Lorem 56№*"),
+                        "headerText must contain a minimum of 5 and a maximum of 100 letters"}
+        };
+    }
 
-    @Test
-    public void verifyCreateTaskWithInvalidNameData(){
-        boolean allFieldsAreEmpty = addTaskPage.allFieldsAreEmpty();
+    @Test(dataProvider = "invalidNameData")
+    public void verifyCreateTaskWithInvalidNameData(String invalidData, String expectedMessage) {
+        String descriptionInput = new String(new char[10]).replace("\0", "Lorem 56№*");
+        String actualErrorMessage;
 
-        addTaskPage = addTaskPage
-                .inputStartDate("2023-12-11")
+        boolean isAllFieldsAreEmptyByDefault = addTaskPage.allFieldsAreEmpty();
+
+        addTaskPage.inputStartDate("2022-05-05")
                 .inputImage(pathToImage)
-//                .inputImageSecondPhoto()
-                .inputHeading("first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section " +
-                        "1.10.32. There are many variations of passages of Lorem Ipsum available, but the majority " +
-                        "have suffered alteration in some form,by injected humour, or randomised words which don't " +
-                        "look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to " +
-                        "be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum " +
-                        "generators on the Internet tend to repeat predefined chunks as necessary, making this the " +
-                        "first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined ")
-                .inputDescribing("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has " +
-                        "been the industry's standard dummy text ever since the 1500s, when an unknown printer took a ")
+                .inputName(invalidData)
+                .inputHeading("n't anything embarrassing")
+                .inputDescribing(descriptionInput)
                 .chooseChallenge("Example name")
                 .tryClickSaveButton();
 
-        addTaskPage = addTaskPage
-                .inputName("Lor")
-                .tryClickSaveButton();
-
-        boolean errorMessageNameNotEnoughCharacters = addTaskPage.errorMessageLessThenFiveCharactersIsVisible();
-
-        addTaskPage = addTaskPage
-                .inputName("even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to \" +\n" +
-                        "                        \"be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum \" +\n" +
-                        "                        \"generators on the Internet tend to repeat predefined chunks as")
-                .tryClickSaveButton();
-
-        boolean errorMessageHeadingTooManyChars = addTaskPage.errorMessageMoreThenOneHundredCharactersIsVisible();
-
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertTrue(allFieldsAreEmpty, "All field should be empty");
-        softAssert.assertTrue(errorMessageNameNotEnoughCharacters, "A message should appear stating that not enough " +
-                "characters have been entered");
-        softAssert.assertTrue(errorMessageHeadingTooManyChars, "A message should appear stating that too many " +
-                "characters have been entered");
+
+        softAssert.assertTrue(isAllFieldsAreEmptyByDefault);
+        actualErrorMessage = addTaskPage.getErrorMessageText();
+        softAssert.assertEquals(actualErrorMessage, expectedMessage);
+
         softAssert.assertAll();
     }
 }

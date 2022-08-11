@@ -13,8 +13,8 @@ public class PasswordInputFieldsBorderTest extends EditProfileTestRunner {
         editProfileComponent.changePasswordClick().saveChangesButtonClick().saveChangesButtonIsEnable();
 
         String oldPasswordBorderColor = editProfileComponent.getOldPasswordFieldBorderColor(errorBorderColor);
-        String newPasswordBorderColor = editProfileComponent.getOldPasswordFieldBorderColor(errorBorderColor);
-        String repeatNewPasswordBorderColor = editProfileComponent.getOldPasswordFieldBorderColor(errorBorderColor);
+        String newPasswordBorderColor = editProfileComponent.getNewPasswordFieldBorderColor(errorBorderColor);
+        String repeatNewPasswordBorderColor = editProfileComponent.getRepeatNewPasswordFieldBorderColor(errorBorderColor);
 
 
         SoftAssert softAssert = new SoftAssert();
