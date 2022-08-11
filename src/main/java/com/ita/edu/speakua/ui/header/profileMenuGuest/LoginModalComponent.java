@@ -2,6 +2,7 @@ package com.ita.edu.speakua.ui.header.profileMenuGuest;
 
 import com.ita.edu.speakua.ui.BaseMethods;
 import com.ita.edu.speakua.ui.HomePage;
+import io.qameta.allure.Step;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -42,6 +43,7 @@ public class LoginModalComponent extends BaseMethods {
         return this;
     }
 
+    @Step("set login {email}")
     public LoginModalComponent fillInEmail(String email) {
         emailField.click();
         emailField.clear();
@@ -49,6 +51,7 @@ public class LoginModalComponent extends BaseMethods {
         return this;
     }
 
+    @Step("set password {password}")
     public LoginModalComponent fillInPassword(String password) {
 
         passwordField.click();
@@ -57,7 +60,7 @@ public class LoginModalComponent extends BaseMethods {
         return this;
     }
 
-
+    @Step("click submit")
     public LoginModalComponent clickLoginButton() {
         waitVisibilityOfWebElement(loginButton);
         loginButton.click();

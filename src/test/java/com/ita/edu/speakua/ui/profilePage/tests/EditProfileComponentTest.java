@@ -1,6 +1,10 @@
 package com.ita.edu.speakua.ui.profilePage.tests;
 
 import com.ita.edu.speakua.ui.runners.EditProfileTestRunner;
+import io.qameta.allure.*;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -27,6 +31,9 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
         };
     }
 
+    @Issue("TUA-177")
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("My verify EditProfile")
     @Test(dataProvider = "invalidFirstNameData")
     public void verifyEditProfileWithInvalidData(String data, String expectedMessage) {
         String actualMessage;
@@ -38,7 +45,6 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
 
         saveChangesBtnIsEnabled = editProfileComponent.saveChangesButtonIsEnable();
         softAssert.assertFalse(saveChangesBtnIsEnabled, "SaveChanges button is enabled");
-
         softAssert.assertAll();
     }
 

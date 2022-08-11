@@ -3,6 +3,7 @@ package com.ita.edu.speakua.ui.header.profileMenuAdmin.profilePage;
 import com.ita.edu.speakua.ui.BaseMethods;
 import com.ita.edu.speakua.ui.HomePage;
 import com.ita.edu.speakua.ui.header.PopupMessageComponent;
+import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 
@@ -80,6 +81,7 @@ public class EditProfileComponent extends BaseMethods {
         return this;
     }
 
+    @Step("set FirstName {firstName}")
     public EditProfileComponent fillInFirstName(String firstName) {
         setNewValueForInput(firstNameInput, firstName);
         firstNameInput.submit();
