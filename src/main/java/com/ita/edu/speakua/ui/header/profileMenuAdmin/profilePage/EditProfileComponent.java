@@ -85,13 +85,13 @@ public class EditProfileComponent extends BaseMethods {
     public EditProfileComponent fillInFirstName(String firstName) {
         setNewValueForInput(firstNameInput, firstName);
         firstNameInput.submit();
-        waitForErrorsRefresh(firstNameErrors);
+        waitStalenessOfPreviousErrors(firstNameErrors);
         return this;
     }
 
     public EditProfileComponent fillInPhone(String phone) {
         setNewValueForInput(phoneInput, phone);
-        waitForErrorsRefresh(phoneErrors);
+        waitStalenessOfPreviousErrors(phoneErrors);
         return this;
     }
 

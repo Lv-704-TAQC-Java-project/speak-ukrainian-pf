@@ -1,5 +1,6 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.addCenterComponent;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 
@@ -40,8 +41,8 @@ public class AddCenterMainInfoComponent extends AbstractAddCenterComponent{
     }
 
     public boolean isLocationAdded(String name) {
-        waitVisibilityOfWebElement(getLocationItem(name));
         try {
+            actionsMoveTo(getLocationItem(name));
             return getLocationItem(name).isDisplayed();
         } catch (NoSuchElementException e) {
             return false;
@@ -72,10 +73,10 @@ public class AddCenterMainInfoComponent extends AbstractAddCenterComponent{
         return new AddLocationComponent(driver);
     }
 
+    @Step("Click addLocation Button")
     public AddLocationComponent clickAddLocationButton() {
         sleep(1000);
         addLocationButton.click();
         return new AddLocationComponent(driver);
     }
-
 }
