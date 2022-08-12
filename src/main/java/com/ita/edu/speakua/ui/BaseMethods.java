@@ -104,7 +104,7 @@ public class BaseMethods {
     }
 
     public void waitVisibilityOfWebElement(WebElement element) {
-        WebDriverWait wait = new WebDriverWait(driver, TIMEOUT);
+        WebDriverWait wait = new WebDriverWait(driver, SHORT_TIMEOUT);
         wait.until(ExpectedConditions.visibilityOf(element));
     }
 
