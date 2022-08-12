@@ -30,7 +30,7 @@ public class AddLocationTest extends LoginTestRunner {
         header
                 .openAdminProfileMenu()
                 .openAddCenterModal()
-                .openAddLocationModal()
+                .clickAddLocationButton()
                 .fillInLocationNameField(name)
                 .selectCityByName(city)
                 .selectRegionByName(region)

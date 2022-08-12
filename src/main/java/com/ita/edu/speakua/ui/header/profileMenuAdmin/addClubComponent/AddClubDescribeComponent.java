@@ -32,7 +32,7 @@ public class AddClubDescribeComponent extends AbstractAddClubComponent {
     }
 
     @Step("Set description {text}")
-    public AddClubDescribeComponent inputDescribe(String text) {
+    public AddClubDescribeComponent inputDescription(String text) {
         describeArea.click();
         describeArea.clear();
         describeArea.sendKeys(text);

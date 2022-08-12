@@ -15,7 +15,7 @@ public class AddClubDescribeTestRunner extends LoginTestRunner {
                 .openUserProfilePage()
                 .openAddClubModal()
                 .inputNameOfClub("Спортивні танці")
-                .chooseClubCategory("Спортивні секції")
+                .selectCategoryClub("Спортивні секції")
                 .inputAgeFrom(4)
                 .inputAgeTo(8)
                 .openNextStep()

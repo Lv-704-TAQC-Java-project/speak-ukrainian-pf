@@ -50,7 +50,7 @@ public class AddClubMainInfoComponent extends AbstractAddClubComponent {
     }
 
     @Step("Select category club")
-    public AddClubMainInfoComponent chooseClubCategory(String name){
+    public AddClubMainInfoComponent selectCategoryClub(String name){
         getCategoryItem(name).click();
         return new AddClubMainInfoComponent(driver);
     }

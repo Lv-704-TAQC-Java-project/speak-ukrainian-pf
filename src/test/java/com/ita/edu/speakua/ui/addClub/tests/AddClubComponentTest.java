@@ -30,7 +30,7 @@ public class AddClubComponentTest extends AddClubDescribeTestRunner {
     public void verifyAddClubDescribeFieldValidDataTest(int charAmount) {
         String descriptionInput = new String(new char[150]).replace("\0", "Lorem Ipsu");
         boolean isButtonEnable = addClubDescribeComponent
-                .inputDescribe(descriptionInput.substring(0,charAmount))
+                .inputDescription(descriptionInput.substring(0,charAmount))
                 .isButtonEnable();
         assertTrue(isButtonEnable, "Button should be enabled");
     }
@@ -73,9 +73,9 @@ public class AddClubComponentTest extends AddClubDescribeTestRunner {
                 .selectCategoryClub("Спортивні секції")
                 .inputAgeFrom(4)
                 .inputAgeTo(8)
-                .clickNextStep()
+                .openNextStep()
                 .inputPhoneNumber("0672131246")
-                .clickNextStep()
+                .openNextStep()
                 .inputDescription(descriptionInput);
 
         SoftAssert softAssert = new SoftAssert();
@@ -112,7 +112,7 @@ public class AddClubComponentTest extends AddClubDescribeTestRunner {
         SoftAssert softAssert = new SoftAssert();
 
         addClubDescribeComponent.inputDescription(testData);
-        btnFinishIsEnable = addClubDescribeComponent.isFinishButtonEnable();
+        btnFinishIsEnable = addClubDescribeComponent.isButtonEnable();
         softAssert.assertTrue(btnFinishIsEnable);
 
         softAssert.assertAll();

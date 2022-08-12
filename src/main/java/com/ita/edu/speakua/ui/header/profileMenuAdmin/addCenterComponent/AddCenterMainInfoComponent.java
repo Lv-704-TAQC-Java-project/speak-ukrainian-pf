@@ -63,15 +63,15 @@ public class AddCenterMainInfoComponent extends AbstractAddCenterComponent{
         return new AddCenterContactComponent(driver);
     }
 
-
+    @Step("Click next step button")
     public AddCenterMainInfoComponent failOpenNextStep(){
         nextStepButton.click();
         return new AddCenterMainInfoComponent(driver);
     }
 
     @Step("Verify error message is displayed")
-    public boolean isErrorMessageCenterName(){
-        waitVisibilityOfElement(By.xpath("//div[contains(text(),'Некоректна назва центру')]"));
+    public boolean isErrorMessageDisplayed(){
+        waitVisibilityOfWebElement(errorMessage);
         return errorMessage.isDisplayed();
     }
 
@@ -85,5 +85,4 @@ public class AddCenterMainInfoComponent extends AbstractAddCenterComponent{
     public AddLocationComponent getAddLocationComponent() {
         return new AddLocationComponent(driver);
     }
-
 }
