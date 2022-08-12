@@ -13,11 +13,11 @@ public class AddCenterTest extends LoginTestRunner {
     @Description("Verify if an error message appears under field when empty data is entered")
     @Test
     public void verifyErrorMessageIsDisplayTest(){
-       boolean message = new HomePage(driver)
+       boolean isMessage = new HomePage(driver)
                 .openAdminProfileMenu()
                 .openAddCenterModal()
                 .failOpenNextStep()
                 .isErrorMessageDisplayed();
-        Assert.assertTrue(message, "Error message should be displayed");
+        Assert.assertTrue(isMessage, "Error message should be displayed");
     }
 }

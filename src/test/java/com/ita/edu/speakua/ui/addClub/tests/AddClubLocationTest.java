@@ -25,10 +25,10 @@ public class AddClubLocationTest extends LoginTestRunner {
                 .openUserProfilePage()
                 .openAddClubModal()
                 .inputNameOfClub("Спортивні танці")
-                .chooseCategoryClub("Спортивні секції")
+                .selectCategoryClub("Спортивні секції")
                 .inputAgeFrom(4)
                 .inputAgeTo(8)
-                .clickNextStep();
+                .openNextStep();
         String name = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 
         addClubContactComponent
