@@ -70,5 +70,7 @@ public class CardComponent extends BaseMethods {
         return availableOnline.isDisplayed();
     }
 
-
+    public boolean equals(CardComponent card) {
+        return this.getTextCardName().equals(card.getTextCardName());
+    }
 }

@@ -2,9 +2,12 @@ package com.ita.edu.speakua.ui.baseSearch.tests;
 
 import com.ita.edu.speakua.ui.HomePage;
 import com.ita.edu.speakua.ui.clubs.ClubsPage;
+import com.ita.edu.speakua.ui.clubs.card.components.CardComponent;
 import com.ita.edu.speakua.ui.runners.SameWindowTestRunner;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
+
+import java.util.List;
 
 public class ClubsPageSearchTest extends SameWindowTestRunner {
     private ClubsPage clubsPage;
@@ -31,13 +34,26 @@ public class ClubsPageSearchTest extends SameWindowTestRunner {
 
     @Test(dataProvider = "searchData")
     public void verifySearchFunctionality(String query, int inputLength) {
+        List<CardComponent> cardsBeforeSearch = clubsPage.getCards();
         clubsPage.fillInSearch(query);
+        List<CardComponent> cardsAfterSearch = clubsPage.getCards();
+
+        boolean areCardsDifferentAfterSearch = false;
+        for (int i = 0; i < cardsAfterSearch.size(); i++) {
+            if(cardsBeforeSearch.get(i).equals(cardsAfterSearch.get(i))) {
+                areCardsDifferentAfterSearch = true;
+            } else {
+                areCardsDifferentAfterSearch = false;
+                break;
+            }
+        }
 
         int lastPageNumberAfterSearch = clubsPage.getPaginationComponent()
                 .getLastPaginationPageNumber();
 
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertTrue(lastPageNumberBeforeSearch > lastPageNumberAfterSearch, "Number of pages decreased after search.");
+        softAssert.assertTrue(areCardsDifferentAfterSearch);
+        softAssert.assertTrue(lastPageNumberBeforeSearch != lastPageNumberAfterSearch, "Number of pages decreased after search.");
         softAssert.assertEquals(clubsPage.getSearchInputLength(), inputLength);
         softAssert.assertAll();
     }

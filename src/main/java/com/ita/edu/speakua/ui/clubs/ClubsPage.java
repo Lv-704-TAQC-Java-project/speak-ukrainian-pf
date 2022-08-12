@@ -107,7 +107,15 @@ public class ClubsPage extends HeaderComponent {
     }
 
     public ClubsPage fillInSearch(String query) {
+        List<CardComponent> cards = new ClubsPage(driver).getCards();
         setNewValueForInput(searchInput, query);
+        driver.manage().timeouts().implicitlyWait(SHORT_TIMEOUT);
+        for (CardComponent card : cards) {
+            try {
+                waitStalenessOfElement(card.getCardBody());
+            } catch (TimeoutException ignored) {
+            }
+        }
         return this;
     }
 
