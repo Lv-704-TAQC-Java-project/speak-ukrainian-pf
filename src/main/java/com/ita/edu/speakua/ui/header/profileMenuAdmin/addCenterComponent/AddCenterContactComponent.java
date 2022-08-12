@@ -1,80 +1,93 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.addCenterComponent;
 
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubDescribeComponent;
+import io.qameta.allure.Step;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class AddCenterContactComponent extends AbstractAddCenterComponent{
-
+public class AddCenterContactComponent extends AbstractAddCenterComponent {
 
     @FindBy(xpath = "//input[@id='contacts_contactFacebook']")
-    WebElement inputFaceBook;
-    @FindBy(xpath = "//input[@id='contacts_contactContact']")
-    WebElement inputBasicContact;
-    @FindBy(xpath = "//input[@id='contacts_contactПошта']")
-    WebElement inputEmail;
-    @FindBy(xpath = "//input[@id='contacts_contactSkype']")
-    WebElement inputSkype;
-    @FindBy(xpath = "//input[@id='contacts_contactWhatsApp']")
-    WebElement inputWhatsApp;
-    @FindBy(xpath = "//input[@id='contacts_contactТелефон']")
-    WebElement inputPhoneNumber;
-    @FindBy(xpath = "//span[contains(text(),'Назад')]/ancestor::button")
-    WebElement previousStep;
-    @FindBy(xpath = "//span[contains(text(),'Наступний крок')]/ancestor::button")
-    private WebElement nextStepBtn;
+    private WebElement enterFaceBook;
 
+    @FindBy(xpath = "//input[@id='contacts_contactContact']")
+    private WebElement enterBasicContact;
+
+    @FindBy(xpath = "//input[@id='contacts_contactПошта']")
+    private WebElement enterEmail;
+
+    @FindBy(xpath = "//input[@id='contacts_contactSkype']")
+    private WebElement enterSkype;
+
+    @FindBy(xpath = "//input[@id='contacts_contactWhatsApp']")
+    private WebElement enterWhatsApp;
+
+    @FindBy(xpath = "//input[@id='contacts_contactТелефон']")
+    private WebElement enterPhoneNumber;
+
+    @FindBy(xpath = "//span[contains(text(),'Назад')]/ancestor::button")
+    private WebElement previousStepButton;
+
+    @FindBy(xpath = "//span[contains(text(),'Наступний крок')]/ancestor::button")
+    private WebElement nextStepButton;
 
     public AddCenterContactComponent(WebDriver driver) {
         super(driver);
     }
 
-    public AddCenterContactComponent inputFaceBook(String name){
-        inputFaceBook.sendKeys(Keys.chord(Keys.CONTROL, "a"));
-        inputFaceBook.sendKeys(Keys.chord(name));
+    @Step("Enter Facebook contact")
+    public AddCenterContactComponent enterFaceBook(String data) {
+        enterFaceBook.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        enterFaceBook.sendKeys(Keys.chord(data));
         return new AddCenterContactComponent(driver);
     }
 
-    public AddCenterContactComponent inputBasicContact(String name){
-        inputBasicContact.sendKeys(Keys.chord(Keys.CONTROL, "a"));
-        inputBasicContact.sendKeys(Keys.chord(name));
+    @Step("Enter basic contact")
+    public AddCenterContactComponent enterBasicContact(String data) {
+        enterBasicContact.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        enterBasicContact.sendKeys(Keys.chord(data));
         return new AddCenterContactComponent(driver);
     }
 
-    public AddCenterContactComponent inputEmail(String name){
-        inputEmail.sendKeys(Keys.chord(Keys.CONTROL, "a"));
-        inputEmail.sendKeys(Keys.chord(name));
+    @Step("Enter email contact")
+    public AddCenterContactComponent enterEmail(String data) {
+        enterEmail.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        enterEmail.sendKeys(Keys.chord(data));
         return new AddCenterContactComponent(driver);
     }
 
-    public AddCenterContactComponent inputSkype(String name){
-        inputSkype.sendKeys(Keys.chord(Keys.CONTROL, "a"));
-        inputSkype.sendKeys(Keys.chord(name));
+    @Step("Enter Skype contact")
+    public AddCenterContactComponent enterSkype(String data) {
+        enterSkype.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        enterSkype.sendKeys(Keys.chord(data));
         return new AddCenterContactComponent(driver);
     }
 
-    public AddCenterContactComponent inputWhatsApp(String name){
-        inputWhatsApp.sendKeys(Keys.chord(Keys.CONTROL, "a"));
-        inputWhatsApp.sendKeys(Keys.chord(name));
+    @Step("Enter WhatsApp contact")
+    public AddCenterContactComponent enterWhatsApp(String data) {
+        enterWhatsApp.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        enterWhatsApp.sendKeys(Keys.chord(data));
         return new AddCenterContactComponent(driver);
     }
 
-    public AddCenterContactComponent inputPhoneNumber(String name){
-        inputPhoneNumber.sendKeys(Keys.chord(Keys.CONTROL, "a"));
-        inputPhoneNumber.sendKeys(Keys.chord(name));
+    @Step("Enter phone number")
+    public AddCenterContactComponent enterPhoneNumber(String data) {
+        enterPhoneNumber.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        enterPhoneNumber.sendKeys(Keys.chord(data));
         return new AddCenterContactComponent(driver);
     }
 
-
-    public AddCenterMainInfoComponent clickPreviousStep(){
-        previousStep.click();
+    @Step("Go back to previous modal 'Main info'")
+    public AddCenterMainInfoComponent openPreviousStep() {
+        previousStepButton.click();
         return new AddCenterMainInfoComponent(driver);
     }
 
-    public AddClubDescribeComponent clickNextStep(){
-        nextStepBtn.click();
+    @Step("Open next modal 'Describe'")
+    public AddClubDescribeComponent openNextStep() {
+        nextStepButton.click();
         return new AddClubDescribeComponent(driver);
     }
 }

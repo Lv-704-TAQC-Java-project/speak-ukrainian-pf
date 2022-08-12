@@ -9,17 +9,17 @@ public class AddClubDescribeTestRunner extends LoginTestRunner {
     protected AddClubDescribeComponent addClubDescribeComponent;
 
     @BeforeClass
-    public void openAddClubDescribeComponent(){
+    public void openAddClubDescribeComponent() {
         addClubDescribeComponent = new HomePage(driver)
                 .openAdminProfileMenu()
                 .openUserProfilePage()
                 .openAddClubModal()
                 .inputNameOfClub("Спортивні танці")
-                .chooseCategoryClub("Спортивні секції")
+                .selectCategoryClub("Спортивні секції")
                 .inputAgeFrom(4)
                 .inputAgeTo(8)
-                .clickNextStep()
+                .openNextStep()
                 .inputPhoneNumber("0672131246")
-                .clickNextStep();
+                .openNextStep();
     }
 }

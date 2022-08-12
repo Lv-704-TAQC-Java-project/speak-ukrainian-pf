@@ -48,7 +48,7 @@ public class HeaderComponent extends BaseMethods {
         return new AdminProfileMenuComponent(driver);
     }
 
-    @Step(" open Profile Menu")
+    @Step("Open guest profile menu")
     public GuestProfileMenuComponent openGuestProfileMenu() {
         profileMenuButton.click();
         return getGuestProfileMenuComponent();

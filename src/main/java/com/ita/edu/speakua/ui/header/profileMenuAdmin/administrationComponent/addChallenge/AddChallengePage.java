@@ -1,7 +1,7 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.addChallenge;
 
-import com.ita.edu.speakua.ui.BaseMethods;
 import com.ita.edu.speakua.ui.header.HeaderComponent;
+import io.qameta.allure.Step;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,60 +10,66 @@ import org.openqa.selenium.support.FindBy;
 public class AddChallengePage extends HeaderComponent {
 
     @FindBy(xpath = "//input[@id='sortNumber']")
-    WebElement inputSortNumber;
+    private WebElement sortNumber;
 
     @FindBy(xpath = "//input[@id='name']")
-    WebElement inputName;
+    private WebElement challengeName;
 
     @FindBy(xpath = "//input[@id='title']")
-    WebElement inputHeading;
+    private WebElement titleText;
 
     @FindBy(xpath = "//div[@class='ql-editor ql-blank']/p")
-    WebElement inputDescribe;
+    private WebElement describe;
 
     @FindBy(xpath = "//span[@class='upload-label']")
-    WebElement uploadImageBtn;
+    private WebElement uploadImageButton;
 
     @FindBy(xpath = "//input[@id='startDate']")
-    WebElement saveBtn;
+    private WebElement saveBtn;
 
     @FindBy(xpath = "//span[contains(text(),'Зберегти')]/ancestor::button")
-    WebElement saveButton;
+    private WebElement saveButton;
 
     public AddChallengePage(WebDriver driver) {
         super(driver);
     }
 
-    public AddChallengePage inputSortNumber(String name){
-        inputSortNumber.sendKeys(Keys.chord(Keys.CONTROL, "a"));
-        inputSortNumber.sendKeys(Keys.chord(name));
-        return new AddChallengePage(driver);
+    @Step("Input sort number")
+    public AddChallengePage enterSortNumber(String number) {
+        sortNumber.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        sortNumber.sendKeys(Keys.chord(number));
+        return this;
     }
 
-    public AddChallengePage inputName(String name){
-        inputName.sendKeys(Keys.chord(Keys.CONTROL, "a"));
-        inputName.sendKeys(Keys.chord(name));
-        return new AddChallengePage(driver);
+    @Step("Input challenge name")
+    public AddChallengePage enterName(String name) {
+        challengeName.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        challengeName.sendKeys(Keys.chord(name));
+        return this;
     }
 
-    public AddChallengePage inputHeading(String name){
-        inputHeading.sendKeys(Keys.chord(Keys.CONTROL, "a"));
-        inputHeading.sendKeys(Keys.chord(name));
-        return new AddChallengePage(driver);
+    @Step("Input title text")
+    public AddChallengePage enterTitle(String title) {
+        titleText.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        titleText.sendKeys(Keys.chord(title));
+        return this;
     }
 
-    public AddChallengePage inputDescribe(String name){
-        inputDescribe.sendKeys(Keys.chord(Keys.CONTROL, "a"));
-        inputDescribe.sendKeys(Keys.chord(name));
-        return new AddChallengePage(driver);
+    @Step("Enter a challenge description")
+    public AddChallengePage enterDescription(String text) {
+        describe.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        describe.sendKeys(Keys.chord(text));
+        return this;
     }
 
-    public AddChallengePage openUploadImageBtn(){
-        uploadImageBtn.click();
-        return new AddChallengePage(driver);
+    @Step("Upload image")
+    public AddChallengePage uploadImage() {
+        uploadImageButton.click();
+        return this;
     }
 
-    public ChallengePage clickSaveButton(String name){
+    @Step("Save challenge")
+    public ChallengePage save() {
         saveButton.click();
         return new ChallengePage(driver);
     }

@@ -1,5 +1,6 @@
 package com.ita.edu.speakua.ui.clubs;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -110,6 +111,7 @@ public class AdvancedSearchPanelComponent extends ClubsPage {
         return this;
     }
 
+    @Step("Check is availableOnlineCheckbox displayed")
     public boolean availableOnlineCheckboxIsDisplayed() {
         try {
             return availableOnline.isDisplayed();
@@ -118,6 +120,7 @@ public class AdvancedSearchPanelComponent extends ClubsPage {
         }
     }
 
+    @Step("Check is categoriesBlock displayed")
     public boolean categoriesBlockIsDisplayed() {
         try {
             return categoriesBlock.isDisplayed();
@@ -126,6 +129,7 @@ public class AdvancedSearchPanelComponent extends ClubsPage {
         }
     }
 
+    @Step("Check is childAgeBlock displayed")
     public boolean childAgeBlockIsDisplayed() {
         try {
             return childAgeBlock.isDisplayed();
@@ -224,30 +228,20 @@ public class AdvancedSearchPanelComponent extends ClubsPage {
     public AdvancedSearchPanelComponent clubRadioButtonClick() {
         waitVisibilityOfWebElement(clubRadioButton);
         clubRadioButton.click();
-
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         return this;
     }
 
+    @Step("Click on 'center' radioButton")
     public AdvancedSearchPanelComponent centerRadioButtonClick() {
         waitVisibilityOfWebElement(centerRadioButton);
-        clickManagingCenterPageElement(centerRadioButton);
+        centerRadioButton.click();
         return this;
     }
 
     public AdvancedSearchPanelComponent centerRadioButtonClickAnother() {
         waitVisibilityOfWebElement(centerRadioButton);
         centerRadioButton.click();
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        sleep(1000);
         return this;
     }
 
@@ -278,24 +272,24 @@ public class AdvancedSearchPanelComponent extends ClubsPage {
         return this;
     }
 
-    public boolean cityListIsActivated(){
+    public boolean cityListIsActivated() {
         return citySelector.isDisplayed() && citySelector.isEnabled();
     }
 
-    public boolean districtListIsActivated(){
+    public boolean districtListIsActivated() {
         return districtSelector.isDisplayed() && districtSelector.isEnabled();
     }
 
-    public boolean metroListIsActivated(){
+    public boolean metroListIsActivated() {
         return metroSelector.isDisplayed() && metroSelector.isEnabled();
     }
 
-    public boolean checkOnlineIsActivated(){
+    public boolean checkOnlineIsActivated() {
         return availableOnline.isDisplayed() && availableOnline.isEnabled();
     }
 
-    public boolean categoriesListIsActivated(){
-        for (WebElement categoryElement: categoriesNameList) {
+    public boolean categoriesListIsActivated() {
+        for (WebElement categoryElement : categoriesNameList) {
             try {
                 categoryElement.isDisplayed();
                 categoryElement.isEnabled();
@@ -306,7 +300,7 @@ public class AdvancedSearchPanelComponent extends ClubsPage {
         return true;
     }
 
-    public boolean ageChildInputActivated(){
+    public boolean ageChildInputActivated() {
         return childAgeBlock.isDisplayed() && childAgeBlock.isEnabled();
     }
 

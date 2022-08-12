@@ -14,6 +14,7 @@ public class BaseMethods {
     protected final Duration TIMEOUT = Duration.ofSeconds(12);
     protected final Duration SHORT_TIMEOUT = Duration.ofSeconds(3);
     protected WebDriver driver;
+    private Actions actions;
 
     public BaseMethods(WebDriver driver) {
         this.driver = driver;
@@ -88,8 +89,7 @@ public class BaseMethods {
     }
 
     public void waitInvisibilityOfElement(WebElement element) {
-        WebDriverWait wait = new WebDriverWait(driver, TIMEOUT);
-        wait.until(ExpectedConditions.invisibilityOf(element));
+        waitInvisibilityOfElement(element, TIMEOUT.getSeconds());
     }
 
     public void waitInvisibilityOfElement(WebElement element, long seconds) {
@@ -98,12 +98,16 @@ public class BaseMethods {
     }
 
     public void waitStalenessOfElement(WebElement element) {
+        waitStalenessOfElement(element, TIMEOUT.getSeconds());
+    }
+
+    public void waitStalenessOfElement(WebElement element, long seconds) {
         WebDriverWait wait = new WebDriverWait(driver, TIMEOUT);
         wait.until(ExpectedConditions.stalenessOf(element));
     }
 
     public void waitVisibilityOfWebElement(WebElement element) {
-        WebDriverWait wait = new WebDriverWait(driver, TIMEOUT);
+        WebDriverWait wait = new WebDriverWait(driver, SHORT_TIMEOUT);
         wait.until(ExpectedConditions.visibilityOf(element));
     }
 
@@ -123,8 +127,13 @@ public class BaseMethods {
     }
 
     public void actionsClickOnElement(WebElement element) {
-        Actions actions = new Actions(driver);
+        actions = new Actions(driver);
         actions.moveToElement(element).click().perform();
+    }
+
+    public void actionsMoveTo(WebElement element) {
+        actions = new Actions(driver);
+        actions.moveToElement(element).perform();
     }
 
     public void waitStalenessOfPreviousErrors(List<WebElement> errors) {

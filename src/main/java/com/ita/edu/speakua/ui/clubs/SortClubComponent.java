@@ -43,7 +43,6 @@ public class SortClubComponent extends ClubsPage {
     public SortClubComponent arrowUpButtonClick() {
         clickManagingClubsPageElement(arrowUpButton);
         return this;
-
     }
 
     public SortClubComponent arrowDownButtonClick() {
