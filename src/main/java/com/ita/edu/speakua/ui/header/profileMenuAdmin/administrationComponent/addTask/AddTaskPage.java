@@ -150,6 +150,7 @@ public class AddTaskPage extends HeaderComponent {
         return errorMessage.getText();
     }
 
+    @Step("Get error messages from invalid challenges")
     public boolean errorMessageIsEmptyIsVisible() {
         waitVisibilityOfElement(By.xpath("//span[contains(text(),'Please')]"));
         return errorMessageIsEmpty.isDisplayed();

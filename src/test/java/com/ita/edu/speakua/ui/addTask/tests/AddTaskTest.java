@@ -139,6 +139,7 @@ public class AddTaskTest extends AddTaskTestRunner {
     }
 
 
+    @Issue("TUA-526")
     @Test
     public void verifyCreateTaskWithoutChallenge() {
         addTaskPage = addTaskPage
