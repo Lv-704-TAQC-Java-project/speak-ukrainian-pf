@@ -1,6 +1,5 @@
 package com.ita.edu.speakua.ui.clubs;
 
-import com.ita.edu.speakua.ui.BaseMethods;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -37,6 +36,15 @@ public class PaginationComponent extends ClubsPage {
         return lastPaginationPage;
     }
 
+    public int getLastPaginationPageNumber() {
+        if (getLastPaginationPage().isDisplayed()) {
+            waitStalenessOfElement(getLastPaginationPage());
+        } else {
+            waitVisibilityOfWebElement(getLastPaginationPage());
+        }
+        return Integer.parseInt(getLastPaginationPage().getText());
+    }
+
     public void clickFirstPageButton() {
         clickManagingClubsPageElement(firstPageButton);
     }
@@ -65,7 +73,4 @@ public class PaginationComponent extends ClubsPage {
         waitInvisibilityOfElement(firstClubPOnPage);
         return this;
     }
-
-
-
 }

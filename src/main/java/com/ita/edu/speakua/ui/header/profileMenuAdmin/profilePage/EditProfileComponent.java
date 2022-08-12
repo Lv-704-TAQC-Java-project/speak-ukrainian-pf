@@ -176,6 +176,7 @@ public class EditProfileComponent extends BaseMethods {
         return this;
     }
 
+    @Step("Get firstname error text")
     public String getFirstnameErrorText() {
         waitVisibilityOfWebElement(firstnameErrorText);
         return firstnameErrorText.getText();
@@ -192,6 +193,7 @@ public class EditProfileComponent extends BaseMethods {
         return this;
     }
 
+    @Step("Check is 'save changes' button enabled")
     public boolean saveChangesButtonIsEnable() {
         saveButton.click();
         try {

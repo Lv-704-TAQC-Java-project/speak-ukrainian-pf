@@ -2,7 +2,6 @@ package com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent;
 
 import com.ita.edu.speakua.ui.HomePage;
 import io.qameta.allure.Step;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -32,7 +31,7 @@ public class AddClubDescribeComponent extends AbstractAddClubComponent {
         super(driver);
     }
 
-    @Step("Add a description of club")
+    @Step("Set description {text}")
     public AddClubDescribeComponent inputDescribe(String text) {
         describeArea.click();
         describeArea.clear();
@@ -61,6 +60,7 @@ public class AddClubDescribeComponent extends AbstractAddClubComponent {
         return errorMessages;
     }
 
+    @Step("Check is 'finish' button enable")
     public boolean isButtonEnable() {
         return successArea.isDisplayed();
     }

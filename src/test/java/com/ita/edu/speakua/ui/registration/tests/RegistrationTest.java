@@ -34,21 +34,49 @@ public class RegistrationTest extends BaseTestRunner {
                 .openGuestProfileMenu()
                 .openRegistrationModal();
 
-        String lastNameValue = header.getGuestProfileMenuComponent().getRegistrationModal().getLastNameValue();
-        String firstNameValue = header.getGuestProfileMenuComponent().getRegistrationModal().getFistNameValue();
-        String phoneValue = header.getGuestProfileMenuComponent().getRegistrationModal().getPhoneValue();
-        String emailValue = header.getGuestProfileMenuComponent().getRegistrationModal().getEmailValue();
-        String passwordValue = header.getGuestProfileMenuComponent().getRegistrationModal().getPasswordValue();
-        String confirmPasswordValue = header.getGuestProfileMenuComponent().getRegistrationModal().getConfirmPasswordValue();
+        String lastNameValue = header
+                .getGuestProfileMenuComponent()
+                .getRegistrationModal()
+                .getLastNameValue();
+
+        String firstNameValue = header
+                .getGuestProfileMenuComponent()
+                .getRegistrationModal()
+                .getFistNameValue();
+
+        String phoneValue = header
+                .getGuestProfileMenuComponent()
+                .getRegistrationModal()
+                .getPhoneValue();
+
+        String emailValue = header
+                .getGuestProfileMenuComponent()
+                .getRegistrationModal()
+                .getEmailValue();
+
+        String passwordValue = header
+                .getGuestProfileMenuComponent()
+                .getRegistrationModal()
+                .getPasswordValue();
+
+        String confirmPasswordValue = header
+                .getGuestProfileMenuComponent()
+                .getRegistrationModal()
+                .getConfirmPasswordValue();
 
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(lastNameValue, lastName);
-        softAssert.assertEquals(firstNameValue, firstName);
-        softAssert.assertEquals(phoneValue, phone);
-        softAssert.assertEquals(emailValue, email);
-        softAssert.assertEquals(passwordValue, password);
-        softAssert.assertEquals(confirmPasswordValue, password);
+        softAssert.assertEquals(lastNameValue, lastName,
+                "Last name is not remembered");
+        softAssert.assertEquals(firstNameValue, firstName,
+                "First name is not remembered");
+        softAssert.assertEquals(phoneValue, phone,
+                "Phone number is not remembered");
+        softAssert.assertEquals(emailValue, email,
+                "Email is not remembered");
+        softAssert.assertEquals(passwordValue, password,
+                "Password is not remembered");
+        softAssert.assertEquals(confirmPasswordValue, password,
+                "Confirm password is not remembered");
         softAssert.assertAll();
-
     }
 }

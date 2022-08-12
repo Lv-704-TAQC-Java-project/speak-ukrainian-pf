@@ -75,8 +75,8 @@ public class AddCenterMainInfoComponent extends AbstractAddCenterComponent{
         return errorMessage.isDisplayed();
     }
 
-    @Step("Open the model to add a location")
-    public AddLocationComponent openAddLocationModal() {
+    @Step("Click addLocation Button")
+    public AddLocationComponent clickAddLocationButton() {
         sleep(1000);
         addLocationButton.click();
         return new AddLocationComponent(driver);

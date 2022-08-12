@@ -46,6 +46,7 @@ public class AdminProfileMenuComponent extends BaseMethods {
 
     @Step("Open user profile page")
     public ProfilePage openUserProfilePage() {
+        waitElementIsClickable(userProfileBtn);
         userProfileBtn.click();
         return new ProfilePage(driver);
     }
@@ -63,7 +64,6 @@ public class AdminProfileMenuComponent extends BaseMethods {
         return new AdministrationComponent(driver);
     }
 
-    //???
     public AddCenterMainInfoComponent getAddCenterMainInfoComponent() {
         return new AddCenterMainInfoComponent(driver);
     }

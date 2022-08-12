@@ -5,6 +5,8 @@ import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubDe
 import com.ita.edu.speakua.ui.runners.AddClubDescribeTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -43,28 +45,19 @@ public class AddClubComponentTest extends AddClubDescribeTestRunner {
 
     @Test(dataProvider = "descriptionErrorWithForbiddenCharacters")
     public void verifyErrorMessageAddClubDescriptionField(String description, String firstError, String secondError) {
-        AddClubDescribeComponent addClubDescribeComponent = new HomePage(driver)
-
-                .openAdminProfileMenu()
-                .openUserProfilePage()
-                .openAddClubModal()
-                .inputNameOfClub("Спортивні танці")
-                .chooseClubCategory("Спортивні секції")
-                .inputAgeFrom(4)
-                .inputAgeTo(8)
-                .openNextStep()
-                .inputPhoneNumber("0672131246")
-                .openNextStep()
-                .inputDescribe(description);
+        addClubDescribeComponent.inputDescription(description);
 
         String firstActualErrorMessage = addClubDescribeComponent.getErrorMessageDescriptionField().get(0);
         String secondActualErrorMessage = addClubDescribeComponent.getErrorMessageDescriptionField().get(1);
         int amountOfErrorMessages = addClubDescribeComponent.getErrorMessageDescriptionField().size();
 
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(firstActualErrorMessage, firstError);
-        softAssert.assertEquals(secondActualErrorMessage, secondError);
-        softAssert.assertEquals(amountOfErrorMessages, 2);
+        softAssert.assertEquals(firstActualErrorMessage, firstError,
+                "first error message does not correspond expected");
+        softAssert.assertEquals(secondActualErrorMessage, secondError,
+                "second error message does not correspond expected");
+        softAssert.assertEquals(amountOfErrorMessages, 2,
+                "There are more than 2 error messages");
         softAssert.assertAll();
     }
 
@@ -77,25 +70,25 @@ public class AddClubComponentTest extends AddClubDescribeTestRunner {
                 .openUserProfilePage()
                 .openAddClubModal()
                 .inputNameOfClub("Спортивні танці")
-                .chooseClubCategory("Спортивні секції")
+                .selectCategoryClub("Спортивні секції")
                 .inputAgeFrom(4)
                 .inputAgeTo(8)
-                .openNextStep()
+                .clickNextStep()
                 .inputPhoneNumber("0672131246")
-                .openNextStep()
-                .inputDescribe(descriptionInput);
+                .clickNextStep()
+                .inputDescription(descriptionInput);
 
         SoftAssert softAssert = new SoftAssert();
         String lengthErrorText = "Опис гуртка може містити від 40 до 1500 символів.";
         softAssert.assertFalse(addClubDescribeComponent.errorMessageForDescriptionFieldContainsText(lengthErrorText));
 
-        addClubDescribeComponent.inputDescribe(descriptionInput.substring(0, 1498));
+        addClubDescribeComponent.inputDescription(descriptionInput.substring(0, 1498));
         softAssert.assertFalse(addClubDescribeComponent.errorMessageForDescriptionFieldContainsText(lengthErrorText));
 
-        addClubDescribeComponent.inputDescribe(descriptionInput + "m");
+        addClubDescribeComponent.inputDescription(descriptionInput + "m");
         softAssert.assertTrue(addClubDescribeComponent.errorMessageForDescriptionFieldContainsText(lengthErrorText));
 
-        addClubDescribeComponent.inputDescribe(descriptionInput + "Hello world");
+        addClubDescribeComponent.inputDescription(descriptionInput + "Hello world");
         softAssert.assertTrue(addClubDescribeComponent.errorMessageForDescriptionFieldContainsText(lengthErrorText));
         softAssert.assertAll();
     }
@@ -109,14 +102,17 @@ public class AddClubComponentTest extends AddClubDescribeTestRunner {
         };
     }
 
+    @Issue("TUA-173")
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("Verify the description field is filled in with valid data and The 'Завершити' button is enable")
     @Test(dataProvider = "validDescriptionData")
-    public void verifyDescribeComponentWithValidData(String testData) {
+    public void verifyCreatingClubWithDescribeValidData(String testData) {
         boolean btnFinishIsEnable;
 
         SoftAssert softAssert = new SoftAssert();
 
-        addClubDescribeComponent.inputDescribe(testData);
-        btnFinishIsEnable = addClubDescribeComponent.isButtonEnable();
+        addClubDescribeComponent.inputDescription(testData);
+        btnFinishIsEnable = addClubDescribeComponent.isFinishButtonEnable();
         softAssert.assertTrue(btnFinishIsEnable);
 
         softAssert.assertAll();

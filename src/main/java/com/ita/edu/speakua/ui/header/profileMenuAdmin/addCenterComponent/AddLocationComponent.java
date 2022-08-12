@@ -1,6 +1,7 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.addCenterComponent;
 
 import com.ita.edu.speakua.ui.BaseMethods;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -39,6 +40,7 @@ public class AddLocationComponent extends BaseMethods {
         super(driver);
     }
 
+    @Step("Fill In {locationName}")
     public AddLocationComponent fillInLocationNameField(String locationName) {
         waitVisibilityOfWebElement(locationNameField);
         locationNameField.click();
@@ -52,6 +54,7 @@ public class AddLocationComponent extends BaseMethods {
                 (String.format("//div[@class='ant-select-item-option-content'][contains(text(),'%s')]", city)));
     }
 
+    @Step("Select {city}")
     public AddLocationComponent selectCityByName(String city) {
         cityDropDownList.click();
         findCityByName(city).click();
@@ -63,12 +66,14 @@ public class AddLocationComponent extends BaseMethods {
                 (String.format("//div[@class='ant-select-item-option-content'][contains(text(),'%s')]", region)));
     }
 
+    @Step("Select {region}")
     public AddLocationComponent selectRegionByName(String region) {
         regionDropDownList.click();
         findRegionByName(region).click();
         return this;
     }
 
+    @Step("Fill In {address}")
     public AddLocationComponent fillInAddressField(String address) {
         waitVisibilityOfWebElement(addressField);
         addressField.click();
@@ -77,6 +82,7 @@ public class AddLocationComponent extends BaseMethods {
         return this;
     }
 
+    @Step("Fill In {coordinates}")
     public AddLocationComponent fillInGeographicСoordinatesField(String coordinates) {
         waitVisibilityOfWebElement(geographicСoordinatesField);
         geographicСoordinatesField.click();
@@ -85,6 +91,7 @@ public class AddLocationComponent extends BaseMethods {
         return this;
     }
 
+    @Step("Fill In {phoneNumber}")
     public AddLocationComponent fillInPhoneNumberField(String phoneNumber) {
         phoneNumberField.click();
         phoneNumberField.clear();
@@ -92,6 +99,7 @@ public class AddLocationComponent extends BaseMethods {
         return this;
     }
 
+    @Step("Click addButton")
     public AddCenterMainInfoComponent addButtonClick() {
         addButton.click();
         return new AddCenterMainInfoComponent(driver);

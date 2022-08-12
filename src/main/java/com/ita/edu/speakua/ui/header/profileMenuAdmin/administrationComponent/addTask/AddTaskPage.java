@@ -61,7 +61,7 @@ public class AddTaskPage extends HeaderComponent {
         super(driver);
     }
 
-    @Step("Enter start date of challenge")
+    @Step("Enter start date of challenge {date}")
     public AddTaskPage enterStartDate(String date) {
         setNewValueForInput(startDate, date);
         return this;
@@ -73,19 +73,19 @@ public class AddTaskPage extends HeaderComponent {
         return this;
     }
 
-    @Step("Enter name of challenge")
+    @Step("Enter name of challenge {name}")
     public AddTaskPage enterName(String name) {
         setNewValueForInput(taskName, name);
         return this;
     }
 
-    @Step("Enter title of challenge")
+    @Step("Set heading {value}")
     public AddTaskPage enterTitle(String value) {
         setNewValueForInput(taskTitle, value);
         return this;
     }
 
-    @Step("Enter description of challenge")
+    @Step("Enter description of challenge {value}")
     public AddTaskPage enterDescription(String value) {
         setNewValueForInput(enterDescription, value);
         return this;
@@ -101,15 +101,15 @@ public class AddTaskPage extends HeaderComponent {
         return challengeList.findElement(By.xpath(String.format(".//div[contains(text(),'%s')]", name)));
     }
 
-    @Step("Choose challenge from list")
-    public AddTaskPage chooseChallenge(String name) {
+    @Step("Select challenge")
+    public AddTaskPage selectChallenge(String name) {
         openChallengeList()
                 .getChallengeItem(name)
                 .click();
         return this;
     }
 
-    @Step("Verify whether all fields are empty")
+    @Step("Check are allFields empty")
     public boolean areFieldsEmpty() {
         waitVisibilityOfWebElement(startDate);
         return startDateIsEmpty() &&
@@ -144,6 +144,7 @@ public class AddTaskPage extends HeaderComponent {
         return challengeInput.getText().equals("Оберіть челендж");
     }
 
+    @Step("Get error message")
     public String getErrorMessageText() {
         waitVisibilityOfWebElement(errorMessage);
         return errorMessage.getText();
@@ -172,11 +173,13 @@ public class AddTaskPage extends HeaderComponent {
         }
     }
 
+    @Step("Click on 'save' button")
     public TaskPage save() {
         saveButton.click();
         return new TaskPage(driver);
     }
 
+    @Step("Click on 'save' button")
     public AddTaskPage failSave() {
         saveButton.click();
         return this;

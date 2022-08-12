@@ -71,7 +71,7 @@ public class AddClubContactComponent extends AbstractAddClubComponent {
         return this;
     }
 
-    @Step("Enter phone number")
+    @Step("Enter PhoneNumber {phone}")
     public AddClubContactComponent inputPhoneNumber(String phone){
         phoneNumber.click();
         phoneNumber.clear();

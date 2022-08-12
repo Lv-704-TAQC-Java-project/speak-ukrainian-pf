@@ -36,7 +36,7 @@ public class AddClubMainInfoComponent extends AbstractAddClubComponent {
         super(driver);
     }
 
-    @Step("Input name of club")
+    @Step("Set nameOfClub {name}")
     public AddClubMainInfoComponent inputNameOfClub(String name){
         waitVisibilityOfWebElement(inputNameOfClub);
         inputNameOfClub.click();
@@ -49,13 +49,13 @@ public class AddClubMainInfoComponent extends AbstractAddClubComponent {
         return categoryList.findElement(By.xpath(String.format(".//span[contains(text(),'%s')]",name)));
     }
 
-    @Step("Choose category of club")
+    @Step("Select category club")
     public AddClubMainInfoComponent chooseClubCategory(String name){
         getCategoryItem(name).click();
         return new AddClubMainInfoComponent(driver);
     }
 
-    @Step("Input the child's minimum age")
+    @Step("Input the child's minimum age {age}")
     public AddClubMainInfoComponent inputAgeFrom(int age){
         inputAgeFrom.click();
         inputAgeFrom.clear();
@@ -63,7 +63,7 @@ public class AddClubMainInfoComponent extends AbstractAddClubComponent {
         return new AddClubMainInfoComponent(driver);
     }
 
-    @Step("Input the child's maximum age")
+    @Step("Input the child's maximum age {age}")
     public AddClubMainInfoComponent inputAgeTo(int age){
         inputAgeTo.click();
         inputAgeTo.clear();

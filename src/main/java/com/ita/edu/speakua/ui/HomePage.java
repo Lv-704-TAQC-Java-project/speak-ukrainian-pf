@@ -26,8 +26,7 @@ public class HomePage extends HeaderComponent {
     }
 
     public ClubsPage fillInSearch(String query) {
-        searchInput.sendKeys(Keys.chord(Keys.CONTROL, "a"), "");
-        searchInput.sendKeys(query);
+        setNewValueForInput(searchInput, query);
         return new ClubsPage(driver);
     }
 
@@ -46,6 +45,4 @@ public class HomePage extends HeaderComponent {
         searchButton.click();
         return new ClubsPage(driver);
     }
-
-
 }
