@@ -3,6 +3,7 @@ package com.ita.edu.speakua.ui.clubs;
 import com.ita.edu.speakua.ui.clubs.card.components.CardComponent;
 import com.ita.edu.speakua.ui.clubs.card.components.CenterComponent;
 import com.ita.edu.speakua.ui.header.HeaderComponent;
+import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -19,10 +20,10 @@ public class ClubsPage extends HeaderComponent {
 
     private SortClubComponent sortClubComponent;
 
-    @FindBy(xpath = "//div[@class = 'content-clubs-list false']")
+    //@FindBy(xpath = "//div[@class = 'content-clubs-list false']")
     private WebElement blockCardContainer;
 
-    @FindBy(xpath = "//div[@class = 'content-clubs-list content-clubs-block']")
+   // @FindBy(xpath = "//div[@class = 'content-clubs-list content-clubs-block']")
     private WebElement listCardContainer;
 
     @FindBy(xpath = "//span[contains(@class, 'anticon-control')]")
@@ -101,6 +102,19 @@ public class ClubsPage extends HeaderComponent {
 
     public boolean isDisappearsAdvancedSearchPanelComponent() {
         return advancedSearchButton == null;
+    }
+    public WebElement getBlockCardContainer() {
+        if (blockCardContainer == null) {
+            blockCardContainer = driver.findElement(By.xpath("//div[@class = 'content-clubs-list content-clubs-block']"));
+        }
+        return blockCardContainer;
+    }
+
+    public WebElement getWideCardContainer() {
+        if (listCardContainer == null) {
+            listCardContainer = driver.findElement(By.xpath("//div[@class = 'content-clubs-list false']"));
+        }
+        return listCardContainer;
     }
 
 }

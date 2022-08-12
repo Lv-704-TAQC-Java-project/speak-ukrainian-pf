@@ -4,6 +4,7 @@ import com.ita.edu.speakua.ui.clubs.ClubsPage;
 import com.ita.edu.speakua.ui.header.HeaderComponent;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.profilePage.EditProfileComponent;
 import io.qameta.allure.Step;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -36,9 +37,17 @@ public class HomePage extends HeaderComponent {
         return new ClubsPage(driver);
     }
 
-    @Step("click Advanced Search Button")
+    public WebElement getAdvancedSearchButton() {
+        if (advancedSearchButton == null) {
+            waitVisibilityOfElement(By.xpath("//span[contains(@class, 'anticon-control')]"));
+            advancedSearchButton = driver.findElement(By.xpath("//span[contains(@class, 'anticon-control')]"));
+        }
+        return advancedSearchButton;
+    }
+
+
     public ClubsPage clickAdvancedSearchButton() {
-        advancedSearchButton.click();
+        getAdvancedSearchButton().click();
         return new ClubsPage(driver);
     }
 

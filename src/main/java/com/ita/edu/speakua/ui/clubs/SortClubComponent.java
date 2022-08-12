@@ -1,6 +1,7 @@
 package com.ita.edu.speakua.ui.clubs;
 
 import com.ita.edu.speakua.ui.BaseMethods;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -21,7 +22,7 @@ public class SortClubComponent extends ClubsPage {
     @FindBy(xpath = "//div/label[@class = 'ant-radio-button-wrapper club-view-button']")
     private WebElement listViewButton;
 
-    @FindBy(xpath = "//div/label[@class = 'ant-radio-button-wrapper ant-radio-button-wrapper-checked club-view-button']")
+    //@FindBy(xpath = "//div/label[@class = 'ant-radio-button-wrapper ant-radio-button-wrapper-checked club-view-button']")
     private WebElement blockViewButton;
 
     public SortClubComponent(WebDriver driver) {
@@ -55,9 +56,16 @@ public class SortClubComponent extends ClubsPage {
         listViewButton.click();
         return this;
     }
+    public WebElement getBlockViewButton() {
+        if (blockViewButton == null) {
+            blockViewButton = driver.findElement(By.xpath("//div/label[@class = 'ant-radio-button-wrapper ant-radio-button-wrapper-checked club-view-button']"));
+
+        }
+        return blockViewButton;
+    }
 
     public SortClubComponent blockViewButtonClick() {
-        blockViewButton.click();
+        getBlockViewButton().click();
         return this;
     }
 }
