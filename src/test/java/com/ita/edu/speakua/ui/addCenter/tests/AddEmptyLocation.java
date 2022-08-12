@@ -9,7 +9,7 @@ public class AddEmptyLocation extends LoginTestRunner {
     @Test
     public void addLocationTest() {
 
-        var c=new HeaderComponent(driver)
+        var c = new HeaderComponent(driver)
                 .openAdminProfileMenu()
                 .openAddCenterModal()
                 .clickAddLocationButton();

@@ -1,7 +1,7 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -30,13 +30,13 @@ public class AddClubMainInfoComponent extends AbstractAddClubComponent {
     private WebElement centerList;
 
     @FindBy(xpath = "//span[contains(text(),'Наступний крок')]/ancestor::button")
-    private WebElement nextStepBtn;
-
+    private WebElement nextStepButton;
 
     public AddClubMainInfoComponent(WebDriver driver) {
         super(driver);
     }
 
+    @Step("Set nameOfClub {name}")
     public AddClubMainInfoComponent inputNameOfClub(String name){
         waitVisibilityOfWebElement(inputNameOfClub);
         inputNameOfClub.click();
@@ -45,15 +45,17 @@ public class AddClubMainInfoComponent extends AbstractAddClubComponent {
         return new AddClubMainInfoComponent(driver);
     }
 
-    public WebElement getCategoryItem(String name){
+    private WebElement getCategoryItem(String name){
         return categoryList.findElement(By.xpath(String.format(".//span[contains(text(),'%s')]",name)));
     }
 
-    public AddClubMainInfoComponent chooseCategoryClub(String name){
+    @Step("Select category club")
+    public AddClubMainInfoComponent selectCategoryClub(String name){
         getCategoryItem(name).click();
         return new AddClubMainInfoComponent(driver);
     }
 
+    @Step("Input the child's minimum age {age}")
     public AddClubMainInfoComponent inputAgeFrom(int age){
         inputAgeFrom.click();
         inputAgeFrom.clear();
@@ -61,6 +63,7 @@ public class AddClubMainInfoComponent extends AbstractAddClubComponent {
         return new AddClubMainInfoComponent(driver);
     }
 
+    @Step("Input the child's maximum age {age}")
     public AddClubMainInfoComponent inputAgeTo(int age){
         inputAgeTo.click();
         inputAgeTo.clear();
@@ -68,22 +71,25 @@ public class AddClubMainInfoComponent extends AbstractAddClubComponent {
         return new AddClubMainInfoComponent(driver);
     }
 
+    @Step("Open list with centers")
     public AddClubMainInfoComponent openCenterList(){
         openCenterList.click();
         return new AddClubMainInfoComponent(driver);
     }
 
-    public WebElement getCenterItem(String name){
+    private WebElement getCenterItem(String name){
         return centerList.findElement(By.xpath(String.format(".//div[contains(text(),'%s')]",name)));
     }
 
+    @Step("Choose center from list")
     public AddClubMainInfoComponent chooseCenter(String name){
         getCenterItem(name).click();
         return new AddClubMainInfoComponent(driver);
     }
 
-    public AddClubContactComponent clickNextStep(){
-        nextStepBtn.click();
+    @Step("Open next modal 'Contacts'")
+    public AddClubContactComponent openNextStep(){
+        nextStepButton.click();
         return new AddClubContactComponent(driver);
     }
 

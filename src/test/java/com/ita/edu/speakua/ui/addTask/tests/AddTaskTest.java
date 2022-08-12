@@ -1,6 +1,10 @@
 package com.ita.edu.speakua.ui.addTask.tests;
 
 import com.ita.edu.speakua.ui.runners.AddTaskTestRunner;
+import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -15,35 +19,35 @@ public class AddTaskTest extends AddTaskTestRunner {
     @Test
     public void verifyCreateTaskInvalidData() {
 
-        boolean allFieldsAreEmpty = addTaskPage.allFieldsAreEmpty();
+        boolean allFieldsAreEmpty = addTaskPage.areFieldsEmpty();
 
         addTaskPage = addTaskPage
-                .inputStartDate("2022-08-23")
-                .inputImage(pathToImage)
-                .inputName("Yaroslav test")
-                .inputHeading("Lorem Ipsum is simply dummy text of the printing and typesetting industry. " +
+                .enterStartDate("2022-08-23")
+                .uploadImage(pathToImage)
+                .enterName("Yaroslav test")
+                .enterTitle("Lorem Ipsum is simply dummy text of the printing and typesetting industry. " +
                         "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s," +
                         " when an unknown printer took a galley of type and scrambled " +
                         "it to make a type specimen book.")
-                .chooseChallenge("Example name");
+                .selectChallenge("Example name");
 //                .tryClickSaveButton();
 
 //        boolean errorMessageDescribeIsEmpty = addTaskPage.errorMessageIsEmptyIsVisible();
 
         addTaskPage = addTaskPage
-                .inputDescribing("ъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ð")
-                .tryClickSaveButton();
+                .enterDescription("ъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ð")
+                .failSave();
 
         boolean errorMessageDescribeInvalidCharacters = addTaskPage.errorMessageInvalidCharactersIsVisible();
 
         addTaskPage = addTaskPage
-                .inputHeading("Lorem Ipsum is simply ")
-                .tryClickSaveButton();
+                .enterTitle("Lorem Ipsum is simply ")
+                .failSave();
 
-        boolean errorMessageHeadingNotEnoughChars = addTaskPage.errorMessageLessThenFortyCharactersIsVisible();
+        boolean errorMessageHeadingNotEnoughChars = addTaskPage.errorMessageInvalidCharactersCount();
 
         addTaskPage = addTaskPage
-                .inputHeading("What is Lorem Ipsum?\n" +
+                .enterTitle("What is Lorem Ipsum?\n" +
                         "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has " +
                         "been the industry's standard dummy text ever since the 1500s, when an unknown printer took a " +
                         "galley of type and scrambled it to make a type specimen book. It has survived not only five " +
@@ -78,9 +82,9 @@ public class AddTaskTest extends AddTaskTestRunner {
                         "reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum " +
                         "et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by " +
                         "English versions from the 1914 translation")
-                .tryClickSaveButton();
+                .failSave();
 
-        boolean errorMessageHeadingTooManyChars = addTaskPage.errorMessageMoreThenThreeThousandCharactersIsVisible();
+        boolean errorMessageHeadingTooManyChars = addTaskPage.errorMessageInvalidCharactersCount();
 
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertTrue(allFieldsAreEmpty, "All field should be empty");
@@ -107,20 +111,23 @@ public class AddTaskTest extends AddTaskTestRunner {
         };
     }
 
+    @Issue("TUA-524")
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("Verify impossibility of creating task with heading invalid data")
     @Test(dataProvider = "invalidHeaderData")
-    public void verifyImpossibilityOfCreatingTaskWithInvalidData(String invalidData, String expectedMessage) {
+    public void verifyCreatingTaskWithHeadingInvalidData(String invalidData, String expectedMessage) {
         String descriptionInput = new String(new char[10]).replace("\0", "Lorem 56№*");
         String actualErrorMessage;
 
-        boolean isAllFieldsAreEmptyByDefault = addTaskPage.allFieldsAreEmpty();
+        boolean isAllFieldsAreEmptyByDefault = addTaskPage.areFieldsEmpty();
 
-        addTaskPage.inputStartDate("2022-10-19")
-                .inputImage(pathToImage)
-                .inputName("Test task # 5/")
-                .inputHeading(invalidData)
-                .inputDescribing(descriptionInput)
-                .chooseChallenge("Example name")
-                .tryClickSaveButton();
+        addTaskPage.enterStartDate("2022-10-19")
+                .uploadImage(pathToImage)
+                .enterName("Test task # 5/")
+                .enterTitle(invalidData)
+                .enterDescription(descriptionInput)
+                .selectChallenge("Example name")
+                .failSave();
 
         SoftAssert softAssert = new SoftAssert();
 
@@ -135,18 +142,18 @@ public class AddTaskTest extends AddTaskTestRunner {
     @Test
     public void verifyCreateTaskWithoutChallenge() {
         addTaskPage = addTaskPage
-                .inputStartDate("2023-01-01")
-                .inputName("Lorem Ipsum")
-                .inputHeading("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has " +
+                .enterStartDate("2023-01-01")
+                .enterName("Lorem Ipsum")
+                .enterTitle("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has " +
                         "been the industry's standard dummy text ever since the 1500s, when an unknown printer took a " +
                         "galley of type and scrambled it to make a type specimen book. It has survived not only five " +
                         "centuries, but also the leap into electronic typesetting, remaining essentially unchanged. " +
                         "It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum " +
                         "passages, and more recently with desktop publishing software like Aldus PageMaker including " +
                         "versions of Lorem Ipsum")
-                .inputDescribing("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has " +
+                .enterDescription("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has " +
                         "been the industry's standard dummy text ever since the 1500s, when an unknown printer took a ")
-                .tryClickSaveButton();
+                .failSave();
 
 
         Assert.assertTrue(addTaskPage.errorMessageIsEmptyIsVisible(), "Error message didn't find");
