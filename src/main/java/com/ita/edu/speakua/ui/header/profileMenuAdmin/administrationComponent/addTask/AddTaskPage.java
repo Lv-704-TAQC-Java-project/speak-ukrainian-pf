@@ -1,6 +1,7 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.addTask;
 
 import com.ita.edu.speakua.ui.header.HeaderComponent;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -60,6 +61,7 @@ public class AddTaskPage extends HeaderComponent {
         super(driver);
     }
 
+    @Step("Set start date {date}")
     public AddTaskPage inputStartDate(String date) {
         setNewValueForInput(startDate, date);
         return this;
@@ -70,16 +72,19 @@ public class AddTaskPage extends HeaderComponent {
         return this;
     }
 
+    @Step("Set name {name}")
     public AddTaskPage inputName(String name) {
         setNewValueForInput(inputName, name);
         return this;
     }
 
+    @Step("Set heading {value}")
     public AddTaskPage inputHeading(String value) {
         setNewValueForInput(inputHeading, value);
         return this;
     }
 
+    @Step("Set description {value}")
     public AddTaskPage inputDescribing(String value) {
         setNewValueForInput(inputDescribing, value);
         return this;
@@ -140,6 +145,7 @@ public class AddTaskPage extends HeaderComponent {
         return errorMessage.getText();
     }
 
+    @Step("Get error messages from invalid challenges")
     public boolean errorMessageIsEmptyIsVisible() {
         waitVisibilityOfElement(By.xpath("//span[contains(text(),'Please')]"));
         return errorMessageIsEmpty.isDisplayed();
@@ -173,6 +179,7 @@ public class AddTaskPage extends HeaderComponent {
         return new TaskPage(driver);
     }
 
+    @Step("Save changes")
     public AddTaskPage tryClickSaveButton() {
         saveButton.click();
         return this;

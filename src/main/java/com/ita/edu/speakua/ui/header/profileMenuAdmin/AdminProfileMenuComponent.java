@@ -7,6 +7,7 @@ import com.ita.edu.speakua.ui.header.profileMenuAdmin.addCenterComponent.AddCent
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubMainInfoComponent;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.AdministrationComponent;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.profilePage.ProfilePage;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -39,6 +40,7 @@ public class AdminProfileMenuComponent extends BaseMethods {
         return new AddClubMainInfoComponent(driver);
     }
 
+    @Step("Open add center modal")
     public AddCenterMainInfoComponent openAddCenterModal() {
         addCenterModal.click();
         return new AddCenterMainInfoComponent(driver);

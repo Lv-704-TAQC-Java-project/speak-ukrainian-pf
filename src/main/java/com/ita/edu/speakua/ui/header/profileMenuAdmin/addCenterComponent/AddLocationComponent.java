@@ -1,6 +1,7 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.addCenterComponent;
 
 import com.ita.edu.speakua.ui.BaseMethods;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -92,12 +93,18 @@ public class AddLocationComponent extends BaseMethods {
         return this;
     }
 
+    @Step("Is add location button enabled")
+    public boolean isAddButtonEnabled() {
+        return addButton.isEnabled();
+    }
+
+    public void clickCloseButton(){
+        closeAddLocationButton.click();
+    }
+
     public AddCenterMainInfoComponent addButtonClick() {
         addButton.click();
         return new AddCenterMainInfoComponent(driver);
     }
-
-    public boolean isAddButtonEnabled() {
-        return addButton.isEnabled();
-    }
 }
+

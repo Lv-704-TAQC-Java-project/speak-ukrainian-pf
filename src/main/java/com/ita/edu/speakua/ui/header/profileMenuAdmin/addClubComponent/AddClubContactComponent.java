@@ -1,5 +1,6 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent;
 
+import com.ita.edu.speakua.ui.header.profileMenuAdmin.addCenterComponent.AddLocationComponent;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -23,6 +24,9 @@ public class AddClubContactComponent extends AbstractAddClubComponent {
     WebElement previousStep;
     @FindBy(xpath = "//span[contains(text(),'Наступний крок')]/ancestor::button")
     private WebElement nextStepBtn;
+
+    @FindBy(xpath = "//span[@class='add-club-location']")
+    private WebElement addLocation;
 
 
     public AddClubContactComponent(WebDriver driver) {
@@ -66,6 +70,11 @@ public class AddClubContactComponent extends AbstractAddClubComponent {
         inputPhoneNumber.clear();
         inputPhoneNumber.sendKeys(phone);
         return new AddClubContactComponent(driver);
+    }
+
+    public AddLocationComponent addLocation(){
+        addLocation.click();
+        return new AddLocationComponent(driver);
     }
 
 

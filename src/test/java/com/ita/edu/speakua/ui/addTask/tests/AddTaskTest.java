@@ -1,6 +1,7 @@
 package com.ita.edu.speakua.ui.addTask.tests;
 
 import com.ita.edu.speakua.ui.runners.AddTaskTestRunner;
+import io.qameta.allure.Issue;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -132,6 +133,7 @@ public class AddTaskTest extends AddTaskTestRunner {
     }
 
 
+    @Issue("TUA-526")
     @Test
     public void verifyCreateTaskWithoutChallenge() {
         addTaskPage = addTaskPage

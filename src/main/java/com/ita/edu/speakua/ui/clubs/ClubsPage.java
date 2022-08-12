@@ -3,6 +3,7 @@ package com.ita.edu.speakua.ui.clubs;
 import com.ita.edu.speakua.ui.clubs.card.components.CardComponent;
 import com.ita.edu.speakua.ui.clubs.card.components.CenterComponent;
 import com.ita.edu.speakua.ui.header.HeaderComponent;
+import io.qameta.allure.Step;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -35,6 +36,7 @@ public class ClubsPage extends HeaderComponent {
         super(driver);
     }
 
+    @Step("Open advanced search panel")
     public AdvancedSearchPanelComponent getAdvancedSearchPanelComponent() {
         return new AdvancedSearchPanelComponent(driver);
     }
@@ -59,6 +61,7 @@ public class ClubsPage extends HeaderComponent {
         return this.centers;
     }
 
+    @Step("Close advanced search panel")
     public ClubsPage advancedSearchButtonClick() {
         clickManagingClubsPageElement(advancedSearchButton);
         return this;
@@ -99,8 +102,8 @@ public class ClubsPage extends HeaderComponent {
         sleep(2000);
     }
 
+    @Step("Is closed advanced search panel")
     public boolean isDisappearsAdvancedSearchPanelComponent() {
         return advancedSearchButton == null;
     }
-
 }
