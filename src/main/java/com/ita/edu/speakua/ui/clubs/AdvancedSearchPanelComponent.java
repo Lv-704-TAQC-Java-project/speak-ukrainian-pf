@@ -265,12 +265,16 @@ public class AdvancedSearchPanelComponent extends ClubsPage {
         }
     }
 
-    public AdvancedSearchPanelComponent enterChildAge(Integer age) {
+    public AdvancedSearchPanelComponent enterChildAge(int age) {
         childAgeInput.sendKeys(Keys.chord(Keys.CONTROL, "a"));
-        childAgeInput.sendKeys(age.toString());
-        clickManagingClubsPageElement(childAgeInput);
+        childAgeInput.sendKeys(String.valueOf(age));
         return this;
     }
+
+    public int getChildAge() {
+        return Integer.parseInt(childAgeInput.getAttribute("value"));
+    }
+
 
     public boolean isCityListActivated() {
         return citySelector.isDisplayed() && citySelector.isEnabled();
