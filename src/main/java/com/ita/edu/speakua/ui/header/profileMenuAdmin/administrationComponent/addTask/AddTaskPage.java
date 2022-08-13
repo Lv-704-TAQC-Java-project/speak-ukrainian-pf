@@ -51,6 +51,12 @@ public class AddTaskPage extends HeaderComponent {
     @FindBy(xpath = "//span[contains(text(),'minimum of 40')]")
     private WebElement errorLessThenFortyCharacters;
 
+    @FindBy(xpath = "//span[contains(text(),'startDate не може бути відсутнім, має бути задано')]")
+    private WebElement errorEmptyDate;
+
+    @FindBy(xpath = "//span[contains(text(),'startDate не може бути відсутнім, має бути задано')]")
+    private WebElement errorPastDate;
+
     @FindBy(xpath = "//span[@class='ant-upload-list-item-actions']")
     private List<WebElement> imageElements;
 
@@ -161,9 +167,14 @@ public class AddTaskPage extends HeaderComponent {
         return errorInvalidCharacters.isDisplayed();
     }
 
-    public boolean errorMessageInvalidCharactersCount() {
-        waitVisibilityOfElement(By.xpath("//span[contains(text(),'minimum of 40')]"));
-        return errorLessThenFortyCharacters.isDisplayed();
+    public boolean errorMessageEmptyDate() {
+        waitVisibilityOfWebElement(errorEmptyDate);
+        return errorEmptyDate.isDisplayed();
+    }
+
+    public boolean errorMessagePastDate() {
+        waitVisibilityOfWebElement(errorPastDate);
+        return errorPastDate.isDisplayed();
     }
 
     public boolean errorMessageIsDisplayed() {

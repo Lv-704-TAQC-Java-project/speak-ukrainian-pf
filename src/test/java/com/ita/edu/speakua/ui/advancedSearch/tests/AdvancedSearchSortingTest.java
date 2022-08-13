@@ -3,6 +3,10 @@ package com.ita.edu.speakua.ui.advancedSearch.tests;
 import com.ita.edu.speakua.ui.clubs.ClubsPage;
 import com.ita.edu.speakua.ui.clubs.SortClubComponent;
 import com.ita.edu.speakua.ui.runners.AdvancedSearchTestRunner;
+import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -103,6 +107,37 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
         sortClubComponent.arrowDownButtonClick();
         softAssert.assertEquals(clubsPage.getCards().get(0).getStarRatingZeroList().size(), 5,
                 "Centers are not sorted by rating DEC when arrowDownButton is clicked");
+        softAssert.assertAll();
+    }
+
+    @Issue("TUA-516")
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("Verify that the clubs can be sorted by rating")
+    @Test
+    public void verifySortingClubsByRate() {
+        advancedSearchPanel.clubRadioButtonClick();
+        ClubsPage clubsPage = new ClubsPage(driver);
+
+        SortClubComponent sort = clubsPage
+                .getSortClubComponent()
+                .sortByRatingButtonClick();
+
+        SoftAssert softAssert = new SoftAssert();
+        List<Integer> cardCountOfStars = new ArrayList<>();
+        for (int i = 0; i < clubsPage.getCards().size(); i++) {
+            cardCountOfStars.add(clubsPage.getCards().get(i).getStarRatingZeroList().size());
+            boolean result = cardCountOfStars.get(i) == 5;
+            softAssert.assertTrue(result, "Club cards are not sorted by Rate when advancedSearch is opened");
+        }
+
+        sort.arrowUpButtonClick();
+
+        cardCountOfStars = new ArrayList<>();
+        for (int i = 0; i < clubsPage.getCards().size(); i++) {
+            cardCountOfStars.add(i, clubsPage.getCards().get(i).getStarRatingFullList().size());
+            boolean result = cardCountOfStars.get(i) == 5;
+            softAssert.assertTrue(result, "Club cards are not sorted by Rate when advancedSearch is opened");
+        }
         softAssert.assertAll();
     }
 }

@@ -272,23 +272,23 @@ public class AdvancedSearchPanelComponent extends ClubsPage {
         return this;
     }
 
-    public boolean cityListIsActivated() {
+    public boolean isCityListActivated() {
         return citySelector.isDisplayed() && citySelector.isEnabled();
     }
 
-    public boolean districtListIsActivated() {
+    public boolean isDistrictListActivated() {
         return districtSelector.isDisplayed() && districtSelector.isEnabled();
     }
 
-    public boolean metroListIsActivated() {
+    public boolean isMetroListActivated() {
         return metroSelector.isDisplayed() && metroSelector.isEnabled();
     }
 
-    public boolean checkOnlineIsActivated() {
+    public boolean isCheckOnlineActivated() {
         return availableOnline.isDisplayed() && availableOnline.isEnabled();
     }
 
-    public boolean categoriesListIsActivated() {
+    public boolean isCategoriesListActivated() {
         for (WebElement categoryElement : categoriesNameList) {
             try {
                 categoryElement.isDisplayed();
@@ -300,7 +300,7 @@ public class AdvancedSearchPanelComponent extends ClubsPage {
         return true;
     }
 
-    public boolean ageChildInputActivated() {
+    public boolean isAgeChildInputActivated() {
         return childAgeBlock.isDisplayed() && childAgeBlock.isEnabled();
     }
 
