@@ -11,6 +11,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.nio.file.Paths;
+import java.time.LocalDate;
 
 public class AddTaskTest extends AddTaskTestRunner {
     private final String pathToImage = Paths.get(Paths.get(System.getProperty("user.dir")).toString(),
@@ -35,19 +36,19 @@ public class AddTaskTest extends AddTaskTestRunner {
 
         addTaskPage = addTaskPage
                 .enterDescription("ъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ð")
-                .failSave();
+                .save();
 
         boolean errorMessageDescribeInvalidCharacters = addTaskPage.errorMessageInvalidCharactersIsVisible();
 
         addTaskPage = addTaskPage
                 .enterTitle(descriptionInput.substring(0, 39))
-                .failSave();
+                .save();
 
         boolean errorMessageHeadingNotEnoughChars = addTaskPage.errorMessageIsDisplayed();
 
         addTaskPage = addTaskPage
                 .enterTitle(descriptionInput.substring(0, 3001))
-                .failSave();
+                .save();
 
         boolean errorMessageHeadingTooManyChars = addTaskPage.errorMessageIsDisplayed();
 
@@ -92,7 +93,7 @@ public class AddTaskTest extends AddTaskTestRunner {
                 .enterTitle(invalidData)
                 .enterDescription(descriptionInput)
                 .selectChallenge("Example name")
-                .failSave();
+                .save();
 
         SoftAssert softAssert = new SoftAssert();
 
@@ -119,7 +120,7 @@ public class AddTaskTest extends AddTaskTestRunner {
                         "versions of Lorem Ipsum")
                 .enterDescription("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has " +
                         "been the industry's standard dummy text ever since the 1500s, when an unknown printer took a ")
-                .failSave();
+                .save();
 
 
         Assert.assertTrue(addTaskPage.errorMessageIsEmptyIsVisible(), "Error message didn't find");
@@ -148,9 +149,28 @@ public class AddTaskTest extends AddTaskTestRunner {
                 .enterDescription(descriptionInput.substring(0, 50))
                 .selectChallenge("Example name")
                 .enterStartDate(actualDate)
-                .failSave();
+                .save();
         String actualErrorMessage = addTaskPage.getErrorMessageText();
         softAssert.assertEquals(actualErrorMessage, expectedErrorMessage);
+        softAssert.assertAll();
+    }
+
+    @Issue("TUA-522")
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("Verify that admin can't create a task without image on 'Add task' page")
+    @Test
+    public void verifyCreateTaskWithoutImageError() {
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertTrue(addTaskPage.areFieldsEmpty());
+        addTaskPage = addTaskPage
+                .enterStartDate(LocalDate.now().plusDays(1).toString())
+                .enterName("Maksym test")
+                .enterTitle("Lorem ipsum dolor sit amet, sed do eiusmod et dolore magna aliqua.")
+                .enterDescription("Facilisis sed odio morbi quis. Mauris rhoncus aenean vel elit scelerisque.")
+                .selectChallenge("The European languages")
+                .save();
+        String actualErrorMessage = addTaskPage.getErrorMessageText();
+        softAssert.assertEquals(actualErrorMessage, "Фото не може бути пустим");
         softAssert.assertAll();
     }
 }
