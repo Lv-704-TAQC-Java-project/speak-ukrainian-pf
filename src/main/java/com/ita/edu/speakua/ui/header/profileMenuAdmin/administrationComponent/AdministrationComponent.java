@@ -2,7 +2,7 @@ package com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent;
 
 import com.ita.edu.speakua.ui.BaseMethods;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.addChallenge.ChallengePage;
-import com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.addTask.TaskPage;
+import com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.addTask.TasksPage;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,10 +21,10 @@ public class AdministrationComponent extends BaseMethods {
     }
 
     @Step("Open task page")
-    public TaskPage openTaskPage() {
+    public TasksPage openTaskPage() {
         waitVisibilityOfWebElement(taskButton);
         actionsClickOnElement(taskButton);
-        return new TaskPage(driver);
+        return new TasksPage(driver);
     }
 
     @Step("Open challenge page")
@@ -32,5 +32,4 @@ public class AdministrationComponent extends BaseMethods {
         challengeButton.click();
         return new ChallengePage(driver);
     }
-
 }

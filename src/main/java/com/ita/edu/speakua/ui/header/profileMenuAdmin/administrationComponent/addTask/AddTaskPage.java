@@ -39,6 +39,9 @@ public class AddTaskPage extends HeaderComponent {
     @FindBy(xpath = "//div[contains(@class, 'warning')]//span[text()]")
     private WebElement errorMessage;
 
+    @FindBy(xpath = "//div[contains(@class, 'success')]//span[text()]")
+    private WebElement successMessage;
+
     @FindBy(xpath = "//div[contains(@class, 'warning')]//span[text()]")
     private List<WebElement> errorMessages;
 
@@ -156,6 +159,12 @@ public class AddTaskPage extends HeaderComponent {
         return errorMessage.getText();
     }
 
+    @Step("Get success message")
+    public String getSuccessMessage() {
+        waitVisibilityOfWebElement(successMessage);
+        return successMessage.getText();
+    }
+
     @Step("Get error messages from invalid challenges")
     public boolean errorMessageIsEmptyIsVisible() {
         waitVisibilityOfElement(By.xpath("//span[contains(text(),'Please')]"));
@@ -189,5 +198,11 @@ public class AddTaskPage extends HeaderComponent {
     public AddTaskPage save() {
         saveButton.click();
         return this;
+    }
+
+    @Step("Click on 'save' button")
+    public TaskPage saveSuccess() {
+        saveButton.click();
+        return new TaskPage(driver);
     }
 }

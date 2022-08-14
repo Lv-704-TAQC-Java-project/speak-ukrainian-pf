@@ -1,5 +1,6 @@
 package com.ita.edu.speakua.ui.addTask.tests;
 
+import com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.addTask.TaskPage;
 import com.ita.edu.speakua.ui.runners.AddTaskTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -171,6 +172,33 @@ public class AddTaskTest extends AddTaskTestRunner {
                 .save();
         String actualErrorMessage = addTaskPage.getErrorMessageText();
         softAssert.assertEquals(actualErrorMessage, "Фото не може бути пустим");
+        softAssert.assertAll();
+    }
+
+    @Issue("TUA-520")
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("Verify that admin can create a task on 'Add task' page")
+    @Test
+    public void verifyCreateTask() {
+        String name = "Maksym test";
+        String title = "Lorem ipsum dolor sit amet, sed do eiusmod et dolore magna aliqua.";
+        String description = "Facilisis sed odio morbi quis. Mauris rhoncus aenean vel elit scelerisque.";
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertTrue(addTaskPage.areFieldsEmpty());
+        addTaskPage = addTaskPage
+                .enterStartDate(LocalDate.now().plusDays(1).toString())
+                .uploadImage(pathToImage)
+                .enterName(name)
+                .enterTitle(title)
+                .enterDescription(description)
+                .selectChallenge("The European languages");
+
+        TaskPage taskPage = addTaskPage.saveSuccess();
+
+        softAssert.assertEquals(addTaskPage.getSuccessMessage(), String.format("Завдання%s' успішно додане!", name));
+        softAssert.assertEquals(taskPage.getNameText(), name);
+        softAssert.assertEquals(taskPage.getTitleText(), title);
+        softAssert.assertEquals(taskPage.getDescriptionText(), description);
         softAssert.assertAll();
     }
 }
