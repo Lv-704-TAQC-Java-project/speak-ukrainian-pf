@@ -99,13 +99,19 @@ public class AddLocationComponent extends BaseMethods {
         return this;
     }
 
+    @Step("Is add location button enabled")
+    public boolean isAddButtonEnabled() {
+        return addButton.isEnabled();
+    }
+
+    public void clickCloseButton(){
+        closeAddLocationButton.click();
+    }
+
     @Step("Click addButton")
     public AddCenterMainInfoComponent addButtonClick() {
         addButton.click();
         return new AddCenterMainInfoComponent(driver);
     }
-
-    public boolean isAddButtonEnabled() {
-        return addButton.isEnabled();
-    }
 }
+

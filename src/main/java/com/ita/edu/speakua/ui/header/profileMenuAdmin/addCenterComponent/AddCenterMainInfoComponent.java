@@ -15,7 +15,7 @@ public class AddCenterMainInfoComponent extends AbstractAddCenterComponent{
     @FindBy(xpath = "//div[@id='basic_locations']")
     private WebElement locationsList;
 
-    @FindBy(xpath = "//div[@class='btn']")
+    @FindBy(xpath = "//div[@class='btn']/button")
     private WebElement nextStepButton;
 
     @FindBy(xpath = "//div[contains(text(),'Некоректна назва центру')]")

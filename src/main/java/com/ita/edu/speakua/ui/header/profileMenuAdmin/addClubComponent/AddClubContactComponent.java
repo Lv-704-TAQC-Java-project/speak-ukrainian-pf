@@ -1,5 +1,6 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent;
 
+import com.ita.edu.speakua.ui.header.profileMenuAdmin.addCenterComponent.AddLocationComponent;
 import io.qameta.allure.Step;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -31,6 +32,10 @@ public class AddClubContactComponent extends AbstractAddClubComponent {
 
     @FindBy(xpath = "//span[contains(text(),'Наступний крок')]/ancestor::button")
     private WebElement nextStepButton;
+
+    @FindBy(xpath = "//span[@class='add-club-location']")
+    private WebElement addLocation;
+
 
     public AddClubContactComponent(WebDriver driver) {
         super(driver);
@@ -77,6 +82,11 @@ public class AddClubContactComponent extends AbstractAddClubComponent {
         phoneNumber.clear();
         phoneNumber.sendKeys(phone);
         return this;
+    }
+
+    public AddLocationComponent addLocation(){
+        addLocation.click();
+        return new AddLocationComponent(driver);
     }
 
     @Step("Go back to previous modal 'Main info'")

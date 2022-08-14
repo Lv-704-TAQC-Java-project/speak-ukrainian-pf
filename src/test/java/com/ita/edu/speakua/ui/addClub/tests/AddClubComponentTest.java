@@ -26,11 +26,12 @@ public class AddClubComponentTest extends AddClubDescribeTestRunner {
 
     @Issue("TUA-172")
     @Description("Verify that the button is enable when the correct data is entered")
+    @Severity(SeverityLevel.CRITICAL)
     @Test(dataProvider = "descriptionValidData")
     public void verifyAddClubDescribeFieldValidDataTest(int charAmount) {
         String descriptionInput = new String(new char[150]).replace("\0", "Lorem Ipsu");
         boolean isButtonEnable = addClubDescribeComponent
-                .inputDescription(descriptionInput.substring(0,charAmount))
+                .inputDescription(descriptionInput.substring(0, charAmount))
                 .isButtonEnable();
         assertTrue(isButtonEnable, "Button should be enabled");
     }
