@@ -19,7 +19,7 @@ public class SortClubComponent extends ClubsPage {
     @FindBy(xpath = "//div/span[@aria-label = 'arrow-down']")
     private WebElement arrowDownButton;
 
-    @FindBy(xpath = "//div/label[@class = 'ant-radio-button-wrapper club-view-button']")
+    //@FindBy(xpath = "//div/label[@class = 'ant-radio-button-wrapper club-view-button']")
     private WebElement listViewButton;
 
     //@FindBy(xpath = "//div/label[@class = 'ant-radio-button-wrapper ant-radio-button-wrapper-checked club-view-button']")
@@ -52,16 +52,24 @@ public class SortClubComponent extends ClubsPage {
         return this;
     }
 
-    public SortClubComponent listViewButtonClick() {
-        listViewButton.click();
-        return this;
+    public WebElement getListViewButton() {
+        if (listViewButton == null) {
+            listViewButton = driver.findElement(By.xpath("//div/label[@class = 'ant-radio-button-wrapper club-view-button']"));
+        }
+        return listViewButton;
     }
+
     public WebElement getBlockViewButton() {
         if (blockViewButton == null) {
             blockViewButton = driver.findElement(By.xpath("//div/label[@class = 'ant-radio-button-wrapper ant-radio-button-wrapper-checked club-view-button']"));
 
         }
         return blockViewButton;
+    }
+
+    public SortClubComponent listViewButtonClick() {
+        getListViewButton().click();
+        return this;
     }
 
     public SortClubComponent blockViewButtonClick() {

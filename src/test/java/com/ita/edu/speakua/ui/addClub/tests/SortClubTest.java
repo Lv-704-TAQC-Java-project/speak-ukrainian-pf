@@ -20,7 +20,6 @@ public class SortClubTest extends BaseTestRunner {
     }
 
     @Test
-    @Description("Verify that cards are displayed in a list view")
     public void listCardViewIsDisplayed() {
         new HomePage(driver)
                 .clickAdvancedSearchButton()
