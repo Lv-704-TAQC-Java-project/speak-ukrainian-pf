@@ -14,11 +14,17 @@ import java.util.List;
 public class CardComponent extends BaseMethods {
     protected WebElement cardBody;
 
+    @FindBy(xpath = "./parent::div")
+    protected WebElement cardWrapper;
+
     @FindBy(xpath = ".//div[@class='title']")
     protected WebElement cardTitle;
 
     @FindBy(xpath = ".//div[contains(@class, 'name')]")
     protected WebElement cardName;
+
+    @FindBy(xpath = ".//*[@class='description']")
+    protected WebElement cardDescription;
 
     @FindBy(xpath = ".//div[@class='address']")
     protected WebElement address;
@@ -41,11 +47,17 @@ public class CardComponent extends BaseMethods {
         PageFactory.initElements(new DefaultElementLocatorFactory(cardBody), this);
     }
 
+    public String getCardText() {
+        waitVisibilityOfWebElement(cardWrapper);
+        return cardWrapper.getText();
+    }
+
     public WebElement getCardBody() {
         return cardBody;
     }
 
     public WebElement getCardName() {
+        waitVisibilityOfWebElement(cardName);
         return cardName;
     }
 
@@ -68,9 +80,5 @@ public class CardComponent extends BaseMethods {
 
     public boolean isClubAvailableOnline() {
         return availableOnline.isDisplayed();
-    }
-
-    public boolean equals(CardComponent card) {
-        return this.getTextCardName().equals(card.getTextCardName());
     }
 }

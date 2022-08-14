@@ -4,6 +4,8 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -106,8 +108,36 @@ public class BaseMethods {
         wait.until(ExpectedConditions.stalenessOf(element));
     }
 
+    public void fluentWaitStalenessOfElement(WebElement element, long timeoutMillis, int polling) {
+        Wait<WebDriver> wait = new FluentWait<>(driver)
+                .withTimeout(Duration.ofMillis(timeoutMillis))
+                .pollingEvery(Duration.ofMillis(polling))
+                .ignoring(NoSuchElementException.class);
+        try {
+            wait.until(ExpectedConditions.stalenessOf(element));
+        } catch (TimeoutException ignore) {
+        }
+    }
+
+    public void fluentWaitVisibilityOfElement(WebElement element, long timeoutMillis, int polling) {
+        Wait<WebDriver> wait = new FluentWait<>(driver)
+                .withTimeout(Duration.ofMillis(timeoutMillis))
+                .pollingEvery(Duration.ofMillis(polling))
+                .ignoring(NoSuchElementException.class)
+                .ignoring(TimeoutException.class);
+        try {
+            wait.until(ExpectedConditions.visibilityOf(element));
+        } catch (TimeoutException ignore) {
+        }
+    }
+
     public void waitVisibilityOfWebElement(WebElement element) {
-        WebDriverWait wait = new WebDriverWait(driver, SHORT_TIMEOUT);
+        WebDriverWait wait = new WebDriverWait(driver, TIMEOUT);
+        wait.until(ExpectedConditions.visibilityOf(element));
+    }
+
+    public void waitVisibilityOfWebElement(WebElement element, int seconds) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(seconds));
         wait.until(ExpectedConditions.visibilityOf(element));
     }
 
