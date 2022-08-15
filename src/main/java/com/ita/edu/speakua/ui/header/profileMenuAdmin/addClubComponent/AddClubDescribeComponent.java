@@ -97,7 +97,7 @@ public class AddClubDescribeComponent extends AbstractAddClubComponent {
         return successArea.isDisplayed();
     }
 
-    @Step("Check number of description errors")
+    @Step("Check description field has errors")
     public boolean areDescriptionErrorsShown() {
         try {
             waitInvisibility(errorMessagesForDescriptionField, 1);
