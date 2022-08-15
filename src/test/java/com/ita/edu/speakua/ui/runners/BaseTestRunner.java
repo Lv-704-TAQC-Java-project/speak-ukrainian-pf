@@ -25,6 +25,7 @@ public class BaseTestRunner {
     @BeforeMethod
     public void setUp() {
         ChromeOptions options = new ChromeOptions();
+        options.addArguments("--lang=en-GB");
 //        options.addArguments("--headless");
 //        options.addArguments("--window-size=1920,1080", "--no-sandbox", "--disable-dev-shm-usage");
         driver = new ChromeDriver(options);

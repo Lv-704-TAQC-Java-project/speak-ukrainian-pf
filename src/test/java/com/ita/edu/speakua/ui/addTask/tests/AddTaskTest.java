@@ -18,48 +18,38 @@ public class AddTaskTest extends AddTaskTestRunner {
     private final String pathToImage = Paths.get(Paths.get(System.getProperty("user.dir")).toString(),
             "src", "test", "resources", "image.png").toString();
 
+    @DataProvider(name = "invalidDescriptionData")
+    public static Object[][] invalidDescriptionData() {
+        return new Object[][]{
+                {"", "description не може бути пустим"},
+                {"ъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ð",
+                        "description Помилка. Текст містить недопустимі символи"},
+                {"Lorem Ipsum 5% ",
+                        "description must contain a minimum of 40 and a maximum of 3000 letters"},
+                {new String(new char[350]).replace("\0", "Lorem ipsum "),
+                        "description must contain a minimum of 40 and a maximum of 3000 letters"}
+        };
+    }
+
     @Issue("TUA-525")
     @Severity(SeverityLevel.CRITICAL)
     @Description("Verify that admin can't create a task with invalid data in description field and title field")
-    @Test
-    public void verifyCreateTaskInvalidDescriptionAndTitle() {
-        String descriptionInput = new String(new char[350]).replace("\0", "Lorem Ipsu");
+    @Test(dataProvider = "invalidDescriptionData")
+    public void verifyCreateTaskInvalidDescriptionAndTitle(String textDescription, String expectedMessage) {
         boolean allFieldsAreEmpty = addTaskPage.areFieldsEmpty();
         addTaskPage = addTaskPage
-                .enterStartDate("2022-08-23")
+                .enterStartDate(LocalDate.now().plusDays(2).toString())
                 .uploadImage(pathToImage)
                 .enterName("Yaroslav test")
-                .enterTitle(descriptionInput.substring(0, 50))
-                .selectChallenge("Example name");
-//                .failSave();
-
-//        boolean errorMessageDescribeIsEmpty = addTaskPage.errorMessageIsEmptyIsVisible();
-
-        addTaskPage = addTaskPage
-                .enterDescription("ъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ð");
+                .enterTitle("Some forty character text for the test!!")
+                .selectChallenge("Example name")
+                .enterDescription(textDescription);
         addTaskPage.save();
-
-        boolean errorMessageDescribeInvalidCharacters = addTaskPage.errorMessageInvalidCharactersIsVisible();
-
-        addTaskPage.enterTitle(descriptionInput.substring(0, 39));
-        addTaskPage.save();
-
-        boolean errorMessageHeadingNotEnoughChars = addTaskPage.errorMessageIsDisplayed();
-
-        addTaskPage.enterTitle(descriptionInput.substring(0, 3001));
-        addTaskPage.save();
-
-        boolean errorMessageHeadingTooManyChars = addTaskPage.errorMessageIsDisplayed();
+        String errorMessage = addTaskPage.getErrorMessageText();
 
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertTrue(allFieldsAreEmpty, "All field should be empty");
-//        softAssert.assertTrue(errorMessageDescribeIsEmpty, "A message should appear that the field is empty");
-        softAssert.assertTrue(errorMessageDescribeInvalidCharacters, "A message should appear stating that invalid " +
-                "characters have been entered");
-        softAssert.assertTrue(errorMessageHeadingNotEnoughChars, "A message should appear stating that not enough " +
-                "characters have been entered");
-        softAssert.assertTrue(errorMessageHeadingTooManyChars, "A message should appear stating that too many " +
-                "characters have been entered");
+        softAssert.assertTrue(allFieldsAreEmpty);
+        softAssert.assertEquals(errorMessage, expectedMessage);
         softAssert.assertAll();
     }
 
@@ -77,6 +67,7 @@ public class AddTaskTest extends AddTaskTestRunner {
     }
 
     @Issue("TUA-524")
+    @Severity(SeverityLevel.CRITICAL)
     @Description("Verify impossibility of creating task with heading invalid data")
     @Test(dataProvider = "invalidHeaderData")
     public void verifyCreatingTaskWithHeadingInvalidData(String invalidData, String expectedMessage) {
@@ -141,12 +132,12 @@ public class AddTaskTest extends AddTaskTestRunner {
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertTrue(addTaskPage.areFieldsEmpty());
         addTaskPage = addTaskPage
+                .enterStartDate(actualDate)
                 .uploadImage(pathToImage)
                 .enterName("Yaroslav test")
                 .enterTitle(descriptionInput.substring(0, 50))
                 .enterDescription(descriptionInput.substring(0, 50))
-                .selectChallenge("Example name")
-                .enterStartDate(actualDate);
+                .selectChallenge("Example name");
         addTaskPage.save();
         String actualErrorMessage = addTaskPage.getErrorMessageText();
         softAssert.assertEquals(actualErrorMessage, expectedErrorMessage);

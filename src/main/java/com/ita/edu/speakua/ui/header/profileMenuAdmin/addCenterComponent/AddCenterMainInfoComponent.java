@@ -65,6 +65,7 @@ public class AddCenterMainInfoComponent extends AbstractAddCenterComponent{
 
     @Step("Click next step button")
     public AddCenterMainInfoComponent failOpenNextStep(){
+        waitVisibilityOfWebElement(nextStepButton);
         nextStepButton.click();
         return new AddCenterMainInfoComponent(driver);
     }
