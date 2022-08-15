@@ -65,7 +65,7 @@ public class HeaderComponent extends BaseMethods {
     }
 
     public HeaderComponent getHomePageReload() {
-        waitForPageToReload();
+        waitPageReload();
         return new HeaderComponent(driver);
     }
 }

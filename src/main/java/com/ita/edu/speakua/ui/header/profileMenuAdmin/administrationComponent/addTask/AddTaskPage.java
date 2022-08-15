@@ -106,7 +106,7 @@ public class AddTaskPage extends HeaderComponent {
     }
 
     private WebElement getChallengeItem(String name) {
-        waitVisibilityOfWebElement(challengeList);
+        waitVisibility(challengeList);
         return challengeList.findElement(By.xpath(String.format(".//div[contains(text(),'%s')]", name)));
     }
 
@@ -120,7 +120,7 @@ public class AddTaskPage extends HeaderComponent {
 
     @Step("Check are allFields empty")
     public boolean areFieldsEmpty() {
-        waitVisibilityOfWebElement(startDate);
+        waitVisibility(startDate);
         return startDateIsEmpty() &&
                 imageIsEmpty() &&
                 nameIsEmpty() &&
@@ -155,34 +155,34 @@ public class AddTaskPage extends HeaderComponent {
 
     @Step("Get error message")
     public String getErrorMessageText() {
-        waitVisibilityOfWebElement(errorMessage);
+        waitVisibility(errorMessage);
         return errorMessage.getText();
     }
 
     @Step("Get success message")
     public String getSuccessMessage() {
-        waitVisibilityOfWebElement(successMessage);
+        waitVisibility(successMessage);
         return successMessage.getText();
     }
 
     @Step("Get error messages from invalid challenges")
     public boolean errorMessageIsEmptyIsVisible() {
-        waitVisibilityOfElement(By.xpath("//span[contains(text(),'Please')]"));
+        waitVisibility(By.xpath("//span[contains(text(),'Please')]"));
         return errorMessageIsEmpty.isDisplayed();
     }
 
     public boolean errorMessageInvalidCharactersIsVisible() {
-        waitVisibilityOfElement(By.xpath("//span[contains(text(),'Помилка')]"));
+        waitVisibility(By.xpath("//span[contains(text(),'Помилка')]"));
         return errorInvalidCharacters.isDisplayed();
     }
 
     public boolean errorMessageEmptyDate() {
-        waitVisibilityOfWebElement(errorEmptyDate);
+        waitVisibility(errorEmptyDate);
         return errorEmptyDate.isDisplayed();
     }
 
     public boolean errorMessagePastDate() {
-        waitVisibilityOfWebElement(errorPastDate);
+        waitVisibility(errorPastDate);
         return errorPastDate.isDisplayed();
     }
 

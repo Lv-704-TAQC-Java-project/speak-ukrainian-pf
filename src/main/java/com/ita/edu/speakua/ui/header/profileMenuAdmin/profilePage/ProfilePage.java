@@ -3,6 +3,7 @@ package com.ita.edu.speakua.ui.header.profileMenuAdmin.profilePage;
 import com.ita.edu.speakua.ui.header.HeaderComponent;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubMainInfoComponent;
 import io.qameta.allure.Step;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -29,18 +30,34 @@ public class ProfilePage extends HeaderComponent {
 
     @Step("Open edit profile page")
     public EditProfileComponent openEditProfilePage() {
-        waitElementIsClickable(editProfileButton);
+        waitClickable(editProfileButton);
         editProfileButton.click();
         return new EditProfileComponent(driver);
     }
 
     @Step("Open a model for adding club")
     public AddClubMainInfoComponent openAddClubModal() {
-        waitVisibilityOfWebElement(addButton);
+        waitVisibility(addButton);
         addButton.click();
-        waitVisibilityOfWebElement(addClubButton);
+        waitVisibility(addClubButton);
         addClubButton.click();
         return new AddClubMainInfoComponent(driver);
+    }
+
+    public boolean isEditProfileButtonVisible() {
+        try {
+            return editProfileButton.isEnabled();
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    public boolean isAddButtonVisible(){
+        try {
+            return addButton.isEnabled();
+        } catch (NoSuchElementException e) {
+            return false;
+        }
     }
 
 }

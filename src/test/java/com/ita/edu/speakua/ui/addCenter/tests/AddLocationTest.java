@@ -1,6 +1,7 @@
 package com.ita.edu.speakua.ui.addCenter.tests;
 
 import com.ita.edu.speakua.ui.header.HeaderComponent;
+import com.ita.edu.speakua.ui.header.profileMenuAdmin.addLocation.Location;
 import com.ita.edu.speakua.ui.runners.LoginTestRunner;
 
 import io.qameta.allure.Description;
@@ -30,19 +31,13 @@ public class AddLocationTest extends LoginTestRunner {
         header
                 .openAdminProfileMenu()
                 .openAddCenterModal()
-                .clickAddLocationButton()
-                .fillInLocationNameField(name)
-                .selectCityByName(city)
-                .selectRegionByName(region)
-                .fillInAddressField(address)
-                .fillInGeographicСoordinatesField(coordinates)
-                .fillInPhoneNumberField(phoneNumber)
-                .addButtonClick();
+                .addLocation(new Location(name, city, region, address, coordinates, phoneNumber));
+
 
         Assert.assertTrue(header
-                .getAdminProfileMenuComponent()
-                .getAddCenterMainInfoComponent()
-                .isLocationAdded(name),
+                        .getAdminProfileMenuComponent()
+                        .getAddCenterMainInfoComponent()
+                        .isLocationAdded(name),
                 "New Location is not added");
     }
 }

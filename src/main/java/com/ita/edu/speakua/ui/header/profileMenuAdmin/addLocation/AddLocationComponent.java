@@ -1,14 +1,14 @@
-package com.ita.edu.speakua.ui.header.profileMenuAdmin.addCenterComponent;
+package com.ita.edu.speakua.ui.header.profileMenuAdmin.addLocation;
 
 import com.ita.edu.speakua.ui.BaseMethods;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class AddLocationComponent extends BaseMethods {
-
     @FindBy(xpath = "//input[@id='name']")
     private WebElement locationNameField;
 
@@ -16,7 +16,7 @@ public class AddLocationComponent extends BaseMethods {
     private WebElement addressField;
 
     @FindBy(xpath = "//input[@id = 'coordinates']")
-    private WebElement geographicСoordinatesField;
+    private WebElement geographicCoordinatesField;
 
     @FindBy(xpath = "//input[@id = 'phone']")
     private WebElement phoneNumberField;
@@ -30,11 +30,12 @@ public class AddLocationComponent extends BaseMethods {
     @FindBy(xpath = "//input[@id = 'stationName']")
     private WebElement metroDropDownList;
 
-    @FindBy(xpath = "//div[contains(@class, 'add-club-content')]/button")
+    @FindBy(xpath = "//form[contains(@class, 'ant-form') and not(contains(@id, 'basic'))]//button[contains(@class,'ant-btn ant-btn-default flooded-button add-club-content-next')]")
     private WebElement addButton;
 
     @FindBy(xpath = "//div[contains(@class, 'modal-add-club')]//button[@class = 'ant-modal-close']")
     private WebElement closeAddLocationButton;
+
 
     public AddLocationComponent(WebDriver driver) {
         super(driver);
@@ -42,7 +43,7 @@ public class AddLocationComponent extends BaseMethods {
 
     @Step("Fill In {locationName}")
     public AddLocationComponent fillInLocationNameField(String locationName) {
-        waitVisibilityOfWebElement(locationNameField);
+        waitVisibility(locationNameField);
         locationNameField.click();
         locationNameField.clear();
         locationNameField.sendKeys(locationName);
@@ -75,7 +76,7 @@ public class AddLocationComponent extends BaseMethods {
 
     @Step("Fill In {address}")
     public AddLocationComponent fillInAddressField(String address) {
-        waitVisibilityOfWebElement(addressField);
+        waitVisibility(addressField);
         addressField.click();
         addressField.clear();
         addressField.sendKeys(address);
@@ -83,11 +84,11 @@ public class AddLocationComponent extends BaseMethods {
     }
 
     @Step("Fill In {coordinates}")
-    public AddLocationComponent fillInGeographicСoordinatesField(String coordinates) {
-        waitVisibilityOfWebElement(geographicСoordinatesField);
-        geographicСoordinatesField.click();
-        geographicСoordinatesField.clear();
-        geographicСoordinatesField.sendKeys(coordinates);
+    public AddLocationComponent fillInGeographicCoordinatesField(String coordinates) {
+        waitVisibility(geographicCoordinatesField);
+        geographicCoordinatesField.click();
+        geographicCoordinatesField.clear();
+        geographicCoordinatesField.sendKeys(coordinates);
         return this;
     }
 
@@ -101,17 +102,25 @@ public class AddLocationComponent extends BaseMethods {
 
     @Step("Is add location button enabled")
     public boolean isAddButtonEnabled() {
-        return addButton.isEnabled();
+        try {
+            return addButton.isEnabled();
+        } catch (NoSuchElementException e) {
+            return false;
+        }
     }
 
-    public void clickCloseButton(){
-        closeAddLocationButton.click();
-    }
-
-    @Step("Click addButton")
-    public AddCenterMainInfoComponent addButtonClick() {
+    public void addButtonClick() {
         addButton.click();
-        return new AddCenterMainInfoComponent(driver);
+
+    }
+
+    public void addLocation(Location location) {
+        fillInLocationNameField(location.getName());
+        selectCityByName(location.getCity());
+        selectRegionByName(location.getRegion());
+        fillInAddressField(location.getAddress());
+        fillInGeographicCoordinatesField(location.getCoordinates());
+        fillInPhoneNumberField(location.getPhone());
+        addButtonClick();
     }
 }
-

@@ -178,12 +178,12 @@ public class EditProfileComponent extends BaseMethods {
 
     @Step("Get firstname error text")
     public String getFirstnameErrorText() {
-        waitVisibilityOfWebElement(firstnameErrorText);
+        waitVisibility(firstnameErrorText);
         return firstnameErrorText.getText();
     }
 
     public List<String> getPhoneErrorText() {
-        waitVisibilityOfWebElements(phoneErrors);
+        waitVisibility(phoneErrors);
         return phoneErrors.stream().map(WebElement::getText).collect(Collectors.toList());
     }
 
@@ -197,7 +197,7 @@ public class EditProfileComponent extends BaseMethods {
     public boolean saveChangesButtonIsEnable() {
         saveButton.click();
         try {
-            waitInvisibilityOfElement(editProfileModalBody, 1);
+            waitInvisibility(editProfileModalBody, 1);
         } catch (TimeoutException e) {
             return false;
         }

@@ -21,17 +21,17 @@ public class TaskPage extends HeaderComponent {
     }
 
     public String getNameText() {
-        waitVisibilityOfWebElement(name);
+        waitVisibility(name);
         return name.getText();
     }
 
     public String getTitleText() {
-        waitVisibilityOfWebElement(title);
+        waitVisibility(title);
         return title.getText();
     }
 
     public String getDescriptionText() {
-        waitVisibilityOfWebElement(description);
+        waitVisibility(description);
         return description.getText();
     }
 }

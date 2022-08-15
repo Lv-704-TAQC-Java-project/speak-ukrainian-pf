@@ -2,7 +2,6 @@ package com.ita.edu.speakua.ui.clubs.card.components;
 
 import com.ita.edu.speakua.ui.BaseMethods;
 import com.ita.edu.speakua.ui.clubs.ExpandedCardComponent;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -48,7 +47,7 @@ public class CardComponent extends BaseMethods {
     }
 
     public String getCardText() {
-        waitVisibilityOfWebElement(cardWrapper);
+        waitVisibility(cardWrapper);
         return cardWrapper.getText();
     }
 
@@ -57,7 +56,7 @@ public class CardComponent extends BaseMethods {
     }
 
     public WebElement getCardName() {
-        waitVisibilityOfWebElement(cardName);
+        waitVisibility(cardName);
         return cardName;
     }
 

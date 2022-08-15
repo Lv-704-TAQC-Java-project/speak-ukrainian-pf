@@ -4,7 +4,6 @@ import com.ita.edu.speakua.ui.BaseMethods;
 import com.ita.edu.speakua.ui.HomePage;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -44,13 +43,13 @@ public class RegistrationModalComponent extends BaseMethods {
 
     @Step("Fill in last name field")
     public RegistrationModalComponent fillInLastName(String lastName) {
-        waitVisibilityOfWebElement(lastNameInputField);
+        waitVisibility(lastNameInputField);
         lastNameInputField.sendKeys(lastName);
         return this;
     }
 
     public String getLastNameValue() {
-        waitVisibilityOfWebElement(lastNameInputField);
+        waitVisibility(lastNameInputField);
         return lastNameInputField.getAttribute("value");
     }
 

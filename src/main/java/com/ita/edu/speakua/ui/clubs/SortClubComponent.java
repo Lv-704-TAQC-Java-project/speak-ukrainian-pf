@@ -1,6 +1,5 @@
 package com.ita.edu.speakua.ui.clubs;
 
-import com.ita.edu.speakua.ui.BaseMethods;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -31,14 +30,14 @@ public class SortClubComponent extends ClubsPage {
 
     @Step("Click on 'sort by ABC' button")
     public SortClubComponent sortByABCButtonClick() {
-        waitVisibilityOfWebElement(sortByABCButton);
+        waitVisibility(sortByABCButton);
         clickManagingClubsPageElement(sortByABCButton);
         return this;
     }
 
     @Step("Click on 'sort by rating' button")
     public SortClubComponent sortByRatingButtonClick() {
-        waitVisibilityOfWebElement(sortByRatingButton);
+        waitVisibility(sortByRatingButton);
         clickManagingClubsPageElement(sortByRatingButton);
         return this;
     }
