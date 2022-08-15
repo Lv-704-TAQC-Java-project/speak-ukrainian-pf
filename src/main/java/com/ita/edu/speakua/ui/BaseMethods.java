@@ -130,6 +130,11 @@ public class BaseMethods {
         }
     }
 
+    public void waitValue(WebElement element, String value, long seconds) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(seconds));
+        wait.until(ExpectedConditions.attributeContains(element, "value", value));
+    }
+
     public void waitForTextPresentInElement(WebElement element, String text) {
         WebDriverWait wait = new WebDriverWait(driver, SHORT_TIMEOUT);
         wait.until(ExpectedConditions.textToBePresentInElement(element, text));

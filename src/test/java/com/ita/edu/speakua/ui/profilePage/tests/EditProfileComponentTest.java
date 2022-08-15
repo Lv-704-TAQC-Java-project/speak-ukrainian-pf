@@ -3,6 +3,7 @@ package com.ita.edu.speakua.ui.profilePage.tests;
 import com.ita.edu.speakua.ui.runners.EditProfileTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -38,7 +39,7 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
         boolean saveChangesBtnIsEnabled;
         SoftAssert softAssert = new SoftAssert();
 
-        actualMessage = editProfileComponent.fillInFirstName(data).getFirstnameErrorText();
+        actualMessage = editProfileComponent.setFirstName(data).getFirstnameErrorText();
         softAssert.assertEquals(actualMessage, expectedMessage, "Expected error message did not appear");
 
         saveChangesBtnIsEnabled = editProfileComponent.saveChangesButtonIsEnable();
@@ -59,9 +60,11 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
         };
     }
 
+    @Issue("TUA-356")
+    @Description("Verify error messages are shown and 'Save' button is disabled while entering invalid data in phone field")
     @Test(dataProvider = "invalidPhoneData")
     public void verifyPhoneErrorMessageWhenEditProfileTest(String phone, String expectedMessage) {
-        List<String> errorMessages = editProfileComponent.fillInPhone(phone).getPhoneErrorText();
+        List<String> errorMessages = editProfileComponent.setPhone(phone).getPhoneErrorText();
         boolean expectedMessageIsPresent = errorMessages.contains(expectedMessage);
 
         SoftAssert softAssert = new SoftAssert();
@@ -71,5 +74,15 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
         softAssert.assertFalse(saveChangesBtnIsEnabled, "SaveChanges button is not enabled.");
 
         softAssert.assertAll();
+    }
+
+    @AfterMethod
+    public void setInitialInfo() {
+        if (!editProfileComponent.getFirstName().equals(initialFirstName)) {
+            editProfileComponent.setFirstName(initialFirstName);
+        }
+        if (!editProfileComponent.getPhone().equals(initialPhone)) {
+            editProfileComponent.setPhone(initialPhone);
+        }
     }
 }

@@ -6,6 +6,8 @@ import org.testng.annotations.BeforeClass;
 
 public class EditProfileTestRunner extends LoginTestRunner {
     protected EditProfileComponent editProfileComponent;
+    protected String initialPhone;
+    protected String initialFirstName;
 
     @BeforeClass
     public void openEditProfile() {
@@ -13,5 +15,7 @@ public class EditProfileTestRunner extends LoginTestRunner {
                 .openAdminProfileMenu()
                 .openUserProfilePage()
                 .openEditProfilePage();
+        initialPhone = editProfileComponent.getPhone();
+        initialFirstName = editProfileComponent.getFirstName();
     }
 }

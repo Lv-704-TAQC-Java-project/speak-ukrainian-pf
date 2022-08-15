@@ -108,15 +108,29 @@ public class EditProfileComponent extends BaseMethods {
     }
 
     @Step("Set firstname {firstName}")
-    public EditProfileComponent fillInFirstName(String firstName) {
+    public EditProfileComponent setFirstName(String firstName) {
         setNewValueForInput(firstNameInput, firstName);
-        firstNameInput.submit();
         waitStalenessOfPreviousErrors(firstNameErrors);
         return this;
     }
 
+    @Step("Get current user first name")
+    public String getFirstName() {
+        waitVisibility(firstNameInput);
+        return firstNameInput.getAttribute("value");
+    }
+
+    @Step("Get current user phone number")
+    public String getPhone() {
+        try {
+            waitValue(phoneInput, "0", 2);
+        } catch (TimeoutException ignore) {
+        }
+        return phoneInput.getAttribute("value");
+    }
+
     @Step("Set phone number {phone}")
-    public EditProfileComponent fillInPhone(String phone) {
+    public EditProfileComponent setPhone(String phone) {
         setNewValueForInput(phoneInput, phone);
         waitStalenessOfPreviousErrors(phoneErrors);
         return this;
@@ -182,6 +196,7 @@ public class EditProfileComponent extends BaseMethods {
         return firstnameErrorText.getText();
     }
 
+    @Step("Get a list of phone field error messages")
     public List<String> getPhoneErrorText() {
         waitVisibility(phoneErrors);
         return phoneErrors.stream().map(WebElement::getText).collect(Collectors.toList());
@@ -193,7 +208,7 @@ public class EditProfileComponent extends BaseMethods {
         return this;
     }
 
-    @Step("Check is 'save changes' button enabled")
+    @Step("Check is 'Save' button enabled")
     public boolean saveChangesButtonIsEnable() {
         saveButton.click();
         try {
