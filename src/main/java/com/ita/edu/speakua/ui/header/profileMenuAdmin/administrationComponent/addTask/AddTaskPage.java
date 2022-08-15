@@ -195,13 +195,7 @@ public class AddTaskPage extends HeaderComponent {
     }
 
     @Step("Click on 'save' button")
-    public AddTaskPage save() {
-        saveButton.click();
-        return this;
-    }
-
-    @Step("Click on 'save' button")
-    public TaskPage saveSuccess() {
+    public TaskPage save() {
         saveButton.click();
         return new TaskPage(driver);
     }
