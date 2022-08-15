@@ -67,7 +67,7 @@ public class ClubsPage extends HeaderComponent {
         return this.centers;
     }
 
-    @Step("Close advanced search panel")
+    @Step("Open advanced search panel")
     public ClubsPage advancedSearchButtonClick() {
         clickManagingClubsPageElement(advancedSearchButton);
         return this;

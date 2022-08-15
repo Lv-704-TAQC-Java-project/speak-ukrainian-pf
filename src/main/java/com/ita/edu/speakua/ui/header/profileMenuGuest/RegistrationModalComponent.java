@@ -2,6 +2,7 @@ package com.ita.edu.speakua.ui.header.profileMenuGuest;
 
 import com.ita.edu.speakua.ui.BaseMethods;
 import com.ita.edu.speakua.ui.HomePage;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -41,6 +42,7 @@ public class RegistrationModalComponent extends BaseMethods {
     }
 
 
+    @Step("Fill in last name field")
     public RegistrationModalComponent fillInLastName(String lastName) {
         waitVisibilityOfWebElement(lastNameInputField);
         lastNameInputField.sendKeys(lastName);
@@ -52,6 +54,7 @@ public class RegistrationModalComponent extends BaseMethods {
         return lastNameInputField.getAttribute("value");
     }
 
+    @Step("Fill in first name field")
     public RegistrationModalComponent fillInName(String name) {
         firstNameInputField.sendKeys(name);
         return this;
@@ -61,6 +64,7 @@ public class RegistrationModalComponent extends BaseMethods {
         return firstNameInputField.getAttribute("value");
     }
 
+    @Step("Fill in phone number field")
     public RegistrationModalComponent fillInPhone(String phone) {
         phoneInputField.sendKeys(phone);
         return this;
@@ -70,6 +74,7 @@ public class RegistrationModalComponent extends BaseMethods {
         return phoneInputField.getAttribute("value");
     }
 
+    @Step("Fill in email field")
     public RegistrationModalComponent fillInEmail(String email) {
         emailInputField.sendKeys(email);
         return this;
@@ -79,6 +84,7 @@ public class RegistrationModalComponent extends BaseMethods {
         return emailInputField.getAttribute("value");
     }
 
+    @Step("Fill in password field")
     public RegistrationModalComponent fillInPassword(String password) {
         passwordInputField.sendKeys(password);
         return this;
@@ -88,6 +94,7 @@ public class RegistrationModalComponent extends BaseMethods {
         return passwordInputField.getAttribute("value");
     }
 
+    @Step("Fill in confirm password field")
     public RegistrationModalComponent fillInConfirmPassword(String confirmPassword) {
         confirmPasswordInputField.sendKeys(confirmPassword);
         return this;

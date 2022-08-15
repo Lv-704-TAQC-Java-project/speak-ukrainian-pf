@@ -225,6 +225,7 @@ public class AdvancedSearchPanelComponent extends ClubsPage {
         return this;
     }
 
+    @Step("Click on 'club' radioButton")
     public AdvancedSearchPanelComponent clubRadioButtonClick() {
         waitVisibilityOfWebElement(clubRadioButton);
         clubRadioButton.click();

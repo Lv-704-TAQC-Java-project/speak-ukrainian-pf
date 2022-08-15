@@ -15,6 +15,8 @@ import java.util.List;
 
 public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
 
+    @Issue("TUA-103")
+    @Description("Verify that clubs are sorted by ABC")
     @Test
     public void advancedSearchABCSortClubTest() {
         advancedSearchPanel.clubRadioButtonClick();
@@ -50,6 +52,8 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
         softAssert.assertAll();
     }
 
+    @Issue("TUA-103")
+    @Description("Verify that centers are sorted by ABC")
     @Test
     public void advancedSearchABCSortCenterTest() {
         advancedSearchPanel.centerRadioButtonClick();
@@ -70,6 +74,8 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
         softAssert.assertAll();
     }
 
+    @Issue("TUA-103")
+    @Description("Verify that clubs are sorted by rating")
     @Test
     public void advancedSearchRatingSortClubTest() {
         advancedSearchPanel.clubRadioButtonClick();
@@ -90,6 +96,9 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
         softAssert.assertAll();
     }
 
+    @Issue("TUA-103")
+    @Issue("TUA-449")
+    @Description("Verify that centers are sorted by rating")
     @Test
     public void advancedSearchRatingSortCenterTest() {
         advancedSearchPanel.centerRadioButtonClick();

@@ -44,6 +44,8 @@ public class AddClubComponentTest extends AddClubDescribeTestRunner {
         };
     }
 
+    @Issue("TUA-178")
+    @Description("Verify error messages when description field is filled in with russian language")
     @Test(dataProvider = "descriptionErrorWithForbiddenCharacters")
     public void verifyErrorMessageAddClubDescriptionField(String description, String firstError, String secondError) {
         addClubDescribeComponent.inputDescription(description);
