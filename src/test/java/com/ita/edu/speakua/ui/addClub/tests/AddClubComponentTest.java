@@ -104,8 +104,7 @@ public class AddClubComponentTest extends AddClubDescribeTestRunner {
     }
 
     @Issue("TUA-173")
-    @Severity(SeverityLevel.CRITICAL)
-    @Description("Verify the description field is filled in with valid data and The 'Завершити' button is enable")
+    @Description("Verify the description field is filled in with valid data and the 'Завершити' button is enable")
     @Test(dataProvider = "validDescriptionData")
     public void verifyCreatingClubWithDescribeValidData(String testData) {
         boolean btnFinishIsEnable;

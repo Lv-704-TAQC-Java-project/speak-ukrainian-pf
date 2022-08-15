@@ -11,7 +11,6 @@ import org.testng.asserts.SoftAssert;
 public class AdvancedSearchTest extends AdvancedSearchTestRunner {
 
     @Issue("TUA-509")
-    @Severity(SeverityLevel.CRITICAL)
     @Description("Verify that all parameters are activated with the selected club radio button")
     @Test
     public void verifyItemsAdvancedSearchPanelAreActivated() {

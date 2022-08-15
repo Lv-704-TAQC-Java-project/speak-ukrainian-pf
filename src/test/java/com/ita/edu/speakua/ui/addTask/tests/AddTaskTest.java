@@ -36,20 +36,18 @@ public class AddTaskTest extends AddTaskTestRunner {
 //        boolean errorMessageDescribeIsEmpty = addTaskPage.errorMessageIsEmptyIsVisible();
 
         addTaskPage = addTaskPage
-                .enterDescription("ъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ð")
-                .save();
+                .enterDescription("ъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ð");
+        addTaskPage.save();
 
         boolean errorMessageDescribeInvalidCharacters = addTaskPage.errorMessageInvalidCharactersIsVisible();
 
-        addTaskPage = addTaskPage
-                .enterTitle(descriptionInput.substring(0, 39))
-                .save();
+        addTaskPage.enterTitle(descriptionInput.substring(0, 39));
+        addTaskPage.save();
 
         boolean errorMessageHeadingNotEnoughChars = addTaskPage.errorMessageIsDisplayed();
 
-        addTaskPage = addTaskPage
-                .enterTitle(descriptionInput.substring(0, 3001))
-                .save();
+        addTaskPage.enterTitle(descriptionInput.substring(0, 3001));
+        addTaskPage.save();
 
         boolean errorMessageHeadingTooManyChars = addTaskPage.errorMessageIsDisplayed();
 
@@ -79,7 +77,6 @@ public class AddTaskTest extends AddTaskTestRunner {
     }
 
     @Issue("TUA-524")
-    @Severity(SeverityLevel.CRITICAL)
     @Description("Verify impossibility of creating task with heading invalid data")
     @Test(dataProvider = "invalidHeaderData")
     public void verifyCreatingTaskWithHeadingInvalidData(String invalidData, String expectedMessage) {
@@ -88,7 +85,7 @@ public class AddTaskTest extends AddTaskTestRunner {
 
         boolean isAllFieldsAreEmptyByDefault = addTaskPage.areFieldsEmpty();
 
-        addTaskPage.enterStartDate("2022-10-19")
+        addTaskPage.enterStartDate(LocalDate.now().plusDays(1).toString())
                 .uploadImage(pathToImage)
                 .enterName("Test task # 5/")
                 .enterTitle(invalidData)
@@ -120,8 +117,8 @@ public class AddTaskTest extends AddTaskTestRunner {
                         "passages, and more recently with desktop publishing software like Aldus PageMaker including " +
                         "versions of Lorem Ipsum")
                 .enterDescription("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has " +
-                        "been the industry's standard dummy text ever since the 1500s, when an unknown printer took a ")
-                .save();
+                        "been the industry's standard dummy text ever since the 1500s, when an unknown printer took a ");
+        addTaskPage.save();
 
 
         Assert.assertTrue(addTaskPage.errorMessageIsEmptyIsVisible(), "Error message didn't find");
@@ -149,8 +146,8 @@ public class AddTaskTest extends AddTaskTestRunner {
                 .enterTitle(descriptionInput.substring(0, 50))
                 .enterDescription(descriptionInput.substring(0, 50))
                 .selectChallenge("Example name")
-                .enterStartDate(actualDate)
-                .save();
+                .enterStartDate(actualDate);
+        addTaskPage.save();
         String actualErrorMessage = addTaskPage.getErrorMessageText();
         softAssert.assertEquals(actualErrorMessage, expectedErrorMessage);
         softAssert.assertAll();
@@ -168,8 +165,8 @@ public class AddTaskTest extends AddTaskTestRunner {
                 .enterName("Maksym test")
                 .enterTitle("Lorem ipsum dolor sit amet, sed do eiusmod et dolore magna aliqua.")
                 .enterDescription("Facilisis sed odio morbi quis. Mauris rhoncus aenean vel elit scelerisque.")
-                .selectChallenge("The European languages")
-                .save();
+                .selectChallenge("The European languages");
+        addTaskPage.save();
         String actualErrorMessage = addTaskPage.getErrorMessageText();
         softAssert.assertEquals(actualErrorMessage, "Фото не може бути пустим");
         softAssert.assertAll();
@@ -193,7 +190,7 @@ public class AddTaskTest extends AddTaskTestRunner {
                 .enterDescription(description)
                 .selectChallenge("The European languages");
 
-        TaskPage taskPage = addTaskPage.saveSuccess();
+        TaskPage taskPage = addTaskPage.save();
 
         softAssert.assertEquals(addTaskPage.getSuccessMessage(), String.format("Завдання%s' успішно додане!", name));
         softAssert.assertEquals(taskPage.getNameText(), name);
