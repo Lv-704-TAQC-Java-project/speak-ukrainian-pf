@@ -156,11 +156,10 @@ public class BaseMethods {
     }
 
     public void waitStalenessOfPreviousErrors(List<WebElement> errors) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(1));
         if (errors.size() != 0) {
             for (WebElement error : errors) {
                 try {
-                    wait.until(ExpectedConditions.stalenessOf(error));
+                    waitStaleness(error, 2);
                 } catch (TimeoutException ignore) {
                 }
             }
