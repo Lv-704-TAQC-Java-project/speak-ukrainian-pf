@@ -77,7 +77,6 @@ public class AddTaskTest extends AddTaskTestRunner {
     }
 
     @Issue("TUA-524")
-    @Severity(SeverityLevel.CRITICAL)
     @Description("Verify impossibility of creating task with heading invalid data")
     @Test(dataProvider = "invalidHeaderData")
     public void verifyCreatingTaskWithHeadingInvalidData(String invalidData, String expectedMessage) {
@@ -86,7 +85,7 @@ public class AddTaskTest extends AddTaskTestRunner {
 
         boolean isAllFieldsAreEmptyByDefault = addTaskPage.areFieldsEmpty();
 
-        addTaskPage.enterStartDate("2022-10-19")
+        addTaskPage.enterStartDate(LocalDate.now().plusDays(1).toString())
                 .uploadImage(pathToImage)
                 .enterName("Test task # 5/")
                 .enterTitle(invalidData)
