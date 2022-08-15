@@ -1,6 +1,6 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent;
 
-import com.ita.edu.speakua.ui.HomePage;
+import com.ita.edu.speakua.ui.header.profileMenuAdmin.profilePage.ProfilePage;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,6 +14,15 @@ public class AddClubDescribeComponent extends AbstractAddClubComponent {
 
     @FindBy(xpath = "//textarea[@id='basic_description']")
     private WebElement describeArea;
+
+    @FindBy(xpath = "//input[@id='basic_urlLogo']")
+    private WebElement logoInput;
+
+    @FindBy(xpath = "//input[@id='basic_urlBackground']")
+    private WebElement backgroundInput;
+
+    @FindBy(xpath = "(//span[@role='button']/input)[3]")
+    private WebElement gallery;
 
     @FindBy(xpath = "//span[contains(text(),'Назад')]/ancestor::button")
     private WebElement previousStepButton;
@@ -45,10 +54,28 @@ public class AddClubDescribeComponent extends AbstractAddClubComponent {
         return new AddClubContactComponent(driver);
     }
 
+    @Step("Add club logo")
+    public AddClubDescribeComponent addLogo(String imagePath){
+        logoInput.sendKeys(imagePath);
+        return this;
+    }
+
+    @Step("Add club background")
+    public AddClubDescribeComponent addBackground(String imagePath){
+        backgroundInput.sendKeys(imagePath);
+        return this;
+    }
+
+    @Step("Add club gallery")
+    public AddClubDescribeComponent addGallery(String imagePath){
+        gallery.sendKeys(imagePath);
+        return this;
+    }
+
     @Step("Add club")
-    public HomePage addClub() {
+    public ProfilePage addClub() {
         finishButton.click();
-        return new HomePage(driver);
+        return new ProfilePage(driver);
     }
 
     public List<String> getErrorMessageDescriptionField() {
