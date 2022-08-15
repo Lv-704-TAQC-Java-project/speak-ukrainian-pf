@@ -44,6 +44,7 @@ public class AddCenterMainInfoComponent extends AbstractAddCenterComponent{
     @Step("Verify that location is displayed")
     public boolean isLocationAdded(String name) {
         try {
+            waitVisibility(getLocationItem(name));
             actionsMoveTo(getLocationItem(name));
             return getLocationItem(name).isDisplayed();
         } catch (NoSuchElementException e) {
