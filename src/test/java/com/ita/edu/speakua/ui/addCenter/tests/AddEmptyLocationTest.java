@@ -1,7 +1,8 @@
 package com.ita.edu.speakua.ui.addCenter.tests;
 
 import com.ita.edu.speakua.ui.header.HeaderComponent;
-import com.ita.edu.speakua.ui.header.profileMenuAdmin.addCenterComponent.AddLocationComponent;
+import com.ita.edu.speakua.ui.header.profileMenuAdmin.addLocation.AddLocationComponent;
+import com.ita.edu.speakua.ui.header.profileMenuAdmin.addLocation.Location;
 import com.ita.edu.speakua.ui.runners.LoginTestRunner;
 import io.qameta.allure.Issue;
 import org.testng.Assert;
@@ -11,12 +12,13 @@ public class AddEmptyLocationTest extends LoginTestRunner {
     @Issue("TUA-160")
     @Test
     public void addLocationTest() {
-        AddLocationComponent locationComponent = new HeaderComponent(driver)
+        new HeaderComponent(driver)
                 .openAdminProfileMenu()
                 .openAddCenterModal()
-                .clickAddLocationButton();
+                .addLocation(new Location("", "", "", "", "", ""));
 
-        Assert.assertFalse(locationComponent.isAddButtonEnabled());
+
+        Assert.assertFalse(new AddLocationComponent(driver).isAddButtonEnabled());
 
     }
 }
