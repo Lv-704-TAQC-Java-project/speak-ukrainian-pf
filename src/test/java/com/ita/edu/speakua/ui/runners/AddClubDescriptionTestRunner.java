@@ -4,13 +4,13 @@ import com.ita.edu.speakua.ui.HomePage;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubDescribeComponent;
 import org.testng.annotations.BeforeClass;
 
-public class AddClubDescribeTestRunner extends LoginTestRunner {
+public class AddClubDescriptionTestRunner extends LoginTestRunner {
 
-    protected AddClubDescribeComponent addClubDescribeComponent;
+    protected AddClubDescribeComponent addClubDescriptionComponent;
 
     @BeforeClass
     public void openAddClubDescribeComponent() {
-        addClubDescribeComponent = new HomePage(driver)
+        addClubDescriptionComponent = new HomePage(driver)
                 .openAdminProfileMenu()
                 .openUserProfilePage()
                 .openAddClubModal()

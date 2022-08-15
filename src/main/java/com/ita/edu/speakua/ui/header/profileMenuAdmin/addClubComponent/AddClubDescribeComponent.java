@@ -108,7 +108,7 @@ public class AddClubDescribeComponent extends AbstractAddClubComponent {
     }
 
     @Step("Check description field error message contains {errorMsg}")
-    public boolean errorMessageForDescriptionFieldContainsText(String errorMsg) {
+    public boolean descriptionErrorsContainMessage(String errorMsg) {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
         if (errorMessagesForDescriptionField != null && errorMessagesForDescriptionField.size() > 0) {
             for (WebElement error : errorMessagesForDescriptionField) {

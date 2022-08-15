@@ -1,6 +1,6 @@
 package com.ita.edu.speakua.ui.addClub.tests;
 
-import com.ita.edu.speakua.ui.runners.AddClubDescribeTestRunner;
+import com.ita.edu.speakua.ui.runners.AddClubDescriptionTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Severity;
@@ -12,7 +12,7 @@ import org.testng.asserts.SoftAssert;
 
 import static org.testng.Assert.assertTrue;
 
-public class AddClubComponentTest extends AddClubDescribeTestRunner {
+public class AddClubDescriptionTest extends AddClubDescriptionTestRunner {
 
     @DataProvider(name = "descriptionValidData")
     public Object[][] validDescriptionField() {
@@ -29,7 +29,7 @@ public class AddClubComponentTest extends AddClubDescribeTestRunner {
     @Test(dataProvider = "descriptionValidData")
     public void verifyAddClubDescribeFieldValidDataTest(int charAmount) {
         String descriptionInput = new String(new char[150]).replace("\0", "Lorem Ipsu");
-        boolean isButtonEnable = addClubDescribeComponent
+        boolean isButtonEnable = addClubDescriptionComponent
                 .inputDescription(descriptionInput.substring(0, charAmount))
                 .isButtonEnable();
         assertTrue(isButtonEnable, "Button should be enabled");
@@ -47,11 +47,11 @@ public class AddClubComponentTest extends AddClubDescribeTestRunner {
     @Description("Verify error messages when description field is filled in with russian language")
     @Test(dataProvider = "descriptionErrorWithForbiddenCharacters")
     public void verifyErrorMessageAddClubDescriptionField(String description, String firstError, String secondError) {
-        addClubDescribeComponent.inputDescription(description);
+        addClubDescriptionComponent.inputDescription(description);
 
-        String firstActualErrorMessage = addClubDescribeComponent.getErrorMessageDescriptionField().get(0);
-        String secondActualErrorMessage = addClubDescribeComponent.getErrorMessageDescriptionField().get(1);
-        int amountOfErrorMessages = addClubDescribeComponent.getErrorMessageDescriptionField().size();
+        String firstActualErrorMessage = addClubDescriptionComponent.getErrorMessageDescriptionField().get(0);
+        String secondActualErrorMessage = addClubDescriptionComponent.getErrorMessageDescriptionField().get(1);
+        int amountOfErrorMessages = addClubDescriptionComponent.getErrorMessageDescriptionField().size();
 
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(firstActualErrorMessage, firstError,
@@ -66,12 +66,12 @@ public class AddClubComponentTest extends AddClubDescribeTestRunner {
 
     @DataProvider(name = "descriptionLengthErrorData")
     public Object[][] descriptionLengthError() {
-        String fifteenHundredCharacterDescription = new String(new char[60]).replace("\0", "Lorem ipsum dolor am sit.");
+        String fifteenHundredCharactersDescription = new String(new char[60]).replace("\0", "Lorem ipsum dolor am sit.");
         return new Object[][]{
-                {fifteenHundredCharacterDescription, false},
-                {fifteenHundredCharacterDescription + "m", true},
-                {fifteenHundredCharacterDescription.substring(0, 1498), false},
-                {fifteenHundredCharacterDescription + "Hello world", true},
+                {fifteenHundredCharactersDescription, false},
+                {fifteenHundredCharactersDescription + "m", true},
+                {fifteenHundredCharactersDescription.substring(0, 1498), false},
+                {fifteenHundredCharactersDescription + "Hello world", true},
         };
     }
 
@@ -79,18 +79,18 @@ public class AddClubComponentTest extends AddClubDescribeTestRunner {
     @Description("Verify that description length error message appears when the user enters more than 1500 symbols into the field")
     @Test(dataProvider = "descriptionLengthErrorData")
     public void verifyDescriptionLengthErrorMessage(String description, boolean isErrorShown) {
-        String lengthErrorText = "Опис гуртка може містити від 40 до 1500 символів.";
+        String lengthErrorMessage = "Опис гуртка може містити від 40 до 1500 символів.";
 
-        boolean descriptionErrorsContainLengthError = addClubDescribeComponent
+        boolean descriptionErrorsContainLengthError = addClubDescriptionComponent
                 .inputDescription(description)
-                .errorMessageForDescriptionFieldContainsText(lengthErrorText);
+                .descriptionErrorsContainMessage(lengthErrorMessage);
 
         if (isErrorShown) {
-            Assert.assertTrue(addClubDescribeComponent.areDescriptionErrorsShown());
-            Assert.assertTrue(descriptionErrorsContainLengthError);
+            Assert.assertTrue(addClubDescriptionComponent.areDescriptionErrorsShown(), "Description errors are shown.");
+            Assert.assertTrue(descriptionErrorsContainLengthError, "Description length error is shown.");
         } else {
-            Assert.assertFalse(addClubDescribeComponent.areDescriptionErrorsShown());
-            Assert.assertFalse(descriptionErrorsContainLengthError);
+            Assert.assertFalse(addClubDescriptionComponent.areDescriptionErrorsShown(), "Description errors aren't shown.");
+            Assert.assertFalse(descriptionErrorsContainLengthError, "Description length error isn't shown.");
         }
     }
 
@@ -111,8 +111,8 @@ public class AddClubComponentTest extends AddClubDescribeTestRunner {
 
         SoftAssert softAssert = new SoftAssert();
 
-        addClubDescribeComponent.inputDescription(testData);
-        btnFinishIsEnable = addClubDescribeComponent.isButtonEnable();
+        addClubDescriptionComponent.inputDescription(testData);
+        btnFinishIsEnable = addClubDescriptionComponent.isButtonEnable();
         softAssert.assertTrue(btnFinishIsEnable);
 
         softAssert.assertAll();
