@@ -33,9 +33,9 @@ public class AddTaskTest extends AddTaskTestRunner {
 
     @Issue("TUA-525")
     @Severity(SeverityLevel.CRITICAL)
-    @Description("Verify that admin can't create a task with invalid data in description field and title field")
+    @Description("Verify that admin can't create a task with invalid data in description field")
     @Test(dataProvider = "invalidDescriptionData")
-    public void verifyCreateTaskInvalidDescriptionAndTitle(String textDescription, String expectedMessage) {
+    public void verifyCreateTaskInvalidDescription(String textDescription, String expectedMessage) {
         boolean allFieldsAreEmpty = addTaskPage.areFieldsEmpty();
         addTaskPage = addTaskPage
                 .enterStartDate(LocalDate.now().plusDays(2).toString())
