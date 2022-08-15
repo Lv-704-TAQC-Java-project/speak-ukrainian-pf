@@ -20,10 +20,10 @@ public class SortClubComponent extends ClubsPage {
     private WebElement arrowDownButton;
 
     @FindBy(xpath = "//div/label[@class = 'ant-radio-button-wrapper club-view-button']")
-    private WebElement blockViewButton;
+    private WebElement listViewButton;
 
     @FindBy(xpath = "//span[@class='ant-radio-button ant-radio-button-checked']/parent::label")
-    private WebElement listViewButton;
+    private WebElement blockViewButton;
 
     public SortClubComponent(WebDriver driver) {
         super(driver);
