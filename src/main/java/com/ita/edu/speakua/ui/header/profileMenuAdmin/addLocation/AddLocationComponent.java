@@ -119,7 +119,7 @@ public class AddLocationComponent extends BaseMethods {
         selectCityByName(location.getCity());
         selectRegionByName(location.getRegion());
         fillInAddressField(location.getAddress());
-        fillInGeographicСoordinatesField(location.getCoordinates());
+        fillInGeographicCoordinatesField(location.getCoordinates());
         fillInPhoneNumberField(location.getPhone());
         addButtonClick();
     }
