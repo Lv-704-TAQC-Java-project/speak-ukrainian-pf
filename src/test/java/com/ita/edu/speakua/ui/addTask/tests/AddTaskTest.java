@@ -88,7 +88,7 @@ public class AddTaskTest extends AddTaskTestRunner {
 
         boolean isAllFieldsAreEmptyByDefault = addTaskPage.areFieldsEmpty();
 
-        addTaskPage.enterStartDate("2022-10-19")
+        addTaskPage.enterStartDate(LocalDate.now().plusDays(1).toString())
                 .uploadImage(pathToImage)
                 .enterName("Test task # 5/")
                 .enterTitle(invalidData)

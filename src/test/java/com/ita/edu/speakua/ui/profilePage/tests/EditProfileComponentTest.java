@@ -18,7 +18,7 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
         String errorMessageStartEndLetter = "Ім'я повинно починатися та закінчуватися літерою";
         String errorMessageSpecialCharacters = "Ім'я не може містити спеціальні символи";
         return new Object[][]{
-                {"", "Будь ласка введіть Ваше ім'я"},
+                {"", "Введіть ім'я"},
                 {"AfBbCcDdEeFfGgHhIiJjKkLlMmNn", "Ім'я не може містити більше, ніж 25 символів"},
                 {"AfBbCcDdEeFfGgHhIiJjKkLlMm", "Ім'я не може містити більше, ніж 25 символів"},
                 {"!@#$%^&,", errorMessageSpecialCharacters},
