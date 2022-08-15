@@ -2,6 +2,7 @@ package com.ita.edu.speakua.ui.addClub.tests;
 
 import com.ita.edu.speakua.ui.HomePage;
 import com.ita.edu.speakua.ui.clubs.ClubsPage;
+import com.ita.edu.speakua.ui.clubs.card.components.BlockCardComponent;
 import com.ita.edu.speakua.ui.runners.BaseTestRunner;
 import jdk.jfr.Description;
 import org.testng.Assert;
@@ -15,19 +16,18 @@ public class SortClubTest extends BaseTestRunner {
                 .getSortClubComponent()
                 .blockViewButtonClick();
 
-        boolean isDisplayed = new ClubsPage(driver).getBlockCardContainer().isDisplayed();
-        Assert.assertTrue(isDisplayed, "Clubs are not displayed in block type view");
+        boolean isBlockView = new ClubsPage(driver).isBlockCardContainerDisplayed();
+        Assert.assertTrue(isBlockView, "Clubs are not displayed in block type view");
     }
 
     @Test
     public void listCardViewIsDisplayed() {
-        new HomePage(driver)
-                .clickAdvancedSearchButton()
+        HomePage homePage = new HomePage(driver);
+        homePage.clickAdvancedSearchButton()
                 .getSortClubComponent()
                 .listViewButtonClick();
 
-        boolean isDisplayed = new ClubsPage(driver).getWideCardContainer().isDisplayed();
-        Assert.assertTrue(isDisplayed, "Clubs are not displayed in list type view");
+        boolean isListView = new ClubsPage(driver).isListCardContainerDisplayed();
+        Assert.assertTrue(isListView, "Clubs are not displayed in list type view");
     }
-
 }

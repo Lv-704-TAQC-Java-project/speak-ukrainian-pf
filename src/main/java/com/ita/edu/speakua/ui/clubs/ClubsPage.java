@@ -3,10 +3,7 @@ package com.ita.edu.speakua.ui.clubs;
 import com.ita.edu.speakua.ui.clubs.card.components.CardComponent;
 import com.ita.edu.speakua.ui.clubs.card.components.CenterComponent;
 import com.ita.edu.speakua.ui.header.HeaderComponent;
-import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.ArrayList;
@@ -17,13 +14,12 @@ public class ClubsPage extends HeaderComponent {
     private List<CardComponent> cards;
     private List<CenterComponent> centers;
     private PaginationComponent paginationComponent;
-
     private SortClubComponent sortClubComponent;
 
-    //@FindBy(xpath = "//div[@class = 'content-clubs-list false']")
+    @FindBy(xpath = "//div[@class = 'content-clubs-list content-clubs-block']")
     private WebElement blockCardContainer;
 
-   // @FindBy(xpath = "//div[@class = 'content-clubs-list content-clubs-block']")
+    @FindBy(xpath = "//div[@class = 'content-clubs-list false']")
     private WebElement listCardContainer;
 
     @FindBy(xpath = "//span[contains(@class, 'anticon-control')]")
@@ -81,6 +77,24 @@ public class ClubsPage extends HeaderComponent {
         return sortClubComponent;
     }
 
+    public boolean isBlockCardContainerDisplayed() {
+        try {
+            blockCardContainer.isDisplayed();
+            return true;
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    public boolean isListCardContainerDisplayed() {
+        try {
+            listCardContainer.isDisplayed();
+            return true;
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
     public void clickManagingClubsPageElement(WebElement element) {
         List<CardComponent> cards = new ClubsPage(driver).getCards();
         element.click();
@@ -103,18 +117,4 @@ public class ClubsPage extends HeaderComponent {
     public boolean isDisappearsAdvancedSearchPanelComponent() {
         return advancedSearchButton == null;
     }
-    public WebElement getBlockCardContainer() {
-        if (blockCardContainer == null) {
-            blockCardContainer = driver.findElement(By.xpath("//div[@class = 'content-clubs-list content-clubs-block']"));
-        }
-        return blockCardContainer;
-    }
-
-    public WebElement getWideCardContainer() {
-        if (listCardContainer == null) {
-            listCardContainer = driver.findElement(By.xpath("//div[@class = 'content-clubs-list false']"));
-        }
-        return listCardContainer;
-    }
-
 }
