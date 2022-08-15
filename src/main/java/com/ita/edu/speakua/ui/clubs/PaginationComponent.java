@@ -32,16 +32,20 @@ public class PaginationComponent extends ClubsPage {
     }
 
     public WebElement getLastPaginationPage() {
+//        sleep(3000);
         lastPaginationPage = listOfPagesInPagination.get(listOfPagesInPagination.size() - 1);
+//        lastPaginationPage = driver
+//                .findElements(By.xpath("//li[contains(@class, 'ant-pagination-item')]"))
+//                .get(listOfPagesInPagination.size() - 1);
         return lastPaginationPage;
     }
 
     public int getLastPaginationPageNumber() {
-        if (getLastPaginationPage().isDisplayed()) {
-            waitStalenessOfElement(getLastPaginationPage());
-        } else {
-            waitVisibilityOfWebElement(getLastPaginationPage());
-        }
+//        if (getLastPaginationPage().isDisplayed()) {
+//            waitStalenessOfElement(getLastPaginationPage());
+//        } else {
+//            waitVisibilityOfWebElement(getLastPaginationPage());
+//        }
         return Integer.parseInt(getLastPaginationPage().getText());
     }
 
@@ -64,13 +68,13 @@ public class PaginationComponent extends ClubsPage {
     }
 
     public PaginationComponent waitForPaginationComponentToOpen() {
-        waitForPageToReload();
+        waitPageReload();
         return this;
     }
 
     public PaginationComponent waitForPageToRefresh() {
         WebElement firstClubPOnPage = listOfClubsOnCurrentPage.get(0);
-        waitInvisibilityOfElement(firstClubPOnPage);
+        waitInvisibility(firstClubPOnPage);
         return this;
     }
 }

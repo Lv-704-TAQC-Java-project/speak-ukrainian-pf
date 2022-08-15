@@ -1,12 +1,11 @@
 package com.ita.edu.speakua.ui.addClub.tests;
 
-import com.ita.edu.speakua.ui.HomePage;
-import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubDescribeComponent;
 import com.ita.edu.speakua.ui.runners.AddClubDescribeTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -26,11 +25,12 @@ public class AddClubComponentTest extends AddClubDescribeTestRunner {
 
     @Issue("TUA-172")
     @Description("Verify that the button is enable when the correct data is entered")
+    @Severity(SeverityLevel.CRITICAL)
     @Test(dataProvider = "descriptionValidData")
     public void verifyAddClubDescribeFieldValidDataTest(int charAmount) {
         String descriptionInput = new String(new char[150]).replace("\0", "Lorem Ipsu");
         boolean isButtonEnable = addClubDescribeComponent
-                .inputDescription(descriptionInput.substring(0,charAmount))
+                .inputDescription(descriptionInput.substring(0, charAmount))
                 .isButtonEnable();
         assertTrue(isButtonEnable, "Button should be enabled");
     }
@@ -43,6 +43,8 @@ public class AddClubComponentTest extends AddClubDescribeTestRunner {
         };
     }
 
+    @Issue("TUA-178")
+    @Description("Verify error messages when description field is filled in with russian language")
     @Test(dataProvider = "descriptionErrorWithForbiddenCharacters")
     public void verifyErrorMessageAddClubDescriptionField(String description, String firstError, String secondError) {
         addClubDescribeComponent.inputDescription(description);
@@ -61,36 +63,35 @@ public class AddClubComponentTest extends AddClubDescribeTestRunner {
         softAssert.assertAll();
     }
 
-    @Test
-    public void verifyLengthErrorMessageForDescriptionFieldWhenAddClub() {
-        String descriptionInput = new String(new char[150]).replace("\0", "Lorem Ipsu");
 
-        AddClubDescribeComponent addClubDescribeComponent = new HomePage(driver)
-                .openAdminProfileMenu()
-                .openUserProfilePage()
-                .openAddClubModal()
-                .inputNameOfClub("Спортивні танці")
-                .selectCategoryClub("Спортивні секції")
-                .inputAgeFrom(4)
-                .inputAgeTo(8)
-                .openNextStep()
-                .inputPhoneNumber("0672131246")
-                .openNextStep()
-                .inputDescription(descriptionInput);
+    @DataProvider(name = "descriptionLengthErrorData")
+    public Object[][] descriptionLengthError() {
+        String fifteenHundredCharacterDescription = new String(new char[60]).replace("\0", "Lorem ipsum dolor am sit.");
+        return new Object[][]{
+                {fifteenHundredCharacterDescription, false},
+                {fifteenHundredCharacterDescription + "m", true},
+                {fifteenHundredCharacterDescription.substring(0, 1498), false},
+                {fifteenHundredCharacterDescription + "Hello world", true},
+        };
+    }
 
-        SoftAssert softAssert = new SoftAssert();
+    @Issue("TUA-177")
+    @Description("Verify that description length error message appears when the user enters more than 1500 symbols into the field")
+    @Test(dataProvider = "descriptionLengthErrorData")
+    public void verifyDescriptionLengthErrorMessage(String description, boolean isErrorShown) {
         String lengthErrorText = "Опис гуртка може містити від 40 до 1500 символів.";
-        softAssert.assertFalse(addClubDescribeComponent.errorMessageForDescriptionFieldContainsText(lengthErrorText));
 
-        addClubDescribeComponent.inputDescription(descriptionInput.substring(0, 1498));
-        softAssert.assertFalse(addClubDescribeComponent.errorMessageForDescriptionFieldContainsText(lengthErrorText));
+        boolean descriptionErrorsContainLengthError = addClubDescribeComponent
+                .inputDescription(description)
+                .errorMessageForDescriptionFieldContainsText(lengthErrorText);
 
-        addClubDescribeComponent.inputDescription(descriptionInput + "m");
-        softAssert.assertTrue(addClubDescribeComponent.errorMessageForDescriptionFieldContainsText(lengthErrorText));
-
-        addClubDescribeComponent.inputDescription(descriptionInput + "Hello world");
-        softAssert.assertTrue(addClubDescribeComponent.errorMessageForDescriptionFieldContainsText(lengthErrorText));
-        softAssert.assertAll();
+        if (isErrorShown) {
+            Assert.assertTrue(addClubDescribeComponent.areDescriptionErrorsShown());
+            Assert.assertTrue(descriptionErrorsContainLengthError);
+        } else {
+            Assert.assertFalse(addClubDescribeComponent.areDescriptionErrorsShown());
+            Assert.assertFalse(descriptionErrorsContainLengthError);
+        }
     }
 
     @DataProvider(name = "validDescriptionData")
@@ -103,8 +104,7 @@ public class AddClubComponentTest extends AddClubDescribeTestRunner {
     }
 
     @Issue("TUA-173")
-    @Severity(SeverityLevel.CRITICAL)
-    @Description("Verify the description field is filled in with valid data and The 'Завершити' button is enable")
+    @Description("Verify the description field is filled in with valid data and the 'Завершити' button is enable")
     @Test(dataProvider = "validDescriptionData")
     public void verifyCreatingClubWithDescribeValidData(String testData) {
         boolean btnFinishIsEnable;

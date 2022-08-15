@@ -3,7 +3,6 @@ package com.ita.edu.speakua.ui.header.profileMenuGuest;
 import com.ita.edu.speakua.ui.BaseMethods;
 import com.ita.edu.speakua.ui.HomePage;
 import io.qameta.allure.Step;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -62,13 +61,13 @@ public class LoginModalComponent extends BaseMethods {
 
     @Step("click submit")
     public LoginModalComponent clickLoginButton() {
-        waitVisibilityOfWebElement(loginButton);
+        waitVisibility(loginButton);
         loginButton.click();
         return this;
     }
 
     public LoginModalComponent waitForUserToBeLoggedIn() {
-        waitForPageToReload();
+        waitPageReload();
         return this;
     }
 

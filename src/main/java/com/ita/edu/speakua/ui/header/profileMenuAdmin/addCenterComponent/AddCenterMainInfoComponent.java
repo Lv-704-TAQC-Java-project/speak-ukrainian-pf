@@ -17,7 +17,7 @@ public class AddCenterMainInfoComponent extends AbstractAddCenterComponent {
     @FindBy(xpath = "//div[@id='basic_locations']")
     private WebElement locationsList;
 
-    @FindBy(xpath = "//div[@class='btn']")
+    @FindBy(xpath = "//div[@class='btn']/button")
     private WebElement nextStepButton;
 
     @FindBy(xpath = "//div[contains(text(),'Некоректна назва центру')]")
@@ -44,6 +44,7 @@ public class AddCenterMainInfoComponent extends AbstractAddCenterComponent {
     @Step("Verify that location is displayed")
     public boolean isLocationAdded(String name) {
         try {
+            waitVisibility(getLocationItem(name));
             actionsMoveTo(getLocationItem(name));
             return getLocationItem(name).isDisplayed();
         } catch (NoSuchElementException | TimeoutException e) {
@@ -71,7 +72,7 @@ public class AddCenterMainInfoComponent extends AbstractAddCenterComponent {
 
     @Step("Verify error message is displayed")
     public boolean isErrorMessageDisplayed() {
-        waitVisibilityOfWebElement(errorMessage);
+        waitVisibility(errorMessage);
         return errorMessage.isDisplayed();
     }
 

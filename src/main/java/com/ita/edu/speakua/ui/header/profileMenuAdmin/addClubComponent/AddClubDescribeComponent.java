@@ -2,6 +2,7 @@ package com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent;
 
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.profilePage.ProfilePage;
 import io.qameta.allure.Step;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -33,7 +34,7 @@ public class AddClubDescribeComponent extends AbstractAddClubComponent {
     @FindBy(css = "div.ant-form-item-has-success")
     private WebElement successArea;
 
-    @FindBy(xpath = "//div[contains(@class, 'explain-error')]")
+    @FindBy(xpath = "//textarea[@id='basic_description']/ancestor::div[contains(@class, 'item-row')]//div[contains(@class, 'explain-error')]")
     private List<WebElement> errorMessagesForDescriptionField;
 
     public AddClubDescribeComponent(WebDriver driver) {
@@ -42,9 +43,13 @@ public class AddClubDescribeComponent extends AbstractAddClubComponent {
 
     @Step("Set description {text}")
     public AddClubDescribeComponent inputDescription(String text) {
-        describeArea.click();
-        describeArea.clear();
-        describeArea.sendKeys(text);
+        setNewValueForInput(describeArea,text);
+        return new AddClubDescribeComponent(driver);
+    }
+
+    @Step("Clear description")
+    public AddClubDescribeComponent clearDescription() {
+        clearInput(describeArea);
         return new AddClubDescribeComponent(driver);
     }
 
@@ -80,7 +85,7 @@ public class AddClubDescribeComponent extends AbstractAddClubComponent {
 
     public List<String> getErrorMessageDescriptionField() {
         List<String> errorMessages = new ArrayList<>();
-        waitVisibilityOfWebElements(errorMessagesForDescriptionField);
+        waitVisibility(errorMessagesForDescriptionField);
         if (errorMessagesForDescriptionField != null & errorMessagesForDescriptionField.size() > 0) {
             errorMessagesForDescriptionField.stream().forEach((c) -> errorMessages.add(c.getText()));
         }
@@ -92,11 +97,22 @@ public class AddClubDescribeComponent extends AbstractAddClubComponent {
         return successArea.isDisplayed();
     }
 
+    @Step("Check number of description errors")
+    public boolean areDescriptionErrorsShown() {
+        try {
+            waitInvisibility(errorMessagesForDescriptionField, 1);
+        } catch (TimeoutException ignore) {
+        }
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
+        return errorMessagesForDescriptionField.size() > 0;
+    }
+
+    @Step("Check description field error message contains {errorMsg}")
     public boolean errorMessageForDescriptionFieldContainsText(String errorMsg) {
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
         if (errorMessagesForDescriptionField != null && errorMessagesForDescriptionField.size() > 0) {
             for (WebElement error : errorMessagesForDescriptionField) {
-                waitVisibilityOfWebElement(error);
+                waitVisibility(error);
                 if (error.getText().equals(errorMsg)) {
                     return true;
                 }

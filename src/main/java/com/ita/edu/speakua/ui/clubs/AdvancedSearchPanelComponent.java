@@ -225,21 +225,22 @@ public class AdvancedSearchPanelComponent extends ClubsPage {
         return this;
     }
 
+    @Step("Click on 'club' radioButton")
     public AdvancedSearchPanelComponent clubRadioButtonClick() {
-        waitVisibilityOfWebElement(clubRadioButton);
+        waitVisibility(clubRadioButton);
         clubRadioButton.click();
         return this;
     }
 
     @Step("Click on 'center' radioButton")
     public AdvancedSearchPanelComponent centerRadioButtonClick() {
-        waitVisibilityOfWebElement(centerRadioButton);
+        waitVisibility(centerRadioButton);
         centerRadioButton.click();
         return this;
     }
 
     public AdvancedSearchPanelComponent centerRadioButtonClickAnother() {
-        waitVisibilityOfWebElement(centerRadioButton);
+        waitVisibility(centerRadioButton);
         centerRadioButton.click();
         sleep(1000);
         return this;
@@ -265,30 +266,34 @@ public class AdvancedSearchPanelComponent extends ClubsPage {
         }
     }
 
-    public AdvancedSearchPanelComponent enterChildAge(Integer age) {
+    public AdvancedSearchPanelComponent enterChildAge(int age) {
         childAgeInput.sendKeys(Keys.chord(Keys.CONTROL, "a"));
-        childAgeInput.sendKeys(age.toString());
-        clickManagingClubsPageElement(childAgeInput);
+        childAgeInput.sendKeys(String.valueOf(age));
         return this;
     }
 
-    public boolean cityListIsActivated() {
+    public int getChildAge() {
+        return Integer.parseInt(childAgeInput.getAttribute("value"));
+    }
+
+
+    public boolean isCityListActivated() {
         return citySelector.isDisplayed() && citySelector.isEnabled();
     }
 
-    public boolean districtListIsActivated() {
+    public boolean isDistrictListActivated() {
         return districtSelector.isDisplayed() && districtSelector.isEnabled();
     }
 
-    public boolean metroListIsActivated() {
+    public boolean isMetroListActivated() {
         return metroSelector.isDisplayed() && metroSelector.isEnabled();
     }
 
-    public boolean checkOnlineIsActivated() {
+    public boolean isCheckOnlineActivated() {
         return availableOnline.isDisplayed() && availableOnline.isEnabled();
     }
 
-    public boolean categoriesListIsActivated() {
+    public boolean isCategoriesListActivated() {
         for (WebElement categoryElement : categoriesNameList) {
             try {
                 categoryElement.isDisplayed();
@@ -300,7 +305,7 @@ public class AdvancedSearchPanelComponent extends ClubsPage {
         return true;
     }
 
-    public boolean ageChildInputActivated() {
+    public boolean isAgeChildInputActivated() {
         return childAgeBlock.isDisplayed() && childAgeBlock.isEnabled();
     }
 

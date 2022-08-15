@@ -38,7 +38,7 @@ public class AddClubMainInfoComponent extends AbstractAddClubComponent {
 
     @Step("Set nameOfClub {name}")
     public AddClubMainInfoComponent inputNameOfClub(String name){
-        waitVisibilityOfWebElement(inputNameOfClub);
+        waitVisibility(inputNameOfClub);
         inputNameOfClub.click();
         inputNameOfClub.clear();
         inputNameOfClub.sendKeys(name);

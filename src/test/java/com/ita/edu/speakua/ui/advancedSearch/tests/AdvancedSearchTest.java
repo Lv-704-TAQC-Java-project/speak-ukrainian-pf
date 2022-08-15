@@ -10,21 +10,23 @@ import org.testng.asserts.SoftAssert;
 
 public class AdvancedSearchTest extends AdvancedSearchTestRunner {
 
+    @Issue("TUA-509")
+    @Description("Verify that all parameters are activated with the selected club radio button")
     @Test
     public void verifyItemsAdvancedSearchPanelAreActivated() {
         SoftAssert softAssert = new SoftAssert();
 
-        softAssert.assertTrue(advancedSearchPanel.cityListIsActivated(),
+        softAssert.assertTrue(advancedSearchPanel.isCityListActivated(),
                 "City selected list should be activated");
-        softAssert.assertTrue(advancedSearchPanel.districtListIsActivated(),
+        softAssert.assertTrue(advancedSearchPanel.isDistrictListActivated(),
                 "District selected list should be activated");
-        softAssert.assertTrue(advancedSearchPanel.metroListIsActivated(),
+        softAssert.assertTrue(advancedSearchPanel.isMetroListActivated(),
                 "Metro station selected list should be activated");
-        softAssert.assertTrue(advancedSearchPanel.checkOnlineIsActivated(),
+        softAssert.assertTrue(advancedSearchPanel.isCheckOnlineActivated(),
                 "Checkbox is online should be activated");
-        softAssert.assertTrue(advancedSearchPanel.categoriesListIsActivated(),
+        softAssert.assertTrue(advancedSearchPanel.isCategoriesListActivated(),
                 "Category checkbox list should be activated");
-        softAssert.assertTrue(advancedSearchPanel.ageChildInputActivated(),
+        softAssert.assertTrue(advancedSearchPanel.isAgeChildInputActivated(),
                 "Age input should be activated");
 
         softAssert.assertAll();

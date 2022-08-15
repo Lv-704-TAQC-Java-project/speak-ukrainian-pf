@@ -30,13 +30,14 @@ public class GuestProfileMenuComponent extends BaseMethods {
         return new RegistrationModalComponent(driver);
     }
 
-    @Step("open Login Modal")
+    @Step("Open Login Modal")
     public LoginModalComponent openLoginModal() {
-        waitVisibilityOfWebElement(loginButton);
+        waitVisibility(loginButton);
         actionsClickOnElement(loginButton);
         return new LoginModalComponent(driver);
     }
 
+    @Step("Open Registration Modal")
     public RegistrationModalComponent openRegistrationModal() {
         registrationButton.click();
         return getRegistrationModal();

@@ -3,6 +3,10 @@ package com.ita.edu.speakua.ui.advancedSearch.tests;
 import com.ita.edu.speakua.ui.clubs.ClubsPage;
 import com.ita.edu.speakua.ui.clubs.SortClubComponent;
 import com.ita.edu.speakua.ui.runners.AdvancedSearchTestRunner;
+import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -11,6 +15,8 @@ import java.util.List;
 
 public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
 
+    @Issue("TUA-103")
+    @Description("Verify that clubs are sorted by ABC")
     @Test
     public void advancedSearchABCSortClubTest() {
         advancedSearchPanel.clubRadioButtonClick();
@@ -46,6 +52,8 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
         softAssert.assertAll();
     }
 
+    @Issue("TUA-103")
+    @Description("Verify that centers are sorted by ABC")
     @Test
     public void advancedSearchABCSortCenterTest() {
         advancedSearchPanel.centerRadioButtonClick();
@@ -66,6 +74,8 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
         softAssert.assertAll();
     }
 
+    @Issue("TUA-103")
+    @Description("Verify that clubs are sorted by rating")
     @Test
     public void advancedSearchRatingSortClubTest() {
         advancedSearchPanel.clubRadioButtonClick();
@@ -86,6 +96,9 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
         softAssert.assertAll();
     }
 
+    @Issue("TUA-103")
+    @Issue("TUA-449")
+    @Description("Verify that centers are sorted by rating")
     @Test
     public void advancedSearchRatingSortCenterTest() {
         advancedSearchPanel.centerRadioButtonClick();
@@ -103,6 +116,37 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
         sortClubComponent.arrowDownButtonClick();
         softAssert.assertEquals(clubsPage.getCards().get(0).getStarRatingZeroList().size(), 5,
                 "Centers are not sorted by rating DEC when arrowDownButton is clicked");
+        softAssert.assertAll();
+    }
+
+    @Issue("TUA-516")
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("Verify that the clubs can be sorted by rating")
+    @Test
+    public void verifySortingClubsByRate() {
+        advancedSearchPanel.clubRadioButtonClick();
+        ClubsPage clubsPage = new ClubsPage(driver);
+
+        SortClubComponent sort = clubsPage
+                .getSortClubComponent()
+                .sortByRatingButtonClick();
+
+        SoftAssert softAssert = new SoftAssert();
+        List<Integer> cardCountOfStars = new ArrayList<>();
+        for (int i = 0; i < clubsPage.getCards().size(); i++) {
+            cardCountOfStars.add(clubsPage.getCards().get(i).getStarRatingZeroList().size());
+            boolean result = cardCountOfStars.get(i) == 5;
+            softAssert.assertTrue(result, "Club cards are not sorted by Rate when advancedSearch is opened");
+        }
+
+        sort.arrowUpButtonClick();
+
+        cardCountOfStars = new ArrayList<>();
+        for (int i = 0; i < clubsPage.getCards().size(); i++) {
+            cardCountOfStars.add(i, clubsPage.getCards().get(i).getStarRatingFullList().size());
+            boolean result = cardCountOfStars.get(i) == 5;
+            softAssert.assertTrue(result, "Club cards are not sorted by Rate when advancedSearch is opened");
+        }
         softAssert.assertAll();
     }
 }

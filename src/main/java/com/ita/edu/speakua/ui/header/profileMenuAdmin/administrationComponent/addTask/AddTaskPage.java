@@ -39,6 +39,9 @@ public class AddTaskPage extends HeaderComponent {
     @FindBy(xpath = "//div[contains(@class, 'warning')]//span[text()]")
     private WebElement errorMessage;
 
+    @FindBy(xpath = "//div[contains(@class, 'success')]//span[text()]")
+    private WebElement successMessage;
+
     @FindBy(xpath = "//div[contains(@class, 'warning')]//span[text()]")
     private List<WebElement> errorMessages;
 
@@ -50,6 +53,12 @@ public class AddTaskPage extends HeaderComponent {
 
     @FindBy(xpath = "//span[contains(text(),'minimum of 40')]")
     private WebElement errorLessThenFortyCharacters;
+
+    @FindBy(xpath = "//span[contains(text(),'startDate не може бути відсутнім, має бути задано')]")
+    private WebElement errorEmptyDate;
+
+    @FindBy(xpath = "//span[contains(text(),'startDate не може бути відсутнім, має бути задано')]")
+    private WebElement errorPastDate;
 
     @FindBy(xpath = "//span[@class='ant-upload-list-item-actions']")
     private List<WebElement> imageElements;
@@ -97,7 +106,7 @@ public class AddTaskPage extends HeaderComponent {
     }
 
     private WebElement getChallengeItem(String name) {
-        waitVisibilityOfWebElement(challengeList);
+        waitVisibility(challengeList);
         return challengeList.findElement(By.xpath(String.format(".//div[contains(text(),'%s')]", name)));
     }
 
@@ -111,7 +120,7 @@ public class AddTaskPage extends HeaderComponent {
 
     @Step("Check are allFields empty")
     public boolean areFieldsEmpty() {
-        waitVisibilityOfWebElement(startDate);
+        waitVisibility(startDate);
         return startDateIsEmpty() &&
                 imageIsEmpty() &&
                 nameIsEmpty() &&
@@ -146,24 +155,35 @@ public class AddTaskPage extends HeaderComponent {
 
     @Step("Get error message")
     public String getErrorMessageText() {
-        waitVisibilityOfWebElement(errorMessage);
+        waitVisibility(errorMessage);
         return errorMessage.getText();
+    }
+
+    @Step("Get success message")
+    public String getSuccessMessage() {
+        waitVisibility(successMessage);
+        return successMessage.getText();
     }
 
     @Step("Get error messages from invalid challenges")
     public boolean errorMessageIsEmptyIsVisible() {
-        waitVisibilityOfElement(By.xpath("//span[contains(text(),'Please')]"));
+        waitVisibility(By.xpath("//span[contains(text(),'Please')]"));
         return errorMessageIsEmpty.isDisplayed();
     }
 
     public boolean errorMessageInvalidCharactersIsVisible() {
-        waitVisibilityOfElement(By.xpath("//span[contains(text(),'Помилка')]"));
+        waitVisibility(By.xpath("//span[contains(text(),'Помилка')]"));
         return errorInvalidCharacters.isDisplayed();
     }
 
-    public boolean errorMessageInvalidCharactersCount() {
-        waitVisibilityOfElement(By.xpath("//span[contains(text(),'minimum of 40')]"));
-        return errorLessThenFortyCharacters.isDisplayed();
+    public boolean errorMessageEmptyDate() {
+        waitVisibility(errorEmptyDate);
+        return errorEmptyDate.isDisplayed();
+    }
+
+    public boolean errorMessagePastDate() {
+        waitVisibility(errorPastDate);
+        return errorPastDate.isDisplayed();
     }
 
     public boolean errorMessageIsDisplayed() {
@@ -178,11 +198,5 @@ public class AddTaskPage extends HeaderComponent {
     public TaskPage save() {
         saveButton.click();
         return new TaskPage(driver);
-    }
-
-    @Step("Click on 'save' button")
-    public AddTaskPage failSave() {
-        saveButton.click();
-        return this;
     }
 }

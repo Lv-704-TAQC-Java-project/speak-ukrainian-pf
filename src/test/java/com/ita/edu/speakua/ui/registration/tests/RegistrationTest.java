@@ -2,6 +2,8 @@ package com.ita.edu.speakua.ui.registration.tests;
 
 import com.ita.edu.speakua.ui.header.HeaderComponent;
 import com.ita.edu.speakua.ui.runners.BaseTestRunner;
+import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -14,7 +16,8 @@ public class RegistrationTest extends BaseTestRunner {
                 {"Прізвище", "Ім'я", "0631133456", "adminNewRegistration@gmail.com", "12345Aa!"}
         };
     }
-
+    @Issue("TUA-454")
+    @Description("Verify that registration data are remembered")
     @Test(dataProvider = "registrationFormInputData")
     public void verifyThatRegistrationDataAreRememberedTest(String lastName, String firstName, String phone, String email, String password) {
         HeaderComponent header = new HeaderComponent(driver);

@@ -4,6 +4,8 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -29,7 +31,7 @@ public class BaseMethods {
         return driver.getCurrentUrl();
     }
 
-    public void waitForPageToReload() {
+    public void waitPageReload() {
         try {
             WebDriverWait wait = new WebDriverWait(this.driver, TIMEOUT);
             wait.until(driver -> ((JavascriptExecutor) driver).executeScript("return document.readyState;").equals("loading"));
@@ -39,7 +41,7 @@ public class BaseMethods {
         }
     }
 
-    public void waitForAttributeValueWithJS(WebElement element, String attribute, String value) {
+    public void waitAttributeValue(WebElement element, String attribute, String value) {
         try {
             WebDriverWait wait = new WebDriverWait(this.driver, TIMEOUT);
             wait.until(driver -> ((JavascriptExecutor) driver)
@@ -58,57 +60,74 @@ public class BaseMethods {
         }
     }
 
-    public void waitElementIsClickable(WebElement element) {
+    public void waitClickable(WebElement element) {
         WebDriverWait wait = new WebDriverWait(driver, TIMEOUT);
         wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
-    public void waitVisibilityOfElement(By locator) {
+    public void waitVisibility(By locator) {
         WebDriverWait wait = new WebDriverWait(driver, TIMEOUT);
         wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
-    public void waitAttributeOfElementContains(By locator, String attribute, String value) {
-        WebDriverWait wait = new WebDriverWait(driver, TIMEOUT);
-        wait.until(ExpectedConditions.attributeContains(locator, attribute, value));
+    public void waitVisibility(WebElement element) {
+        waitVisibility(element, TIMEOUT.getSeconds());
     }
 
-    public void waitVisibilityOfElement(By locator, Duration timeout) {
-        WebDriverWait wait = new WebDriverWait(driver, timeout);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    public void waitVisibility(WebElement element, long seconds) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(seconds));
+        wait.until(ExpectedConditions.visibilityOf(element));
     }
 
-    public void waitVisibilityOfWebElements(By locator) {
-        WebDriverWait wait = new WebDriverWait(driver, TIMEOUT);
-        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
-    }
-
-    public void waitVisibilityOfWebElements(List<WebElement> elements) {
+    public void waitVisibility(List<WebElement> elements) {
         WebDriverWait wait = new WebDriverWait(driver, TIMEOUT);
         wait.until(ExpectedConditions.visibilityOfAllElements(elements));
     }
 
-    public void waitInvisibilityOfElement(WebElement element) {
-        waitInvisibilityOfElement(element, TIMEOUT.getSeconds());
+    public void waitInvisibility(WebElement element) {
+        waitInvisibility(element, TIMEOUT.getSeconds());
     }
 
-    public void waitInvisibilityOfElement(WebElement element, long seconds) {
+    public void waitInvisibility(WebElement element, long seconds) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(seconds));
         wait.until(ExpectedConditions.invisibilityOf(element));
     }
 
-    public void waitStalenessOfElement(WebElement element) {
-        waitStalenessOfElement(element, TIMEOUT.getSeconds());
+    public void waitInvisibility(List<WebElement> elements, long seconds) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(seconds));
+        wait.until(ExpectedConditions.invisibilityOfAllElements(elements));
     }
 
-    public void waitStalenessOfElement(WebElement element, long seconds) {
-        WebDriverWait wait = new WebDriverWait(driver, TIMEOUT);
+    public void waitStaleness(WebElement element) {
+        waitStaleness(element, TIMEOUT.getSeconds());
+    }
+
+    public void waitStaleness(WebElement element, long seconds) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(seconds));
         wait.until(ExpectedConditions.stalenessOf(element));
     }
 
-    public void waitVisibilityOfWebElement(WebElement element) {
-        WebDriverWait wait = new WebDriverWait(driver, SHORT_TIMEOUT);
-        wait.until(ExpectedConditions.visibilityOf(element));
+    public void fluentWaitStaleness(WebElement element, long timeoutMillis, int polling) {
+        Wait<WebDriver> wait = new FluentWait<>(driver)
+                .withTimeout(Duration.ofMillis(timeoutMillis))
+                .pollingEvery(Duration.ofMillis(polling))
+                .ignoring(NoSuchElementException.class);
+        try {
+            wait.until(ExpectedConditions.stalenessOf(element));
+        } catch (TimeoutException ignore) {
+        }
+    }
+
+    public void fluentWaitVisibility(WebElement element, long timeoutMillis, int polling) {
+        Wait<WebDriver> wait = new FluentWait<>(driver)
+                .withTimeout(Duration.ofMillis(timeoutMillis))
+                .pollingEvery(Duration.ofMillis(polling))
+                .ignoring(NoSuchElementException.class)
+                .ignoring(TimeoutException.class);
+        try {
+            wait.until(ExpectedConditions.visibilityOf(element));
+        } catch (TimeoutException ignore) {
+        }
     }
 
     public void waitForTextPresentInElement(WebElement element, String text) {
@@ -137,11 +156,10 @@ public class BaseMethods {
     }
 
     public void waitStalenessOfPreviousErrors(List<WebElement> errors) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(1));
         if (errors.size() != 0) {
             for (WebElement error : errors) {
                 try {
-                    wait.until(ExpectedConditions.stalenessOf(error));
+                    waitStaleness(error, 2);
                 } catch (TimeoutException ignore) {
                 }
             }

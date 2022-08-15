@@ -3,8 +3,6 @@ package com.ita.edu.speakua.ui.profilePage.tests;
 import com.ita.edu.speakua.ui.runners.EditProfileTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -18,7 +16,7 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
         String errorMessageStartEndLetter = "Ім'я повинно починатися та закінчуватися літерою";
         String errorMessageSpecialCharacters = "Ім'я не може містити спеціальні символи";
         return new Object[][]{
-                {"", "Будь ласка введіть Ваше ім'я"},
+                {"", "Введіть ім'я"},
                 {"AfBbCcDdEeFfGgHhIiJjKkLlMmNn", "Ім'я не може містити більше, ніж 25 символів"},
                 {"AfBbCcDdEeFfGgHhIiJjKkLlMm", "Ім'я не може містити більше, ніж 25 символів"},
                 {"!@#$%^&,", errorMessageSpecialCharacters},
@@ -26,15 +24,14 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
                 {"-Name", errorMessageStartEndLetter},
                 {"< Name>", errorMessageSpecialCharacters},
                 {"'Name", errorMessageStartEndLetter},
-                {"Name-", errorMessageSpecialCharacters},
+                {"Name-", errorMessageStartEndLetter},
                 {"<Name >", errorMessageSpecialCharacters},
                 {"Name'", errorMessageStartEndLetter}
         };
     }
 
     @Issue("TUA-328")
-    @Severity(SeverityLevel.CRITICAL)
-    @Description("My verify EditProfile")
+    @Description("Verify impossibility of editing profile with first name invalid data")
     @Test(dataProvider = "invalidFirstNameData")
     public void verifyErrorMessageWithFirstNameInvalidData(String data, String expectedMessage) {
         String actualMessage;
