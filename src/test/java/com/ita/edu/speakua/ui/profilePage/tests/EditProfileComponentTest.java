@@ -3,8 +3,6 @@ package com.ita.edu.speakua.ui.profilePage.tests;
 import com.ita.edu.speakua.ui.runners.EditProfileTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -26,15 +24,14 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
                 {"-Name", errorMessageStartEndLetter},
                 {"< Name>", errorMessageSpecialCharacters},
                 {"'Name", errorMessageStartEndLetter},
-                {"Name-", errorMessageSpecialCharacters},
+                {"Name-", errorMessageStartEndLetter},
                 {"<Name >", errorMessageSpecialCharacters},
                 {"Name'", errorMessageStartEndLetter}
         };
     }
 
     @Issue("TUA-328")
-    @Severity(SeverityLevel.CRITICAL)
-    @Description("My verify EditProfile")
+    @Description("Verify impossibility of editing profile with first name invalid data")
     @Test(dataProvider = "invalidFirstNameData")
     public void verifyErrorMessageWithFirstNameInvalidData(String data, String expectedMessage) {
         String actualMessage;
