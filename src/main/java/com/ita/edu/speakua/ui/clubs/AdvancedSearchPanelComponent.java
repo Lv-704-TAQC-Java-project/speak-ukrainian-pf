@@ -227,20 +227,20 @@ public class AdvancedSearchPanelComponent extends ClubsPage {
 
     @Step("Click on 'club' radioButton")
     public AdvancedSearchPanelComponent clubRadioButtonClick() {
-        waitVisibilityOfWebElement(clubRadioButton);
+        waitVisibility(clubRadioButton);
         clubRadioButton.click();
         return this;
     }
 
     @Step("Click on 'center' radioButton")
     public AdvancedSearchPanelComponent centerRadioButtonClick() {
-        waitVisibilityOfWebElement(centerRadioButton);
+        waitVisibility(centerRadioButton);
         centerRadioButton.click();
         return this;
     }
 
     public AdvancedSearchPanelComponent centerRadioButtonClickAnother() {
-        waitVisibilityOfWebElement(centerRadioButton);
+        waitVisibility(centerRadioButton);
         centerRadioButton.click();
         sleep(1000);
         return this;

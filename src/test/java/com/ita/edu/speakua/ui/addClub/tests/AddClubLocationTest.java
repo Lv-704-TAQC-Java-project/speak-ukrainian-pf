@@ -37,7 +37,7 @@ public class AddClubLocationTest extends LoginTestRunner {
                 .selectCityByName(city)
                 .selectRegionByName(region)
                 .fillInAddressField(address)
-                .fillInGeographicСoordinatesField(coordinates)
+                .fillInGeographicCoordinatesField(coordinates)
                 .fillInPhoneNumberField(phoneNumber)
                 .addButtonClick();
         addClubContactComponent.inputEmail("a@gdg.ooo");

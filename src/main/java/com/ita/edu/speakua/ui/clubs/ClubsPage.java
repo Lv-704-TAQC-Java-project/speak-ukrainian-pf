@@ -38,8 +38,8 @@ public class ClubsPage extends HeaderComponent {
 
     public ClubsPage(WebDriver driver) {
         super(driver);
-        waitInvisibilityOfElement(cardsBody.get(0));
-        waitVisibilityOfWebElement(cardsBody.get(0));
+        waitInvisibility(cardsBody.get(0));
+        waitVisibility(cardsBody.get(0));
     }
 
     @Step("Open advanced search panel")
@@ -95,7 +95,7 @@ public class ClubsPage extends HeaderComponent {
         driver.manage().timeouts().implicitlyWait(SHORT_TIMEOUT);
         for (CardComponent card : cards) {
             try {
-                waitStalenessOfElement(card.getCardBody());
+                waitStaleness(card.getCardBody());
             } catch (TimeoutException ignored) {
             }
         }
@@ -154,8 +154,8 @@ public class ClubsPage extends HeaderComponent {
 
     private void waitForCardsChange(long timeoutMillis, int polling) {
         try {
-            fluentWaitStalenessOfElement(getCards().get(0).getCardName(), timeoutMillis, polling);
-            fluentWaitVisibilityOfElement(getCards().get(0).getCardName(), timeoutMillis, polling);
+            fluentWaitStaleness(getCards().get(0).getCardName(), timeoutMillis, polling);
+            fluentWaitVisibility(getCards().get(0).getCardName(), timeoutMillis, polling);
         } catch (TimeoutException | StaleElementReferenceException ignore) {
         }
     }

@@ -68,13 +68,13 @@ public class PaginationComponent extends ClubsPage {
     }
 
     public PaginationComponent waitForPaginationComponentToOpen() {
-        waitForPageToReload();
+        waitPageReload();
         return this;
     }
 
     public PaginationComponent waitForPageToRefresh() {
         WebElement firstClubPOnPage = listOfClubsOnCurrentPage.get(0);
-        waitInvisibilityOfElement(firstClubPOnPage);
+        waitInvisibility(firstClubPOnPage);
         return this;
     }
 }

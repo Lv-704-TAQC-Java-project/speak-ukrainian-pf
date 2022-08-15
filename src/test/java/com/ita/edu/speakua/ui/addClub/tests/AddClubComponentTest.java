@@ -5,6 +5,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -62,27 +63,35 @@ public class AddClubComponentTest extends AddClubDescribeTestRunner {
         softAssert.assertAll();
     }
 
+
+    @DataProvider(name = "descriptionLengthErrorData")
+    public Object[][] descriptionLengthError() {
+        String fifteenHundredCharacterDescription = new String(new char[60]).replace("\0", "Lorem ipsum dolor am sit.");
+        return new Object[][]{
+                {fifteenHundredCharacterDescription, false},
+                {fifteenHundredCharacterDescription + "m", true},
+                {fifteenHundredCharacterDescription.substring(0, 1498), false},
+                {fifteenHundredCharacterDescription + "Hello world", true},
+        };
+    }
+
     @Issue("TUA-177")
     @Description("Verify that description length error message appears when the user enters more than 1500 symbols into the field")
-    @Test
-    public void verifyDescriptionLengthErrorMessage() {
-        String descriptionInput = new String(new char[150]).replace("\0", "Lorem Ipsu");
-
-        addClubDescribeComponent.inputDescription(descriptionInput);
-
-        SoftAssert softAssert = new SoftAssert();
+    @Test(dataProvider = "descriptionLengthErrorData")
+    public void verifyDescriptionLengthErrorMessage(String description, boolean isErrorShown) {
         String lengthErrorText = "Опис гуртка може містити від 40 до 1500 символів.";
-        softAssert.assertFalse(addClubDescribeComponent.errorMessageForDescriptionFieldContainsText(lengthErrorText));
 
-        addClubDescribeComponent.inputDescription(descriptionInput.substring(0, 1498));
-        softAssert.assertFalse(addClubDescribeComponent.errorMessageForDescriptionFieldContainsText(lengthErrorText));
+        boolean descriptionErrorsContainLengthError = addClubDescribeComponent
+                .inputDescription(description)
+                .errorMessageForDescriptionFieldContainsText(lengthErrorText);
 
-        addClubDescribeComponent.inputDescription(descriptionInput + "m");
-        softAssert.assertTrue(addClubDescribeComponent.errorMessageForDescriptionFieldContainsText(lengthErrorText));
-
-        addClubDescribeComponent.inputDescription(descriptionInput + "Hello world");
-        softAssert.assertTrue(addClubDescribeComponent.errorMessageForDescriptionFieldContainsText(lengthErrorText));
-        softAssert.assertAll();
+        if (isErrorShown) {
+            Assert.assertTrue(addClubDescribeComponent.areDescriptionErrorsShown());
+            Assert.assertTrue(descriptionErrorsContainLengthError);
+        } else {
+            Assert.assertFalse(addClubDescribeComponent.areDescriptionErrorsShown());
+            Assert.assertFalse(descriptionErrorsContainLengthError);
+        }
     }
 
     @DataProvider(name = "validDescriptionData")

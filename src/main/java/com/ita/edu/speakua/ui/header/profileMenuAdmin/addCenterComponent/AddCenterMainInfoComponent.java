@@ -43,7 +43,7 @@ public class AddCenterMainInfoComponent extends AbstractAddCenterComponent{
 
     @Step("Verify that location is displayed")
     public boolean isLocationAdded(String name) {
-        waitVisibilityOfWebElement(getLocationItem(name));
+        waitVisibility(getLocationItem(name));
         try {
             return getLocationItem(name).isDisplayed();
         } catch (NoSuchElementException e) {
@@ -71,7 +71,7 @@ public class AddCenterMainInfoComponent extends AbstractAddCenterComponent{
 
     @Step("Verify error message is displayed")
     public boolean isErrorMessageDisplayed(){
-        waitVisibilityOfWebElement(errorMessage);
+        waitVisibility(errorMessage);
         return errorMessage.isDisplayed();
     }
 

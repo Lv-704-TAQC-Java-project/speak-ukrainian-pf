@@ -16,7 +16,7 @@ public class AddLocationComponent extends BaseMethods {
     private WebElement addressField;
 
     @FindBy(xpath = "//input[@id = 'coordinates']")
-    private WebElement geographicСoordinatesField;
+    private WebElement geographicCoordinatesField;
 
     @FindBy(xpath = "//input[@id = 'phone']")
     private WebElement phoneNumberField;
@@ -42,7 +42,7 @@ public class AddLocationComponent extends BaseMethods {
 
     @Step("Fill In {locationName}")
     public AddLocationComponent fillInLocationNameField(String locationName) {
-        waitVisibilityOfWebElement(locationNameField);
+        waitVisibility(locationNameField);
         locationNameField.click();
         locationNameField.clear();
         locationNameField.sendKeys(locationName);
@@ -75,7 +75,7 @@ public class AddLocationComponent extends BaseMethods {
 
     @Step("Fill In {address}")
     public AddLocationComponent fillInAddressField(String address) {
-        waitVisibilityOfWebElement(addressField);
+        waitVisibility(addressField);
         addressField.click();
         addressField.clear();
         addressField.sendKeys(address);
@@ -83,11 +83,11 @@ public class AddLocationComponent extends BaseMethods {
     }
 
     @Step("Fill In {coordinates}")
-    public AddLocationComponent fillInGeographicСoordinatesField(String coordinates) {
-        waitVisibilityOfWebElement(geographicСoordinatesField);
-        geographicСoordinatesField.click();
-        geographicСoordinatesField.clear();
-        geographicСoordinatesField.sendKeys(coordinates);
+    public AddLocationComponent fillInGeographicCoordinatesField(String coordinates) {
+        waitVisibility(geographicCoordinatesField);
+        geographicCoordinatesField.click();
+        geographicCoordinatesField.clear();
+        geographicCoordinatesField.sendKeys(coordinates);
         return this;
     }
 

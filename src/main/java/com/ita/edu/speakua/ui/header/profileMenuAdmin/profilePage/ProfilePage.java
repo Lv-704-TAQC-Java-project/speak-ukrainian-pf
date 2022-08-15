@@ -29,16 +29,16 @@ public class ProfilePage extends HeaderComponent {
 
     @Step("Open edit profile page")
     public EditProfileComponent openEditProfilePage() {
-        waitElementIsClickable(editProfileButton);
+        waitClickable(editProfileButton);
         editProfileButton.click();
         return new EditProfileComponent(driver);
     }
 
     @Step("Open a model for adding club")
     public AddClubMainInfoComponent openAddClubModal() {
-        waitVisibilityOfWebElement(addButton);
+        waitVisibility(addButton);
         addButton.click();
-        waitVisibilityOfWebElement(addClubButton);
+        waitVisibility(addClubButton);
         addClubButton.click();
         return new AddClubMainInfoComponent(driver);
     }

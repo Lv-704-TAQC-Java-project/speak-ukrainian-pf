@@ -22,7 +22,7 @@ public class AdministrationComponent extends BaseMethods {
 
     @Step("Open task page")
     public TasksPage openTaskPage() {
-        waitVisibilityOfWebElement(taskButton);
+        waitVisibility(taskButton);
         actionsClickOnElement(taskButton);
         return new TasksPage(driver);
     }
