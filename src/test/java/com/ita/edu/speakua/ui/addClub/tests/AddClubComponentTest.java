@@ -1,7 +1,5 @@
 package com.ita.edu.speakua.ui.addClub.tests;
 
-import com.ita.edu.speakua.ui.HomePage;
-import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubDescribeComponent;
 import com.ita.edu.speakua.ui.runners.AddClubDescribeTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -64,22 +62,13 @@ public class AddClubComponentTest extends AddClubDescribeTestRunner {
         softAssert.assertAll();
     }
 
+    @Issue("TUA-177")
+    @Description("Verify that description length error message appears when the user enters more than 1500 symbols into the field")
     @Test
-    public void verifyLengthErrorMessageForDescriptionFieldWhenAddClub() {
+    public void verifyDescriptionLengthErrorMessage() {
         String descriptionInput = new String(new char[150]).replace("\0", "Lorem Ipsu");
 
-        AddClubDescribeComponent addClubDescribeComponent = new HomePage(driver)
-                .openAdminProfileMenu()
-                .openUserProfilePage()
-                .openAddClubModal()
-                .inputNameOfClub("Спортивні танці")
-                .selectCategoryClub("Спортивні секції")
-                .inputAgeFrom(4)
-                .inputAgeTo(8)
-                .openNextStep()
-                .inputPhoneNumber("0672131246")
-                .openNextStep()
-                .inputDescription(descriptionInput);
+        addClubDescribeComponent.inputDescription(descriptionInput);
 
         SoftAssert softAssert = new SoftAssert();
         String lengthErrorText = "Опис гуртка може містити від 40 до 1500 символів.";
