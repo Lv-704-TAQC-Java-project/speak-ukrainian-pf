@@ -55,13 +55,15 @@ public class CardComponent extends BaseMethods {
         return cardBody;
     }
 
-    public WebElement getCardName() {
-        waitVisibility(cardName);
-        return cardName;
+    public CardComponent waitNameRefresh(long timeoutMillis, int polling) {
+        fluentWaitStaleness(cardName, timeoutMillis, polling);
+        fluentWaitVisibility(cardName, timeoutMillis, polling);
+        return this;
     }
 
-    public String getTextCardName() {
-        return getCardName().getText();
+    public String getCardName() {
+        waitVisibility(cardName);
+        return cardName.getText();
     }
 
     public List<WebElement> getStarRatingFullList() {

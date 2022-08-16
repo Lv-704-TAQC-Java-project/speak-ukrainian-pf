@@ -191,12 +191,12 @@ public class AddTaskPage extends HeaderComponent {
     }
 
     public boolean errorMessageLessThenFiveCharactersIsVisible(){
-        waitVisibilityOfElement(By.xpath("//span[contains(text(),'minimum of 5')]"));
+        waitVisibility(By.xpath("//span[contains(text(),'minimum of 5')]"));
         return errorLessThenFortyCharacters.isDisplayed();
     }
 
     public boolean errorMessageMoreThenOneHundredCharactersIsVisible(){
-        waitVisibilityOfElement(By.xpath("//span[contains(text(),'minimum of 100')]"));
+        waitVisibility(By.xpath("//span[contains(text(),'minimum of 100')]"));
         return errorLessThenFortyCharacters.isDisplayed();
     }
 

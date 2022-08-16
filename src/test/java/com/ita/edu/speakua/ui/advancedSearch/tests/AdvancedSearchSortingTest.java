@@ -39,14 +39,14 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
 
         List<String> cardNamesTextDecActual = new ArrayList<>();
         for (int i = 0; i < clubsPage.getCards().size(); i++) {
-            cardNamesTextDecActual.add(i, clubsPage.getCards().get(i).getTextCardName().toLowerCase());
+            cardNamesTextDecActual.add(i, clubsPage.getCards().get(i).getCardName().toLowerCase());
         }
 
         softAssert.assertEquals(cardNamesTextDecActual.toString(), cardNamesDECExpected.toString(),
                 "Club cards are not sorted by ABC DEC when arrowUp is clicked");
 
         sortClubComponent.orderByDesc();
-        softAssert.assertTrue(clubsPage.getCards().get(0).getTextCardName().toLowerCase().startsWith("a"),
+        softAssert.assertTrue(clubsPage.getCards().get(0).getCardName().toLowerCase().startsWith("a"),
                 "Club cards are not sorted by ABC ASC when arrowDown is clicked");
 
         softAssert.assertAll();

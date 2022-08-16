@@ -130,6 +130,24 @@ public class ClubsPage extends HeaderComponent {
         return advancedSearchButton == null;
     }
 
+    public ClubsPage fillInSearch(String query) {
+        clearInput(searchInput);
+        searchInput.click();
+        for (int i = 0; i < query.length(); i++) {
+            if (i == 1) {
+                waitForCardsRefresh(1000, 100);
+            }
+            if (i < query.length() - 1) {
+                searchInput.sendKeys(query.substring(i, i + 1));
+            }
+            waitForCardsRefresh(200, 50);
+        }
+        searchInput.sendKeys(query.substring(query.length() - 1));
+        waitForCardsRefresh(1000, 100);
+        waitForCardsRefresh(1000, 100);
+        return this;
+    }
+
     public ClubsPage pasteInSearch(String query) {
         clearInput(searchInput);
         searchInput.click();
@@ -144,17 +162,16 @@ public class ClubsPage extends HeaderComponent {
             executor.executeScript(String.format("arguments[0].value='%s'", query.substring(0, 49)), searchInput);
             searchInput.sendKeys(query.substring(49));
         }
-        waitForCardsChange(1000, 100);
-        waitForCardsChange(1000, 100);
+        waitForCardsRefresh(1000, 100);
+        waitForCardsRefresh(1000, 100);
         searchIcon.click();
-        waitForCardsChange(1000, 100);
+        waitForCardsRefresh(1000, 100);
         return this;
     }
 
-    private void waitForCardsChange(long timeoutMillis, int polling) {
+    private void waitForCardsRefresh(long timeoutMillis, int polling) {
         try {
-            fluentWaitStaleness(getCards().get(0).getCardName(), timeoutMillis, polling);
-            fluentWaitVisibility(getCards().get(0).getCardName(), timeoutMillis, polling);
+            getCards().get(0).waitNameRefresh(timeoutMillis, polling);
         } catch (TimeoutException | StaleElementReferenceException ignore) {
         }
     }

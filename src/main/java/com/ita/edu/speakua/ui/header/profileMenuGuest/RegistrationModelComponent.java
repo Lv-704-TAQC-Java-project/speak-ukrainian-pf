@@ -143,7 +143,7 @@ public class RegistrationModelComponent extends BaseMethods {
     }
 
     public HomePage getHomePageReload() {
-        waitForPageToReload();
+        waitPageReload();
         return new HomePage(driver);
     }
 

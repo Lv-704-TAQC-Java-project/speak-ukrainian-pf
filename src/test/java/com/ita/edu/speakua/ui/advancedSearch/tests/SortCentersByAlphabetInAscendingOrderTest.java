@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 
-public class SortCentersAlphabeticalOrderTest extends BaseTestRunner {
+public class SortCentersByAlphabetInAscendingOrderTest extends BaseTestRunner {
 
     @Issue("TUA-440")
     @Description("Verify that the user can sort Centers in alphabetical order")
@@ -25,7 +25,12 @@ public class SortCentersAlphabeticalOrderTest extends BaseTestRunner {
 
         ClubsPage clubsPage = new ClubsPage(driver);
 
-        String[] actualCenterNamesAscOrder = clubsPage.getCards().stream().map(CardComponent::getTextCardName).toArray(String[]::new);
+        String[] actualCenterNamesAscOrder = clubsPage
+                .getCards()
+                .stream()
+                .map(CardComponent::getCardName)
+                .toArray(String[]::new);
+
         String[] expectedCenterNamesAscOrder = new String[]{
                 "API testing2",
                 "BabyClub",
@@ -40,9 +45,16 @@ public class SortCentersAlphabeticalOrderTest extends BaseTestRunner {
             softAssert.assertEquals(actualCenterNamesAscOrder[i], expectedCenterNamesAscOrder[i]);
         }
 
-        clubsPage.getSortClubComponent().orderByAsc();
+        clubsPage
+                .getSortClubComponent()
+                .orderByAsc();
 
-        String[] actualCenterNamesDescOrder = clubsPage.getCards().stream().map(CardComponent::getTextCardName).toArray(String[]::new);
+        String[] actualCenterNamesDescOrder = clubsPage
+                .getCards()
+                .stream()
+                .map(CardComponent::getCardName)
+                .toArray(String[]::new);
+
         String[] expectedCenterNamesDescOrder = new String[]{
                 "Школа мистецтв імені Миколи Дмитровича Леонтовича",
                 "Центр творчості дітей та юнацтва",
