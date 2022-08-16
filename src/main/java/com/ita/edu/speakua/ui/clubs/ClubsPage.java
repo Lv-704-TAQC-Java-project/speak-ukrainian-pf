@@ -39,7 +39,7 @@ public class ClubsPage extends HeaderComponent {
         super(driver);
     }
 
-    @Step("Open advanced search panel")
+    @Step("Get access to advanced search panel")
     public AdvancedSearchPanelComponent getAdvancedSearchPanelComponent() {
         return new AdvancedSearchPanelComponent(driver);
     }
@@ -79,6 +79,7 @@ public class ClubsPage extends HeaderComponent {
         return getPaginationComponent().waitForPaginationComponentToOpen();
     }
 
+    @Step("Get access to sort cards component")
     public SortClubComponent getSortClubComponent() {
         if (sortClubComponent == null) {
             sortClubComponent = new SortClubComponent(driver);
