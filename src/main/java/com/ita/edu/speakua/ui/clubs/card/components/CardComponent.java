@@ -2,7 +2,6 @@ package com.ita.edu.speakua.ui.clubs.card.components;
 
 import com.ita.edu.speakua.ui.BaseMethods;
 import com.ita.edu.speakua.ui.clubs.ExpandedCardComponent;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -14,11 +13,17 @@ import java.util.List;
 public class CardComponent extends BaseMethods {
     protected WebElement cardBody;
 
+    @FindBy(xpath = "./parent::div")
+    protected WebElement cardWrapper;
+
     @FindBy(xpath = ".//div[@class='title']")
     protected WebElement cardTitle;
 
     @FindBy(xpath = ".//div[contains(@class, 'name')]")
     protected WebElement cardName;
+
+    @FindBy(xpath = ".//*[@class='description']")
+    protected WebElement cardDescription;
 
     @FindBy(xpath = ".//div[@class='address']")
     protected WebElement address;
@@ -41,11 +46,17 @@ public class CardComponent extends BaseMethods {
         PageFactory.initElements(new DefaultElementLocatorFactory(cardBody), this);
     }
 
+    public String getCardText() {
+        waitVisibility(cardWrapper);
+        return cardWrapper.getText();
+    }
+
     public WebElement getCardBody() {
         return cardBody;
     }
 
     public WebElement getCardName() {
+        waitVisibility(cardName);
         return cardName;
     }
 
@@ -69,6 +80,4 @@ public class CardComponent extends BaseMethods {
     public boolean isClubAvailableOnline() {
         return availableOnline.isDisplayed();
     }
-
-
 }

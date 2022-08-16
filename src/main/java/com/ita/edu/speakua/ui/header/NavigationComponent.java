@@ -2,6 +2,7 @@ package com.ita.edu.speakua.ui.header;
 
 import com.ita.edu.speakua.ui.*;
 import com.ita.edu.speakua.ui.clubs.ClubsPage;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -38,6 +39,7 @@ public class NavigationComponent extends BaseMethods {
         return new HomePage(driver);
     }
 
+    @Step("Open Clubs page")
     public ClubsPage clickClubsBtn() {
         clubsBtn.click();
         return new ClubsPage(driver);

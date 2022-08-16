@@ -2,6 +2,7 @@ package com.ita.edu.speakua.ui.header.profileMenuGuest;
 
 import com.ita.edu.speakua.ui.BaseMethods;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.profilePage.ProfilePage;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -29,12 +30,14 @@ public class GuestProfileMenuComponent extends BaseMethods {
         return new RegistrationModalComponent(driver);
     }
 
+    @Step("Open Login Modal")
     public LoginModalComponent openLoginModal() {
-        waitVisibilityOfWebElement(loginButton);
+        waitVisibility(loginButton);
         actionsClickOnElement(loginButton);
         return new LoginModalComponent(driver);
     }
 
+    @Step("Open Registration Modal")
     public RegistrationModalComponent openRegistrationModal() {
         registrationButton.click();
         return getRegistrationModal();

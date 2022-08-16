@@ -3,9 +3,8 @@ package com.ita.edu.speakua.ui.clubs;
 import com.ita.edu.speakua.ui.clubs.card.components.CardComponent;
 import com.ita.edu.speakua.ui.clubs.card.components.CenterComponent;
 import com.ita.edu.speakua.ui.header.HeaderComponent;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import io.qameta.allure.Step;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.ArrayList;
@@ -19,6 +18,9 @@ public class ClubsPage extends HeaderComponent {
 
     private SortClubComponent sortClubComponent;
 
+    @FindBy(xpath = "//span[@aria-label='search']")
+    private WebElement searchIcon;
+
     @FindBy(xpath = "//div[@class = 'content-clubs-list false']")
     private WebElement blockCardContainer;
 
@@ -28,13 +30,19 @@ public class ClubsPage extends HeaderComponent {
     @FindBy(xpath = "//span[contains(@class, 'anticon-control')]")
     private WebElement advancedSearchButton;
 
-    @FindBy(xpath = ".//div[contains(@class, 'card-body')]")
+    @FindBy(xpath = "//div[contains(@class, 'card-body')]")
     private List<WebElement> cardsBody;
+
+    @FindBy(xpath = "//input[contains(@id, 'rc_select')]")
+    private WebElement searchInput;
 
     public ClubsPage(WebDriver driver) {
         super(driver);
+        waitInvisibility(cardsBody.get(0));
+        waitVisibility(cardsBody.get(0));
     }
 
+    @Step("Open advanced search panel")
     public AdvancedSearchPanelComponent getAdvancedSearchPanelComponent() {
         return new AdvancedSearchPanelComponent(driver);
     }
@@ -59,6 +67,7 @@ public class ClubsPage extends HeaderComponent {
         return this.centers;
     }
 
+    @Step("Open advanced search panel")
     public ClubsPage advancedSearchButtonClick() {
         clickManagingClubsPageElement(advancedSearchButton);
         return this;
@@ -86,7 +95,7 @@ public class ClubsPage extends HeaderComponent {
         driver.manage().timeouts().implicitlyWait(SHORT_TIMEOUT);
         for (CardComponent card : cards) {
             try {
-                waitStalenessOfElement(card.getCardBody());
+                waitStaleness(card.getCardBody());
             } catch (TimeoutException ignored) {
             }
         }
@@ -99,8 +108,59 @@ public class ClubsPage extends HeaderComponent {
         sleep(2000);
     }
 
+    @Step("Is closed advanced search panel")
     public boolean isDisappearsAdvancedSearchPanelComponent() {
         return advancedSearchButton == null;
     }
 
+    public ClubsPage fillInSearch(String query) {
+        clearInput(searchInput);
+        searchInput.click();
+        for (int i = 0; i < query.length(); i++) {
+            if (i == 1) {
+                waitForCardsChange(1000, 100);
+            }
+            if (i < query.length() - 1) {
+                searchInput.sendKeys(query.substring(i, i + 1));
+            }
+            waitForCardsChange(200, 50);
+        }
+        searchInput.sendKeys(query.substring(query.length() - 1));
+        waitForCardsChange(1000, 100);
+        waitForCardsChange(1000, 100);
+        return this;
+    }
+
+    public ClubsPage pasteInSearch(String query) {
+        clearInput(searchInput);
+        searchInput.click();
+        JavascriptExecutor executor = (JavascriptExecutor) driver;
+
+        if (query.length() == 1) {
+            searchInput.sendKeys(query);
+        } else if (query.length() <= 50) {
+            executor.executeScript(String.format("arguments[0].value='%s'", query.substring(0, query.length() - 1)), searchInput);
+            searchInput.sendKeys(query.substring(query.length() - 1));
+        } else {
+            executor.executeScript(String.format("arguments[0].value='%s'", query.substring(0, 49)), searchInput);
+            searchInput.sendKeys(query.substring(49));
+        }
+        waitForCardsChange(1000, 100);
+        waitForCardsChange(1000, 100);
+        searchIcon.click();
+        waitForCardsChange(1000, 100);
+        return this;
+    }
+
+    private void waitForCardsChange(long timeoutMillis, int polling) {
+        try {
+            fluentWaitStaleness(getCards().get(0).getCardName(), timeoutMillis, polling);
+            fluentWaitVisibility(getCards().get(0).getCardName(), timeoutMillis, polling);
+        } catch (TimeoutException | StaleElementReferenceException ignore) {
+        }
+    }
+
+    public int getSearchInputLength() {
+        return searchInput.getAttribute("value").length();
+    }
 }

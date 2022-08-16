@@ -1,6 +1,9 @@
-package com.ita.edu.speakua.ui.profilePage.tests.editProfile.tests;
+package com.ita.edu.speakua.ui.profilePage.tests;
 
 import com.ita.edu.speakua.ui.runners.EditProfileTestRunner;
+import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -11,34 +14,36 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
 
     @DataProvider(name = "invalidFirstNameData")
     public static Object[][] invalidFirstNameData() {
-        String errorMessage = "Ім'я повинно починатися і закінчуватися літерою";
+        String errorMessageStartEndLetter = "Ім'я повинно починатися та закінчуватися літерою";
+        String errorMessageSpecialCharacters = "Ім'я не може містити спеціальні символи";
         return new Object[][]{
-                {"", "Будь ласка введіть Ваше ім'я"},
+                {"", "Введіть ім'я"},
                 {"AfBbCcDdEeFfGgHhIiJjKkLlMmNn", "Ім'я не може містити більше, ніж 25 символів"},
                 {"AfBbCcDdEeFfGgHhIiJjKkLlMm", "Ім'я не може містити більше, ніж 25 символів"},
-                {"!@#$%^&,", "Ім'я не може містити спеціальні символи"},
+                {"!@#$%^&,", errorMessageSpecialCharacters},
                 {"1234", "Ім'я не може містити цифри"},
-                {"-Name", errorMessage},
-                {"< Name>", errorMessage},
-                {"'Name", errorMessage},
-                {"Name-", errorMessage},
-                {"<Name >", errorMessage},
-                {"Name'", errorMessage}
+                {"-Name", errorMessageStartEndLetter},
+                {"< Name>", errorMessageSpecialCharacters},
+                {"'Name", errorMessageStartEndLetter},
+                {"Name-", errorMessageStartEndLetter},
+                {"<Name >", errorMessageSpecialCharacters},
+                {"Name'", errorMessageStartEndLetter}
         };
     }
 
+    @Issue("TUA-328")
+    @Description("Verify impossibility of editing profile with first name invalid data")
     @Test(dataProvider = "invalidFirstNameData")
-    public void verifyEditProfileWithInvalidData(String data, String expectedMessage) {
+    public void verifyErrorMessageWithFirstNameInvalidData(String data, String expectedMessage) {
         String actualMessage;
         boolean saveChangesBtnIsEnabled;
         SoftAssert softAssert = new SoftAssert();
 
-        actualMessage = editProfileComponent.fillInFirstName(data).getFirstnameErrorText();
+        actualMessage = editProfileComponent.setFirstName(data).getFirstnameErrorText();
         softAssert.assertEquals(actualMessage, expectedMessage, "Expected error message did not appear");
 
         saveChangesBtnIsEnabled = editProfileComponent.saveChangesButtonIsEnable();
         softAssert.assertFalse(saveChangesBtnIsEnabled, "SaveChanges button is enabled");
-
         softAssert.assertAll();
     }
 
@@ -55,9 +60,11 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
         };
     }
 
+    @Issue("TUA-356")
+    @Description("Verify error messages are shown and 'Save' button is disabled while entering invalid data in phone field")
     @Test(dataProvider = "invalidPhoneData")
     public void verifyPhoneErrorMessageWhenEditProfileTest(String phone, String expectedMessage) {
-        List<String> errorMessages = editProfileComponent.fillInPhone(phone).getPhoneErrorText();
+        List<String> errorMessages = editProfileComponent.setPhone(phone).getPhoneErrorText();
         boolean expectedMessageIsPresent = errorMessages.contains(expectedMessage);
 
         SoftAssert softAssert = new SoftAssert();
@@ -67,5 +74,15 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
         softAssert.assertFalse(saveChangesBtnIsEnabled, "SaveChanges button is not enabled.");
 
         softAssert.assertAll();
+    }
+
+    @AfterMethod
+    public void setInitialInfo() {
+        if (!editProfileComponent.getFirstName().equals(initialFirstName)) {
+            editProfileComponent.setFirstName(initialFirstName);
+        }
+        if (!editProfileComponent.getPhone().equals(initialPhone)) {
+            editProfileComponent.setPhone(initialPhone);
+        }
     }
 }

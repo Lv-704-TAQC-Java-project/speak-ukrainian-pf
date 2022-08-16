@@ -2,8 +2,7 @@ package com.ita.edu.speakua.ui;
 
 import com.ita.edu.speakua.ui.clubs.ClubsPage;
 import com.ita.edu.speakua.ui.header.HeaderComponent;
-import com.ita.edu.speakua.ui.header.profileMenuAdmin.profilePage.EditProfileComponent;
-import org.openqa.selenium.Keys;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -25,8 +24,7 @@ public class HomePage extends HeaderComponent {
     }
 
     public ClubsPage fillInSearch(String query) {
-        searchInput.sendKeys(Keys.chord(Keys.CONTROL, "a"), "");
-        searchInput.sendKeys(query);
+        setNewValueForInput(searchInput, query);
         return new ClubsPage(driver);
     }
 
@@ -35,7 +33,8 @@ public class HomePage extends HeaderComponent {
         return new ClubsPage(driver);
     }
 
-    public ClubsPage clickAdvancedSearchButton() {
+    @Step("open Advanced Search menu")
+    public ClubsPage openAdvancedSearch() {
         advancedSearchButton.click();
         return new ClubsPage(driver);
     }
@@ -44,6 +43,4 @@ public class HomePage extends HeaderComponent {
         searchButton.click();
         return new ClubsPage(driver);
     }
-
-
 }

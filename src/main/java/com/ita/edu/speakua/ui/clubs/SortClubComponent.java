@@ -1,13 +1,13 @@
 package com.ita.edu.speakua.ui.clubs;
 
-import com.ita.edu.speakua.ui.BaseMethods;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class SortClubComponent extends ClubsPage {
     @FindBy(xpath = "//div/span[contains(text(), 'за алфавітом')]")
-    private WebElement sortByABCButton;
+    private WebElement sortByAlphabetButton;
 
     @FindBy(xpath = "//div/span[contains(text(), 'за рейтингом')]")
     private WebElement sortByRatingButton;
@@ -28,25 +28,28 @@ public class SortClubComponent extends ClubsPage {
         super(driver);
     }
 
-    public SortClubComponent sortByABCButtonClick() {
-        waitVisibilityOfWebElement(sortByABCButton);
-        clickManagingClubsPageElement(sortByABCButton);
+    @Step("Sort cards by alphabet")
+    public SortClubComponent sortByAlphabet() {
+        waitVisibility(sortByAlphabetButton);
+        clickManagingClubsPageElement(sortByAlphabetButton);
         return this;
     }
 
-    public SortClubComponent sortByRatingButtonClick() {
-        waitVisibilityOfWebElement(sortByRatingButton);
+    @Step("Sort cards by rating")
+    public SortClubComponent sortByRating() {
+        waitVisibility(sortByRatingButton);
         clickManagingClubsPageElement(sortByRatingButton);
         return this;
     }
 
-    public SortClubComponent arrowUpButtonClick() {
+    @Step("Sort cards in ascending order")
+    public SortClubComponent sortAscending() {
         clickManagingClubsPageElement(arrowUpButton);
         return this;
-
     }
 
-    public SortClubComponent arrowDownButtonClick() {
+    @Step("Sort cards in descending order")
+    public SortClubComponent sortDescending() {
         clickManagingClubsPageElement(arrowDownButton);
         return this;
     }
