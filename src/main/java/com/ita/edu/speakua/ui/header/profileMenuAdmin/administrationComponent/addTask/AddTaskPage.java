@@ -81,6 +81,10 @@ public class AddTaskPage extends HeaderComponent {
         uploadImage.sendKeys(imagePath);
         return this;
     }
+    public AddTaskPage inputImageSecondPhoto(){
+        uploadImage.sendKeys("C:\\Users\\User\\IdeaProjects\\speak-ukrainian-pf\\smile-png.png");
+        return this;
+    }
 
     @Step("Enter name of challenge {name}")
     public AddTaskPage enterName(String name) {
@@ -184,6 +188,16 @@ public class AddTaskPage extends HeaderComponent {
     public boolean errorMessagePastDate() {
         waitVisibility(errorPastDate);
         return errorPastDate.isDisplayed();
+    }
+
+    public boolean errorMessageLessThenFiveCharactersIsVisible(){
+        waitVisibilityOfElement(By.xpath("//span[contains(text(),'minimum of 5')]"));
+        return errorLessThenFortyCharacters.isDisplayed();
+    }
+
+    public boolean errorMessageMoreThenOneHundredCharactersIsVisible(){
+        waitVisibilityOfElement(By.xpath("//span[contains(text(),'minimum of 100')]"));
+        return errorLessThenFortyCharacters.isDisplayed();
     }
 
     public boolean errorMessageIsDisplayed() {

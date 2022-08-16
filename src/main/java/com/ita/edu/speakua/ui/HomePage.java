@@ -3,6 +3,8 @@ package com.ita.edu.speakua.ui;
 import com.ita.edu.speakua.ui.clubs.ClubsPage;
 import com.ita.edu.speakua.ui.header.HeaderComponent;
 import io.qameta.allure.Step;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -31,6 +33,14 @@ public class HomePage extends HeaderComponent {
     public ClubsPage clickAdvancedSearchInput() {
         searchInput.click();
         return new ClubsPage(driver);
+    }
+
+    public WebElement getAdvancedSearchButton() {
+        if (advancedSearchButton == null) {
+            waitVisibilityOfElement(By.xpath("//span[contains(@class, 'anticon-control')]"));
+            advancedSearchButton = driver.findElement(By.xpath("//span[contains(@class, 'anticon-control')]"));
+        }
+        return advancedSearchButton;
     }
 
     @Step("open Advanced Search menu")

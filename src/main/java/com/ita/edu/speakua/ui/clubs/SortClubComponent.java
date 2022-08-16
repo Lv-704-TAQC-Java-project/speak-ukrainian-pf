@@ -21,7 +21,7 @@ public class SortClubComponent extends ClubsPage {
     @FindBy(xpath = "//div/label[@class = 'ant-radio-button-wrapper club-view-button']")
     private WebElement listViewButton;
 
-    @FindBy(xpath = "//div/label[@class = 'ant-radio-button-wrapper ant-radio-button-wrapper-checked club-view-button']")
+    @FindBy(xpath = "//span[@class='ant-radio-button ant-radio-button-checked']/parent::label")
     private WebElement blockViewButton;
 
     public SortClubComponent(WebDriver driver) {
@@ -43,23 +43,25 @@ public class SortClubComponent extends ClubsPage {
     }
 
     @Step("Sort cards in ascending order")
-    public SortClubComponent sortAscending() {
+    public SortClubComponent orderByAsc() {
         clickManagingClubsPageElement(arrowUpButton);
         return this;
     }
 
     @Step("Sort cards in descending order")
-    public SortClubComponent sortDescending() {
+    public SortClubComponent orderByDesc() {
         clickManagingClubsPageElement(arrowDownButton);
         return this;
     }
 
     public SortClubComponent listViewButtonClick() {
+        waitVisibility(listViewButton);
         listViewButton.click();
         return this;
     }
 
     public SortClubComponent blockViewButtonClick() {
+        waitVisibility(blockViewButton);
         blockViewButton.click();
         return this;
     }
