@@ -15,16 +15,15 @@ public class ClubsPage extends HeaderComponent {
     private List<CardComponent> cards;
     private List<CenterComponent> centers;
     private PaginationComponent paginationComponent;
-
     private SortClubComponent sortClubComponent;
 
     @FindBy(xpath = "//span[@aria-label='search']")
     private WebElement searchIcon;
 
-    @FindBy(xpath = "//div[@class = 'content-clubs-list false']")
+    @FindBy(xpath = "//div[@class = 'content-clubs-list content-clubs-block']")
     private WebElement blockCardContainer;
 
-    @FindBy(xpath = "//div[@class = 'content-clubs-list content-clubs-block']")
+    @FindBy(xpath = "//div[@class = 'content-clubs-list false']")
     private WebElement listCardContainer;
 
     @FindBy(xpath = "//span[contains(@class, 'anticon-control')]")
@@ -89,6 +88,24 @@ public class ClubsPage extends HeaderComponent {
         return sortClubComponent;
     }
 
+    public boolean isBlockCardContainerDisplayed() {
+        try {
+            blockCardContainer.isDisplayed();
+            return true;
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    public boolean isListCardContainerDisplayed() {
+        try {
+            listCardContainer.isDisplayed();
+            return true;
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
     public void clickManagingClubsPageElement(WebElement element) {
         List<CardComponent> cards = new ClubsPage(driver).getCards();
         element.click();
@@ -111,24 +128,6 @@ public class ClubsPage extends HeaderComponent {
     @Step("Is closed advanced search panel")
     public boolean isDisappearsAdvancedSearchPanelComponent() {
         return advancedSearchButton == null;
-    }
-
-    public ClubsPage fillInSearch(String query) {
-        clearInput(searchInput);
-        searchInput.click();
-        for (int i = 0; i < query.length(); i++) {
-            if (i == 1) {
-                waitForCardsChange(1000, 100);
-            }
-            if (i < query.length() - 1) {
-                searchInput.sendKeys(query.substring(i, i + 1));
-            }
-            waitForCardsChange(200, 50);
-        }
-        searchInput.sendKeys(query.substring(query.length() - 1));
-        waitForCardsChange(1000, 100);
-        waitForCardsChange(1000, 100);
-        return this;
     }
 
     public ClubsPage pasteInSearch(String query) {
