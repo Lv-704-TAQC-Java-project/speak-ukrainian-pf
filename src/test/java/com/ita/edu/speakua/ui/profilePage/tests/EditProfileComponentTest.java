@@ -125,10 +125,10 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
 
         SoftAssert softAssert = new SoftAssert();
         actualMessage = editProfileComponent
-                .changePasswordClick()
-                .inputOldPassword("admin")
-                .inputNewPassword("uyyyyuyu45ytty@")
-                .saveChangesButtonClick()
+                .changePassword()
+                .enterOldPassword("admin")
+                .enterNewPassword("uyyyyuyu45ytty@")
+                .save()
                 .saveChangesButtonIsEnable();
 
         String xPathErrorMessageText = "//div[@class='ant-form-item-explain ant-form-item-explain-connected']";
@@ -147,9 +147,9 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
 
         SoftAssert softAssert = new SoftAssert();
         actualMessage = editProfileComponent
-                .changePasswordClick()
-                .inputOldPassword("admin")
-                .saveChangesButtonClick()
+                .changePassword()
+                .enterOldPassword("admin")
+                .save()
                 .saveChangesButtonIsEnable();
 
         String xPathErrorMessageText = "//div[@class='ant-form-item-explain-error']";

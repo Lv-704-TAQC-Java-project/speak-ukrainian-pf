@@ -12,7 +12,7 @@ public class SortClubTest extends BaseTestRunner {
     @Test
     public void blockCardViewIsDisplayed() {
         new HomePage(driver)
-                .clickAdvancedSearchButton()
+                .openAdvancedSearch()
                 .getSortClubComponent()
                 .blockViewButtonClick();
 
@@ -23,7 +23,7 @@ public class SortClubTest extends BaseTestRunner {
     @Test
     public void listCardViewIsDisplayed() {
         HomePage homePage = new HomePage(driver);
-        homePage.clickAdvancedSearchButton()
+        homePage.openAdvancedSearch()
                 .getSortClubComponent()
                 .listViewButtonClick();
 
