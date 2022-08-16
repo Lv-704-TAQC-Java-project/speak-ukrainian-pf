@@ -10,28 +10,21 @@ import org.testng.ITestContext;
 import org.testng.annotations.*;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 @Listeners(TestNgListener.class)
-public class SameWindowTestRunner {
-    protected static ConfigProperties configProps;
-    protected WebDriver driver;
-
-    @BeforeSuite
-    public void beforeSuite() {
-        WebDriverManager.chromedriver().setup();
-        configProps = new ConfigProperties();
-    }
+public class SameWindowTestRunner extends BaseSetupTestRunner{
 
     @BeforeClass
     public void setUp(ITestContext context) {
-        ChromeOptions options = new ChromeOptions();
-//        options.addArguments("--headless");
-//        options.addArguments("--window-size=1920,1080", "--no-sandbox", "--disable-dev-shm-usage");
-        driver = new ChromeDriver(options);
-        context.setAttribute("myDriver", driver);
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.get(configProps.getBaseUrl());
+        List<String> arguments = new ArrayList<>();
+        arguments.add("--lang=uk-UA");
+//        arguments.add("--headless");
+//        arguments.add("--window-size=1920,1080");
+//        arguments.add( "--no-sandbox" );
+//        arguments.add("--disable-dev-shm-usage");
+        setDriver(arguments, context);
     }
 
     @AfterClass
