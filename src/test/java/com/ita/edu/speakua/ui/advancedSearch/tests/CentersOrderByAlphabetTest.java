@@ -10,12 +10,12 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 
-public class SortCentersByAlphabetTest extends BaseTestRunner {
+public class CentersOrderByAlphabetTest extends BaseTestRunner {
 
     @Issue("TUA-440")
     @Description("Verify that the user can sort Centers in alphabetical order")
     @Test
-    public void verifyCentersAlphabeticSortFunctionality() {
+    public void verifyCentersOrderByAlphabetSortFunctionality() {
         new HomePage(driver)
                 .openAdvancedSearch()
                 .getAdvancedSearchPanelComponent()
