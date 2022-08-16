@@ -159,8 +159,13 @@ public class AddTaskPage extends HeaderComponent {
 
     @Step("Get error message")
     public String getErrorMessageText() {
-        waitVisibility(errorMessage);
-        return errorMessage.getText();
+        try{
+            waitVisibility(errorMessage);
+            return errorMessage.getText();
+        } catch (Exception e){
+            return "";
+        }
+
     }
 
     @Step("Get success message")
