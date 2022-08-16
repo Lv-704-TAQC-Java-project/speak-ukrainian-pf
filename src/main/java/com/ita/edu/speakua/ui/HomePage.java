@@ -35,14 +35,6 @@ public class HomePage extends HeaderComponent {
         return new ClubsPage(driver);
     }
 
-    public WebElement getAdvancedSearchButton() {
-        if (advancedSearchButton == null) {
-            waitVisibilityOfElement(By.xpath("//span[contains(@class, 'anticon-control')]"));
-            advancedSearchButton = driver.findElement(By.xpath("//span[contains(@class, 'anticon-control')]"));
-        }
-        return advancedSearchButton;
-    }
-
     @Step("open Advanced Search menu")
     public ClubsPage openAdvancedSearch() {
         advancedSearchButton.click();

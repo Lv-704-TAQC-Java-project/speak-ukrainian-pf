@@ -131,15 +131,15 @@ public class AddTaskTest extends AddTaskTestRunner {
         String descriptionInput = new String(new char[10]).replace("\0", "Lorem 56№*");
         String actualErrorMessage;
 
-        boolean isAllFieldsAreEmptyByDefault = addTaskPage.allFieldsAreEmpty();
+        boolean isAllFieldsAreEmptyByDefault = addTaskPage.areFieldsEmpty();
 
-        addTaskPage.inputStartDate("2022-05-05")
-                .inputImage(pathToImage)
-                .inputName(invalidData)
-                .inputHeading("n't anything embarrassing")
-                .inputDescribing(descriptionInput)
-                .chooseChallenge("Example name")
-                .tryClickSaveButton();
+        addTaskPage.enterStartDate("2022-05-05")
+                .uploadImage(pathToImage)
+                .enterName(invalidData)
+                .enterTitle("n't anything embarrassing")
+                .enterDescription(descriptionInput)
+                .selectChallenge("Example name");
+        addTaskPage.save();
 
         SoftAssert softAssert = new SoftAssert();
 
