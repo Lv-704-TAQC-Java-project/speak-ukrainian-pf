@@ -232,8 +232,8 @@ public class AdvancedSearchPanelComponent extends ClubsPage {
         return this;
     }
 
-    @Step("Click on 'center' radioButton")
-    public AdvancedSearchPanelComponent centerRadioButtonClick() {
+    @Step("Select filter by 'Center'")
+    public AdvancedSearchPanelComponent selectFilterByCenter() {
         waitVisibility(centerRadioButton);
         centerRadioButton.click();
         return this;

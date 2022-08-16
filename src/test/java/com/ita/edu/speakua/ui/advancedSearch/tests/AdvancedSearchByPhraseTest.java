@@ -14,7 +14,7 @@ public class AdvancedSearchByPhraseTest extends SameWindowTestRunner {
     @BeforeClass
     public void openClubsPageAdvancedSearch() {
         clubsPage = new HomePage(driver)
-                .clickAdvancedSearchButton();
+                .openAdvancedSearch();
     }
 
     @DataProvider(name = "searchData")

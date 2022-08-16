@@ -12,7 +12,7 @@ public class AdvancedSearchVisibleTest extends BaseTestRunner {
     @Test
     public void test() {
         ClubsPage verify = new HomePage(driver)
-                .clickAdvancedSearchButton()
+                .openAdvancedSearch()
                 .getAdvancedSearchPanelComponent()
                 .advancedSearchButtonClick();
 

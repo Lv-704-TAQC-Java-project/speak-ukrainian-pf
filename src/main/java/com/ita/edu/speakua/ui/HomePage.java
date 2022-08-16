@@ -33,8 +33,8 @@ public class HomePage extends HeaderComponent {
         return new ClubsPage(driver);
     }
 
-    @Step("click Advanced Search Button")
-    public ClubsPage clickAdvancedSearchButton() {
+    @Step("open Advanced Search menu")
+    public ClubsPage openAdvancedSearch() {
         advancedSearchButton.click();
         return new ClubsPage(driver);
     }

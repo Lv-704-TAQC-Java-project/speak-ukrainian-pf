@@ -7,7 +7,7 @@ import org.openqa.selenium.support.FindBy;
 
 public class SortClubComponent extends ClubsPage {
     @FindBy(xpath = "//div/span[contains(text(), 'за алфавітом')]")
-    private WebElement sortByABCButton;
+    private WebElement sortByAlphabetButton;
 
     @FindBy(xpath = "//div/span[contains(text(), 'за рейтингом')]")
     private WebElement sortByRatingButton;
@@ -28,28 +28,28 @@ public class SortClubComponent extends ClubsPage {
         super(driver);
     }
 
-    @Step("Click on 'sort by ABC' button")
-    public SortClubComponent sortByABCButtonClick() {
-        waitVisibility(sortByABCButton);
-        clickManagingClubsPageElement(sortByABCButton);
+    @Step("Sort cards by alphabet")
+    public SortClubComponent sortByAlphabet() {
+        waitVisibility(sortByAlphabetButton);
+        clickManagingClubsPageElement(sortByAlphabetButton);
         return this;
     }
 
-    @Step("Click on 'sort by rating' button")
-    public SortClubComponent sortByRatingButtonClick() {
+    @Step("Sort cards by rating")
+    public SortClubComponent sortByRating() {
         waitVisibility(sortByRatingButton);
         clickManagingClubsPageElement(sortByRatingButton);
         return this;
     }
 
-    @Step("Click on 'arrowUp' button")
-    public SortClubComponent arrowUpButtonClick() {
+    @Step("Sort cards in ascending order")
+    public SortClubComponent sortAscending() {
         clickManagingClubsPageElement(arrowUpButton);
         return this;
     }
 
-    @Step("Click on 'arrowDown' button")
-    public SortClubComponent arrowDownButtonClick() {
+    @Step("Sort cards in descending order")
+    public SortClubComponent sortDescending() {
         clickManagingClubsPageElement(arrowDownButton);
         return this;
     }

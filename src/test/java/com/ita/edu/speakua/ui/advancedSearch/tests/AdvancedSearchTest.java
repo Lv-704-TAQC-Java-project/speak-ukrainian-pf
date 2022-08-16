@@ -37,7 +37,7 @@ public class AdvancedSearchTest extends AdvancedSearchTestRunner {
     @Description("Verify disability of some elements after selecting center")
     @Test
     public void verifySomeElementsIsDisabledAfterSelectingCenter() {
-        advancedSearchPanel.centerRadioButtonClick();
+        advancedSearchPanel.selectFilterByCenter();
 
         SoftAssert softAssert = new SoftAssert();
 
