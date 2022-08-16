@@ -42,9 +42,6 @@ public class AddTaskPage extends HeaderComponent {
     @FindBy(xpath = "//div[contains(@class, 'success')]//span[text()]")
     private WebElement successMessage;
 
-    @FindBy(xpath = "//div[contains(@class, 'warning')]//span[text()]")
-    private List<WebElement> errorMessages;
-
     @FindBy(xpath = "//span[contains(text(),'Please')]")
     private WebElement errorMessageIsEmpty;
 
@@ -165,7 +162,6 @@ public class AddTaskPage extends HeaderComponent {
         } catch (Exception e){
             return "";
         }
-
     }
 
     @Step("Get success message")
