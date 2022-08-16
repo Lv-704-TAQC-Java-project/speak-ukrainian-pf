@@ -40,7 +40,7 @@ public class SortCentersAlphabeticalOrderTest extends BaseTestRunner {
             softAssert.assertEquals(actualCenterNamesAscOrder[i], expectedCenterNamesAscOrder[i]);
         }
 
-        clubsPage.getSortClubComponent().sortAscending();
+        clubsPage.getSortClubComponent().orderByAsc();
 
         String[] actualCenterNamesDescOrder = clubsPage.getCards().stream().map(CardComponent::getTextCardName).toArray(String[]::new);
         String[] expectedCenterNamesDescOrder = new String[]{
