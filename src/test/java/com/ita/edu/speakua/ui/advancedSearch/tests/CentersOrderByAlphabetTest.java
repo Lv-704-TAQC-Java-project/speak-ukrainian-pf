@@ -4,13 +4,14 @@ import com.ita.edu.speakua.ui.HomePage;
 import com.ita.edu.speakua.ui.clubs.ClubsPage;
 import com.ita.edu.speakua.ui.clubs.card.components.CardComponent;
 import com.ita.edu.speakua.ui.runners.BaseTestRunner;
+import com.ita.edu.speakua.ui.runners.SameWindowTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 
-public class CentersOrderByAlphabetTest extends BaseTestRunner {
+public class CentersOrderByAlphabetTest extends SameWindowTestRunner {
 
     @Issue("TUA-440")
     @Description("Verify that the user can sort Centers in alphabetical order")
