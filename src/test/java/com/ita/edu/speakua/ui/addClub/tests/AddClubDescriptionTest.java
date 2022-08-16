@@ -99,7 +99,7 @@ public class AddClubDescriptionTest extends AddClubDescriptionTestRunner {
         return new Object[][]{
                 {"Education, students, Школа балету, Teachers"},
                 {"1234567890123456789012345678901234567890"},
-                {"!\"#$%&'()*+,-./:;<=>?@[]^_`{}~"}
+                {"!\"#$%&'()*+,-./:;<=>?@[]^_`{}~!#$%&'()*+,-./:;<=>?@[]^_`{}~"}
         };
     }
 
