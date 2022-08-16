@@ -67,7 +67,6 @@ public class AddTaskTest extends AddTaskTestRunner {
     }
 
     @Issue("TUA-524")
-    @Severity(SeverityLevel.CRITICAL)
     @Description("Verify impossibility of creating task with heading invalid data")
     @Test(dataProvider = "invalidHeaderData")
     public void verifyCreatingTaskWithHeadingInvalidData(String invalidData, String expectedMessage) {
