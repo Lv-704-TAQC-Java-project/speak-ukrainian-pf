@@ -4,9 +4,10 @@ import com.ita.edu.speakua.ui.HomePage;
 import com.ita.edu.speakua.ui.clubs.ClubsPage;
 import com.ita.edu.speakua.ui.clubs.card.components.CardComponent;
 import com.ita.edu.speakua.ui.runners.SameWindowTestRunner;
+import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
-
 
 public class AdvancedSearchByPhraseTest extends SameWindowTestRunner {
     private ClubsPage clubsPage;
@@ -28,6 +29,8 @@ public class AdvancedSearchByPhraseTest extends SameWindowTestRunner {
         };
     }
 
+    @Issue("TUA-428")
+    @Description("Verify search field behavior for different phrase length and input method")
     @Test(dataProvider = "searchData")
     public void verifySearchFunctionality(String query, boolean pastePhrase) {
         final int maxInputValueLength = 50;

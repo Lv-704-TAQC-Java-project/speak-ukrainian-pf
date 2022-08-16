@@ -2,6 +2,7 @@ package com.ita.edu.speakua.ui.clubs.card.components;
 
 import com.ita.edu.speakua.ui.BaseMethods;
 import com.ita.edu.speakua.ui.clubs.ExpandedCardComponent;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -46,6 +47,7 @@ public class CardComponent extends BaseMethods {
         PageFactory.initElements(new DefaultElementLocatorFactory(cardBody), this);
     }
 
+    @Step("Get full card text")
     public String getCardText() {
         waitVisibility(cardWrapper);
         return cardWrapper.getText();
