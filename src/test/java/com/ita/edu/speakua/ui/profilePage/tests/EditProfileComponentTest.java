@@ -70,14 +70,17 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
         boolean expectedMessageIsPresent = errorMessages.contains(expectedMessage);
 
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertTrue(expectedMessageIsPresent, "Expected error message is present.");
+        softAssert.assertTrue(expectedMessageIsPresent, "Expected error message:\n"
+                + expectedMessage
+                + "\n\tActual error messages:\n"
+                + errorMessages);
 
         boolean saveChangesBtnIsEnabled = editProfileComponent.saveChangesButtonIsEnable();
         softAssert.assertFalse(saveChangesBtnIsEnabled, "SaveChanges button is not enabled.");
 
         softAssert.assertAll();
     }
-  
+
     @DataProvider(name = "invalidLastNameData")
     public static Object[][] invalidLastNameData() {
         return new Object[][]{
@@ -96,29 +99,24 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
     }
 
     @Test(dataProvider = "invalidLastNameData")
-    public void verifyEditProfileWithInvalidLastNamedData(String data, String expectedMessage) {
-        List<String> errorMessages;
-        boolean expectedMessageIsPresent = false;
-        boolean saveChangesBtnIsEnabled;
+    public void verifyEditProfileWithInvalidLastNamedData(String lastName, String expectedMessage) {
+        List<String> errorMessages = editProfileComponent.setLastName(lastName).getLastNameErrorText();
+        boolean expectedMessageIsPresent = errorMessages.contains(expectedMessage);
+
         SoftAssert softAssert = new SoftAssert();
+        softAssert.assertTrue(expectedMessageIsPresent, "Expected error message:\n"
+                + expectedMessage
+                + "\n\tActual error messages:\n"
+                + errorMessages);
 
-        errorMessages = editProfileComponent.setLastName(data).getLastNameErrorText();
-        for (String errorMessage: errorMessages) {
-            if (errorMessage.equals(expectedMessage)) {
-                expectedMessageIsPresent = true;
-                break;
-            }
-        }
-        softAssert.assertTrue(expectedMessageIsPresent, "Expected error message is not present.");
-
-        saveChangesBtnIsEnabled = editProfileComponent.saveChangesButtonIsEnable();
-        softAssert.assertFalse(saveChangesBtnIsEnabled, "SaveChanges button is enabled.");
+        boolean saveChangesBtnIsEnabled = editProfileComponent.saveChangesButtonIsEnable();
+        softAssert.assertFalse(saveChangesBtnIsEnabled, "SaveChanges button is not enabled.");
 
         softAssert.assertAll();
     }
 
     @Test(priority = 1)
-    public void verifyEditProfileWithEmptyNewRepeatPasswordData(){
+    public void verifyEditProfileWithEmptyNewRepeatPasswordData() {
         boolean actualMessage;
         boolean expectedMessageIsPresent = false;
 
@@ -133,14 +131,14 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
         String xPathErrorMessageText = "//div[@class='ant-form-item-explain ant-form-item-explain-connected']";
         WebElement item = driver.findElement(By.xpath(xPathErrorMessageText));
 
-        if(item.isDisplayed()){
+        if (item.isDisplayed()) {
             expectedMessageIsPresent = true;
         }
         softAssert.assertEquals(actualMessage, expectedMessageIsPresent);
     }
 
     @Test(priority = 1)
-    public void verifyEditProfileWithEmptyNewPasswordData(){
+    public void verifyEditProfileWithEmptyNewPasswordData() {
         boolean actualMessage;
         boolean expectedMessageIsPresent = false;
 
@@ -154,7 +152,7 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
         String xPathErrorMessageText = "//div[@class='ant-form-item-explain-error']";
         WebElement item = driver.findElement(By.xpath(xPathErrorMessageText));
 
-        if(item.isDisplayed()){
+        if (item.isDisplayed()) {
             expectedMessageIsPresent = true;
         }
         softAssert.assertEquals(actualMessage, expectedMessageIsPresent);
