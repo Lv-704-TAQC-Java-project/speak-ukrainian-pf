@@ -1,9 +1,12 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.addCenterComponent;
 
+import com.ita.edu.speakua.ui.header.profileMenuAdmin.addLocation.AddLocationComponent;
+import com.ita.edu.speakua.ui.header.profileMenuAdmin.addLocation.Location;
+import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 
-public class AddCenterMainInfoComponent extends AbstractAddCenterComponent{
+public class AddCenterMainInfoComponent extends AbstractAddCenterComponent {
 
     @FindBy(xpath = "//div[@class='modal-title']")
     private WebElement centerHeader;
@@ -14,8 +17,8 @@ public class AddCenterMainInfoComponent extends AbstractAddCenterComponent{
     @FindBy(xpath = "//div[@id='basic_locations']")
     private WebElement locationsList;
 
-    @FindBy(xpath = "//div[@class='btn']")
-    private WebElement nextStepBtn;
+    @FindBy(xpath = "//div[@class='btn']/button")
+    private WebElement nextStepButton;
 
     @FindBy(xpath = "//div[contains(text(),'Некоректна назва центру')]")
     private WebElement errorMessage;
@@ -23,59 +26,61 @@ public class AddCenterMainInfoComponent extends AbstractAddCenterComponent{
     @FindBy(xpath = "//button[contains(@class, 'add-location-btn')]")
     private WebElement addLocationButton;
 
-    private AddLocationComponent addLocationComponent;
-
     public AddCenterMainInfoComponent(WebDriver driver) {
         super(driver);
     }
 
-    public AddCenterMainInfoComponent inputName(String name){
+    @Step("Input name of center")
+    public AddCenterMainInfoComponent inputName(String name) {
         inputName.sendKeys(Keys.chord(Keys.CONTROL, "a"));
         inputName.sendKeys(Keys.chord(name));
         return new AddCenterMainInfoComponent(driver);
     }
 
-    public WebElement getLocationItem(String name){
-        return locationsList.findElement(By.xpath(String.format(".//span[contains(text(),'%s')]",name)));
+    private WebElement getLocationItem(String name) {
+        return locationsList.findElement(By.xpath(String.format(".//span[contains(text(),'%s')]", name)));
     }
 
+    @Step("Verify that location is displayed")
     public boolean isLocationAdded(String name) {
-        waitVisibilityOfWebElement(getLocationItem(name));
         try {
+            waitVisibility(getLocationItem(name));
+            actionsMoveTo(getLocationItem(name));
             return getLocationItem(name).isDisplayed();
-        } catch (NoSuchElementException e) {
+        } catch (NoSuchElementException | TimeoutException e) {
             return false;
         }
     }
 
-    public AddCenterMainInfoComponent chooseLocation(String name){
+    @Step("Choose location from checkbox list")
+    public AddCenterMainInfoComponent chooseLocation(String name) {
         getLocationItem(name).click();
         return new AddCenterMainInfoComponent(driver);
     }
 
-    public AddCenterContactComponent clickNextStep(){
-        nextStepBtn.click();
+    @Step("Open next modal 'Contacts'")
+    public AddCenterContactComponent openNextStep() {
+        nextStepButton.click();
         return new AddCenterContactComponent(driver);
     }
 
-    public AddCenterMainInfoComponent tryClickNextStep(){
-        nextStepBtn.click();
+    @Step("Click next step button")
+    public AddCenterMainInfoComponent failOpenNextStep() {
+        nextStepButton.click();
         return new AddCenterMainInfoComponent(driver);
     }
 
-    public boolean errorMessageCenterName(){
-        waitVisibilityOfElement(By.xpath("//div[contains(text(),'Некоректна назва центру')]"));
+    @Step("Verify error message is displayed")
+    public boolean isErrorMessageDisplayed() {
+        waitVisibility(errorMessage);
         return errorMessage.isDisplayed();
     }
 
-    public AddLocationComponent getAddLocationComponent() {
-        return new AddLocationComponent(driver);
-    }
-
-    public AddLocationComponent clickAddLocationButton() {
+    @Step("Add location on center component")
+    public AddCenterMainInfoComponent addLocation(Location location) {
         sleep(1000);
         addLocationButton.click();
-        return new AddLocationComponent(driver);
+        new AddLocationComponent(driver).addLocation(location);
+        return this;
     }
-
 }

@@ -1,7 +1,8 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent;
 
-import com.ita.edu.speakua.ui.HomePage;
-import org.openqa.selenium.Keys;
+import com.ita.edu.speakua.ui.header.profileMenuAdmin.profilePage.ProfilePage;
+import io.qameta.allure.Step;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,61 +14,105 @@ import java.util.List;
 public class AddClubDescribeComponent extends AbstractAddClubComponent {
 
     @FindBy(xpath = "//textarea[@id='basic_description']")
-    WebElement describeArea;
+    private WebElement describeArea;
+
+    @FindBy(xpath = "//input[@id='basic_urlLogo']")
+    private WebElement logoInput;
+
+    @FindBy(xpath = "//input[@id='basic_urlBackground']")
+    private WebElement backgroundInput;
+
+    @FindBy(xpath = "(//span[@role='button']/input)[3]")
+    private WebElement gallery;
 
     @FindBy(xpath = "//span[contains(text(),'Назад')]/ancestor::button")
-    WebElement previousStep;
+    private WebElement previousStepButton;
 
     @FindBy(xpath = "//span[contains(text(),'Завершити')]/ancestor::button")
-    WebElement finishBtn;
+    private WebElement finishButton;
 
-    @FindBy(xpath = "//div[contains(@class, 'explain-error')]")
+    @FindBy(css = "div.ant-form-item-has-success")
+    private WebElement successArea;
+
+    @FindBy(xpath = "//textarea[@id='basic_description']/ancestor::div[contains(@class, 'item-row')]//div[contains(@class, 'explain-error')]")
     private List<WebElement> errorMessagesForDescriptionField;
 
     public AddClubDescribeComponent(WebDriver driver) {
         super(driver);
     }
 
-    public AddClubDescribeComponent inputDescribe(String text) {
-        describeArea.click();
-        describeArea.clear();
-        describeArea.sendKeys(text);
+    @Step("Set description {text}")
+    public AddClubDescribeComponent inputDescription(String text) {
+        setNewValueForInput(describeArea,text);
         return new AddClubDescribeComponent(driver);
     }
 
-    public AddClubContactComponent clickPreviousStep() {
-        previousStep.click();
+    @Step("Clear description")
+    public AddClubDescribeComponent clearDescription() {
+        clearInput(describeArea);
+        return new AddClubDescribeComponent(driver);
+    }
+
+    @Step("Go back to previous modal 'Contact'")
+    public AddClubContactComponent openPreviousStep() {
+        previousStepButton.click();
         return new AddClubContactComponent(driver);
     }
 
-    public HomePage clickFinishStep() {
-        finishBtn.click();
-        return new HomePage(driver);
+    @Step("Add club logo")
+    public AddClubDescribeComponent addLogo(String imagePath){
+        logoInput.sendKeys(imagePath);
+        return this;
+    }
+
+    @Step("Add club background")
+    public AddClubDescribeComponent addBackground(String imagePath){
+        backgroundInput.sendKeys(imagePath);
+        return this;
+    }
+
+    @Step("Add club gallery")
+    public AddClubDescribeComponent addGallery(String imagePath){
+        gallery.sendKeys(imagePath);
+        return this;
+    }
+
+    @Step("Add club")
+    public ProfilePage addClub() {
+        finishButton.click();
+        return new ProfilePage(driver);
     }
 
     public List<String> getErrorMessageDescriptionField() {
         List<String> errorMessages = new ArrayList<>();
-        waitVisibilityOfWebElements(errorMessagesForDescriptionField);
+        waitVisibility(errorMessagesForDescriptionField);
         if (errorMessagesForDescriptionField != null & errorMessagesForDescriptionField.size() > 0) {
             errorMessagesForDescriptionField.stream().forEach((c) -> errorMessages.add(c.getText()));
         }
         return errorMessages;
     }
 
-    public boolean finishBtnIsEnable() {
-        return finishBtn.isEnabled();
+    @Step("Check is 'finish' button enable")
+    public boolean isButtonEnable() {
+        return successArea.isDisplayed();
     }
 
-    public AddClubDescribeComponent clearDescribeField() {
-        describeArea.sendKeys(Keys.chord(Keys.CONTROL, "a"));
-        return this;
+    @Step("Check description field has errors")
+    public boolean areDescriptionErrorsShown() {
+        try {
+            waitInvisibility(errorMessagesForDescriptionField, 1);
+        } catch (TimeoutException ignore) {
+        }
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
+        return errorMessagesForDescriptionField.size() > 0;
     }
 
-    public boolean errorMessageForDescriptionFieldContainsText(String errorMsg) {
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+    @Step("Check description field error message contains {errorMsg}")
+    public boolean descriptionErrorsContainMessage(String errorMsg) {
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
         if (errorMessagesForDescriptionField != null && errorMessagesForDescriptionField.size() > 0) {
-            for (WebElement error: errorMessagesForDescriptionField) {
-                waitVisibilityOfWebElement(error);
+            for (WebElement error : errorMessagesForDescriptionField) {
+                waitVisibility(error);
                 if (error.getText().equals(errorMsg)) {
                     return true;
                 }

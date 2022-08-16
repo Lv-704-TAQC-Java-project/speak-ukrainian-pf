@@ -9,14 +9,14 @@ import org.openqa.selenium.support.FindBy;
 public abstract class AbstractAddClubComponent extends BaseMethods {
 
     @FindBy(xpath = "//span[@aria-label='close']")
-    private WebElement closeClubComponent;
+    private WebElement closeButton;
 
     public AbstractAddClubComponent(WebDriver driver) {
         super(driver);
     }
 
-    public HomePage clickCloseComponent(String name){
-        closeClubComponent.click();
+    public HomePage close(String name){
+        closeButton.click();
         return new HomePage(driver);
     }
 }
