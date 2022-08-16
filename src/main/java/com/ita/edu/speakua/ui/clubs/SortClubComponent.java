@@ -55,13 +55,13 @@ public class SortClubComponent extends ClubsPage {
     }
 
     public SortClubComponent listViewButtonClick() {
-        waitVisibilityOfWebElement(listViewButton);
+        waitVisibility(listViewButton);
         listViewButton.click();
         return this;
     }
 
     public SortClubComponent blockViewButtonClick() {
-        waitVisibilityOfWebElement(blockViewButton);
+        waitVisibility(blockViewButton);
         blockViewButton.click();
         return this;
     }
