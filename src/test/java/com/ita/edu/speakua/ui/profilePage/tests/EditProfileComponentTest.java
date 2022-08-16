@@ -122,7 +122,7 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
 
         SoftAssert softAssert = new SoftAssert();
         actualMessage = editProfileComponent
-                .changePassword()
+                .togglePasswordChange()
                 .enterOldPassword("admin")
                 .enterNewPassword("uyyyyuyu45ytty@")
                 .save()
@@ -135,16 +135,18 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
             expectedMessageIsPresent = true;
         }
         softAssert.assertEquals(actualMessage, expectedMessageIsPresent);
+
+        editProfileComponent.togglePasswordChange();
     }
 
-    @Test(priority = 1)
+    @Test
     public void verifyEditProfileWithEmptyNewPasswordData() {
         boolean actualMessage;
         boolean expectedMessageIsPresent = false;
 
         SoftAssert softAssert = new SoftAssert();
         actualMessage = editProfileComponent
-                .changePassword()
+                .togglePasswordChange()
                 .enterOldPassword("admin")
                 .save()
                 .saveChangesButtonIsEnable();
@@ -156,6 +158,8 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
             expectedMessageIsPresent = true;
         }
         softAssert.assertEquals(actualMessage, expectedMessageIsPresent);
+
+        editProfileComponent.togglePasswordChange();
     }
 
     @AfterMethod
