@@ -13,6 +13,12 @@ import java.util.stream.Collectors;
 
 public class EditProfileComponent extends BaseMethods {
 
+    @FindBy(xpath = "//input[@id='edit_currentPassword']/parent::span")
+    private WebElement oldPasswordFieldWrapper;
+    @FindBy(xpath = "//input[@id='edit_password']/parent::span")
+    private WebElement newPasswordField;
+    @FindBy(xpath = "//input[@id='edit_confirmPassword']/parent::span")
+    private WebElement newPasswordFieldWrapper;
     @FindBy(xpath = "//input[@value='ROLE_USER']/..")
     private WebElement userButton;
 
@@ -84,6 +90,8 @@ public class EditProfileComponent extends BaseMethods {
 
     @FindBy(xpath = "//div[contains(@class, 'modal-body')]")
     private WebElement editProfileModalBody;
+    @FindBy(xpath = "//input[@id='edit_lastName']/ancestor::div[contains(@class, 'row')]//div[contains(@class, 'error')]")
+    private List<WebElement> lastnameErrors;
 
     public EditProfileComponent(WebDriver driver) {
         super(driver);
@@ -196,12 +204,17 @@ public class EditProfileComponent extends BaseMethods {
         return firstnameErrorText.getText();
     }
 
+    public List<String> getLastNameErrorText() {
+        waitVisibilityOfWebElements(lastnameErrors);
+        return lastnameErrors.stream().map(WebElement::getText).collect(Collectors.toList());
+    }
+
     @Step("Get a list of phone field error messages")
     public List<String> getPhoneErrorText() {
         waitVisibility(phoneErrors);
         return phoneErrors.stream().map(WebElement::getText).collect(Collectors.toList());
     }
-
+  
     @Step("Save changes")
     public EditProfileComponent save() {
         saveButton.click();
@@ -217,6 +230,31 @@ public class EditProfileComponent extends BaseMethods {
             return false;
         }
         return true;
+    }
+
+    public String getOldPasswordFieldBorderColor(String color) {
+        try {
+            waitAttributeOfElementContains(oldPasswordFieldWrapper, "border-color", color);
+        } catch (TimeoutException ignore) {}
+        return oldPasswordFieldWrapper.getCssValue("border-color");
+    }
+
+    public String getNewPasswordFieldBorderColor(String color) {
+        try {
+            waitAttributeOfElementContains(newPasswordFieldWrapper, "border-color", color);
+        } catch (TimeoutException ignore) {}
+        return newPasswordFieldWrapper.getCssValue("border-color");
+    }
+
+    public String getRepeatNewPasswordFieldBorderColor(String color) {
+        try {
+            waitAttributeOfElementContains(newPasswordFieldWrapper, "border-color", color);
+        } catch (TimeoutException ignore) {}
+        return newPasswordFieldWrapper.getCssValue("border-color");
+    }
+
+    public WebElement getCloseEditProfileButton() {
+        return driver.findElement(By.xpath("//button[contains(@class, 'modal-close')]"));
     }
 
     public HomePage close() {

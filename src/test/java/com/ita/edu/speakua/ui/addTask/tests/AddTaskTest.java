@@ -114,6 +114,41 @@ public class AddTaskTest extends AddTaskTestRunner {
 
         Assert.assertTrue(addTaskPage.errorMessageIsEmptyIsVisible(), "Error message didn't find");
     }
+  
+    @DataProvider(name = "invalidNameData")
+    public static Object[][] invalidNameData() {
+        return new Object[][]{
+                {"", "headerText не може бути пустим"},
+                {"Lor",
+                        "headerText must contain a minimum of 5 and a maximum of 100 letters"},
+                {new String(new char[400]).replace("\0", "Lorem 56№*"),
+                        "headerText must contain a minimum of 5 and a maximum of 100 letters"}
+        };
+    }
+
+    @Test(dataProvider = "invalidNameData")
+    public void verifyCreateTaskWithInvalidNameData(String invalidData, String expectedMessage) {
+        String descriptionInput = new String(new char[10]).replace("\0", "Lorem 56№*");
+        String actualErrorMessage;
+
+        boolean isAllFieldsAreEmptyByDefault = addTaskPage.allFieldsAreEmpty();
+
+        addTaskPage.inputStartDate("2022-05-05")
+                .inputImage(pathToImage)
+                .inputName(invalidData)
+                .inputHeading("n't anything embarrassing")
+                .inputDescribing(descriptionInput)
+                .chooseChallenge("Example name")
+                .tryClickSaveButton();
+
+        SoftAssert softAssert = new SoftAssert();
+
+        softAssert.assertTrue(isAllFieldsAreEmptyByDefault);
+        actualErrorMessage = addTaskPage.getErrorMessageText();
+        softAssert.assertEquals(actualErrorMessage, expectedMessage);
+      
+        softAssert.assertAll();
+    }
 
     @DataProvider(name = "invalidDateData")
     public static Object[][] invalidDateData() {
@@ -187,6 +222,7 @@ public class AddTaskTest extends AddTaskTestRunner {
         softAssert.assertEquals(taskPage.getNameText(), name);
         softAssert.assertEquals(taskPage.getTitleText(), title);
         softAssert.assertEquals(taskPage.getDescriptionText(), description);
+      
         softAssert.assertAll();
     }
 }
