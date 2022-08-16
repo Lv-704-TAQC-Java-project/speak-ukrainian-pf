@@ -38,6 +38,7 @@ public class HomePage extends HeaderComponent {
     @Step("open Advanced Search menu")
     public ClubsPage openAdvancedSearch() {
         advancedSearchButton.click();
+        sleep(500);
         return new ClubsPage(driver);
     }
 
