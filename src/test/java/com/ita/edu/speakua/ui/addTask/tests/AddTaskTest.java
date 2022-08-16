@@ -17,6 +17,7 @@ import java.time.LocalDate;
 public class AddTaskTest extends AddTaskTestRunner {
     private final String pathToImage = Paths.get(Paths.get(System.getProperty("user.dir")).toString(),
             "src", "test", "resources", "image.png").toString();
+    private final String tomorrow = LocalDate.now().plusDays(1).toString();
 
     @DataProvider(name = "invalidDescriptionData")
     public static Object[][] invalidDescriptionData() {
@@ -38,7 +39,7 @@ public class AddTaskTest extends AddTaskTestRunner {
     public void verifyCreateTaskInvalidDescription(String textDescription, String expectedMessage) {
         boolean allFieldsAreEmpty = addTaskPage.areFieldsEmpty();
         addTaskPage = addTaskPage
-                .enterStartDate(LocalDate.now().plusDays(2).toString())
+                .enterStartDate(tomorrow)
                 .uploadImage(pathToImage)
                 .enterName("Yaroslav test")
                 .enterTitle("Some forty character text for the test!!")
@@ -132,7 +133,7 @@ public class AddTaskTest extends AddTaskTestRunner {
 
         boolean isAllFieldsAreEmptyByDefault = addTaskPage.areFieldsEmpty();
 
-        addTaskPage.enterStartDate("2022-05-05")
+        addTaskPage.enterStartDate(tomorrow)
                 .uploadImage(pathToImage)
                 .enterName(invalidData)
                 .enterTitle("n't anything embarrassing")
@@ -208,7 +209,7 @@ public class AddTaskTest extends AddTaskTestRunner {
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertTrue(addTaskPage.areFieldsEmpty());
         addTaskPage = addTaskPage
-                .enterStartDate(LocalDate.now().plusDays(1).toString())
+                .enterStartDate(tomorrow)
                 .uploadImage(pathToImage)
                 .enterName(name)
                 .enterTitle(title)
