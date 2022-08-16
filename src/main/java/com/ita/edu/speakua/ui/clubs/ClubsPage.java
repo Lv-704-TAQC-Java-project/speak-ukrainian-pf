@@ -37,8 +37,6 @@ public class ClubsPage extends HeaderComponent {
 
     public ClubsPage(WebDriver driver) {
         super(driver);
-        waitInvisibility(cardsBody.get(0));
-        waitVisibility(cardsBody.get(0));
     }
 
     @Step("Open advanced search panel")
