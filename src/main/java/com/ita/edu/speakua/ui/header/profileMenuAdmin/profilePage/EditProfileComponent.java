@@ -3,10 +3,7 @@ package com.ita.edu.speakua.ui.header.profileMenuAdmin.profilePage;
 import com.ita.edu.speakua.ui.BaseMethods;
 import com.ita.edu.speakua.ui.HomePage;
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
@@ -151,7 +148,7 @@ public class EditProfileComponent extends BaseMethods {
     public EditProfileComponent setPhone(String phone) {
         List<WebElement> previousLastNameErrors = phoneErrors;
         setNewValueForInput(phoneInput, phone);
-        waitStalenessOfPreviousErrors(previousLastNameErrors,1);
+        waitStalenessOfPreviousErrors(previousLastNameErrors, 1);
         return this;
     }
 
@@ -168,7 +165,7 @@ public class EditProfileComponent extends BaseMethods {
     }
 
     @Step("Select change password")
-    public EditProfileComponent changePassword() {
+    public EditProfileComponent togglePasswordChange() {
         changePasswordCheckBox.click();
         return this;
     }

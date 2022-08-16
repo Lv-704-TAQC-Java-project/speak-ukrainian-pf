@@ -10,7 +10,7 @@ public class PasswordInputFieldsBorderTest extends EditProfileTestRunner {
     public void checkEditPasswordInputFieldsBorders() {
         String errorBorderColor = "rgb(255, 77, 79)";
 
-        editProfileComponent.changePassword().save().saveChangesButtonIsEnable();
+        editProfileComponent.togglePasswordChange().save().saveChangesButtonIsEnable();
 
         String oldPasswordBorderColor = editProfileComponent.getOldPasswordFieldBorderColor(errorBorderColor);
         String newPasswordBorderColor = editProfileComponent.getNewPasswordFieldBorderColor(errorBorderColor);
