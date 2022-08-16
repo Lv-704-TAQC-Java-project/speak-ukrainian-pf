@@ -146,6 +146,11 @@ public class BaseMethods {
         return element;
     }
 
+    public void waitAttributeOfElementContains(WebElement element, String attribute, String value) {
+        WebDriverWait wait = new WebDriverWait(driver, SHORT_TIMEOUT);
+        wait.until(ExpectedConditions.attributeContains(element, attribute, value));
+    }
+
     public void setNewValueForInput(WebElement element, String value) {
         clearInput(element).sendKeys(value);
     }
