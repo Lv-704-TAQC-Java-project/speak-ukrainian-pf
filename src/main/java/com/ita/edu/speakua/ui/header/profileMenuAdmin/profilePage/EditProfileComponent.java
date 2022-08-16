@@ -110,38 +110,48 @@ public class EditProfileComponent extends BaseMethods {
         return this;
     }
 
-    @Step("Set lastname {lastName}")
-    public EditProfileComponent fillInLastName(String lastName) {
-        setNewValueForInput(lastNameInput, lastName);
-        return this;
-    }
-
-    @Step("Set firstname {firstName}")
-    public EditProfileComponent setFirstName(String firstName) {
-        setNewValueForInput(firstNameInput, firstName);
-        waitStalenessOfPreviousErrors(firstNameErrors);
-        return this;
-    }
-
     @Step("Get current user first name")
     public String getFirstName() {
         waitVisibility(firstNameInput);
         return firstNameInput.getAttribute("value");
     }
 
+    @Step("Get current user last name")
+    public String getLastName() {
+        waitVisibility(lastNameInput);
+        return lastNameInput.getAttribute("value");
+    }
+
     @Step("Get current user phone number")
     public String getPhone() {
         try {
-            waitValue(phoneInput, "0", 2);
+            waitValue(phoneInput, "0", 3);
         } catch (TimeoutException ignore) {
         }
         return phoneInput.getAttribute("value");
     }
 
+    @Step("Set lastname {lastName}")
+    public EditProfileComponent setLastName(String lastName) {
+        List<WebElement> previousPhoneErrors = lastnameErrors;
+        setNewValueForInput(lastNameInput, lastName);
+        waitStalenessOfPreviousErrors(previousPhoneErrors, 1);
+        return this;
+    }
+
+    @Step("Set firstname {firstName}")
+    public EditProfileComponent setFirstName(String firstName) {
+        List<WebElement> previousFirstNameErrors = firstNameErrors;
+        setNewValueForInput(firstNameInput, firstName);
+        waitStalenessOfPreviousErrors(previousFirstNameErrors, 1);
+        return this;
+    }
+
     @Step("Set phone number {phone}")
     public EditProfileComponent setPhone(String phone) {
+        List<WebElement> previousLastNameErrors = phoneErrors;
         setNewValueForInput(phoneInput, phone);
-        waitStalenessOfPreviousErrors(phoneErrors);
+        waitStalenessOfPreviousErrors(previousLastNameErrors,1);
         return this;
     }
 
@@ -201,21 +211,21 @@ public class EditProfileComponent extends BaseMethods {
 
     @Step("Get firstname error text")
     public String getFirstnameErrorText() {
-        waitVisibility(firstnameErrorText);
+        waitVisibility(firstnameErrorText, 1);
         return firstnameErrorText.getText();
     }
 
     public List<String> getLastNameErrorText() {
-        waitVisibilityOfWebElements(lastnameErrors);
+        waitVisibility(lastnameErrors, 1);
         return lastnameErrors.stream().map(WebElement::getText).collect(Collectors.toList());
     }
 
     @Step("Get a list of phone field error messages")
     public List<String> getPhoneErrorText() {
-        waitVisibility(phoneErrors);
+        waitVisibility(phoneErrors, 1);
         return phoneErrors.stream().map(WebElement::getText).collect(Collectors.toList());
     }
-  
+
     @Step("Save changes")
     public EditProfileComponent save() {
         saveButton.click();
@@ -236,21 +246,24 @@ public class EditProfileComponent extends BaseMethods {
     public String getOldPasswordFieldBorderColor(String color) {
         try {
             waitAttributeOfElementContains(oldPasswordFieldWrapper, "border-color", color);
-        } catch (TimeoutException ignore) {}
+        } catch (TimeoutException ignore) {
+        }
         return oldPasswordFieldWrapper.getCssValue("border-color");
     }
 
     public String getNewPasswordFieldBorderColor(String color) {
         try {
             waitAttributeOfElementContains(newPasswordFieldWrapper, "border-color", color);
-        } catch (TimeoutException ignore) {}
+        } catch (TimeoutException ignore) {
+        }
         return newPasswordFieldWrapper.getCssValue("border-color");
     }
 
     public String getRepeatNewPasswordFieldBorderColor(String color) {
         try {
             waitAttributeOfElementContains(newPasswordFieldWrapper, "border-color", color);
-        } catch (TimeoutException ignore) {}
+        } catch (TimeoutException ignore) {
+        }
         return newPasswordFieldWrapper.getCssValue("border-color");
     }
 

@@ -8,6 +8,7 @@ public class EditProfileTestRunner extends LoginTestRunner {
     protected EditProfileComponent editProfileComponent;
     protected String initialPhone;
     protected String initialFirstName;
+    protected String initialLastName;
 
     @BeforeClass
     public void openEditProfile() {
@@ -17,5 +18,6 @@ public class EditProfileTestRunner extends LoginTestRunner {
                 .openEditProfilePage();
         initialPhone = editProfileComponent.getPhone();
         initialFirstName = editProfileComponent.getFirstName();
+        initialLastName = editProfileComponent.getLastName();
     }
 }

@@ -3,8 +3,6 @@ package com.ita.edu.speakua.ui.profilePage.tests;
 import com.ita.edu.speakua.ui.runners.EditProfileTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.AfterMethod;
@@ -104,7 +102,7 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
         boolean saveChangesBtnIsEnabled;
         SoftAssert softAssert = new SoftAssert();
 
-        errorMessages = editProfileComponent.fillInLastName(data).getLastNameErrorText();
+        errorMessages = editProfileComponent.setLastName(data).getLastNameErrorText();
         for (String errorMessage: errorMessages) {
             if (errorMessage.equals(expectedMessage)) {
                 expectedMessageIsPresent = true;
@@ -118,7 +116,8 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
 
         softAssert.assertAll();
     }
-    @Test
+
+    @Test(priority = 1)
     public void verifyEditProfileWithEmptyNewRepeatPasswordData(){
         boolean actualMessage;
         boolean expectedMessageIsPresent = false;
@@ -140,7 +139,7 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
         softAssert.assertEquals(actualMessage, expectedMessageIsPresent);
     }
 
-    @Test
+    @Test(priority = 1)
     public void verifyEditProfileWithEmptyNewPasswordData(){
         boolean actualMessage;
         boolean expectedMessageIsPresent = false;
@@ -163,11 +162,14 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
 
     @AfterMethod
     public void setInitialInfo() {
+        if (!editProfileComponent.getPhone().equals(initialPhone)) {
+            editProfileComponent.setPhone(initialPhone);
+        }
         if (!editProfileComponent.getFirstName().equals(initialFirstName)) {
             editProfileComponent.setFirstName(initialFirstName);
         }
-        if (!editProfileComponent.getPhone().equals(initialPhone)) {
-            editProfileComponent.setPhone(initialPhone);
+        if (!editProfileComponent.getLastName().equals(initialLastName)) {
+            editProfileComponent.setLastName(initialLastName);
         }
     }
 }

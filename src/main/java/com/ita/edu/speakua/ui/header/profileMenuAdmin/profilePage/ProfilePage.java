@@ -30,6 +30,7 @@ public class ProfilePage extends HeaderComponent {
 
     @Step("Open edit profile page")
     public EditProfileComponent openEditProfilePage() {
+        sleep(1000);
         waitClickable(editProfileButton);
         editProfileButton.click();
         return new EditProfileComponent(driver);

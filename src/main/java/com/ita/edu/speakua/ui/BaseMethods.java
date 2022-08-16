@@ -84,6 +84,11 @@ public class BaseMethods {
         wait.until(ExpectedConditions.visibilityOfAllElements(elements));
     }
 
+    public void waitVisibility(List<WebElement> elements, long seconds) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(seconds));
+        wait.until(ExpectedConditions.visibilityOfAllElements(elements));
+    }
+
     public void waitInvisibility(WebElement element) {
         waitInvisibility(element, TIMEOUT.getSeconds());
     }
@@ -146,11 +151,6 @@ public class BaseMethods {
         return element;
     }
 
-    public void waitVisibilityOfWebElements(List<WebElement> elements) {
-        WebDriverWait wait = new WebDriverWait(driver, TIMEOUT);
-        wait.until(ExpectedConditions.visibilityOfAllElements(elements));
-    }
-
     public void waitVisibilityOfWebElement(WebElement element) {
         WebDriverWait wait = new WebDriverWait(driver, TIMEOUT);
         wait.until(ExpectedConditions.visibilityOf(element));
@@ -174,11 +174,11 @@ public class BaseMethods {
         actions.moveToElement(element).perform();
     }
 
-    public void waitStalenessOfPreviousErrors(List<WebElement> errors) {
-        if (errors.size() != 0) {
+    public void waitStalenessOfPreviousErrors(List<WebElement> errors, long seconds) {
+        if (errors.size() > 0) {
             for (WebElement error : errors) {
                 try {
-                    waitStaleness(error, 2);
+                    waitStaleness(error, seconds);
                 } catch (TimeoutException ignore) {
                 }
             }
