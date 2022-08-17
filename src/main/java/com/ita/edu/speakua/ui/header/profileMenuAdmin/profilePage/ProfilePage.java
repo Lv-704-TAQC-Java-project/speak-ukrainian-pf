@@ -4,6 +4,7 @@ import com.ita.edu.speakua.ui.header.HeaderComponent;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubMainInfoComponent;
 import io.qameta.allure.Step;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -47,6 +48,7 @@ public class ProfilePage extends HeaderComponent {
 
     public boolean isEditProfileButtonVisible() {
         try {
+            sleep(3000);
             return editProfileButton.isEnabled();
         } catch (NoSuchElementException e) {
             return false;
@@ -55,9 +57,10 @@ public class ProfilePage extends HeaderComponent {
 
     public boolean isAddButtonVisible(){
         try {
-            waitVisibility(addButton);
+            sleep(3000);
+//            waitVisibility(addButton);
             return addButton.isEnabled();
-        } catch (NoSuchElementException e) {
+        } catch (TimeoutException e) {
             return false;
         }
     }
