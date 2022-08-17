@@ -29,7 +29,8 @@ public class AdministrationComponent extends BaseMethods {
 
     @Step("Open challenge page")
     public ChallengePage openChallengePage() {
-        challengeButton.click();
+        waitVisibility(challengeButton);
+        actionsClickOnElement(challengeButton);
         return new ChallengePage(driver);
     }
 }
