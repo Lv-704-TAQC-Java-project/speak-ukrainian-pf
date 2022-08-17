@@ -127,12 +127,11 @@ public class AddTaskTest extends AddTaskTestRunner {
 
     @Test(dataProvider = "invalidNameData")
     public void verifyCreateTaskWithInvalidNameData(String invalidData, String expectedMessage) {
-        String descriptionInput = new String(new char[10]).replace("\0", "Lorem 56№*");
         String actualErrorMessage;
 
         boolean isAllFieldsAreEmptyByDefault = addTaskPage.areFieldsEmpty();
 
-        addTaskPage.enterStartDate("2023-05-05")
+        addTaskPage.enterStartDate(LocalDate.now().plusDays(1).toString())
                 .uploadImage(pathToImage)
                 .enterName(invalidData)
                 .enterTitle("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has " +
