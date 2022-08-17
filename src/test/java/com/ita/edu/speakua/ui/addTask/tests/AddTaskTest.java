@@ -117,11 +117,11 @@ public class AddTaskTest extends AddTaskTestRunner {
     @DataProvider(name = "invalidNameData")
     public static Object[][] invalidNameData() {
         return new Object[][]{
-                {"", "headerText не може бути пустим"},
+                {"", "name не може бути пустим"},
                 {"Lor",
-                        "headerText must contain a minimum of 5 and a maximum of 100 letters"},
+                        "name must contain a minimum of 5 and a maximum of 100 letters"},
                 {new String(new char[400]).replace("\0", "Lorem 56№*"),
-                        "headerText must contain a minimum of 5 and a maximum of 100 letters"}
+                        "name must contain a minimum of 5 and a maximum of 100 letters"}
         };
     }
 
@@ -132,11 +132,18 @@ public class AddTaskTest extends AddTaskTestRunner {
 
         boolean isAllFieldsAreEmptyByDefault = addTaskPage.areFieldsEmpty();
 
-        addTaskPage.enterStartDate("2022-05-05")
+        addTaskPage.enterStartDate("2023-05-05")
                 .uploadImage(pathToImage)
                 .enterName(invalidData)
-                .enterTitle("n't anything embarrassing")
-                .enterDescription(descriptionInput)
+                .enterTitle("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has " +
+                        "been the industry's standard dummy text ever since the 1500s, when an unknown printer took a " +
+                        "galley of type and scrambled it to make a type specimen book. It has survived not only five " +
+                        "centuries, but also the leap into electronic typesetting, remaining essentially unchanged. " +
+                        "It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum " +
+                        "passages, and more recently with desktop publishing software like Aldus PageMaker including " +
+                        "versions of Lorem Ipsum")
+                .enterDescription("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has " +
+                        "been the industry's standard dummy text ever since the 1500s, when an unknown printer took a ")
                 .selectChallenge("Example name");
         addTaskPage.save();
 
