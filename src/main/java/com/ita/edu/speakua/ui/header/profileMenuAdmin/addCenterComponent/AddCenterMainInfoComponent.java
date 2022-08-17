@@ -60,6 +60,7 @@ public class AddCenterMainInfoComponent extends AbstractAddCenterComponent {
 
     @Step("Open next modal 'Contacts'")
     public AddCenterContactComponent openNextStep() {
+        waitVisibilityOfWebElement(nextStepButton);
         nextStepButton.click();
         return new AddCenterContactComponent(driver);
     }

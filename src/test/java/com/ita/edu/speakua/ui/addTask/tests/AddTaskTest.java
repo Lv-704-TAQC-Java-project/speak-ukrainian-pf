@@ -176,7 +176,7 @@ public class AddTaskTest extends AddTaskTestRunner {
                 .uploadImage(pathToImage)
                 .enterName("Yaroslav test")
                 .enterTitle(descriptionInput.substring(0, 50))
-                .enterDescription(descriptionInput.substring(0, 50))
+                .enterDescription(descriptionInput.substring(0, 500))
                 .selectChallenge("Example name");
         addTaskPage.save();
         String actualErrorMessage = addTaskPage.getErrorMessageText();
