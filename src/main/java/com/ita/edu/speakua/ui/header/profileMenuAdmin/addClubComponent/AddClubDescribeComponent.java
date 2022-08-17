@@ -31,6 +31,9 @@ public class AddClubDescribeComponent extends AbstractAddClubComponent {
     @FindBy(xpath = "//span[contains(text(),'Завершити')]/ancestor::button")
     private WebElement finishButton;
 
+    @FindBy(xpath = "//div[@class='ant-modal-body']")
+    private WebElement addGroupModal;
+
     @FindBy(xpath = "//textarea[contains(@class,'success')]")
     private WebElement successArea;
 
@@ -80,6 +83,7 @@ public class AddClubDescribeComponent extends AbstractAddClubComponent {
     @Step("Add club")
     public ProfilePage addClub() {
         finishButton.click();
+        waitInvisibility(addGroupModal);
         return new ProfilePage(driver);
     }
 

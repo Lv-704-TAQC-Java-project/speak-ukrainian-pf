@@ -48,7 +48,7 @@ public class ProfilePage extends HeaderComponent {
 
     public boolean isEditProfileButtonVisible() {
         try {
-            sleep(3000);
+            waitClickable(editProfileButton);
             return editProfileButton.isEnabled();
         } catch (NoSuchElementException e) {
             return false;
@@ -57,8 +57,7 @@ public class ProfilePage extends HeaderComponent {
 
     public boolean isAddButtonVisible(){
         try {
-            sleep(3000);
-//            waitVisibility(addButton);
+            waitClickable(addButton);
             return addButton.isEnabled();
         } catch (TimeoutException e) {
             return false;
