@@ -16,7 +16,7 @@ public class ProfilePage extends HeaderComponent {
     @FindBy(xpath = "//div[@class='edit-button']//button")
     private WebElement editProfileButton;
 
-    @FindBy(xpath = "//span[contains(text(),'Додати')]/parent::button")
+    @FindBy(xpath = "//button[@classname='add-button']")
     private WebElement addButton;
 
     @FindBy(xpath = "//li[@class = 'ant-dropdown-menu-item ant-dropdown-menu-item-only-child menu-item']//div[contains(text(),'Додати гурток')]")
@@ -55,6 +55,7 @@ public class ProfilePage extends HeaderComponent {
 
     public boolean isAddButtonVisible(){
         try {
+            waitVisibility(addButton);
             return addButton.isEnabled();
         } catch (NoSuchElementException e) {
             return false;
