@@ -1,11 +1,8 @@
 package com.ita.edu.speakua.ui.addChallenge.tests;
 
-import com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.addChallenge.ChallengePage;
 import com.ita.edu.speakua.ui.runners.AddChallengeTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
