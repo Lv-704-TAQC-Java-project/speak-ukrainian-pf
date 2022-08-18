@@ -71,7 +71,7 @@ public class AdvancedSearchByPhraseTest extends SameWindowTestRunner {
             }
         }
 
-        softAssert.assertTrue(areCardsDifferentAfterSearch, "Cards must be different after search");
+        softAssert.assertTrue(areCardsDifferentAfterSearch, "Cards must be different after search.");
         softAssert.assertAll();
     }
 }

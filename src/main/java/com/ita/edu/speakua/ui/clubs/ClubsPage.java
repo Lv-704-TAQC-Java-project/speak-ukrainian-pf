@@ -48,6 +48,7 @@ public class ClubsPage extends HeaderComponent {
         return new ExpandedCardComponent(driver);
     }
 
+    @Step("Get list of cards")
     public List<CardComponent> getCards() {
         this.cards = new ArrayList<>();
         for (WebElement card : cardsBody) {
@@ -129,6 +130,7 @@ public class ClubsPage extends HeaderComponent {
         return advancedSearchButton == null;
     }
 
+    @Step("Search phrase by entering separate characters in search field: {query}")
     public ClubsPage fillInSearch(String query) {
         clearInput(searchInput);
         searchInput.click();
@@ -140,6 +142,7 @@ public class ClubsPage extends HeaderComponent {
         return this;
     }
 
+    @Step("Search phrase by pasting input in search field: {query}. Maximum input length is {maxLength}.")
     public ClubsPage pasteInSearch(String query, int maxLength) {
         clearInput(searchInput);
         searchInput.click();
