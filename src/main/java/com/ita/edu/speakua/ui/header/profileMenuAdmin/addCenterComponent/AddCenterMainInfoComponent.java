@@ -84,4 +84,12 @@ public class AddCenterMainInfoComponent extends AbstractAddCenterComponent {
         new AddLocationComponent(driver).addLocation(location);
         return this;
     }
+
+    @Step("Add location on center component filling only mandatory fields")
+    public AddCenterMainInfoComponent addLocationWithMandatoryFields(Location location) {
+        sleep(1000);
+        addLocationButton.click();
+        new AddLocationComponent(driver).addLocationWithMandatoryFields(location);
+        return this;
+    }
 }

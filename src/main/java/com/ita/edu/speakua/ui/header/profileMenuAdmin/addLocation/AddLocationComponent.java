@@ -123,4 +123,13 @@ public class AddLocationComponent extends BaseMethods {
         fillInPhoneNumberField(location.getPhone());
         addButtonClick();
     }
+
+    public void addLocationWithMandatoryFields(Location location) {
+        fillInLocationNameField(location.getName());
+        selectCityByName(location.getCity());
+        fillInAddressField(location.getAddress());
+        fillInGeographicCoordinatesField(location.getCoordinates());
+        fillInPhoneNumberField(location.getPhone());
+        addButtonClick();
+    }
 }
