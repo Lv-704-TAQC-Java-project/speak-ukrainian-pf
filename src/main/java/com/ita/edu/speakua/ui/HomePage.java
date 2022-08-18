@@ -46,4 +46,10 @@ public class HomePage extends HeaderComponent {
         searchButton.click();
         return new ClubsPage(driver);
     }
+
+    public boolean isHomePageOpened(){
+        waitPageReload();
+        WebElement banner = driver.findElement(By.xpath("//div[@class='ant-carousel']"));
+        return banner.isDisplayed();
+    }
 }

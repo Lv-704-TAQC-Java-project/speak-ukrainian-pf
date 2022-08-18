@@ -54,8 +54,11 @@ public class AddCenterMainInfoComponent extends AbstractAddCenterComponent {
 
     @Step("Choose location from checkbox list")
     public AddCenterMainInfoComponent chooseLocation(String name) {
-        getLocationItem(name).click();
-        return new AddCenterMainInfoComponent(driver);
+
+            sleep(1000);
+            scrollTo(getLocationItem(name));
+            getLocationItem(name).click();
+            return new AddCenterMainInfoComponent(driver);
     }
 
     @Step("Open next modal 'Contacts'")

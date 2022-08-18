@@ -1,6 +1,7 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.profilePage;
 
 import com.ita.edu.speakua.ui.header.HeaderComponent;
+import com.ita.edu.speakua.ui.header.profileMenuAdmin.addCenterComponent.AddCenterMainInfoComponent;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubMainInfoComponent;
 import io.qameta.allure.Step;
 import org.openqa.selenium.NoSuchElementException;
@@ -21,6 +22,9 @@ public class ProfilePage extends HeaderComponent {
 
     @FindBy(xpath = "//li[@class = 'ant-dropdown-menu-item ant-dropdown-menu-item-only-child menu-item']//div[contains(text(),'Додати гурток')]")
     private WebElement addClubButton;
+
+    @FindBy(xpath = "//div[contains(text(),'Додати центр')]")
+    private WebElement addCenterButton;
 
     private EditProfileComponent editProfileModalComponent;
 
@@ -43,6 +47,16 @@ public class ProfilePage extends HeaderComponent {
         waitVisibility(addClubButton);
         addClubButton.click();
         return new AddClubMainInfoComponent(driver);
+    }
+
+    @Step("Open a modal for adding center")
+    public AddCenterMainInfoComponent openAddCenterModal() {
+        waitVisibility(addButton);
+        addButton.click();
+        sleep(5000);
+        waitVisibility(addCenterButton);
+        addCenterButton.click();
+        return new AddCenterMainInfoComponent(driver);
     }
 
     public boolean isEditProfileButtonVisible() {

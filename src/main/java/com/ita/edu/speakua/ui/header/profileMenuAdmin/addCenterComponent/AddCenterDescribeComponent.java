@@ -8,7 +8,7 @@ import org.openqa.selenium.support.FindBy;
 
 public class AddCenterDescribeComponent extends AbstractAddCenterComponent {
 
-    @FindBy(xpath = "//input[@id='basic_description']")
+    @FindBy(xpath = "//textarea[@id='basic_description']")
     private WebElement describeArea;
 
     @FindBy(xpath = "//span[contains(text(),'Назад')]/ancestor::button")
@@ -23,6 +23,7 @@ public class AddCenterDescribeComponent extends AbstractAddCenterComponent {
 
     @Step("Add a description of center")
     public AddCenterDescribeComponent addDescribe(String text) {
+        waitVisibility(describeArea);
         describeArea.sendKeys(Keys.chord(Keys.CONTROL, "a"));
         describeArea.sendKeys(Keys.chord(text));
         return new AddCenterDescribeComponent(driver);
