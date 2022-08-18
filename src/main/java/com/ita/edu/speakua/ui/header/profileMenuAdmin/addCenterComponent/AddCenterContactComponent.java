@@ -86,8 +86,8 @@ public class AddCenterContactComponent extends AbstractAddCenterComponent {
     }
 
     @Step("Open next modal 'Describe'")
-    public AddClubDescribeComponent openNextStep() {
+    public AddCenterDescribeComponent openNextStep() {
         nextStepButton.click();
-        return new AddClubDescribeComponent(driver);
+        return new AddCenterDescribeComponent(driver);
     }
 }
