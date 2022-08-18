@@ -37,6 +37,9 @@ public class AddClubDescribeComponent extends AbstractAddClubComponent {
     @FindBy(xpath = "//textarea[@id='basic_description']/ancestor::div[contains(@class, 'item-row')]//div[contains(@class, 'explain-error')]")
     private List<WebElement> errorMessagesForDescriptionField;
 
+    @FindBy(xpath = "//div[@class='ant-modal-body']")
+    private WebElement addGroupModal;
+
     public AddClubDescribeComponent(WebDriver driver) {
         super(driver);
     }
@@ -80,6 +83,7 @@ public class AddClubDescribeComponent extends AbstractAddClubComponent {
     @Step("Add club")
     public ProfilePage addClub() {
         finishButton.click();
+        waitInvisibility(addGroupModal);
         return new ProfilePage(driver);
     }
 
