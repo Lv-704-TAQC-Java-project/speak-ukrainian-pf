@@ -2,10 +2,8 @@ package com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.a
 
 import com.ita.edu.speakua.ui.header.HeaderComponent;
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
@@ -28,7 +26,7 @@ public class AddTaskPage extends HeaderComponent {
     private WebElement enterDescription;
 
     @FindBy(xpath = "//input[@id='challengeId']")
-    private WebElement challenge;
+    private WebElement challengeDropdown;
 
     @FindBy(xpath = "//div[@class='rc-virtual-list-holder-inner']")
     private WebElement challengeList;
@@ -39,11 +37,8 @@ public class AddTaskPage extends HeaderComponent {
     @FindBy(xpath = "//div[contains(@class, 'warning')]//span[text()]")
     private WebElement errorMessage;
 
-    @FindBy(xpath = "//div[contains(@class, 'success')]//span[text()]")
+    @FindBy(xpath = "//div[@class='ant-message']//div[contains(@class, 'success')]")
     private WebElement successMessage;
-
-    @FindBy(xpath = "//div[contains(@class, 'warning')]//span[text()]")
-    private List<WebElement> errorMessages;
 
     @FindBy(xpath = "//span[contains(text(),'Please')]")
     private WebElement errorMessageIsEmpty;
@@ -81,7 +76,8 @@ public class AddTaskPage extends HeaderComponent {
         uploadImage.sendKeys(imagePath);
         return this;
     }
-    public AddTaskPage inputImageSecondPhoto(){
+
+    public AddTaskPage inputImageSecondPhoto() {
         uploadImage.sendKeys("C:\\Users\\User\\IdeaProjects\\speak-ukrainian-pf\\smile-png.png");
         return this;
     }
@@ -104,21 +100,20 @@ public class AddTaskPage extends HeaderComponent {
         return this;
     }
 
-    private AddTaskPage openChallengeList() {
-        actionsClickOnElement(challenge);
-        return this;
-    }
-
-    private WebElement getChallengeItem(String name) {
-        waitVisibility(challengeList);
-        return challengeList.findElement(By.xpath(String.format(".//div[contains(text(),'%s')]", name)));
-    }
-
     @Step("Select challenge")
     public AddTaskPage selectChallenge(String name) {
-        openChallengeList()
-                .getChallengeItem(name)
-                .click();
+        String challengeXpath = String.format("//div[contains(@class,'option-content') and contains(text(), '%s')]", name);
+        String lastChallengeXpath = "(//div[contains(@class,'option-content')])[last()]";
+
+        actionsClick(challengeDropdown);
+        WebElement challenge = safeFind(challengeXpath);
+
+        Actions actions = new Actions(driver);
+        while (challenge == null) {
+            actions.scrollToElement(driver.findElement(By.xpath(lastChallengeXpath))).perform();
+            challenge = safeFind(challengeXpath);
+        }
+        actionsClick(challenge);
         return this;
     }
 
@@ -159,13 +154,12 @@ public class AddTaskPage extends HeaderComponent {
 
     @Step("Get error message")
     public String getErrorMessageText() {
-        try{
+        try {
             waitVisibility(errorMessage);
             return errorMessage.getText();
-        } catch (Exception e){
+        } catch (Exception e) {
             return "";
         }
-
     }
 
     @Step("Get success message")
@@ -195,12 +189,12 @@ public class AddTaskPage extends HeaderComponent {
         return errorPastDate.isDisplayed();
     }
 
-    public boolean errorMessageLessThenFiveCharactersIsVisible(){
+    public boolean errorMessageLessThenFiveCharactersIsVisible() {
         waitVisibility(By.xpath("//span[contains(text(),'minimum of 5')]"));
         return errorLessThenFortyCharacters.isDisplayed();
     }
 
-    public boolean errorMessageMoreThenOneHundredCharactersIsVisible(){
+    public boolean errorMessageMoreThenOneHundredCharactersIsVisible() {
         waitVisibility(By.xpath("//span[contains(text(),'minimum of 100')]"));
         return errorLessThenFortyCharacters.isDisplayed();
     }

@@ -164,14 +164,14 @@ public class BaseMethods {
         clearInput(element).sendKeys(value);
     }
 
-    public void actionsClickOnElement(WebElement element) {
+    public void actionsClick(WebElement element) {
         actions = new Actions(driver);
         actions.moveToElement(element).click().perform();
     }
 
-    public void actionsMoveTo(WebElement element) {
+    public void scrollTo(WebElement element) {
         actions = new Actions(driver);
-        actions.moveToElement(element).perform();
+        actions.scrollToElement(element).perform();
     }
 
     public void waitStalenessOfPreviousErrors(List<WebElement> errors, long seconds) {
@@ -183,5 +183,14 @@ public class BaseMethods {
                 }
             }
         }
+    }
+
+    public WebElement safeFind(String xpath) {
+        WebElement element = null;
+        try {
+            element = driver.findElement(By.xpath( xpath));
+        } catch (NoSuchElementException ignored) {
+        }
+        return element;
     }
 }

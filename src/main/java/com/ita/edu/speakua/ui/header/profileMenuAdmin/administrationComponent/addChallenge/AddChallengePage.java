@@ -7,6 +7,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.List;
+
 public class AddChallengePage extends HeaderComponent {
 
     @FindBy(xpath = "//input[@id='sortNumber']")
@@ -30,14 +32,23 @@ public class AddChallengePage extends HeaderComponent {
     @FindBy(xpath = "//span[contains(text(),'Зберегти')]/ancestor::button")
     private WebElement saveButton;
 
+    @FindBy(xpath = "//input[@type='file']")
+    private WebElement uploadImageInput;
+
+    @FindBy(xpath = "//span[@class='ant-upload-list-item-actions']")
+    private List<WebElement> imageElements;
+
+    @FindBy(xpath = "//div[@class='ant-message']//span[contains(text(), 'успішно')]")
+    private WebElement successeMessage;
+
     public AddChallengePage(WebDriver driver) {
         super(driver);
     }
 
     @Step("Input sort number")
-    public AddChallengePage enterSortNumber(String number) {
+    public AddChallengePage enterSortNumber(int number) {
         sortNumber.sendKeys(Keys.chord(Keys.CONTROL, "a"));
-        sortNumber.sendKeys(Keys.chord(number));
+        sortNumber.sendKeys(Keys.chord(String.valueOf(number)));
         return this;
     }
 
@@ -63,8 +74,8 @@ public class AddChallengePage extends HeaderComponent {
     }
 
     @Step("Upload image")
-    public AddChallengePage uploadImage() {
-        uploadImageButton.click();
+    public AddChallengePage uploadImage(String path) {
+        uploadImageInput.sendKeys(path);
         return this;
     }
 
@@ -72,5 +83,37 @@ public class AddChallengePage extends HeaderComponent {
     public ChallengePage save() {
         saveButton.click();
         return new ChallengePage(driver);
+    }
+
+    @Step("Get message")
+    public String getMessageText() {
+        waitVisibilityOfWebElement(successeMessage);
+        return successeMessage.getText();
+    }
+
+    public boolean areFieldsEmpty() {
+        return sortNumberIsEmpty() &&
+                imageIsEmpty() &&
+                nameIsEmpty() &&
+                headingIsEmpty() &&
+                describeIsEmpty();
+    }
+
+    private boolean sortNumberIsEmpty() {
+        return sortNumber.getAttribute("value").isEmpty();
+    }
+
+    private boolean nameIsEmpty() {
+        return challengeName.getAttribute("value").isEmpty();
+    }
+
+    private boolean imageIsEmpty() {return imageElements.size() == 0;}
+
+    private boolean headingIsEmpty() {
+        return titleText.getText().isEmpty();
+    }
+
+    private boolean describeIsEmpty() {
+        return describe.getText().isEmpty();
     }
 }

@@ -20,29 +20,40 @@ public class AdvancedSearchByPhraseTest extends SameWindowTestRunner {
     @DataProvider(name = "searchData")
     public static Object[][] searchData() {
         return new Object[][]{
-                {"я"},
-                {"bVFGgqFhQnbPWUxedbdQTMZFgHQACFuyDPcdAinKpWlKXffivF"},
-                {"Журналістика, дитяче телебачення, монтаж відео, влогів"},
+                {"я", false},
+                {"bVFGgqFhQnbPWUxedbdQTMZFgHQACFuyDPcdAinKpWlKXffivF", false},
+                {"Журналістика, дитяче телебачення, монтаж відео, влогів", false},
+                {"bVFGgqFhQnbPWUxedbdQTMZFgHQACFuyDPcdAinKpWlKXffivF", true},
+                {"Журналістика, дитяче телебачення, монтаж відео, влогів", true},
         };
     }
 
+    /**
+     *
+     * @param query phrase that we are looking for in cards
+     * @param isTypeOfInputPaste perform input by separate keystrokes if false, paste phrase to input field if true
+     */
     @Test(dataProvider = "searchData")
-    public void verifySearchFunctionality(String query) {
-        String[] cardsTextBeforeSearch = clubsPage.getCards().stream().map(CardComponent::getCardText).toArray(String[]::new);
-        clubsPage.fillInSearch(query);
-        assertSearchResults(cardsTextBeforeSearch, query);
-    }
-
-    @Test(dataProvider = "searchData")
-    public void verifyPasteSearchFunctionality(String query) {
-        String[] cardsTextBeforeSearch = clubsPage.getCards().stream().map(CardComponent::getCardText).toArray(String[]::new);
-        clubsPage.pasteInSearch(query);
-        assertSearchResults(cardsTextBeforeSearch, query);
-    }
-
-    private void assertSearchResults (String[] cardsTextBeforeSearch, String query) {
+    public void verifySearchFunctionality(String query, boolean isTypeOfInputPaste) {
         final int maxInputValueLength = 50;
-        String[] cardsTextAfterSearch = clubsPage.getCards().stream().map(CardComponent::getCardText).toArray(String[]::new);
+
+        String[] cardsTextBeforeSearch = clubsPage
+                .getCards()
+                .stream()
+                .map(CardComponent::getCardText)
+                .toArray(String[]::new);
+
+        if (isTypeOfInputPaste) {
+            clubsPage.pasteInSearch(query, maxInputValueLength);
+        } else {
+            clubsPage.fillInSearch(query);
+        }
+
+        String[] cardsTextAfterSearch = clubsPage
+                .getCards()
+                .stream()
+                .map(CardComponent::getCardText)
+                .toArray(String[]::new);
 
         boolean areCardsDifferentAfterSearch = false;
         SoftAssert softAssert = new SoftAssert();

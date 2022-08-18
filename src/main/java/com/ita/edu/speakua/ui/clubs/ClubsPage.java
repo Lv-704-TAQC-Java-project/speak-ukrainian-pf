@@ -132,43 +132,38 @@ public class ClubsPage extends HeaderComponent {
     public ClubsPage fillInSearch(String query) {
         clearInput(searchInput);
         searchInput.click();
-        for (int i = 0; i < query.length(); i++) {
-            if (i == 1) {
-                waitForCardsRefresh(1000, 100);
-            }
-            if (i < query.length() - 1) {
-                searchInput.sendKeys(query.substring(i, i + 1));
-            }
-            waitForCardsRefresh(200, 50);
+        char[] chars = query.toCharArray();
+        for (int i = 0; i < chars.length; i++) {
+            searchInput.sendKeys(String.valueOf(chars[i]));
+            waitCardsRefresh(i == 0 ? 1000 : 500, 100);
         }
-        searchInput.sendKeys(query.substring(query.length() - 1));
-        waitForCardsRefresh(1000, 100);
-        waitForCardsRefresh(1000, 100);
         return this;
     }
 
-    public ClubsPage pasteInSearch(String query) {
+    public ClubsPage pasteInSearch(String query, int maxLength) {
         clearInput(searchInput);
         searchInput.click();
         JavascriptExecutor executor = (JavascriptExecutor) driver;
+        String pasteQuery = query.length() < maxLength
+                ? query
+                : query.substring(0, maxLength - 1);
+        String typeQuery = query.length() < maxLength
+                ? query.substring(query.length() - 2)
+                : query.substring(maxLength - 2);
+        executor.executeScript(String.format("arguments[0].value='%s'", pasteQuery), searchInput);
 
-        if (query.length() == 1) {
-            searchInput.sendKeys(query);
-        } else if (query.length() <= 50) {
-            executor.executeScript(String.format("arguments[0].value='%s'", query.substring(0, query.length() - 1)), searchInput);
-            searchInput.sendKeys(query.substring(query.length() - 1));
-        } else {
-            executor.executeScript(String.format("arguments[0].value='%s'", query.substring(0, 49)), searchInput);
-            searchInput.sendKeys(query.substring(49));
+        searchInput.sendKeys(Keys.BACK_SPACE);
+        waitCardsRefresh(500, 100);
+
+        char[] chars = typeQuery.toCharArray();
+        for (char aChar : chars) {
+            searchInput.sendKeys(String.valueOf(aChar));
+            waitCardsRefresh(500, 100);
         }
-        waitForCardsRefresh(1000, 100);
-        waitForCardsRefresh(1000, 100);
-        searchIcon.click();
-        waitForCardsRefresh(1000, 100);
         return this;
     }
 
-    private void waitForCardsRefresh(long timeoutMillis, int polling) {
+    private void waitCardsRefresh(long timeoutMillis, int polling) {
         try {
             getCards().get(0).waitNameRefresh(timeoutMillis, polling);
         } catch (TimeoutException | StaleElementReferenceException ignore) {

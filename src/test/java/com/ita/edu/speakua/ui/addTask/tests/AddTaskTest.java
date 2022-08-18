@@ -17,6 +17,7 @@ import java.time.LocalDate;
 public class AddTaskTest extends AddTaskTestRunner {
     private final String pathToImage = Paths.get(Paths.get(System.getProperty("user.dir")).toString(),
             "src", "test", "resources", "image.png").toString();
+    private final String tomorrow = LocalDate.now().plusDays(1).toString();
 
     @DataProvider(name = "invalidDescriptionData")
     public static Object[][] invalidDescriptionData() {
@@ -178,7 +179,7 @@ public class AddTaskTest extends AddTaskTestRunner {
                 .uploadImage(pathToImage)
                 .enterName("Yaroslav test")
                 .enterTitle(descriptionInput.substring(0, 50))
-                .enterDescription(descriptionInput.substring(0, 50))
+                .enterDescription(descriptionInput.substring(0, 500))
                 .selectChallenge("Example name");
         addTaskPage.save();
         String actualErrorMessage = addTaskPage.getErrorMessageText();
@@ -194,7 +195,7 @@ public class AddTaskTest extends AddTaskTestRunner {
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertTrue(addTaskPage.areFieldsEmpty());
         addTaskPage = addTaskPage
-                .enterStartDate(LocalDate.now().plusDays(1).toString())
+                .enterStartDate(tomorrow)
                 .enterName("Maksym test")
                 .enterTitle("Lorem ipsum dolor sit amet, sed do eiusmod et dolore magna aliqua.")
                 .enterDescription("Facilisis sed odio morbi quis. Mauris rhoncus aenean vel elit scelerisque.")
@@ -216,7 +217,7 @@ public class AddTaskTest extends AddTaskTestRunner {
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertTrue(addTaskPage.areFieldsEmpty());
         addTaskPage = addTaskPage
-                .enterStartDate(LocalDate.now().plusDays(1).toString())
+                .enterStartDate(tomorrow)
                 .uploadImage(pathToImage)
                 .enterName(name)
                 .enterTitle(title)
@@ -225,7 +226,7 @@ public class AddTaskTest extends AddTaskTestRunner {
 
         TaskPage taskPage = addTaskPage.save();
 
-        softAssert.assertEquals(addTaskPage.getSuccessMessage(), String.format("Завдання%s' успішно додане!", name));
+        softAssert.assertEquals(addTaskPage.getSuccessMessage(), String.format("Завдання '%s' успішно додане!", name));
         softAssert.assertEquals(taskPage.getNameText(), name);
         softAssert.assertEquals(taskPage.getTitleText(), title);
         softAssert.assertEquals(taskPage.getDescriptionText(), description);
