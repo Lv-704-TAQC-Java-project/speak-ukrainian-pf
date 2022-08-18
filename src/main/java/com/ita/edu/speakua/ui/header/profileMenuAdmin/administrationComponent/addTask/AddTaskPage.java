@@ -26,7 +26,7 @@ public class AddTaskPage extends HeaderComponent {
     private WebElement enterDescription;
 
     @FindBy(xpath = "//input[@id='challengeId']")
-    private WebElement challenge;
+    private WebElement challengeDropdown;
 
     @FindBy(xpath = "//div[@class='rc-virtual-list-holder-inner']")
     private WebElement challengeList;
@@ -102,16 +102,18 @@ public class AddTaskPage extends HeaderComponent {
 
     @Step("Select challenge")
     public AddTaskPage selectChallenge(String name) {
+        String challengeXpath = String.format("//div[contains(@class,'option-content') and contains(text(), '%s')]", name);
+        String lastChallengeXpath = "(//div[contains(@class,'option-content')])[last()]";
+
+        actionsClick(challengeDropdown);
+        WebElement challenge = safeFind(challengeXpath);
+
         Actions actions = new Actions(driver);
-        actions.moveToElement(challenge).click().perform();
-        WebElement challenge = safeFind(String.format("//div[contains(@class,'option-content') and contains(text(), '%s')]", name));
-
         while (challenge == null) {
-            actions.scrollToElement(driver.findElement(By.xpath("(//div[contains(@class,'option-content')])[10]"))).perform();
-            challenge = safeFind(String.format("//div[contains(@class,'option-content') and contains(text(), '%s')]", name));
-
+            actions.scrollToElement(driver.findElement(By.xpath(lastChallengeXpath))).perform();
+            challenge = safeFind(challengeXpath);
         }
-        actions.moveToElement(challenge).click().perform();
+        actionsClick(challenge);
         return this;
     }
 

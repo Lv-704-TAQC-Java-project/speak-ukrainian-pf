@@ -224,7 +224,7 @@ public class AddTaskTest extends AddTaskTestRunner {
 
         TaskPage taskPage = addTaskPage.save();
 
-        softAssert.assertEquals(addTaskPage.getSuccessMessage(), String.format("Завдання%s' успішно додане!", name));
+        softAssert.assertEquals(addTaskPage.getSuccessMessage(), String.format("Завдання '%s' успішно додане!", name));
         softAssert.assertEquals(taskPage.getNameText(), name);
         softAssert.assertEquals(taskPage.getTitleText(), title);
         softAssert.assertEquals(taskPage.getDescriptionText(), description);

@@ -164,7 +164,7 @@ public class BaseMethods {
         clearInput(element).sendKeys(value);
     }
 
-    public void actionsClickOnElement(WebElement element) {
+    public void actionsClick(WebElement element) {
         actions = new Actions(driver);
         actions.moveToElement(element).click().perform();
     }

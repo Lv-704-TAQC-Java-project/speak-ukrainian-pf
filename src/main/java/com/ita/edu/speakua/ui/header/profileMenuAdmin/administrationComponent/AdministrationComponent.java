@@ -23,14 +23,14 @@ public class AdministrationComponent extends BaseMethods {
     @Step("Open task page")
     public TasksPage openTaskPage() {
         waitVisibility(taskButton);
-        actionsClickOnElement(taskButton);
+        actionsClick(taskButton);
         return new TasksPage(driver);
     }
 
     @Step("Open challenge page")
     public ChallengePage openChallengePage() {
         waitVisibility(challengeButton);
-        actionsClickOnElement(challengeButton);
+        actionsClick(challengeButton);
         return new ChallengePage(driver);
     }
 }
