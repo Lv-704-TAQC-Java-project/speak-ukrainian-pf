@@ -117,4 +117,33 @@ public class AddClubDescriptionTest extends AddClubDescriptionTestRunner {
 
         softAssert.assertAll();
     }
+
+    @DataProvider(name = "descriptionNotEnoughLengthErrorData")
+    public Object[][] descriptionNotEnoughLengthError() {
+        String twentyCharactersDescription = ("Lorem ipsum dolor am");
+        return new Object[][]{
+                {twentyCharactersDescription, true},
+                {"m", true},
+                {twentyCharactersDescription + "Hello world! Lorem ", true},
+        };
+    }
+
+    @Issue("TUA-176")
+    @Description("Verify that description length error message appears when the user enters less than 40 symbols into the field")
+    @Test(dataProvider = "descriptionNotEnoughLengthErrorData")
+    public void verifyDescriptionNotEnoughLengthErrorMessage(String description, boolean isErrorShown) {
+        String lengthErrorMessage = "Опис гуртка закороткий";
+
+        boolean descriptionErrorsContainLengthError = addClubDescriptionComponent
+                .inputDescription(description)
+                .descriptionErrorsContainMessage(lengthErrorMessage);
+
+        if (isErrorShown) {
+            Assert.assertTrue(addClubDescriptionComponent.areDescriptionErrorsShown(), "Description errors are shown.");
+            Assert.assertTrue(descriptionErrorsContainLengthError, "Description length error is shown.");
+        } else {
+            Assert.assertFalse(addClubDescriptionComponent.areDescriptionErrorsShown(), "Description errors aren't shown.");
+            Assert.assertFalse(descriptionErrorsContainLengthError, "Description length error isn't shown.");
+        }
+    }
 }

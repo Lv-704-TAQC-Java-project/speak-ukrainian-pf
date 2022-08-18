@@ -1,11 +1,15 @@
 package com.ita.edu.speakua.ui.profilePage.tests;
 
 import com.ita.edu.speakua.ui.runners.EditProfileTestRunner;
+import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 public class PasswordInputFieldsBorderTest extends EditProfileTestRunner {
 
+    @Issue("TUA-359")
+    @Description("Verify that fields is bordered in red color with invalid data")
     @Test
     public void checkEditPasswordInputFieldsBorders() {
         String errorBorderColor = "rgb(255, 77, 79)";
