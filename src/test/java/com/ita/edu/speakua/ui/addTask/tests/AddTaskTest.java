@@ -86,9 +86,9 @@ public class AddTaskTest extends AddTaskTestRunner {
 
         SoftAssert softAssert = new SoftAssert();
 
-        softAssert.assertTrue(isAllFieldsAreEmptyByDefault);
+        softAssert.assertTrue(isAllFieldsAreEmptyByDefault, "Not all fields are empty by default");
         actualErrorMessage = addTaskPage.getErrorMessageText();
-        softAssert.assertEquals(actualErrorMessage, expectedMessage);
+        softAssert.assertEquals(actualErrorMessage, expectedMessage, "Expected error message did not appear");
 
         softAssert.assertAll();
     }
