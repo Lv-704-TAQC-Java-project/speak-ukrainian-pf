@@ -1,6 +1,7 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.addCenterComponent;
 
 import com.ita.edu.speakua.ui.HomePage;
+import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubMainInfoComponent;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -15,7 +16,7 @@ public class AddCenterChooseClubComponent extends AbstractAddCenterComponent{
     @FindBy(xpath = "//span[contains(text(),'Назад')]/ancestor::button")
     private WebElement previousStepButton;
 
-    @FindBy(xpath = "//span[contains(text(),'Завершити')]/ancestor::button")
+    @FindBy(xpath = "//button[@class='finish-btn']")
     private WebElement finishButton;
 
     public AddCenterChooseClubComponent(WebDriver driver) {
@@ -44,4 +45,8 @@ public class AddCenterChooseClubComponent extends AbstractAddCenterComponent{
         return new HomePage(driver);
     }
 
+    @Step("Verify that modal is closed")
+    public boolean isModalClosed(){
+        return !clubsList.isDisplayed();
+    }
 }

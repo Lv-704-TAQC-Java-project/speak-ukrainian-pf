@@ -126,6 +126,8 @@ public class AddTaskTest extends AddTaskTestRunner {
         };
     }
 
+    @Issue("TUA-523")
+    @Description("Verify impossibility of creating task with name invalid data")
     @Test(dataProvider = "invalidNameData")
     public void verifyCreateTaskWithInvalidNameData(String invalidData, String expectedMessage) {
         String actualErrorMessage;

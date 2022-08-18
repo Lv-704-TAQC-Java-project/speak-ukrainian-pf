@@ -97,7 +97,8 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
                 {"Lastname'", "Прізвище повинно починатися і закінчуватися літерою"}
         };
     }
-
+    @Issue("TUA-343")
+    @Description("Verify impossibility of editing profile with last name invalid data")
     @Test(dataProvider = "invalidLastNameData")
     public void verifyEditProfileWithInvalidLastNamedData(String lastName, String expectedMessage) {
         List<String> errorMessages = editProfileComponent.setLastName(lastName).getLastNameErrorText();
@@ -115,6 +116,8 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
         softAssert.assertAll();
     }
 
+    @Issue("TUA-359")
+    @Description("Verify that error messages are shown while leaving empty any field in the 'Змінити пароль' pop-up")
     @Test(priority = 1)
     public void verifyEditProfileWithEmptyNewRepeatPasswordData() {
         boolean actualMessage;
@@ -139,6 +142,8 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
         editProfileComponent.togglePasswordChange();
     }
 
+    @Issue("TUA-359")
+    @Description("Verify that error messages are shown while leaving empty any field in the 'Змінити пароль' pop-up")
     @Test
     public void verifyEditProfileWithEmptyNewPasswordData() {
         boolean actualMessage;
