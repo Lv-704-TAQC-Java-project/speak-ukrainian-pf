@@ -41,9 +41,9 @@ public class AdvancedSearchTest extends AdvancedSearchTestRunner {
         softAssert.assertFalse(advancedSearchPanel.availableOnlineCheckboxIsDisplayed(),
                 "Available online checkbox is displayed");
         softAssert.assertFalse(advancedSearchPanel.categoriesBlockIsDisplayed(),
-                "Categories block online checkbox is displayed");
+                "Categories block is displayed");
         softAssert.assertFalse(advancedSearchPanel.childAgeBlockIsDisplayed(),
-                "Child age block block online checkbox is displayed");
+                "Child age block is displayed");
 
         softAssert.assertAll();
     }

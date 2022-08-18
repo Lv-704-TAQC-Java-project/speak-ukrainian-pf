@@ -113,7 +113,7 @@ public class AddClubDescriptionTest extends AddClubDescriptionTestRunner {
 
         addClubDescriptionComponent.inputDescription(testData);
         btnFinishIsEnable = addClubDescriptionComponent.isButtonEnable();
-        softAssert.assertTrue(btnFinishIsEnable);
+        softAssert.assertTrue(btnFinishIsEnable, "'Завершити' button is disabled");
 
         softAssert.assertAll();
     }
