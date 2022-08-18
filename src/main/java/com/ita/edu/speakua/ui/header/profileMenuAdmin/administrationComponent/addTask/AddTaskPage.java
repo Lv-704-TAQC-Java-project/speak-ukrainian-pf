@@ -3,6 +3,7 @@ package com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.a
 import com.ita.edu.speakua.ui.header.HeaderComponent;
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
@@ -75,7 +76,8 @@ public class AddTaskPage extends HeaderComponent {
         uploadImage.sendKeys(imagePath);
         return this;
     }
-    public AddTaskPage inputImageSecondPhoto(){
+
+    public AddTaskPage inputImageSecondPhoto() {
         uploadImage.sendKeys("C:\\Users\\User\\IdeaProjects\\speak-ukrainian-pf\\smile-png.png");
         return this;
     }
@@ -98,18 +100,18 @@ public class AddTaskPage extends HeaderComponent {
         return this;
     }
 
-    private AddTaskPage openChallengeList() {
-        actionsClickOnElement(challenge);
-        return this;
-    }
-
-
     @Step("Select challenge")
     public AddTaskPage selectChallenge(String name) {
-        openChallengeList();
-        WebElement challenge = challengeList.findElement(By.xpath(String.format(".//div[contains(text(),'%s')]", name)));
-        JavascriptExecutor executor = (JavascriptExecutor)driver;
-        executor.executeScript("arguments[0].click();", challenge);
+        Actions actions = new Actions(driver);
+        actions.moveToElement(challenge).click().perform();
+        WebElement challenge = safeFind(String.format("//div[contains(@class,'option-content') and contains(text(), '%s')]", name));
+
+        while (challenge == null) {
+            actions.scrollToElement(driver.findElement(By.xpath("(//div[contains(@class,'option-content')])[10]"))).perform();
+            challenge = safeFind(String.format("//div[contains(@class,'option-content') and contains(text(), '%s')]", name));
+
+        }
+        actions.moveToElement(challenge).click().perform();
         return this;
     }
 
@@ -150,10 +152,10 @@ public class AddTaskPage extends HeaderComponent {
 
     @Step("Get error message")
     public String getErrorMessageText() {
-        try{
+        try {
             waitVisibility(errorMessage);
             return errorMessage.getText();
-        } catch (Exception e){
+        } catch (Exception e) {
             return "";
         }
     }
@@ -185,12 +187,12 @@ public class AddTaskPage extends HeaderComponent {
         return errorPastDate.isDisplayed();
     }
 
-    public boolean errorMessageLessThenFiveCharactersIsVisible(){
+    public boolean errorMessageLessThenFiveCharactersIsVisible() {
         waitVisibility(By.xpath("//span[contains(text(),'minimum of 5')]"));
         return errorLessThenFortyCharacters.isDisplayed();
     }
 
-    public boolean errorMessageMoreThenOneHundredCharactersIsVisible(){
+    public boolean errorMessageMoreThenOneHundredCharactersIsVisible() {
         waitVisibility(By.xpath("//span[contains(text(),'minimum of 100')]"));
         return errorLessThenFortyCharacters.isDisplayed();
     }

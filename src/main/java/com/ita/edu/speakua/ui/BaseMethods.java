@@ -184,4 +184,13 @@ public class BaseMethods {
             }
         }
     }
+
+    public WebElement safeFind(String xpath) {
+        WebElement element = null;
+        try {
+            element = driver.findElement(By.xpath( xpath));
+        } catch (NoSuchElementException ignored) {
+        }
+        return element;
+    }
 }
