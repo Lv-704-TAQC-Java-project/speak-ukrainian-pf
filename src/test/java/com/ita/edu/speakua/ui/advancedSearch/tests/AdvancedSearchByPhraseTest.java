@@ -28,8 +28,13 @@ public class AdvancedSearchByPhraseTest extends SameWindowTestRunner {
         };
     }
 
+    /**
+     *
+     * @param query phrase that we are looking for in cards
+     * @param isTypeOfInputPaste perform input by separate keystrokes if false, paste phrase to input field if true
+     */
     @Test(dataProvider = "searchData")
-    public void verifySearchFunctionality(String query, boolean pastePhrase) {
+    public void verifySearchFunctionality(String query, boolean isTypeOfInputPaste) {
         final int maxInputValueLength = 50;
 
         String[] cardsTextBeforeSearch = clubsPage
@@ -38,7 +43,7 @@ public class AdvancedSearchByPhraseTest extends SameWindowTestRunner {
                 .map(CardComponent::getCardText)
                 .toArray(String[]::new);
 
-        if (pastePhrase) {
+        if (isTypeOfInputPaste) {
             clubsPage.pasteInSearch(query, maxInputValueLength);
         } else {
             clubsPage.fillInSearch(query);
