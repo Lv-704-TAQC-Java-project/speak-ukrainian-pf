@@ -25,7 +25,7 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
         SortClubComponent sortClubComponent = clubsPage
                 .getSortClubComponent()
                 .sortByAlphabet()
-                .orderByAsc();
+                .orderByDesc();
 
         SoftAssert softAssert = new SoftAssert();
 
@@ -45,7 +45,7 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
         softAssert.assertEquals(cardNamesTextDecActual.toString(), cardNamesDECExpected.toString(),
                 "Club cards are not sorted by ABC DEC when arrowUp is clicked");
 
-        sortClubComponent.orderByDesc();
+        sortClubComponent.orderByAsc();
         softAssert.assertTrue(clubsPage.getCards().get(0).getCardName().toLowerCase().startsWith("a"),
                 "Club cards are not sorted by ABC ASC when arrowDown is clicked");
 
@@ -61,13 +61,13 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
 
         SortClubComponent sortClubComponent = clubsPage.getSortClubComponent()
                 .sortByAlphabet()
-                .orderByAsc();
+                .orderByDesc();
 
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertTrue(clubsPage.getCenters().get(0).getTextCenterName().toLowerCase().startsWith("ш"),
                 "Center cards are not sorted by ABC DEC order when arrowUp is clicked");
 
-        sortClubComponent.orderByDesc();
+        sortClubComponent.orderByAsc();
 
         softAssert.assertTrue(clubsPage.getCenters().get(0).getTextCenterName().toLowerCase().startsWith("a"),
                 "Center cards are not sorted by ABC ASC order when arrowDown is clicked");
@@ -84,13 +84,13 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
         SortClubComponent sortClubComponent = clubsPage
                 .getSortClubComponent()
                 .sortByRating()
-                .orderByAsc();
+                .orderByDesc();
 
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(clubsPage.getCards().get(0).getStarRatingFullList().size(), 5,
                 "Clubs are not sorted by rating ASC when arrowUpButton is clicked");
 
-        sortClubComponent.orderByDesc();
+        sortClubComponent.orderByAsc();
         softAssert.assertEquals(clubsPage.getCards().get(0).getStarRatingZeroList().size(), 5,
                 "Clubs are not sorted by rating DEC when arrowDownButton is clicked");
         softAssert.assertAll();
@@ -107,13 +107,13 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
         SortClubComponent sortClubComponent = clubsPage.getSortClubComponent();
         sortClubComponent
                 .sortByRating()
-                .orderByAsc();
+                .orderByDesc();
 
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(clubsPage.getCards().get(0).getStarRatingFullList().size(), 5,
                 "Centers are not sorted by rating ASC when arrowUpButton is clicked");
 
-        sortClubComponent.orderByDesc();
+        sortClubComponent.orderByAsc();
         softAssert.assertEquals(clubsPage.getCards().get(0).getStarRatingZeroList().size(), 5,
                 "Centers are not sorted by rating DEC when arrowDownButton is clicked");
         softAssert.assertAll();
@@ -139,7 +139,7 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
             softAssert.assertTrue(result, "Club cards are not sorted by Rate when advancedSearch is opened");
         }
 
-        sort.orderByAsc();
+        sort.orderByDesc();
 
         cardCountOfStars = new ArrayList<>();
         for (int i = 0; i < clubsPage.getCards().size(); i++) {

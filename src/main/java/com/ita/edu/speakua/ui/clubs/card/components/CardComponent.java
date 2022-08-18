@@ -63,6 +63,7 @@ public class CardComponent extends BaseMethods {
         return this;
     }
 
+    @Step("Get card name.")
     public String getCardName() {
         waitVisibility(cardName);
         return cardName.getText();
