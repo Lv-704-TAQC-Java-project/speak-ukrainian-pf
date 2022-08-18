@@ -169,9 +169,9 @@ public class BaseMethods {
         actions.moveToElement(element).click().perform();
     }
 
-    public void actionsMoveTo(WebElement element) {
+    public void scrollTo(WebElement element) {
         actions = new Actions(driver);
-        actions.moveToElement(element).perform();
+        actions.scrollToElement(element).perform();
     }
 
     public void waitStalenessOfPreviousErrors(List<WebElement> errors, long seconds) {
