@@ -2,10 +2,7 @@ package com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.a
 
 import com.ita.edu.speakua.ui.header.HeaderComponent;
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
@@ -39,7 +36,7 @@ public class AddTaskPage extends HeaderComponent {
     @FindBy(xpath = "//div[contains(@class, 'warning')]//span[text()]")
     private WebElement errorMessage;
 
-    @FindBy(xpath = "//div[contains(@class, 'success')]//span[text()]")
+    @FindBy(xpath = "//div[@class='ant-message']//div[contains(@class, 'success')]")
     private WebElement successMessage;
 
     @FindBy(xpath = "//span[contains(text(),'Please')]")
@@ -106,16 +103,13 @@ public class AddTaskPage extends HeaderComponent {
         return this;
     }
 
-    private WebElement getChallengeItem(String name) {
-        waitVisibility(challengeList);
-        return challengeList.findElement(By.xpath(String.format(".//div[contains(text(),'%s')]", name)));
-    }
 
     @Step("Select challenge")
     public AddTaskPage selectChallenge(String name) {
-        openChallengeList()
-                .getChallengeItem(name)
-                .click();
+        openChallengeList();
+        WebElement challenge = challengeList.findElement(By.xpath(String.format(".//div[contains(text(),'%s')]", name)));
+        JavascriptExecutor executor = (JavascriptExecutor)driver;
+        executor.executeScript("arguments[0].click();", challenge);
         return this;
     }
 
