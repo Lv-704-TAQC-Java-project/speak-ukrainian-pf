@@ -5,6 +5,10 @@ import com.ita.edu.speakua.ui.header.profileMenuAdmin.addCenterComponent.AddCent
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addLocation.Location;
 import com.ita.edu.speakua.ui.runners.AddCenterTestRunner;
 import com.ita.edu.speakua.ui.runners.LoginTestRunner;
+import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -21,6 +25,8 @@ public class AddCenterWithValidDataTest extends AddCenterTestRunner {
         };
     }
 
+    @Issue("TUA-214")
+    @Description("Verify that user can create center with valid data")
     @Test(dataProvider = "addCenterData")
     public void verifyClubIsAdded(String centerName, String city, String region, String address, String coordinates, String phoneNumber, String club) {
         String locationName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());

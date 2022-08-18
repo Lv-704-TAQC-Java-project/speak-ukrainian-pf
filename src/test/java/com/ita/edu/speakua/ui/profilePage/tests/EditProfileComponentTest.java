@@ -45,7 +45,7 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
         softAssert.assertEquals(actualMessage, expectedMessage, "Expected error message did not appear");
 
         saveChangesBtnIsEnabled = editProfileComponent.saveChangesButtonIsEnable();
-        softAssert.assertFalse(saveChangesBtnIsEnabled, "SaveChanges button is enabled");
+        softAssert.assertFalse(saveChangesBtnIsEnabled, "'Зберегти зміни' button is enabled");
         softAssert.assertAll();
     }
 

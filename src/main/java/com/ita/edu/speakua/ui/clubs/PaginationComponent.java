@@ -26,6 +26,13 @@ public class PaginationComponent extends ClubsPage {
 
     private WebElement lastPaginationPage;
 
+    @FindBy(xpath = "//li[@title='Next Page']/preceding::li[1]")
+    private WebElement lastPageButton;
+
+    public void clickLastPageButton() {
+        clickManagingClubsPageElement(lastPageButton);
+    }
+
 
     public PaginationComponent(WebDriver driver) {
         super(driver);
