@@ -114,7 +114,7 @@ public class AddTaskTest extends AddTaskTestRunner {
 
         Assert.assertTrue(addTaskPage.errorMessageIsEmptyIsVisible(), "Error message didn't find");
     }
-  
+
     @DataProvider(name = "invalidNameData")
     public static Object[][] invalidNameData() {
         return new Object[][]{
@@ -152,7 +152,7 @@ public class AddTaskTest extends AddTaskTestRunner {
         softAssert.assertTrue(isAllFieldsAreEmptyByDefault);
         actualErrorMessage = addTaskPage.getErrorMessageText();
         softAssert.assertEquals(actualErrorMessage, expectedMessage);
-      
+
         softAssert.assertAll();
     }
 
@@ -191,7 +191,8 @@ public class AddTaskTest extends AddTaskTestRunner {
     @Test
     public void verifyCreateTaskWithoutImageError() {
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertTrue(addTaskPage.areFieldsEmpty());
+        softAssert.assertTrue(addTaskPage.areFieldsEmpty(),
+                "Create task form fields should be empty by default.");
         addTaskPage = addTaskPage
                 .enterStartDate(tomorrow)
                 .enterName("Maksym test")
@@ -200,7 +201,8 @@ public class AddTaskTest extends AddTaskTestRunner {
                 .selectChallenge("The European languages");
         addTaskPage.save();
         String actualErrorMessage = addTaskPage.getErrorMessageText();
-        softAssert.assertEquals(actualErrorMessage, "Фото не може бути пустим");
+        softAssert.assertEquals(actualErrorMessage, "Фото не може бути пустим",
+                "Incorrect error message when creating task without image.");
         softAssert.assertAll();
     }
 
@@ -213,7 +215,8 @@ public class AddTaskTest extends AddTaskTestRunner {
         String title = "Lorem ipsum dolor sit amet, sed do eiusmod et dolore magna aliqua.";
         String description = "Facilisis sed odio morbi quis. Mauris rhoncus aenean vel elit scelerisque.";
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertTrue(addTaskPage.areFieldsEmpty());
+        softAssert.assertTrue(addTaskPage.areFieldsEmpty(),
+                "Create task form fields should be empty by default.");
         addTaskPage = addTaskPage
                 .enterStartDate(tomorrow)
                 .uploadImage(pathToImage)
@@ -224,11 +227,15 @@ public class AddTaskTest extends AddTaskTestRunner {
 
         TaskPage taskPage = addTaskPage.save();
 
-        softAssert.assertEquals(addTaskPage.getSuccessMessage(), String.format("Завдання '%s' успішно додане!", name));
-        softAssert.assertEquals(taskPage.getNameText(), name);
-        softAssert.assertEquals(taskPage.getTitleText(), title);
-        softAssert.assertEquals(taskPage.getDescriptionText(), description);
-      
+        softAssert.assertEquals(addTaskPage.getSuccessMessage(), String.format("Завдання '%s' успішно додане!", name),
+                "Incorrect popup success message.");
+        softAssert.assertEquals(taskPage.getNameText(), name,
+                "Incorrect name of created task.");
+        softAssert.assertEquals(taskPage.getTitleText(), title,
+                "Incorrect title of created task.");
+        softAssert.assertEquals(taskPage.getDescriptionText(), description,
+                "Incorrect description of created task.");
+
         softAssert.assertAll();
     }
 }

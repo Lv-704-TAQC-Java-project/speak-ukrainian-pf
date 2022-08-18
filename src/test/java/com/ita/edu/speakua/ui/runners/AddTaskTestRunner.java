@@ -12,7 +12,7 @@ public class AddTaskTestRunner extends LoginTestRunner {
         addTaskPage = new HomePage(driver)
                 .openAdminProfileMenu()
                 .openAdministrationModal()
-                .openTaskPage()
-                .openTaskAddingPage();
+                .openTasksPage()
+                .openAddTaskPage();
     }
 }

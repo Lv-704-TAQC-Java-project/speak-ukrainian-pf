@@ -20,8 +20,8 @@ public class AdministrationComponent extends BaseMethods {
         super(driver);
     }
 
-    @Step("Open task page")
-    public TasksPage openTaskPage() {
+    @Step("Open tasks page")
+    public TasksPage openTasksPage() {
         waitVisibility(taskButton);
         actionsClick(taskButton);
         return new TasksPage(driver);

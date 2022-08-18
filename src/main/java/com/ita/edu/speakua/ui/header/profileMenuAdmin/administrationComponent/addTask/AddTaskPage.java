@@ -65,13 +65,13 @@ public class AddTaskPage extends HeaderComponent {
         super(driver);
     }
 
-    @Step("Enter start date of challenge {date}")
+    @Step("Enter task start date: {date}")
     public AddTaskPage enterStartDate(String date) {
         setNewValueForInput(startDate, date);
         return this;
     }
 
-    @Step("Upload image")
+    @Step("Upload task image: {imagePath}")
     public AddTaskPage uploadImage(String imagePath) {
         uploadImage.sendKeys(imagePath);
         return this;
@@ -82,25 +82,25 @@ public class AddTaskPage extends HeaderComponent {
         return this;
     }
 
-    @Step("Enter name of challenge {name}")
+    @Step("Enter task name: {name}")
     public AddTaskPage enterName(String name) {
         setNewValueForInput(taskName, name);
         return this;
     }
 
-    @Step("Set heading {value}")
+    @Step("Enter task title: {value}")
     public AddTaskPage enterTitle(String value) {
         setNewValueForInput(taskTitle, value);
         return this;
     }
 
-    @Step("Enter description of challenge {value}")
+    @Step("Enter task description: {value}")
     public AddTaskPage enterDescription(String value) {
         setNewValueForInput(enterDescription, value);
         return this;
     }
 
-    @Step("Select challenge")
+    @Step("Select challenge: {name}")
     public AddTaskPage selectChallenge(String name) {
         String challengeXpath = String.format("//div[contains(@class,'option-content') and contains(text(), '%s')]", name);
         String lastChallengeXpath = "(//div[contains(@class,'option-content')])[last()]";

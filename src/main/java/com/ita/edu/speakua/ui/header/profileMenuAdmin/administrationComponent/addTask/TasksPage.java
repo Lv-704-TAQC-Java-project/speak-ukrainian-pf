@@ -16,7 +16,7 @@ public class TasksPage extends HeaderComponent {
     }
 
     @Step("Open page for adding a task")
-    public AddTaskPage openTaskAddingPage(){
+    public AddTaskPage openAddTaskPage(){
         waitVisibility(addTaskButton);
         addTaskButton.click();
         return new AddTaskPage(driver);
