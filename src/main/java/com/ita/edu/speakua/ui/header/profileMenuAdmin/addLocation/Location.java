@@ -29,6 +29,14 @@ public class Location {
         this.phone = phone;
     }
 
+    public Location(String name, String city, String address, String coordinates, String phone) {
+        this.name = name;
+        this.city = city;
+        this.address = address;
+        this.coordinates = coordinates;
+        this.phone = phone;
+    }
+
     public String getName() {
         return name;
     }
