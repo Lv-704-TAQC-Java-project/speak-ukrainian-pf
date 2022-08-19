@@ -28,9 +28,6 @@ public class AddTaskPage extends Header {
     @FindBy(xpath = "//input[@id='challengeId']")
     private WebElement challengeDropdown;
 
-    @FindBy(xpath = "//div[@class='rc-virtual-list-holder-inner']")
-    private WebElement challengeList;
-
     @FindBy(xpath = "//span[contains(text(),'Зберегти')]/ancestor::button")
     private WebElement saveButton;
 
@@ -42,18 +39,6 @@ public class AddTaskPage extends Header {
 
     @FindBy(xpath = "//span[contains(text(),'Please')]")
     private WebElement errorMessageIsEmpty;
-
-    @FindBy(xpath = "//span[contains(text(),'Помилка')]")
-    private WebElement errorInvalidCharacters;
-
-    @FindBy(xpath = "//span[contains(text(),'minimum of 40')]")
-    private WebElement errorLessThenFortyCharacters;
-
-    @FindBy(xpath = "//span[contains(text(),'startDate не може бути відсутнім, має бути задано')]")
-    private WebElement errorEmptyDate;
-
-    @FindBy(xpath = "//span[contains(text(),'startDate не може бути відсутнім, має бути задано')]")
-    private WebElement errorPastDate;
 
     @FindBy(xpath = "//span[@class='ant-upload-list-item-actions']")
     private List<WebElement> imageElements;
@@ -74,11 +59,6 @@ public class AddTaskPage extends Header {
     @Step("Upload task image: {imagePath}")
     public AddTaskPage uploadImage(String imagePath) {
         uploadImage.sendKeys(imagePath);
-        return this;
-    }
-
-    public AddTaskPage inputImageSecondPhoto() {
-        uploadImage.sendKeys("C:\\Users\\User\\IdeaProjects\\speak-ukrainian-pf\\smile-png.png");
         return this;
     }
 
@@ -172,39 +152,6 @@ public class AddTaskPage extends Header {
     public boolean errorMessageIsEmptyIsVisible() {
         waitVisibility(By.xpath("//span[contains(text(),'Please')]"));
         return errorMessageIsEmpty.isDisplayed();
-    }
-
-    public boolean errorMessageInvalidCharactersIsVisible() {
-        waitVisibility(By.xpath("//span[contains(text(),'Помилка')]"));
-        return errorInvalidCharacters.isDisplayed();
-    }
-
-    public boolean errorMessageEmptyDate() {
-        waitVisibility(errorEmptyDate);
-        return errorEmptyDate.isDisplayed();
-    }
-
-    public boolean errorMessagePastDate() {
-        waitVisibility(errorPastDate);
-        return errorPastDate.isDisplayed();
-    }
-
-    public boolean errorMessageLessThenFiveCharactersIsVisible() {
-        waitVisibility(By.xpath("//span[contains(text(),'minimum of 5')]"));
-        return errorLessThenFortyCharacters.isDisplayed();
-    }
-
-    public boolean errorMessageMoreThenOneHundredCharactersIsVisible() {
-        waitVisibility(By.xpath("//span[contains(text(),'minimum of 100')]"));
-        return errorLessThenFortyCharacters.isDisplayed();
-    }
-
-    public boolean errorMessageIsDisplayed() {
-        try {
-            return errorMessage.isDisplayed();
-        } catch (NoSuchElementException e) {
-            return false;
-        }
     }
 
     @Step("Click on 'save' button")
