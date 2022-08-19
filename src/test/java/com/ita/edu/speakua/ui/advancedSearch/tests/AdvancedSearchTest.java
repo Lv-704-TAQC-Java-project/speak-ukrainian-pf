@@ -38,6 +38,12 @@ public class AdvancedSearchTest extends AdvancedSearchTestRunner {
 
         SoftAssert softAssert = new SoftAssert();
 
+        softAssert.assertTrue(advancedSearchPanel.isCitySelectorVisible(),
+                "City selector isn't displayed");
+        softAssert.assertTrue(advancedSearchPanel.isDistrictSelectorVisible(),
+                "District selector isn't displayed");
+        softAssert.assertTrue(advancedSearchPanel.isMetroSelectorVisible(),
+                "Metro selector isn't displayed");
         softAssert.assertFalse(advancedSearchPanel.isAvailableOnlineCheckboxVisible(),
                 "Available online checkbox is displayed");
         softAssert.assertFalse(advancedSearchPanel.isCategoriesBlockVisible(),
