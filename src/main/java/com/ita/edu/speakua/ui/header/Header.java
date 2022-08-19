@@ -36,10 +36,6 @@ public class Header extends BaseMethods {
         return new LocationComponent(driver);
     }
 
-    public PopupMessageComponent getPopupMessageComponent() {
-        return new PopupMessageComponent(driver);
-    }
-
     public GuestProfileMenuComponent getGuestProfileMenuComponent() {
         return new GuestProfileMenuComponent(driver);
     }
@@ -59,11 +55,6 @@ public class Header extends BaseMethods {
         profileMenuButton.click();
         return getAdminProfileMenuComponent();
     }
-
-    public MapLocationComponent getMapLocationComponent() {
-        return new MapLocationComponent(driver);
-    }
-
     public Header getHomePageReload() {
         waitPageReload();
         return new Header(driver);
