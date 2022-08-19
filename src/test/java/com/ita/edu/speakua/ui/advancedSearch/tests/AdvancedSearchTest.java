@@ -3,12 +3,15 @@ package com.ita.edu.speakua.ui.advancedSearch.tests;
 import com.ita.edu.speakua.ui.runners.AdvancedSearchTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 public class AdvancedSearchTest extends AdvancedSearchTestRunner {
 
     @Issue("TUA-509")
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verify that all parameters are activated with the selected club radio button")
     @Test
     public void verifyItemsAdvancedSearchPanelAreActivated() {

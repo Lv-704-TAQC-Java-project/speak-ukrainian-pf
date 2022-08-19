@@ -54,6 +54,35 @@ public class AddTaskTest extends AddTaskTestRunner {
         softAssert.assertAll();
     }
 
+    @DataProvider(name = "invalidDateData")
+    public static Object[][] invalidDateData() {
+        return new Object[][]{
+                {"", "startDate не може бути відсутнім, має бути задано"},
+                {"2021-01-01", "startDate дата має бути в майбутньому"}
+        };
+    }
+
+    @Issue("TUA-521")
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("Verify that admin can't create a task with invalid data in date field")
+    @Test(dataProvider = "invalidDateData")
+    public void verifyCreateTaskInvalidDateData(String actualDate, String expectedErrorMessage) {
+        String descriptionInput = new String(new char[350]).replace("\0", "Lorem Ipsu");
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertTrue(addTaskPage.areFieldsEmpty());
+        addTaskPage = addTaskPage
+                .enterStartDate(actualDate)
+                .uploadImage(pathToImage)
+                .enterName("Yaroslav test")
+                .enterTitle(descriptionInput.substring(0, 50))
+                .enterDescription(descriptionInput.substring(0, 500))
+                .selectChallenge("Example name");
+        addTaskPage.save();
+        String actualErrorMessage = addTaskPage.getErrorMessageText();
+        softAssert.assertEquals(actualErrorMessage, expectedErrorMessage);
+        softAssert.assertAll();
+    }
+
     @DataProvider(name = "invalidHeaderData")
     public static Object[][] invalidHeaderData() {
         return new Object[][]{
@@ -155,35 +184,6 @@ public class AddTaskTest extends AddTaskTestRunner {
         actualErrorMessage = addTaskPage.getErrorMessageText();
         softAssert.assertEquals(actualErrorMessage, expectedMessage);
 
-        softAssert.assertAll();
-    }
-
-    @DataProvider(name = "invalidDateData")
-    public static Object[][] invalidDateData() {
-        return new Object[][]{
-                {"", "startDate не може бути відсутнім, має бути задано"},
-                {"2021-01-01", "startDate дата має бути в майбутньому"}
-        };
-    }
-
-    @Issue("TUA-521")
-    @Severity(SeverityLevel.CRITICAL)
-    @Description("Verify that admin can't create a task with invalid data in date field")
-    @Test(dataProvider = "invalidDateData")
-    public void verifyCreateTaskInvalidDateData(String actualDate, String expectedErrorMessage) {
-        String descriptionInput = new String(new char[350]).replace("\0", "Lorem Ipsu");
-        SoftAssert softAssert = new SoftAssert();
-        softAssert.assertTrue(addTaskPage.areFieldsEmpty());
-        addTaskPage = addTaskPage
-                .enterStartDate(actualDate)
-                .uploadImage(pathToImage)
-                .enterName("Yaroslav test")
-                .enterTitle(descriptionInput.substring(0, 50))
-                .enterDescription(descriptionInput.substring(0, 500))
-                .selectChallenge("Example name");
-        addTaskPage.save();
-        String actualErrorMessage = addTaskPage.getErrorMessageText();
-        softAssert.assertEquals(actualErrorMessage, expectedErrorMessage);
         softAssert.assertAll();
     }
 
