@@ -8,8 +8,6 @@ import org.openqa.selenium.support.FindBy;
 
 public class AddClubMainInfoComponent extends AbstractAddClubComponent {
 
-    @FindBy(xpath = "//div[@class='modal-title']")
-    private WebElement clubHeader;
 
     @FindBy(xpath = "//input[@placeholder='Назва гуртка']")
     private WebElement inputNameOfClub;
@@ -37,7 +35,7 @@ public class AddClubMainInfoComponent extends AbstractAddClubComponent {
     }
 
     @Step("Set nameOfClub {name}")
-    public AddClubMainInfoComponent inputNameOfClub(String name){
+    public AddClubMainInfoComponent inputNameOfClub(String name) {
         waitVisibility(inputNameOfClub);
         inputNameOfClub.click();
         inputNameOfClub.clear();
@@ -45,18 +43,18 @@ public class AddClubMainInfoComponent extends AbstractAddClubComponent {
         return new AddClubMainInfoComponent(driver);
     }
 
-    private WebElement getCategoryItem(String name){
-        return categoryList.findElement(By.xpath(String.format(".//span[contains(text(),'%s')]",name)));
+    private WebElement getCategoryItem(String name) {
+        return categoryList.findElement(By.xpath(String.format(".//span[contains(text(),'%s')]", name)));
     }
 
     @Step("Select category club")
-    public AddClubMainInfoComponent selectCategoryClub(String name){
+    public AddClubMainInfoComponent selectCategoryClub(String name) {
         getCategoryItem(name).click();
         return new AddClubMainInfoComponent(driver);
     }
 
     @Step("Input the child's minimum age {age}")
-    public AddClubMainInfoComponent inputAgeFrom(int age){
+    public AddClubMainInfoComponent inputAgeFrom(int age) {
         inputAgeFrom.click();
         inputAgeFrom.clear();
         inputAgeFrom.sendKeys(String.valueOf(age));
@@ -64,31 +62,21 @@ public class AddClubMainInfoComponent extends AbstractAddClubComponent {
     }
 
     @Step("Input the child's maximum age {age}")
-    public AddClubMainInfoComponent inputAgeTo(int age){
+    public AddClubMainInfoComponent inputAgeTo(int age) {
         inputAgeTo.click();
         inputAgeTo.clear();
         inputAgeTo.sendKeys(String.valueOf(age));
         return new AddClubMainInfoComponent(driver);
     }
 
-    @Step("Open list with centers")
-    public AddClubMainInfoComponent openCenterList(){
-        openCenterList.click();
-        return new AddClubMainInfoComponent(driver);
+
+    private WebElement getCenterItem(String name) {
+        return centerList.findElement(By.xpath(String.format(".//div[contains(text(),'%s')]", name)));
     }
 
-    private WebElement getCenterItem(String name){
-        return centerList.findElement(By.xpath(String.format(".//div[contains(text(),'%s')]",name)));
-    }
-
-    @Step("Choose center from list")
-    public AddClubMainInfoComponent chooseCenter(String name){
-        getCenterItem(name).click();
-        return new AddClubMainInfoComponent(driver);
-    }
 
     @Step("Open next modal 'Contacts'")
-    public AddClubContactComponent openNextStep(){
+    public AddClubContactComponent openNextStep() {
         nextStepButton.click();
         return new AddClubContactComponent(driver);
     }
