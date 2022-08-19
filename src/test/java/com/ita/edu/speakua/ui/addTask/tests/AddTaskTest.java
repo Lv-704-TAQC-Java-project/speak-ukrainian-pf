@@ -170,7 +170,7 @@ public class AddTaskTest extends AddTaskTestRunner {
     @Severity(SeverityLevel.CRITICAL)
     @Description("Verify that admin can't create a task with invalid data in date field")
     @Test(dataProvider = "invalidDateData")
-    public void verifyCreateTaskInvalidData(String actualDate, String expectedErrorMessage) {
+    public void verifyCreateTaskInvalidDateData(String actualDate, String expectedErrorMessage) {
         String descriptionInput = new String(new char[350]).replace("\0", "Lorem Ipsu");
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertTrue(addTaskPage.areFieldsEmpty());

@@ -15,11 +15,11 @@ public class AdvancedSearchTest extends AdvancedSearchTestRunner {
         SoftAssert softAssert = new SoftAssert();
 
         softAssert.assertTrue(advancedSearchPanel.isCitySelectorVisible(),
-                "City selected list should be activated");
+                "City selector should be activated");
         softAssert.assertTrue(advancedSearchPanel.isDistrictSelectorVisible(),
-                "District selected list should be activated");
+                "District selector should be activated");
         softAssert.assertTrue(advancedSearchPanel.isMetroSelectorVisible(),
-                "Metro station selected list should be activated");
+                "Metro station selector should be activated");
         softAssert.assertTrue(advancedSearchPanel.isAvailableOnlineCheckboxVisible(),
                 "Checkbox is online should be activated");
         softAssert.assertTrue(advancedSearchPanel.isCategoriesBlockVisible(),
