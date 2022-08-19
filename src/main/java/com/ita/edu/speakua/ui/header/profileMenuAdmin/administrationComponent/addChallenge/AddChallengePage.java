@@ -1,6 +1,6 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.addChallenge;
 
-import com.ita.edu.speakua.ui.header.HeaderComponent;
+import com.ita.edu.speakua.ui.header.Header;
 import io.qameta.allure.Step;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -9,7 +9,7 @@ import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
-public class AddChallengePage extends HeaderComponent {
+public class AddChallengePage extends Header {
 
     @FindBy(xpath = "//input[@id='sortNumber']")
     private WebElement sortNumber;

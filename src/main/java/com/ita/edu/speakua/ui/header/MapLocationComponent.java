@@ -1,6 +1,6 @@
 package com.ita.edu.speakua.ui.header;
 
-import com.ita.edu.speakua.ui.BaseMethods;
+import com.ita.edu.speakua.ui.utils.BaseMethods;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 

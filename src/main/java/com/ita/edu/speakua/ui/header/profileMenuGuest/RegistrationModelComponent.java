@@ -1,6 +1,6 @@
 package com.ita.edu.speakua.ui.header.profileMenuGuest;
 
-import com.ita.edu.speakua.ui.BaseMethods;
+import com.ita.edu.speakua.ui.utils.BaseMethods;
 import com.ita.edu.speakua.ui.HomePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

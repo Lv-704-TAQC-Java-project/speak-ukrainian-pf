@@ -1,16 +1,15 @@
 package com.ita.edu.speakua.ui;
 
 import com.ita.edu.speakua.ui.clubs.ClubsPage;
-import com.ita.edu.speakua.ui.header.HeaderComponent;
+import com.ita.edu.speakua.ui.header.Header;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 
-public class HomePage extends HeaderComponent {
+public class HomePage extends Header {
 
     @FindBy(xpath = "//span[contains(@class, 'anticon-search')]")
     private WebElement searchButton;

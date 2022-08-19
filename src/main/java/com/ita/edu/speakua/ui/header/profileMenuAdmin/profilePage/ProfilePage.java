@@ -4,7 +4,7 @@ import com.ita.edu.speakua.ui.clubs.ExpandedCardComponent;
 import com.ita.edu.speakua.ui.clubs.PaginationComponent;
 import com.ita.edu.speakua.ui.clubs.card.components.CardComponent;
 import com.ita.edu.speakua.ui.clubs.card.components.CenterComponent;
-import com.ita.edu.speakua.ui.header.HeaderComponent;
+import com.ita.edu.speakua.ui.header.Header;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addCenterComponent.AddCenterMainInfoComponent;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubMainInfoComponent;
 import io.qameta.allure.Step;
@@ -16,7 +16,7 @@ import org.openqa.selenium.support.FindBy;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProfilePage extends HeaderComponent {
+public class ProfilePage extends Header {
 
     @FindBy(xpath = "//div[@class='user-email-data']")
     private WebElement currentUserEmailField;

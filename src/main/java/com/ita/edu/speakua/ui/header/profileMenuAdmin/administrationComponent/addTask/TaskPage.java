@@ -1,12 +1,12 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.addTask;
 
-import com.ita.edu.speakua.ui.header.HeaderComponent;
+import com.ita.edu.speakua.ui.header.Header;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 
-public class TaskPage extends HeaderComponent {
+public class TaskPage extends Header {
     @FindBy(xpath = "//div[@class='task-header']")
     private WebElement name;
 

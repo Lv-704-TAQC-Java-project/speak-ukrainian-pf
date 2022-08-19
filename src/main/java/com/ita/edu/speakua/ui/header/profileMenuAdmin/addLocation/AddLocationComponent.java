@@ -1,6 +1,6 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.addLocation;
 
-import com.ita.edu.speakua.ui.BaseMethods;
+import com.ita.edu.speakua.ui.utils.BaseMethods;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;

@@ -1,6 +1,6 @@
 package com.ita.edu.speakua.ui.addCenter.tests;
 
-import com.ita.edu.speakua.ui.header.HeaderComponent;
+import com.ita.edu.speakua.ui.header.Header;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addLocation.Location;
 import com.ita.edu.speakua.ui.runners.LoginTestRunner;
 
@@ -28,7 +28,7 @@ public class AddLocationWithMandatoryFieldsTest extends LoginTestRunner {
     public void addLocationTest(String city, String address, String coordinates, String phoneNumber) {
 
         String name = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-        HeaderComponent header = new HeaderComponent(driver);
+        Header header = new Header(driver);
 
         boolean isLocationAdded = header
                 .openAdminProfileMenu()
