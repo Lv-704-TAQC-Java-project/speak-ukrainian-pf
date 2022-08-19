@@ -1,4 +1,4 @@
-package com.ita.edu.speakua.ui;
+package com.ita.edu.speakua.ui.utils;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;

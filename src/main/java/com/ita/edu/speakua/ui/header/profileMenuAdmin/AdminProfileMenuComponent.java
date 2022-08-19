@@ -1,6 +1,6 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin;
 
-import com.ita.edu.speakua.ui.BaseMethods;
+import com.ita.edu.speakua.ui.utils.BaseMethods;
 import com.ita.edu.speakua.ui.HomePage;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addCenterComponent.AddCenterMainInfoComponent;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubMainInfoComponent;

@@ -1,12 +1,12 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.addChallenge;
 
-import com.ita.edu.speakua.ui.header.HeaderComponent;
+import com.ita.edu.speakua.ui.header.Header;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class ChallengePage extends HeaderComponent {
+public class ChallengePage extends Header {
     @FindBy(xpath = "//a[contains(text(),'Додати челендж')]/ancestor::button")
     private WebElement addChallengeButton;
 

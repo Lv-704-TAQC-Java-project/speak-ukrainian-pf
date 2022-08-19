@@ -43,42 +43,42 @@ public class AddClubContactComponent extends AbstractAddClubComponent {
     }
 
     @Step("Enter Facebook contact")
-    public AddClubContactComponent inputFaceBook(String data){
+    public AddClubContactComponent inputFaceBook(String data) {
         faceBook.sendKeys(Keys.chord(Keys.CONTROL, "a"));
         faceBook.sendKeys(Keys.chord(data));
         return this;
     }
 
     @Step("Enter basic contact")
-    public AddClubContactComponent inputBasicContact(String data){
+    public AddClubContactComponent inputBasicContact(String data) {
         basicContact.sendKeys(Keys.chord(Keys.CONTROL, "a"));
         basicContact.sendKeys(Keys.chord(data));
         return this;
     }
 
     @Step("Enter email contact")
-    public AddClubContactComponent inputEmail(String data){
+    public AddClubContactComponent inputEmail(String data) {
         email.sendKeys(Keys.chord(Keys.CONTROL, "a"));
         email.sendKeys(Keys.chord(data));
         return this;
     }
 
     @Step("Enter Skype contact")
-    public AddClubContactComponent inputSkype(String data){
+    public AddClubContactComponent inputSkype(String data) {
         skype.sendKeys(Keys.chord(Keys.CONTROL, "a"));
         skype.sendKeys(Keys.chord(data));
         return this;
     }
 
     @Step("Enter WhatsApp contact")
-    public AddClubContactComponent inputWhatsApp(String data){
+    public AddClubContactComponent inputWhatsApp(String data) {
         whatsApp.sendKeys(Keys.chord(Keys.CONTROL, "a"));
         whatsApp.sendKeys(Keys.chord(data));
         return this;
     }
 
     @Step("Enter PhoneNumber {phone}")
-    public AddClubContactComponent inputPhoneNumber(String phone){
+    public AddClubContactComponent inputPhoneNumber(String phone) {
         phoneNumber.click();
         phoneNumber.clear();
         phoneNumber.sendKeys(phone);
@@ -86,20 +86,15 @@ public class AddClubContactComponent extends AbstractAddClubComponent {
     }
 
     @Step("Add location on club component")
-    public AddClubContactComponent addLocation(Location location){
+    public AddClubContactComponent addLocation(Location location) {
         addLocation.click();
         new AddLocationComponent(driver).addLocation(location);
         return this;
     }
 
-    @Step("Go back to previous modal 'Main info'")
-    public AddClubMainInfoComponent openPreviousStep(){
-        previousStepButton.click();
-        return new AddClubMainInfoComponent(driver);
-    }
 
     @Step("Open next modal 'Describe'")
-    public AddClubDescribeComponent openNextStep(){
+    public AddClubDescribeComponent openNextStep() {
         nextStepButton.click();
         return new AddClubDescribeComponent(driver);
     }

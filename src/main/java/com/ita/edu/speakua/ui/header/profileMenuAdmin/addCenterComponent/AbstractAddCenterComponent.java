@@ -1,6 +1,6 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.addCenterComponent;
 
-import com.ita.edu.speakua.ui.BaseMethods;
+import com.ita.edu.speakua.ui.utils.BaseMethods;
 import com.ita.edu.speakua.ui.HomePage;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;

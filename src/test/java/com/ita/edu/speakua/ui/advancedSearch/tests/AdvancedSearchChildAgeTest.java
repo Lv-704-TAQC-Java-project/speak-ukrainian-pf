@@ -22,7 +22,7 @@ public class AdvancedSearchChildAgeTest extends AdvancedSearchTestRunner {
     @Issue("TUA-210")
     @Description("Verify that user can enter valid child age")
     @Test(dataProvider = "childAgeValidData")
-    public void advancedSearchChildAgePositiveTest(int enteredAge, int expectedAge){
+    public void advancedSearchChildAgePositiveTest(int enteredAge, int expectedAge) {
         advancedSearchPanel.enterChildAge(enteredAge);
         int actualAge = advancedSearchPanel.getChildAge();
         Assert.assertEquals(actualAge, expectedAge);
@@ -39,7 +39,7 @@ public class AdvancedSearchChildAgeTest extends AdvancedSearchTestRunner {
     @Issue("TUA-210")
     @Description("Verify that user can not enter child age out of range 2 - 18")
     @Test(dataProvider = "childAgeNegativeData")
-    public void advancedSearchChildAgeNegativeTest(int enteredAge, int expectedAge){
+    public void advancedSearchChildAgeNegativeTest(int enteredAge, int expectedAge) {
         advancedSearchPanel.enterChildAge(enteredAge);
         int actualAge = advancedSearchPanel.getChildAge();
         Assert.assertEquals(actualAge, expectedAge);

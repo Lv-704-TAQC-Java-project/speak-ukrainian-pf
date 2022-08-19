@@ -1,6 +1,6 @@
 package com.ita.edu.speakua.ui.clubs;
 
-import com.ita.edu.speakua.ui.BaseMethods;
+import com.ita.edu.speakua.ui.utils.BaseMethods;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
