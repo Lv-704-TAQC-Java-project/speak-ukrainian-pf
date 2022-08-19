@@ -4,7 +4,6 @@ import com.ita.edu.speakua.ui.clubs.ClubsPage;
 import com.ita.edu.speakua.ui.header.HeaderComponent;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -30,20 +29,10 @@ public class HomePage extends HeaderComponent {
         return new ClubsPage(driver);
     }
 
-    public ClubsPage clickAdvancedSearchInput() {
-        searchInput.click();
-        return new ClubsPage(driver);
-    }
-
     @Step("open Advanced Search menu")
     public ClubsPage openAdvancedSearch() {
         advancedSearchButton.click();
         sleep(500);
-        return new ClubsPage(driver);
-    }
-
-    public ClubsPage clickSearchButton() {
-        searchButton.click();
         return new ClubsPage(driver);
     }
 

@@ -25,6 +25,4 @@ public class PopupMessageComponent extends BaseMethods {
     public String getErrorPopupMessageText() {
         return loginErrorPopupMessage.getText();
     }
-
-
 }
