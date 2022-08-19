@@ -29,11 +29,8 @@ public class RegistrationTest extends BaseTestRunner {
                 .fillInPhone(phone)
                 .fillInEmail(email)
                 .fillInPassword(password)
-                .fillInConfirmPassword(password);
-
-        header
-                .getGuestProfileMenuComponent()
-                .getRegistrationModal().closeRegistrationModal()
+                .fillInConfirmPassword(password)
+                .closeRegistrationModal()
                 .openGuestProfileMenu()
                 .openRegistrationModal();
 
