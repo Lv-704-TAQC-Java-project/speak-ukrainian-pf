@@ -17,12 +17,12 @@ public class AddChallengeTest extends AddChallengeTestRunner {
     @Issue("TUA-527")
     @Description("Verify that admin can create a challenge with valid data")
     @Test
-    public void addChallengePositiveTest(){
+    public void addChallengePositiveTest() {
 
         String descriptionInput = new String(new char[50]).replace("\0", "Lorem Ipsu");
         boolean areFieldsEmpty = addChallengePage.areFieldsEmpty();
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertTrue(areFieldsEmpty,"Fields are not empty!");
+        softAssert.assertTrue(areFieldsEmpty, "Fields are not empty!");
         addChallengePage
                 .enterSortNumber(lastChallengeNumber + 1)
                 .uploadImage(pathToImage)
@@ -30,7 +30,6 @@ public class AddChallengeTest extends AddChallengeTestRunner {
                 .enterTitle(RandomStringUtils.randomAlphabetic(8))
                 .enterDescription(descriptionInput)
                 .save();
-        System.out.println(addChallengePage.getMessageText());
         softAssert.assertTrue(addChallengePage.getMessageText().contains("успішно"), "Your challenge is not added!");
         softAssert.assertAll();
     }
