@@ -1,4 +1,4 @@
-package com.ita.edu.speakua.ui;
+package com.ita.edu.speakua.ui.utils;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -23,30 +23,11 @@ public class BaseMethods {
         PageFactory.initElements(driver, this);
     }
 
-    public void openUrl(String url) {
-        driver.get(url);
-    }
-
-    public String readCurrentUrl() {
-        return driver.getCurrentUrl();
-    }
-
     public void waitPageReload() {
         try {
             WebDriverWait wait = new WebDriverWait(this.driver, TIMEOUT);
             wait.until(driver -> ((JavascriptExecutor) driver).executeScript("return document.readyState;").equals("loading"));
             wait.until(driver -> ((JavascriptExecutor) driver).executeScript("return document.readyState;").equals("complete"));
-        } catch (Throwable error) {
-            error.printStackTrace();
-        }
-    }
-
-    public void waitAttributeValue(WebElement element, String attribute, String value) {
-        try {
-            WebDriverWait wait = new WebDriverWait(this.driver, TIMEOUT);
-            wait.until(driver -> ((JavascriptExecutor) driver)
-                    .executeScript(String.format("return window.getComputedStyle(arguments[0], ':after').getPropertyValue('%s');", attribute), element)
-                    .toString().equals(value));
         } catch (Throwable error) {
             error.printStackTrace();
         }
@@ -138,11 +119,6 @@ public class BaseMethods {
     public void waitValue(WebElement element, String value, long seconds) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(seconds));
         wait.until(ExpectedConditions.attributeContains(element, "value", value));
-    }
-
-    public void waitForTextPresentInElement(WebElement element, String text) {
-        WebDriverWait wait = new WebDriverWait(driver, SHORT_TIMEOUT);
-        wait.until(ExpectedConditions.textToBePresentInElement(element, text));
     }
 
     public WebElement clearInput(WebElement element) {

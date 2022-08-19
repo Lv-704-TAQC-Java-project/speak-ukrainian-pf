@@ -44,13 +44,13 @@ public class SortClubComponent extends ClubsPage {
 
     @Step("Sort cards in ascending order")
     public SortClubComponent orderByAsc() {
-        clickManagingClubsPageElement(arrowUpButton);
+        clickManagingClubsPageElement(arrowDownButton);
         return this;
     }
 
     @Step("Sort cards in descending order")
     public SortClubComponent orderByDesc() {
-        clickManagingClubsPageElement(arrowDownButton);
+        clickManagingClubsPageElement(arrowUpButton);
         return this;
     }
 

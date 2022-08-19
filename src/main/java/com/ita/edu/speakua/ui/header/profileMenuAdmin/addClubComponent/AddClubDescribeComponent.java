@@ -46,36 +46,25 @@ public class AddClubDescribeComponent extends AbstractAddClubComponent {
 
     @Step("Set description {text}")
     public AddClubDescribeComponent inputDescription(String text) {
-        setNewValueForInput(describeArea,text);
+        setNewValueForInput(describeArea, text);
         return new AddClubDescribeComponent(driver);
     }
 
-    @Step("Clear description")
-    public AddClubDescribeComponent clearDescription() {
-        clearInput(describeArea);
-        return new AddClubDescribeComponent(driver);
-    }
-
-    @Step("Go back to previous modal 'Contact'")
-    public AddClubContactComponent openPreviousStep() {
-        previousStepButton.click();
-        return new AddClubContactComponent(driver);
-    }
 
     @Step("Add club logo")
-    public AddClubDescribeComponent addLogo(String imagePath){
+    public AddClubDescribeComponent addLogo(String imagePath) {
         logoInput.sendKeys(imagePath);
         return this;
     }
 
     @Step("Add club background")
-    public AddClubDescribeComponent addBackground(String imagePath){
+    public AddClubDescribeComponent addBackground(String imagePath) {
         backgroundInput.sendKeys(imagePath);
         return this;
     }
 
     @Step("Add club gallery")
-    public AddClubDescribeComponent addGallery(String imagePath){
+    public AddClubDescribeComponent addGallery(String imagePath) {
         gallery.sendKeys(imagePath);
         return this;
     }

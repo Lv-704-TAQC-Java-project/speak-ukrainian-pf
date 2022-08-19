@@ -1,6 +1,6 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.addTask;
 
-import com.ita.edu.speakua.ui.header.HeaderComponent;
+import com.ita.edu.speakua.ui.header.Header;
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -8,7 +8,7 @@ import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
-public class AddTaskPage extends HeaderComponent {
+public class AddTaskPage extends Header {
 
     @FindBy(xpath = "//input[@id='startDate']")
     private WebElement startDate;

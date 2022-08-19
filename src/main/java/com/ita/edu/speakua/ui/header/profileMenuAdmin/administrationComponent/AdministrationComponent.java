@@ -1,6 +1,6 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent;
 
-import com.ita.edu.speakua.ui.BaseMethods;
+import com.ita.edu.speakua.ui.utils.BaseMethods;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.addChallenge.ChallengePage;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.addTask.TasksPage;
 import io.qameta.allure.Step;

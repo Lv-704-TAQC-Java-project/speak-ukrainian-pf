@@ -2,7 +2,6 @@ package com.ita.edu.speakua.ui.addClub.tests;
 
 import com.ita.edu.speakua.ui.HomePage;
 import com.ita.edu.speakua.ui.clubs.ClubsPage;
-import com.ita.edu.speakua.ui.clubs.card.components.BlockCardComponent;
 import com.ita.edu.speakua.ui.runners.BaseTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;

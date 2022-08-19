@@ -1,10 +1,10 @@
 package com.ita.edu.speakua.ui.addCenter.tests;
 
 import com.ita.edu.speakua.ui.HomePage;
-import com.ita.edu.speakua.ui.header.profileMenuAdmin.addCenterComponent.AddCenterMainInfoComponent;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addLocation.Location;
 import com.ita.edu.speakua.ui.runners.AddCenterTestRunner;
-import com.ita.edu.speakua.ui.runners.LoginTestRunner;
+import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -21,9 +21,13 @@ public class AddCenterWithValidDataTest extends AddCenterTestRunner {
         };
     }
 
+    @Issue("TUA-214")
+    @Description("Verify that user can create center with valid data")
     @Test(dataProvider = "addCenterData")
     public void verifyClubIsAdded(String centerName, String city, String region, String address, String coordinates, String phoneNumber, String club) {
+
         String locationName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+        String descriptionInput = new String(new char[50]).replace("\0", "Lorem Ipsu");
 
         addCenterMainInfoComponent
                 .inputName(centerName)
@@ -32,12 +36,10 @@ public class AddCenterWithValidDataTest extends AddCenterTestRunner {
                 .openNextStep()
                 .enterPhoneNumber(phoneNumber)
                 .openNextStep()
-                .addDescribe("Lorem Ipsum is simply dummy text of the kkkkkkkkkkkkkk")
+                .addDescribe(descriptionInput)
                 .openNextStep()
                 .chooseClub(club)
                 .addCenter();
         Assert.assertTrue(new HomePage(driver).isHomePageOpened());
-
     }
-
 }

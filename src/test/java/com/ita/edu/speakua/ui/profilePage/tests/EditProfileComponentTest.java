@@ -66,7 +66,9 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
     @Description("Verify error messages are shown and 'Save' button is disabled while entering invalid data in phone field")
     @Test(dataProvider = "invalidPhoneData")
     public void verifyPhoneErrorMessageWhenEditProfileTest(String phone, String expectedMessage) {
-        List<String> errorMessages = editProfileComponent.setPhone(phone).getPhoneErrorText();
+        List<String> errorMessages = editProfileComponent
+                .setPhone(phone)
+                .getPhoneErrorText();
         boolean expectedMessageIsPresent = errorMessages.contains(expectedMessage);
 
         SoftAssert softAssert = new SoftAssert();
@@ -76,7 +78,7 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
                 + errorMessages);
 
         boolean saveChangesBtnIsEnabled = editProfileComponent.saveChangesButtonIsEnable();
-        softAssert.assertFalse(saveChangesBtnIsEnabled, "SaveChanges button is not enabled.");
+        softAssert.assertFalse(saveChangesBtnIsEnabled, "SaveChanges button is enabled.");
 
         softAssert.assertAll();
     }

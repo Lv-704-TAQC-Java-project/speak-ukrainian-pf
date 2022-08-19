@@ -1,6 +1,6 @@
 package com.ita.edu.speakua.ui.header;
 
-import com.ita.edu.speakua.ui.BaseMethods;
+import com.ita.edu.speakua.ui.utils.BaseMethods;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.AdminProfileMenuComponent;
 import com.ita.edu.speakua.ui.header.profileMenuGuest.GuestProfileMenuComponent;
 import io.qameta.allure.Step;
@@ -9,7 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 
-public class HeaderComponent extends BaseMethods {
+public class Header extends BaseMethods {
     @FindBy(xpath = "//div[contains(@class, 'user-profile')]")
     private WebElement profileMenuButton;
 
@@ -23,7 +23,7 @@ public class HeaderComponent extends BaseMethods {
     private WebElement profileMenuBtn;
 
 
-    public HeaderComponent(WebDriver driver) {
+    public Header(WebDriver driver) {
         super(driver);
     }
 
@@ -64,8 +64,8 @@ public class HeaderComponent extends BaseMethods {
         return new MapLocationComponent(driver);
     }
 
-    public HeaderComponent getHomePageReload() {
+    public Header getHomePageReload() {
         waitPageReload();
-        return new HeaderComponent(driver);
+        return new Header(driver);
     }
 }

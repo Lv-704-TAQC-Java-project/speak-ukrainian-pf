@@ -3,7 +3,6 @@ package com.ita.edu.speakua.ui.advancedSearch.tests;
 import com.ita.edu.speakua.ui.HomePage;
 import com.ita.edu.speakua.ui.clubs.ClubsPage;
 import com.ita.edu.speakua.ui.clubs.card.components.CardComponent;
-import com.ita.edu.speakua.ui.runners.BaseTestRunner;
 import com.ita.edu.speakua.ui.runners.SameWindowTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -43,12 +42,13 @@ public class CentersOrderByAlphabetTest extends SameWindowTestRunner {
 
         SoftAssert softAssert = new SoftAssert();
         for (int i = 0; i < expectedCenterNamesAscOrder.length; i++) {
-            softAssert.assertEquals(actualCenterNamesAscOrder[i], expectedCenterNamesAscOrder[i]);
+            softAssert.assertEquals(actualCenterNamesAscOrder[i], expectedCenterNamesAscOrder[i],
+                    "Incorrect cards sequence after sorting by alphabet in ascending order.");
         }
 
         clubsPage
                 .getSortClubComponent()
-                .orderByAsc();
+                .orderByDesc();
 
         String[] actualCenterNamesDescOrder = clubsPage
                 .getCards()
@@ -66,7 +66,8 @@ public class CentersOrderByAlphabetTest extends SameWindowTestRunner {
         };
 
         for (int i = 0; i < expectedCenterNamesDescOrder.length; i++) {
-            softAssert.assertEquals(actualCenterNamesDescOrder[i], expectedCenterNamesDescOrder[i]);
+            softAssert.assertEquals(actualCenterNamesDescOrder[i], expectedCenterNamesDescOrder[i],
+                    "Incorrect cards sequence after sorting by alphabet in descending order.");
         }
 
         softAssert.assertAll();

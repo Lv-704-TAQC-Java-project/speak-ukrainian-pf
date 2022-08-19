@@ -2,6 +2,7 @@ package com.ita.edu.speakua.ui.header;
 
 import com.ita.edu.speakua.ui.*;
 import com.ita.edu.speakua.ui.clubs.ClubsPage;
+import com.ita.edu.speakua.ui.utils.BaseMethods;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

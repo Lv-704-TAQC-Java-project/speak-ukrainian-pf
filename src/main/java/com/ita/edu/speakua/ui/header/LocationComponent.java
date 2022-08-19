@@ -1,13 +1,12 @@
 package com.ita.edu.speakua.ui.header;
 
-import com.ita.edu.speakua.ui.BaseMethods;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import java.util.List;
 
 
-public class LocationComponent extends HeaderComponent {
+public class LocationComponent extends Header {
     @FindBy(xpath = "//div[contains(@class, 'city') and contains(@class, 'dropdown')]")
     WebElement locationMenuButton;
 

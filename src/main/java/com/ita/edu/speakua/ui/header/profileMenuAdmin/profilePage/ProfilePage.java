@@ -1,6 +1,10 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.profilePage;
 
-import com.ita.edu.speakua.ui.header.HeaderComponent;
+import com.ita.edu.speakua.ui.clubs.ExpandedCardComponent;
+import com.ita.edu.speakua.ui.clubs.PaginationComponent;
+import com.ita.edu.speakua.ui.clubs.card.components.CardComponent;
+import com.ita.edu.speakua.ui.clubs.card.components.CenterComponent;
+import com.ita.edu.speakua.ui.header.Header;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addCenterComponent.AddCenterMainInfoComponent;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubMainInfoComponent;
 import io.qameta.allure.Step;
@@ -9,7 +13,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class ProfilePage extends HeaderComponent {
+import java.util.ArrayList;
+import java.util.List;
+
+public class ProfilePage extends Header {
 
     @FindBy(xpath = "//div[@class='user-email-data']")
     private WebElement currentUserEmailField;
@@ -26,7 +33,17 @@ public class ProfilePage extends HeaderComponent {
     @FindBy(xpath = "//div[contains(text(),'Додати центр')]")
     private WebElement addCenterButton;
 
+    @FindBy(xpath = "//div[contains(@class, 'center cards')]")
+    private WebElement blockCardContainer;
+
+    @FindBy(xpath = ".//div[contains(@class, 'card-body')]")
+    private List<WebElement> cardsBody;
+
     private EditProfileComponent editProfileModalComponent;
+    private List<CardComponent> cards;
+    private List<CenterComponent> centers;
+    private PaginationComponent paginationComponent;
+
 
     public ProfilePage(WebDriver driver) {
         super(driver);
@@ -74,5 +91,32 @@ public class ProfilePage extends HeaderComponent {
             return false;
         }
     }
+
+    public ExpandedCardComponent getExpandedCardComponent() {
+        return new ExpandedCardComponent(driver);
+    }
+
+    public List<CardComponent> getCards() {
+        this.cards = new ArrayList<>();
+        for (WebElement card : cardsBody) {
+            this.cards.add(new CardComponent(driver, card));
+        }
+        return this.cards;
+    }
+
+    public PaginationComponent getPaginationComponent() {
+        paginationComponent = new PaginationComponent(driver);
+        return paginationComponent;
+    }
+
+    public boolean isClubAvailableOnCurrentPage(String clubName){
+        boolean isClubAdded = false;
+        getPaginationComponent().clickLastPageButton();
+        for(CardComponent card:getCards()){
+            isClubAdded = card.getCardName().contains(clubName);
+        }
+        return isClubAdded;
+    }
+
 
 }

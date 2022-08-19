@@ -86,11 +86,15 @@ public class AddClubDescriptionTest extends AddClubDescriptionTestRunner {
                 .descriptionErrorsContainMessage(lengthErrorMessage);
 
         if (isErrorShown) {
-            Assert.assertTrue(addClubDescriptionComponent.areDescriptionErrorsShown(), "Description errors are shown.");
-            Assert.assertTrue(descriptionErrorsContainLengthError, "Description length error is shown.");
+            Assert.assertTrue(addClubDescriptionComponent.areDescriptionErrorsShown(),
+                    "Description errors aren't shown.");
+            Assert.assertTrue(descriptionErrorsContainLengthError,
+                    "Description length error isn't shown.");
         } else {
-            Assert.assertFalse(addClubDescriptionComponent.areDescriptionErrorsShown(), "Description errors aren't shown.");
-            Assert.assertFalse(descriptionErrorsContainLengthError, "Description length error isn't shown.");
+            Assert.assertFalse(addClubDescriptionComponent.areDescriptionErrorsShown(),
+                    "Description errors are shown.");
+            Assert.assertFalse(descriptionErrorsContainLengthError,
+                    "Description length error is shown.");
         }
     }
 

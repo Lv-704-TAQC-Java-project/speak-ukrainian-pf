@@ -1,6 +1,6 @@
 package com.ita.edu.speakua.ui.clubs.card.components;
 
-import com.ita.edu.speakua.ui.BaseMethods;
+import com.ita.edu.speakua.ui.utils.BaseMethods;
 import com.ita.edu.speakua.ui.clubs.ExpandedCardComponent;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
@@ -63,6 +63,7 @@ public class CardComponent extends BaseMethods {
         return this;
     }
 
+    @Step("Get card name.")
     public String getCardName() {
         waitVisibility(cardName);
         return cardName.getText();

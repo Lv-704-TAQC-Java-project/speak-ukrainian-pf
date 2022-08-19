@@ -4,6 +4,8 @@ import com.ita.edu.speakua.ui.HomePage;
 import com.ita.edu.speakua.ui.clubs.ClubsPage;
 import com.ita.edu.speakua.ui.clubs.card.components.CardComponent;
 import com.ita.edu.speakua.ui.runners.SameWindowTestRunner;
+import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
 
@@ -33,6 +35,8 @@ public class AdvancedSearchByPhraseTest extends SameWindowTestRunner {
      * @param query phrase that we are looking for in cards
      * @param isTypeOfInputPaste perform input by separate keystrokes if false, paste phrase to input field if true
      */
+    @Issue("TUA-428")
+    @Description("Verify search field behavior for strings of different length, that we enter as separate keystrokes or paste as a phrase.")
     @Test(dataProvider = "searchData")
     public void verifySearchFunctionality(String query, boolean isTypeOfInputPaste) {
         final int maxInputValueLength = 50;

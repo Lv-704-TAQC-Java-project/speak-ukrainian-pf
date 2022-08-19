@@ -2,7 +2,7 @@ package com.ita.edu.speakua.ui.clubs;
 
 import com.ita.edu.speakua.ui.clubs.card.components.CardComponent;
 import com.ita.edu.speakua.ui.clubs.card.components.CenterComponent;
-import com.ita.edu.speakua.ui.header.HeaderComponent;
+import com.ita.edu.speakua.ui.header.Header;
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
@@ -10,7 +10,7 @@ import org.openqa.selenium.support.FindBy;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClubsPage extends HeaderComponent {
+public class ClubsPage extends Header {
 
     private List<CardComponent> cards;
     private List<CenterComponent> centers;
@@ -116,13 +116,6 @@ public class ClubsPage extends HeaderComponent {
             } catch (TimeoutException ignored) {
             }
         }
-    }
-
-    public void clickManagingCenterPageElement(WebElement element) {
-        List<CenterComponent> cards = new ClubsPage(driver).getCenters();
-        element.click();
-        driver.manage().timeouts().implicitlyWait(SHORT_TIMEOUT);
-        sleep(2000);
     }
 
     @Step("Is closed advanced search panel")
