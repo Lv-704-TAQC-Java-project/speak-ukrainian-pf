@@ -12,14 +12,7 @@ public class MapLocationComponent extends BaseMethods {
     @FindBy(xpath = "//input[@id='mapCitiesList']/ancestor::div[@class='ant-select-selector']")
     private WebElement locationMenuButton;
 
-
     public MapLocationComponent(WebDriver driver) {
         super(driver);
-    }
-
-
-    public MapLocationComponent showMap() {
-        showOnMapButton.click();
-        return this;
     }
 }
