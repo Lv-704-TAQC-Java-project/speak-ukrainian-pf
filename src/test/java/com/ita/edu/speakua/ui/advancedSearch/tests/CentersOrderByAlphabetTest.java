@@ -19,7 +19,7 @@ public class CentersOrderByAlphabetTest extends SameWindowTestRunner {
         new HomePage(driver)
                 .openAdvancedSearch()
                 .getAdvancedSearchPanelComponent()
-                .selectFilterByCenter()
+                .selectCenterFilter()
                 .getSortClubComponent()
                 .sortByAlphabet();
 

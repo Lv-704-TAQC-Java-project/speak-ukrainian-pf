@@ -14,17 +14,17 @@ public class AdvancedSearchTest extends AdvancedSearchTestRunner {
     public void verifyItemsAdvancedSearchPanelAreActivated() {
         SoftAssert softAssert = new SoftAssert();
 
-        softAssert.assertTrue(advancedSearchPanel.isCityListActivated(),
+        softAssert.assertTrue(advancedSearchPanel.isCitySelectorVisible(),
                 "City selected list should be activated");
-        softAssert.assertTrue(advancedSearchPanel.isDistrictListActivated(),
+        softAssert.assertTrue(advancedSearchPanel.isDistrictSelectorVisible(),
                 "District selected list should be activated");
-        softAssert.assertTrue(advancedSearchPanel.isMetroListActivated(),
+        softAssert.assertTrue(advancedSearchPanel.isMetroSelectorVisible(),
                 "Metro station selected list should be activated");
-        softAssert.assertTrue(advancedSearchPanel.isCheckOnlineActivated(),
+        softAssert.assertTrue(advancedSearchPanel.isAvailableOnlineCheckboxVisible(),
                 "Checkbox is online should be activated");
-        softAssert.assertTrue(advancedSearchPanel.isCategoriesListActivated(),
+        softAssert.assertTrue(advancedSearchPanel.isCategoriesBlockVisible(),
                 "Category checkbox list should be activated");
-        softAssert.assertTrue(advancedSearchPanel.isAgeChildInputActivated(),
+        softAssert.assertTrue(advancedSearchPanel.isChildAgeBlockVisible(),
                 "Age input should be activated");
 
         softAssert.assertAll();
@@ -34,15 +34,15 @@ public class AdvancedSearchTest extends AdvancedSearchTestRunner {
     @Description("Verify disability of some elements after selecting center")
     @Test
     public void verifySomeElementsIsDisabledAfterSelectingCenter() {
-        advancedSearchPanel.selectFilterByCenter();
+        advancedSearchPanel.selectCenterFilter();
 
         SoftAssert softAssert = new SoftAssert();
 
-        softAssert.assertFalse(advancedSearchPanel.availableOnlineCheckboxIsDisplayed(),
+        softAssert.assertFalse(advancedSearchPanel.isAvailableOnlineCheckboxVisible(),
                 "Available online checkbox is displayed");
-        softAssert.assertFalse(advancedSearchPanel.categoriesBlockIsDisplayed(),
+        softAssert.assertFalse(advancedSearchPanel.isCategoriesBlockVisible(),
                 "Categories block is displayed");
-        softAssert.assertFalse(advancedSearchPanel.childAgeBlockIsDisplayed(),
+        softAssert.assertFalse(advancedSearchPanel.isChildAgeBlockVisible(),
                 "Child age block is displayed");
 
         softAssert.assertAll();
