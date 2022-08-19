@@ -11,9 +11,6 @@ public class AddCenterDescribeComponent extends AbstractAddCenterComponent {
     @FindBy(xpath = "//textarea[@id='basic_description']")
     private WebElement describeArea;
 
-    @FindBy(xpath = "//span[contains(text(),'Назад')]/ancestor::button")
-    private WebElement previousStepButton;
-
     @FindBy(xpath = "//span[contains(text(),'Наступний крок')]/ancestor::button")
     private WebElement nextStepButton;
 
@@ -27,12 +24,6 @@ public class AddCenterDescribeComponent extends AbstractAddCenterComponent {
         describeArea.sendKeys(Keys.chord(Keys.CONTROL, "a"));
         describeArea.sendKeys(Keys.chord(text));
         return new AddCenterDescribeComponent(driver);
-    }
-
-    @Step("Go back to previous modal 'Contact'")
-    public AddCenterContactComponent openPreviousStep() {
-        previousStepButton.click();
-        return new AddCenterContactComponent(driver);
     }
 
     @Step("Open next modal 'Describe'")
