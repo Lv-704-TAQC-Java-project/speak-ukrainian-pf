@@ -15,8 +15,4 @@ public abstract class AbstractAddClubComponent extends BaseMethods {
         super(driver);
     }
 
-    public HomePage close(String name){
-        closeButton.click();
-        return new HomePage(driver);
-    }
 }

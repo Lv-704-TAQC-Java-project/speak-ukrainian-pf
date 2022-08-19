@@ -27,14 +27,8 @@ public class AddLocationComponent extends BaseMethods {
     @FindBy(xpath = "//input[@id = 'districtName']")
     private WebElement regionDropDownList;
 
-    @FindBy(xpath = "//input[@id = 'stationName']")
-    private WebElement metroDropDownList;
-
     @FindBy(xpath = "//form[contains(@class, 'ant-form') and not(contains(@id, 'basic'))]//button[contains(@class,'ant-btn ant-btn-default flooded-button add-club-content-next')]")
     private WebElement addButton;
-
-    @FindBy(xpath = "//div[contains(@class, 'modal-add-club')]//button[@class = 'ant-modal-close']")
-    private WebElement closeAddLocationButton;
 
 
     public AddLocationComponent(WebDriver driver) {
