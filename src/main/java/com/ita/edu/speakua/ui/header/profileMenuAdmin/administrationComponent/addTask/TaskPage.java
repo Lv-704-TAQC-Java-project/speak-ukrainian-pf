@@ -21,17 +21,17 @@ public class TaskPage extends Header {
     }
 
     public String getNameText() {
-        waitVisibility(name);
+        wait.visibility(name);
         return name.getText();
     }
 
     public String getTitleText() {
-        waitVisibility(title);
+        wait.visibility(title);
         return title.getText();
     }
 
     public String getDescriptionText() {
-        waitVisibility(description);
+        wait.visibility(description);
         return description.getText();
     }
 }

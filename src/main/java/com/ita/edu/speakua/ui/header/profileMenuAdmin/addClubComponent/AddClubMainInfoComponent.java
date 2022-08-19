@@ -7,8 +7,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class AddClubMainInfoComponent extends AbstractAddClubComponent {
-
-
     @FindBy(xpath = "//input[@placeholder='Назва гуртка']")
     private WebElement inputNameOfClub;
 
@@ -36,7 +34,7 @@ public class AddClubMainInfoComponent extends AbstractAddClubComponent {
 
     @Step("Set nameOfClub {name}")
     public AddClubMainInfoComponent inputNameOfClub(String name) {
-        waitVisibility(inputNameOfClub);
+        wait.visibility(inputNameOfClub);
         inputNameOfClub.click();
         inputNameOfClub.clear();
         inputNameOfClub.sendKeys(name);
@@ -80,5 +78,4 @@ public class AddClubMainInfoComponent extends AbstractAddClubComponent {
         nextStepButton.click();
         return new AddClubContactComponent(driver);
     }
-
 }

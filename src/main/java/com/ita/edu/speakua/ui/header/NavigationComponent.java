@@ -2,14 +2,14 @@ package com.ita.edu.speakua.ui.header;
 
 import com.ita.edu.speakua.ui.*;
 import com.ita.edu.speakua.ui.clubs.ClubsPage;
-import com.ita.edu.speakua.ui.utils.BaseMethods;
+import com.ita.edu.speakua.ui.BasePage;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 
-public class NavigationComponent extends BaseMethods {
+public class NavigationComponent extends BasePage {
 
     @FindBy(xpath = "//header//div[contains(@class, 'logo')]/parent::a")
     WebElement homePageLink;
