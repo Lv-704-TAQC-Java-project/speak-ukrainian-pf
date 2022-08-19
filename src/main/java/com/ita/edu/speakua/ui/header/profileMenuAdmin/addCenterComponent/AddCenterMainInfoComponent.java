@@ -8,9 +8,6 @@ import org.openqa.selenium.support.FindBy;
 
 public class AddCenterMainInfoComponent extends AbstractAddCenterComponent {
 
-    @FindBy(xpath = "//div[@class='modal-title']")
-    private WebElement centerHeader;
-
     @FindBy(xpath = "//input[@id='basic_name']")
     private WebElement inputName;
 
@@ -55,10 +52,10 @@ public class AddCenterMainInfoComponent extends AbstractAddCenterComponent {
     @Step("Choose location from checkbox list")
     public AddCenterMainInfoComponent chooseLocation(String name) {
 
-            sleep(1000);
-            scrollTo(getLocationItem(name));
-            getLocationItem(name).click();
-            return new AddCenterMainInfoComponent(driver);
+        sleep(1000);
+        scrollTo(getLocationItem(name));
+        getLocationItem(name).click();
+        return new AddCenterMainInfoComponent(driver);
     }
 
     @Step("Open next modal 'Contacts'")
@@ -66,12 +63,6 @@ public class AddCenterMainInfoComponent extends AbstractAddCenterComponent {
         waitVisibilityOfWebElement(nextStepButton);
         nextStepButton.click();
         return new AddCenterContactComponent(driver);
-    }
-
-    @Step("Click next step button")
-    public AddCenterMainInfoComponent failOpenNextStep() {
-        nextStepButton.click();
-        return new AddCenterMainInfoComponent(driver);
     }
 
     @Step("Verify error message is displayed")

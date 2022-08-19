@@ -38,14 +38,14 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
     @Test(dataProvider = "invalidFirstNameData")
     public void verifyErrorMessageWithFirstNameInvalidData(String data, String expectedMessage) {
         String actualMessage;
-        boolean saveChangesBtnIsEnabled;
+        boolean saveChangesButtonIsEnabled;
         SoftAssert softAssert = new SoftAssert();
 
         actualMessage = editProfileComponent.setFirstName(data).getFirstnameErrorText();
         softAssert.assertEquals(actualMessage, expectedMessage, "Expected error message did not appear");
 
-        saveChangesBtnIsEnabled = editProfileComponent.saveChangesButtonIsEnable();
-        softAssert.assertFalse(saveChangesBtnIsEnabled, "'Зберегти зміни' button is enabled");
+        saveChangesButtonIsEnabled = editProfileComponent.saveChangesButtonIsEnable();
+        softAssert.assertFalse(saveChangesButtonIsEnabled, "'Зберегти зміни' button is enabled");
         softAssert.assertAll();
     }
 
