@@ -1,8 +1,10 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.profilePage;
 
+import com.ita.edu.speakua.ui.clubs.ExpandedCardComponent;
 import com.ita.edu.speakua.ui.clubs.PaginationComponent;
 import com.ita.edu.speakua.ui.clubs.card.components.CardComponent;
 import com.ita.edu.speakua.ui.header.Header;
+import com.ita.edu.speakua.ui.header.profileMenuAdmin.addCenterComponent.AddCenterMainInfoComponent;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubMainInfoComponent;
 import io.qameta.allure.Step;
 import org.openqa.selenium.NoSuchElementException;
@@ -10,7 +12,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProfilePage extends Header {
@@ -51,28 +52,8 @@ public class ProfilePage extends Header {
         return new AddClubMainInfoComponent(driver);
     }
 
-    public boolean isEditProfileButtonVisible() {
-        try {
-            return editProfileButton.isEnabled();
-        } catch (NoSuchElementException e) {
-            return false;
-        }
-    }
-
-    public boolean isAddButtonVisible(){
-        try {
-            return addButton.isEnabled();
-        } catch (NoSuchElementException e) {
-            return false;
-        }
-    }
-
-    public List<CardComponent> getCards() {
-        this.cards = new ArrayList<>();
-        for (WebElement card : cardsBody) {
-            this.cards.add(new CardComponent(driver, card));
-        }
-        return this.cards;
+    public CardComponent getLastCard() {
+        return new CardComponent(driver, cardsBody.get(cardsBody.size() - 1));
     }
 
     public PaginationComponent getPaginationComponent() {
@@ -80,12 +61,17 @@ public class ProfilePage extends Header {
         return paginationComponent;
     }
 
-    public boolean isClubAvailableOnCurrentPage(String clubName){
-        boolean isClubAdded = false;
+    public boolean isClubAvailableOnCurrentPage(String clubName) {
         getPaginationComponent().clickLastPageButton();
-        for(CardComponent card:getCards()){
-            isClubAdded = card.getCardName().contains(clubName);
-        }
-        return isClubAdded;
+        return getLastCard().getCardName().equals(clubName);
+    }
+
+    public boolean isClubWithCurrentDescription(String description) {
+        getPaginationComponent().clickLastPageButton();
+        return getLastCard().getCardDescription().equals(description);
+    }
+
+    public boolean isClubAvailable(String name, String description) {
+        return isClubAvailableOnCurrentPage(name) && isClubWithCurrentDescription(description);
     }
 }

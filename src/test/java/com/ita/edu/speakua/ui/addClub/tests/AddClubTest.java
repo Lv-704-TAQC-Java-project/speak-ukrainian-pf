@@ -37,11 +37,15 @@ public class AddClubTest extends LoginTestRunner {
     @Issue("TUA-237")
     @Test(dataProvider = "cityFromDropDownAddLocationMenu")
     public void addClub(String sections, Location location, String email, String phoneNumber) {
+        String title = "Test " + randomData;
+        String description = new String(new char[50]).replace("\0", randomData);
+
+
         ProfilePage profilePage = new HomePage(driver)
                 .openAdminProfileMenu()
                 .openUserProfilePage()
                 .openAddClubModal()
-                .inputNameOfClub(randomData)
+                .inputNameOfClub(title)
                 .selectCategoryClub(sections)
                 .inputAgeFrom(4)
                 .inputAgeTo(8)
@@ -57,10 +61,9 @@ public class AddClubTest extends LoginTestRunner {
                 .addLogo(pathToImage)
                 .addBackground(pathToImage)
                 .addGallery(pathToImage)
-                .inputDescription(new String(new char[70]).replace("\0", randomData))
+                .inputDescription(description)
                 .addClub();
 
-        Assert.assertTrue(profilePage.isEditProfileButtonVisible());
-        Assert.assertTrue(profilePage.isAddButtonVisible());
+        Assert.assertTrue(profilePage.isClubAvailable(title, description));
     }
 }
