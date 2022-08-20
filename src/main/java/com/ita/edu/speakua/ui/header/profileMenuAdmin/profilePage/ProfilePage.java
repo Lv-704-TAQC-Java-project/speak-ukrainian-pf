@@ -1,11 +1,8 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.profilePage;
 
-import com.ita.edu.speakua.ui.clubs.ExpandedCardComponent;
 import com.ita.edu.speakua.ui.clubs.PaginationComponent;
 import com.ita.edu.speakua.ui.clubs.card.components.CardComponent;
-import com.ita.edu.speakua.ui.clubs.card.components.CenterComponent;
 import com.ita.edu.speakua.ui.header.Header;
-import com.ita.edu.speakua.ui.header.profileMenuAdmin.addCenterComponent.AddCenterMainInfoComponent;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubMainInfoComponent;
 import io.qameta.allure.Step;
 import org.openqa.selenium.NoSuchElementException;
@@ -17,8 +14,8 @@ import java.util.List;
 
 public class ProfilePage extends Header {
 
-    @FindBy(xpath = "//div[@class='user-email-data']")
-    private WebElement currentUserEmailField;
+    private List<CardComponent> cards;
+    private PaginationComponent paginationComponent;
 
     @FindBy(xpath = "//div[@class='edit-button']//button")
     private WebElement editProfileButton;
@@ -29,20 +26,8 @@ public class ProfilePage extends Header {
     @FindBy(xpath = "//li[@class = 'ant-dropdown-menu-item ant-dropdown-menu-item-only-child menu-item']//div[contains(text(),'Додати гурток')]")
     private WebElement addClubButton;
 
-    @FindBy(xpath = "//div[contains(text(),'Додати центр')]")
-    private WebElement addCenterButton;
-
-    @FindBy(xpath = "//div[contains(@class, 'center cards')]")
-    private WebElement blockCardContainer;
-
     @FindBy(xpath = ".//div[contains(@class, 'card-body')]")
     private List<WebElement> cardsBody;
-
-    private EditProfileComponent editProfileModalComponent;
-    private List<CardComponent> cards;
-    private List<CenterComponent> centers;
-    private PaginationComponent paginationComponent;
-
 
     public ProfilePage(WebDriver driver) {
         super(driver);

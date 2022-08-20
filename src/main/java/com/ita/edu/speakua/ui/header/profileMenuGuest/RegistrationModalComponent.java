@@ -1,14 +1,11 @@
 package com.ita.edu.speakua.ui.header.profileMenuGuest;
 
-import com.ita.edu.speakua.ui.utils.BaseMethods;
 import com.ita.edu.speakua.ui.HomePage;
+import com.ita.edu.speakua.ui.utils.BaseMethods;
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-
-import java.util.List;
 
 
 public class RegistrationModalComponent extends BaseMethods {
@@ -29,9 +26,6 @@ public class RegistrationModalComponent extends BaseMethods {
 
     @FindBy(xpath = "//input[@id='confirm']")
     private WebElement confirmPasswordInputField;
-
-    @FindBy(xpath = "//button[@type='submit']")
-    private WebElement submitRegistrationFormBtn;
 
     @FindBy(xpath = "//span[@class='ant-modal-close-x']/parent::button")
     private WebElement closeRegistrationFormBtn;
@@ -103,37 +97,8 @@ public class RegistrationModalComponent extends BaseMethods {
         return confirmPasswordInputField.getAttribute("value");
     }
 
-    public RegistrationModalComponent submitRegistrationForm() {
-        submitRegistrationFormBtn.click();
-        return this;
-    }
-
     public HomePage closeRegistrationModal() {
         closeRegistrationFormBtn.click();
-        return new HomePage(driver);
-    }
-
-    public String getAllErrorMessages() {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        List<WebElement> divsWithMessages = driver.findElements(By.xpath("//div[@class='ant-form-item-explain-error']"));
-
-        if (divsWithMessages == null) {
-            return "";
-        }
-
-        StringBuilder result = new StringBuilder();
-        for (WebElement div : divsWithMessages) {
-            result.append(div.getText()).append(" ");
-        }
-
-        return result.toString();
-    }
-
-    public HomePage getHomePage() {
         return new HomePage(driver);
     }
 }

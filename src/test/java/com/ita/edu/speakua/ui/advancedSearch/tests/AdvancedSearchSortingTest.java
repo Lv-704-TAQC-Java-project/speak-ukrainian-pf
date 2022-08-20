@@ -19,7 +19,7 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
     @Description("Verify that clubs are sorted by ABC")
     @Test
     public void advancedSearchABCSortClubTest() {
-        advancedSearchPanel.clubRadioButtonClick();
+        advancedSearchPanel.selectClubFilter();
         ClubsPage clubsPage = new ClubsPage(driver);
 
         SortClubComponent sortClubComponent = clubsPage
@@ -56,7 +56,7 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
     @Description("Verify that centers are sorted by ABC")
     @Test
     public void advancedSearchABCSortCenterTest() {
-        advancedSearchPanel.selectFilterByCenter();
+        advancedSearchPanel.selectCenterFilter();
         ClubsPage clubsPage = new ClubsPage(driver);
 
         SortClubComponent sortClubComponent = clubsPage.getSortClubComponent()
@@ -78,7 +78,7 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
     @Description("Verify that clubs are sorted by rating")
     @Test
     public void advancedSearchRatingSortClubTest() {
-        advancedSearchPanel.clubRadioButtonClick();
+        advancedSearchPanel.selectClubFilter();
         ClubsPage clubsPage = new ClubsPage(driver);
 
         SortClubComponent sortClubComponent = clubsPage
@@ -101,7 +101,7 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
     @Description("Verify that centers are sorted by rating")
     @Test
     public void advancedSearchRatingSortCenterTest() {
-        advancedSearchPanel.selectFilterByCenter();
+        advancedSearchPanel.selectCenterFilter();
         ClubsPage clubsPage = new ClubsPage(driver);
 
         SortClubComponent sortClubComponent = clubsPage.getSortClubComponent();
@@ -124,7 +124,7 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
     @Description("Verify that the clubs can be sorted by rating")
     @Test
     public void verifySortingClubsByRate() {
-        advancedSearchPanel.clubRadioButtonClick();
+        advancedSearchPanel.selectClubFilter();
         ClubsPage clubsPage = new ClubsPage(driver);
 
         SortClubComponent sort = clubsPage

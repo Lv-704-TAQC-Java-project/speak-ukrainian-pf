@@ -131,6 +131,7 @@ public class BaseMethods {
         WebDriverWait wait = new WebDriverWait(driver, TIMEOUT);
         wait.until(ExpectedConditions.visibilityOf(element));
     }
+
     public void waitAttributeOfElementContains(WebElement element, String attribute, String value) {
         WebDriverWait wait = new WebDriverWait(driver, SHORT_TIMEOUT);
         wait.until(ExpectedConditions.attributeContains(element, attribute, value));
@@ -164,9 +165,17 @@ public class BaseMethods {
     public WebElement safeFind(String xpath) {
         WebElement element = null;
         try {
-            element = driver.findElement(By.xpath( xpath));
+            element = driver.findElement(By.xpath(xpath));
         } catch (NoSuchElementException ignored) {
         }
         return element;
+    }
+
+    public boolean isVisible(WebElement element) {
+        try {
+            return element.isDisplayed() && element.isEnabled();
+        } catch (NoSuchElementException e) {
+            return false;
+        }
     }
 }

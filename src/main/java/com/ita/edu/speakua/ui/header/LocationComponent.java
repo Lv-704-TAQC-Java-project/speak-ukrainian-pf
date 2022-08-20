@@ -20,10 +20,4 @@ public class LocationComponent extends Header {
     public LocationComponent(WebDriver driver) {
         super(driver);
     }
-
-
-    public LocationComponent clickLocationMenuButton() {
-        locationMenuButton.click();
-        return this;
-    }
 }

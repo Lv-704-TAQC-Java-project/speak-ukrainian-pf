@@ -15,9 +15,11 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 
 public class AddTaskTest extends AddTaskTestRunner {
+    private final String tomorrow = LocalDate.now().plusDays(1).toString();
     private final String pathToImage = Paths.get(Paths.get(System.getProperty("user.dir")).toString(),
             "src", "test", "resources", "image.png").toString();
-    private final String tomorrow = LocalDate.now().plusDays(1).toString();
+    private final String title = "Lorem ipsum dolor sit amet, sed do eiusmod et dolore magna aliqua.";
+    private final String description = "Facilisis sed odio morbi quis. Mauris rhoncus aenean vel elit scelerisque.";
 
     @DataProvider(name = "invalidDescriptionData")
     public static Object[][] invalidDescriptionData() {
@@ -51,6 +53,35 @@ public class AddTaskTest extends AddTaskTestRunner {
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertTrue(allFieldsAreEmpty);
         softAssert.assertEquals(errorMessage, expectedMessage);
+        softAssert.assertAll();
+    }
+
+    @DataProvider(name = "invalidDateData")
+    public static Object[][] invalidDateData() {
+        return new Object[][]{
+                {"", "startDate не може бути відсутнім, має бути задано"},
+                {"2021-01-01", "startDate дата має бути в майбутньому"}
+        };
+    }
+
+    @Issue("TUA-521")
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("Verify that admin can't create a task with invalid data in date field")
+    @Test(dataProvider = "invalidDateData")
+    public void verifyCreateTaskInvalidDateData(String actualDate, String expectedErrorMessage) {
+        String descriptionInput = new String(new char[350]).replace("\0", "Lorem Ipsu");
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertTrue(addTaskPage.areFieldsEmpty());
+        addTaskPage = addTaskPage
+                .enterStartDate(actualDate)
+                .uploadImage(pathToImage)
+                .enterName("Yaroslav test")
+                .enterTitle(descriptionInput.substring(0, 50))
+                .enterDescription(descriptionInput.substring(0, 500))
+                .selectChallenge("Example name");
+        addTaskPage.save();
+        String actualErrorMessage = addTaskPage.getErrorMessageText();
+        softAssert.assertEquals(actualErrorMessage, expectedErrorMessage);
         softAssert.assertAll();
     }
 
@@ -158,35 +189,6 @@ public class AddTaskTest extends AddTaskTestRunner {
         softAssert.assertAll();
     }
 
-    @DataProvider(name = "invalidDateData")
-    public static Object[][] invalidDateData() {
-        return new Object[][]{
-                {"", "startDate не може бути відсутнім, має бути задано"},
-                {"2021-01-01", "startDate дата має бути в майбутньому"}
-        };
-    }
-
-    @Issue("TUA-521")
-    @Severity(SeverityLevel.CRITICAL)
-    @Description("Verify that admin can't create a task with invalid data in date field")
-    @Test(dataProvider = "invalidDateData")
-    public void verifyCreateTaskInvalidData(String actualDate, String expectedErrorMessage) {
-        String descriptionInput = new String(new char[350]).replace("\0", "Lorem Ipsu");
-        SoftAssert softAssert = new SoftAssert();
-        softAssert.assertTrue(addTaskPage.areFieldsEmpty());
-        addTaskPage = addTaskPage
-                .enterStartDate(actualDate)
-                .uploadImage(pathToImage)
-                .enterName("Yaroslav test")
-                .enterTitle(descriptionInput.substring(0, 50))
-                .enterDescription(descriptionInput.substring(0, 500))
-                .selectChallenge("Example name");
-        addTaskPage.save();
-        String actualErrorMessage = addTaskPage.getErrorMessageText();
-        softAssert.assertEquals(actualErrorMessage, expectedErrorMessage);
-        softAssert.assertAll();
-    }
-
     @Issue("TUA-522")
     @Severity(SeverityLevel.CRITICAL)
     @Description("Verify that admin can't create a task without image on 'Add task' page")
@@ -198,8 +200,8 @@ public class AddTaskTest extends AddTaskTestRunner {
         addTaskPage = addTaskPage
                 .enterStartDate(tomorrow)
                 .enterName("Maksym test")
-                .enterTitle("Lorem ipsum dolor sit amet, sed do eiusmod et dolore magna aliqua.")
-                .enterDescription("Facilisis sed odio morbi quis. Mauris rhoncus aenean vel elit scelerisque.")
+                .enterTitle(title)
+                .enterDescription(description)
                 .selectChallenge("The European languages");
         addTaskPage.save();
         String actualErrorMessage = addTaskPage.getErrorMessageText();
@@ -214,8 +216,6 @@ public class AddTaskTest extends AddTaskTestRunner {
     @Test
     public void verifyCreateTask() {
         String name = "Maksym test";
-        String title = "Lorem ipsum dolor sit amet, sed do eiusmod et dolore magna aliqua.";
-        String description = "Facilisis sed odio morbi quis. Mauris rhoncus aenean vel elit scelerisque.";
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertTrue(addTaskPage.areFieldsEmpty(),
                 "Create task form fields should be empty by default.");
@@ -229,7 +229,8 @@ public class AddTaskTest extends AddTaskTestRunner {
 
         TaskPage taskPage = addTaskPage.save();
 
-        softAssert.assertEquals(addTaskPage.getSuccessMessage(), String.format("Завдання '%s' успішно додане!", name),
+        softAssert.assertEquals(addTaskPage.getSuccessMessage(),
+                String.format("Завдання '%s' успішно додане!", name),
                 "Incorrect popup success message.");
         softAssert.assertEquals(taskPage.getNameText(), name,
                 "Incorrect name of created task.");

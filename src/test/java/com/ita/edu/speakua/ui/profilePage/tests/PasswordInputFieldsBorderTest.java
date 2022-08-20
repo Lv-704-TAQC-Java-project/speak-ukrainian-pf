@@ -23,13 +23,13 @@ public class PasswordInputFieldsBorderTest extends EditProfileTestRunner {
 
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertTrue(oldPasswordBorderColor.contains(errorBorderColor),
-                String.format("Border color of email field border is expected to be %s, but was %s.",
+                String.format("Border color of old password field border is expected to be %s, but was %s.",
                         errorBorderColor, oldPasswordBorderColor));
         softAssert.assertTrue(newPasswordBorderColor.contains(errorBorderColor),
-                String.format("Border color of password field border is expected to be %s, but was %s.",
+                String.format("Border color of new password field border is expected to be %s, but was %s.",
                         errorBorderColor, newPasswordBorderColor));
         softAssert.assertTrue(repeatNewPasswordBorderColor.contains(errorBorderColor),
-                String.format("Border color of password field border is expected to be %s, but was %s.",
+                String.format("Border color of repeat new password field border is expected to be %s, but was %s.",
                         errorBorderColor, repeatNewPasswordBorderColor));
         softAssert.assertAll();
         editProfileComponent.getCloseEditProfileButton();
