@@ -69,6 +69,11 @@ public class CardComponent extends BaseMethods {
         return cardName.getText();
     }
 
+    public String getCardDescription(){
+        waitVisibility(cardDescription);
+        return cardDescription.getText();
+    }
+
     public List<WebElement> getStarRatingFullList() {
         return starRatingFullList;
     }
