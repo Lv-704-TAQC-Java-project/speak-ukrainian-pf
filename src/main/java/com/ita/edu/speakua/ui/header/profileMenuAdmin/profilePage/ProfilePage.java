@@ -1,8 +1,10 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.profilePage;
 
+import com.ita.edu.speakua.ui.clubs.ExpandedCardComponent;
 import com.ita.edu.speakua.ui.clubs.PaginationComponent;
 import com.ita.edu.speakua.ui.clubs.card.components.CardComponent;
 import com.ita.edu.speakua.ui.header.Header;
+import com.ita.edu.speakua.ui.header.profileMenuAdmin.addCenterComponent.AddCenterMainInfoComponent;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubMainInfoComponent;
 import io.qameta.allure.Step;
 import org.openqa.selenium.NoSuchElementException;
@@ -48,20 +50,6 @@ public class ProfilePage extends Header {
         waitVisibility(addClubButton);
         addClubButton.click();
         return new AddClubMainInfoComponent(driver);
-    }
-
-    @Step("Open a modal for adding center")
-    public AddCenterMainInfoComponent openAddCenterModal() {
-        waitVisibility(addButton);
-        addButton.click();
-        sleep(5000);
-        waitVisibility(addCenterButton);
-        addCenterButton.click();
-        return new AddCenterMainInfoComponent(driver);
-    }
-
-    public ExpandedCardComponent getExpandedCardComponent() {
-        return new ExpandedCardComponent(driver);
     }
 
     public CardComponent getLastCard() {
