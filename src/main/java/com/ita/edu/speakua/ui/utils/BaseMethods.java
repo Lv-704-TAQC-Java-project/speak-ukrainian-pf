@@ -165,9 +165,11 @@ public class BaseMethods {
     public WebElement safeFind(String xpath) {
         WebElement element = null;
         try {
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
             element = driver.findElement(By.xpath(xpath));
         } catch (NoSuchElementException ignored) {
         }
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(4));
         return element;
     }
 

@@ -20,6 +20,7 @@ public class AddTaskTest extends AddTaskTestRunner {
             "src", "test", "resources", "image.png").toString();
     private final String title = "Lorem ipsum dolor sit amet, sed do eiusmod et dolore magna aliqua.";
     private final String description = "Facilisis sed odio morbi quis. Mauris rhoncus aenean vel elit scelerisque.";
+    private final String challenge = "The European languages";
 
     @DataProvider(name = "invalidDescriptionData")
     public static Object[][] invalidDescriptionData() {
@@ -45,8 +46,8 @@ public class AddTaskTest extends AddTaskTestRunner {
                 .uploadImage(pathToImage)
                 .enterName("Yaroslav test")
                 .enterTitle("Some forty character text for the test!!")
-                .selectChallenge("Example name")
-                .enterDescription(textDescription);
+                .enterDescription(textDescription)
+                .selectChallenge(challenge);
         addTaskPage.save();
         String errorMessage = addTaskPage.getErrorMessageText();
 
@@ -102,7 +103,6 @@ public class AddTaskTest extends AddTaskTestRunner {
     @Description("Verify impossibility of creating task with heading invalid data")
     @Test(dataProvider = "invalidHeaderData")
     public void verifyCreatingTaskWithHeadingInvalidData(String invalidData, String expectedMessage) {
-        String descriptionInput = new String(new char[10]).replace("\0", "Lorem 56№*");
         String actualErrorMessage;
 
         boolean isAllFieldsAreEmptyByDefault = addTaskPage.areFieldsEmpty();
@@ -111,8 +111,8 @@ public class AddTaskTest extends AddTaskTestRunner {
                 .uploadImage(pathToImage)
                 .enterName("Test task # 5/")
                 .enterTitle(invalidData)
-                .enterDescription(descriptionInput)
-                .selectChallenge("Example name")
+                .enterDescription(description)
+                .selectChallenge(challenge)
                 .save();
 
         SoftAssert softAssert = new SoftAssert();
@@ -202,7 +202,7 @@ public class AddTaskTest extends AddTaskTestRunner {
                 .enterName("Maksym test")
                 .enterTitle(title)
                 .enterDescription(description)
-                .selectChallenge("The European languages");
+                .selectChallenge(challenge);
         addTaskPage.save();
         String actualErrorMessage = addTaskPage.getErrorMessageText();
         softAssert.assertEquals(actualErrorMessage, "Фото не може бути пустим",
@@ -225,7 +225,7 @@ public class AddTaskTest extends AddTaskTestRunner {
                 .enterName(name)
                 .enterTitle(title)
                 .enterDescription(description)
-                .selectChallenge("The European languages");
+                .selectChallenge(challenge);
 
         TaskPage taskPage = addTaskPage.save();
 
