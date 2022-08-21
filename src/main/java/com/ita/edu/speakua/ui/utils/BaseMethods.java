@@ -174,7 +174,7 @@ public class BaseMethods {
     public boolean isVisible(WebElement element) {
         try {
             return element.isDisplayed() && element.isEnabled();
-        } catch (AssertionError e) {
+        } catch (NoSuchElementException e) {
             return false;
         }
     }
