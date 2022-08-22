@@ -3,6 +3,8 @@ package com.ita.edu.speakua.ui.utils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 
+import java.time.Duration;
+
 public class ElementAction {
     private final WebDriver driver;
     private final Actions actions;
@@ -33,9 +35,11 @@ public class ElementAction {
     public WebElement safeFind(String xpath) {
         WebElement element = null;
         try {
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
             element = driver.findElement(By.xpath(xpath));
         } catch (NoSuchElementException ignored) {
         }
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(4));
         return element;
     }
 
