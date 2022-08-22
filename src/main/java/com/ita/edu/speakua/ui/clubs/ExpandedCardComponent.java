@@ -1,6 +1,6 @@
 package com.ita.edu.speakua.ui.clubs;
 
-import com.ita.edu.speakua.ui.utils.BaseMethods;
+import com.ita.edu.speakua.ui.BasePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -8,7 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExpandedCardComponent extends BaseMethods {
+public class ExpandedCardComponent extends BasePage {
 
     @FindBy(xpath = "//button[contains(@class,'close')]")
     private WebElement exitButton;

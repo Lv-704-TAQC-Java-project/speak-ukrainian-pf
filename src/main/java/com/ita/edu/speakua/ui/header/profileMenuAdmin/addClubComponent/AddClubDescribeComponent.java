@@ -46,7 +46,7 @@ public class AddClubDescribeComponent extends AbstractAddClubComponent {
 
     @Step("Set description {text}")
     public AddClubDescribeComponent inputDescription(String text) {
-        setNewValueForInput(describeArea, text);
+        action.setNewValueForInput(describeArea, text);
         return new AddClubDescribeComponent(driver);
     }
 
@@ -72,13 +72,13 @@ public class AddClubDescribeComponent extends AbstractAddClubComponent {
     @Step("Add club")
     public ProfilePage addClub() {
         finishButton.click();
-        waitInvisibility(addGroupModal);
+        wait.invisibility(addGroupModal);
         return new ProfilePage(driver);
     }
 
     public List<String> getErrorMessageDescriptionField() {
         List<String> errorMessages = new ArrayList<>();
-        waitVisibility(errorMessagesForDescriptionField);
+        wait.visibility(errorMessagesForDescriptionField);
         if (errorMessagesForDescriptionField != null & errorMessagesForDescriptionField.size() > 0) {
             errorMessagesForDescriptionField.stream().forEach((c) -> errorMessages.add(c.getText()));
         }
@@ -93,7 +93,7 @@ public class AddClubDescribeComponent extends AbstractAddClubComponent {
     @Step("Check description field has errors")
     public boolean areDescriptionErrorsShown() {
         try {
-            waitInvisibility(errorMessagesForDescriptionField, 1);
+            wait.invisibility(errorMessagesForDescriptionField, 1);
         } catch (TimeoutException ignore) {
         }
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
@@ -105,7 +105,7 @@ public class AddClubDescribeComponent extends AbstractAddClubComponent {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
         if (errorMessagesForDescriptionField != null && errorMessagesForDescriptionField.size() > 0) {
             for (WebElement error : errorMessagesForDescriptionField) {
-                waitVisibility(error);
+                wait.visibility(error);
                 if (error.getText().equals(errorMsg)) {
                     return true;
                 }

@@ -1,6 +1,6 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin;
 
-import com.ita.edu.speakua.ui.utils.BaseMethods;
+import com.ita.edu.speakua.ui.BasePage;
 import com.ita.edu.speakua.ui.HomePage;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addCenterComponent.AddCenterMainInfoComponent;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubMainInfoComponent;
@@ -11,7 +11,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class AdminProfileMenuComponent extends BaseMethods {
+public class AdminProfileMenuComponent extends BasePage {
 
     @FindBy(xpath = "//div[contains(text(),'Додати гурток')]")
     private WebElement addClubComponent;
@@ -46,7 +46,7 @@ public class AdminProfileMenuComponent extends BaseMethods {
 
     @Step("Open user profile page")
     public ProfilePage openUserProfilePage() {
-        waitClickable(userProfileBtn);
+        wait.clickable(userProfileBtn);
         userProfileBtn.click();
         return new ProfilePage(driver);
     }
@@ -59,7 +59,7 @@ public class AdminProfileMenuComponent extends BaseMethods {
 
     @Step("Open administration list")
     public AdministrationComponent openAdministrationModal() {
-        waitVisibility(administrationBtn);
+        wait.visibility(administrationBtn);
         administrationBtn.click();
         return new AdministrationComponent(driver);
     }

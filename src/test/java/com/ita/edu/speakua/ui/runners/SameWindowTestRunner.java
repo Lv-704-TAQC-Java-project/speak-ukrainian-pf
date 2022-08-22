@@ -1,20 +1,14 @@
 package com.ita.edu.speakua.ui.runners;
 
-import com.ita.edu.speakua.ui.utils.ConfigProperties;
 import com.ita.edu.speakua.ui.utils.TestNgListener;
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.ITestContext;
 import org.testng.annotations.*;
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
 @Listeners(TestNgListener.class)
-public class SameWindowTestRunner extends BaseSetupTestRunner{
+public class SameWindowTestRunner extends BaseSetupTestRunner {
 
     @BeforeClass
     public void setUp(ITestContext context) {

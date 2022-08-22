@@ -1,13 +1,13 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.addCenterComponent;
 
-import com.ita.edu.speakua.ui.utils.BaseMethods;
+import com.ita.edu.speakua.ui.BasePage;
 import com.ita.edu.speakua.ui.HomePage;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public abstract class AbstractAddCenterComponent extends BaseMethods {
+public abstract class AbstractAddCenterComponent extends BasePage {
 
     @FindBy(xpath = "//span[@aria-label='close']")
     private WebElement closeButton;

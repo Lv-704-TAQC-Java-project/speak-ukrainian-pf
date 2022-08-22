@@ -52,7 +52,7 @@ public class AddTaskPage extends Header {
 
     @Step("Enter task start date: {date}")
     public AddTaskPage enterStartDate(String date) {
-        setNewValueForInput(startDate, date);
+        action.setNewValueForInput(startDate, date);
         return this;
     }
 
@@ -64,19 +64,19 @@ public class AddTaskPage extends Header {
 
     @Step("Enter task name: {name}")
     public AddTaskPage enterName(String name) {
-        setNewValueForInput(taskName, name);
+        action.setNewValueForInput(taskName, name);
         return this;
     }
 
     @Step("Enter task title: {value}")
     public AddTaskPage enterTitle(String value) {
-        setNewValueForInput(taskTitle, value);
+        action.setNewValueForInput(taskTitle, value);
         return this;
     }
 
     @Step("Enter task description: {value}")
     public AddTaskPage enterDescription(String value) {
-        setNewValueForInput(enterDescription, value);
+        action.setNewValueForInput(enterDescription, value);
         return this;
     }
 
@@ -85,13 +85,13 @@ public class AddTaskPage extends Header {
         String challengeXpath = String.format("(//div[contains(@class,'option-content') and contains(text(), '%s')])[1]", name);
         String lastChallengeXpath = "(//div[contains(@class,'option-content')])[last()]";
 
-        actionsClick(challengeDropdown);
-        WebElement challenge = safeFind(challengeXpath);
+        action.click(challengeDropdown);
+        WebElement challenge = action.safeFind(challengeXpath);
 
         Actions actions = new Actions(driver);
         while (challenge == null) {
             actions.scrollToElement(driver.findElement(By.xpath(lastChallengeXpath))).perform();
-            challenge = safeFind(challengeXpath);
+            challenge = action.safeFind(challengeXpath);
         }
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", challenge);
         return this;
@@ -99,7 +99,7 @@ public class AddTaskPage extends Header {
 
     @Step("Check are allFields empty")
     public boolean areFieldsEmpty() {
-        waitVisibility(startDate);
+        wait.visibility(startDate);
         return startDateIsEmpty() &&
                 imageIsEmpty() &&
                 nameIsEmpty() &&
@@ -135,7 +135,7 @@ public class AddTaskPage extends Header {
     @Step("Get error message")
     public String getErrorMessageText() {
         try {
-            waitVisibility(errorMessage);
+            wait.visibility(errorMessage);
             return errorMessage.getText();
         } catch (Exception e) {
             return "";
@@ -144,13 +144,13 @@ public class AddTaskPage extends Header {
 
     @Step("Get success message")
     public String getSuccessMessage() {
-        waitVisibility(successMessage);
+        wait.visibility(successMessage);
         return successMessage.getText();
     }
 
     @Step("Get error messages from invalid challenges")
     public boolean errorMessageIsEmptyIsVisible() {
-        waitVisibility(By.xpath("//span[contains(text(),'Please')]"));
+        wait.visibility(By.xpath("//span[contains(text(),'Please')]"));
         return errorMessageIsEmpty.isDisplayed();
     }
 

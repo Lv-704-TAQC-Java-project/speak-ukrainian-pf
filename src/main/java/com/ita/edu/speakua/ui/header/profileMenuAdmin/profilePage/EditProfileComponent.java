@@ -1,6 +1,6 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.profilePage;
 
-import com.ita.edu.speakua.ui.utils.BaseMethods;
+import com.ita.edu.speakua.ui.BasePage;
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
@@ -8,7 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class EditProfileComponent extends BaseMethods {
+public class EditProfileComponent extends BasePage {
 
     @FindBy(xpath = "//input[@id='edit_currentPassword']/parent::span")
     private WebElement oldPasswordFieldWrapper;
@@ -58,20 +58,20 @@ public class EditProfileComponent extends BaseMethods {
 
     @Step("Get current user first name")
     public String getFirstName() {
-        waitVisibility(firstNameInput);
+        wait.visibility(firstNameInput);
         return firstNameInput.getAttribute("value");
     }
 
     @Step("Get current user last name")
     public String getLastName() {
-        waitVisibility(lastNameInput);
+        wait.visibility(lastNameInput);
         return lastNameInput.getAttribute("value");
     }
 
     @Step("Get current user phone number")
     public String getPhone() {
         try {
-            waitValue(phoneInput, "0", 3);
+            wait.value(phoneInput, "0", 3);
         } catch (TimeoutException ignore) {
         }
         return phoneInput.getAttribute("value");
@@ -80,24 +80,24 @@ public class EditProfileComponent extends BaseMethods {
     @Step("Set lastname {lastName}")
     public EditProfileComponent setLastName(String lastName) {
         List<WebElement> previousPhoneErrors = lastnameErrors;
-        setNewValueForInput(lastNameInput, lastName);
-        waitStalenessOfPreviousErrors(previousPhoneErrors, 1);
+        action.setNewValueForInput(lastNameInput, lastName);
+        wait.stalenessOfPreviousErrors(previousPhoneErrors, 1);
         return this;
     }
 
     @Step("Set firstname {firstName}")
     public EditProfileComponent setFirstName(String firstName) {
         List<WebElement> previousFirstNameErrors = firstNameErrors;
-        setNewValueForInput(firstNameInput, firstName);
-        waitStalenessOfPreviousErrors(previousFirstNameErrors, 1);
+        action.setNewValueForInput(firstNameInput, firstName);
+        wait.stalenessOfPreviousErrors(previousFirstNameErrors, 1);
         return this;
     }
 
     @Step("Set phone number {phone}")
     public EditProfileComponent setPhone(String phone) {
         List<WebElement> previousLastNameErrors = phoneErrors;
-        setNewValueForInput(phoneInput, phone);
-        waitStalenessOfPreviousErrors(previousLastNameErrors, 1);
+        action.setNewValueForInput(phoneInput, phone);
+        wait.stalenessOfPreviousErrors(previousLastNameErrors, 1);
         return this;
     }
 
@@ -121,18 +121,18 @@ public class EditProfileComponent extends BaseMethods {
 
     @Step("Get firstname error text")
     public String getFirstnameErrorText() {
-        waitVisibility(firstnameErrorText, 1);
+        wait.visibility(firstnameErrorText, 1);
         return firstnameErrorText.getText();
     }
 
     public List<String> getLastNameErrorText() {
-        waitVisibility(lastnameErrors, 1);
+        wait.visibility(lastnameErrors, 1);
         return lastnameErrors.stream().map(WebElement::getText).collect(Collectors.toList());
     }
 
     @Step("Get a list of phone field error messages")
     public List<String> getPhoneErrorText() {
-        waitVisibility(phoneErrors, 1);
+        wait.visibility(phoneErrors, 1);
         return phoneErrors.stream().map(WebElement::getText).collect(Collectors.toList());
     }
 
@@ -146,7 +146,7 @@ public class EditProfileComponent extends BaseMethods {
     public boolean saveChangesButtonIsEnable() {
         saveButton.click();
         try {
-            waitInvisibility(editProfileModalBody, 1);
+            wait.invisibility(editProfileModalBody, 1);
         } catch (TimeoutException e) {
             return false;
         }
@@ -155,7 +155,7 @@ public class EditProfileComponent extends BaseMethods {
 
     public String getOldPasswordFieldBorderColor(String color) {
         try {
-            waitAttributeOfElementContains(oldPasswordFieldWrapper, "border-color", color);
+            wait.attributeOfElementContains(oldPasswordFieldWrapper, "border-color", color);
         } catch (TimeoutException ignore) {
         }
         return oldPasswordFieldWrapper.getCssValue("border-color");
@@ -163,7 +163,7 @@ public class EditProfileComponent extends BaseMethods {
 
     public String getNewPasswordFieldBorderColor(String color) {
         try {
-            waitAttributeOfElementContains(newPasswordFieldWrapper, "border-color", color);
+            wait.attributeOfElementContains(newPasswordFieldWrapper, "border-color", color);
         } catch (TimeoutException ignore) {
         }
         return newPasswordFieldWrapper.getCssValue("border-color");
@@ -171,7 +171,7 @@ public class EditProfileComponent extends BaseMethods {
 
     public String getRepeatNewPasswordFieldBorderColor(String color) {
         try {
-            waitAttributeOfElementContains(newPasswordFieldWrapper, "border-color", color);
+            wait.attributeOfElementContains(newPasswordFieldWrapper, "border-color", color);
         } catch (TimeoutException ignore) {
         }
         return newPasswordFieldWrapper.getCssValue("border-color");

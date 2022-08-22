@@ -25,19 +25,19 @@ public class HomePage extends Header {
     }
 
     public ClubsPage fillInSearch(String query) {
-        setNewValueForInput(searchInput, query);
+        action.setNewValueForInput(searchInput, query);
         return new ClubsPage(driver);
     }
 
     @Step("open Advanced Search menu")
     public ClubsPage openAdvancedSearch() {
         advancedSearchButton.click();
-        sleep(500);
+        wait.sleep(500);
         return new ClubsPage(driver);
     }
 
     public boolean isHomePageOpened(){
-        waitPageReload();
+        wait.pageReload();
         WebElement banner = driver.findElement(By.xpath("//div[@class='ant-carousel']"));
         return banner.isDisplayed();
     }

@@ -42,44 +42,44 @@ public class AdvancedSearchPanelComponent extends ClubsPage {
 
     @Step("Check is citySelector displayed")
     public boolean isCitySelectorVisible() {
-        return isVisible(citySelector);
+        return action.isVisible(citySelector);
     }
 
     @Step("Check is districtSelector displayed")
     public boolean isDistrictSelectorVisible() {
-        return isVisible(districtSelector);
+        return action.isVisible(districtSelector);
     }
 
     @Step("Check is metroSelector displayed")
     public boolean isMetroSelectorVisible() {
-        return isVisible(metroSelector);
+        return action.isVisible(metroSelector);
     }
 
     @Step("Check is availableOnlineCheckbox displayed")
     public boolean isAvailableOnlineCheckboxVisible() {
-        return isVisible(availableOnline);
+        return action.isVisible(availableOnline);
     }
 
     @Step("Check is categoriesBlock displayed")
     public boolean isCategoriesBlockVisible() {
-        return isVisible(categoriesBlock);
+        return action.isVisible(categoriesBlock);
     }
 
     @Step("Check is childAgeBlock displayed")
     public boolean isChildAgeBlockVisible() {
-        return isVisible(childAgeBlock);
+        return action.isVisible(childAgeBlock);
     }
 
     @Step("Click on 'club' radioButton")
     public AdvancedSearchPanelComponent selectClubFilter() {
-        waitVisibility(clubRadioButton);
+        wait.visibility(clubRadioButton);
         clubRadioButton.click();
         return this;
     }
 
     @Step("Click on 'center' radioButton")
     public AdvancedSearchPanelComponent selectCenterFilter() {
-        waitVisibility(centerRadioButton);
+        wait.visibility(centerRadioButton);
         centerRadioButton.click();
         return this;
     }

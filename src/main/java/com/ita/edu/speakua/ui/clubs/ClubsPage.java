@@ -7,6 +7,7 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -109,10 +110,10 @@ public class ClubsPage extends Header {
     public void clickManagingClubsPageElement(WebElement element) {
         List<CardComponent> cards = new ClubsPage(driver).getCards();
         element.click();
-        driver.manage().timeouts().implicitlyWait(SHORT_TIMEOUT);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(4));
         for (CardComponent card : cards) {
             try {
-                waitStaleness(card.getCardBody());
+                wait.staleness(card.getCardBody());
             } catch (TimeoutException ignored) {
             }
         }
@@ -125,7 +126,7 @@ public class ClubsPage extends Header {
 
     @Step("Search phrase by entering separate characters in search field: {query}")
     public ClubsPage fillInSearch(String query) {
-        clearInput(searchInput);
+        action.clearInput(searchInput);
         searchInput.click();
         char[] chars = query.toCharArray();
         for (int i = 0; i < chars.length; i++) {
@@ -137,7 +138,7 @@ public class ClubsPage extends Header {
 
     @Step("Search phrase by pasting input in search field: {query}. Maximum input length is {maxLength}.")
     public ClubsPage pasteInSearch(String query, int maxLength) {
-        clearInput(searchInput);
+        action.clearInput(searchInput);
         searchInput.click();
         JavascriptExecutor executor = (JavascriptExecutor) driver;
         String pasteQuery = query.length() < maxLength

@@ -30,14 +30,14 @@ public class SortClubComponent extends ClubsPage {
 
     @Step("Sort cards by alphabet")
     public SortClubComponent sortByAlphabet() {
-        waitVisibility(sortByAlphabetButton);
+        wait.visibility(sortByAlphabetButton);
         clickManagingClubsPageElement(sortByAlphabetButton);
         return this;
     }
 
     @Step("Sort cards by rating")
     public SortClubComponent sortByRating() {
-        waitVisibility(sortByRatingButton);
+        wait.visibility(sortByRatingButton);
         clickManagingClubsPageElement(sortByRatingButton);
         return this;
     }
@@ -55,13 +55,13 @@ public class SortClubComponent extends ClubsPage {
     }
 
     public SortClubComponent listViewButtonClick() {
-        waitVisibility(listViewButton);
+        wait.visibility(listViewButton);
         listViewButton.click();
         return this;
     }
 
     public SortClubComponent blockViewButtonClick() {
-        waitVisibility(blockViewButton);
+        wait.visibility(blockViewButton);
         blockViewButton.click();
         return this;
     }

@@ -41,8 +41,8 @@ public class AddCenterMainInfoComponent extends AbstractAddCenterComponent {
     @Step("Verify that location is displayed")
     public boolean isLocationAdded(String name) {
         try {
-            sleep(1000);
-            scrollTo(getLocationItem(name));
+            wait.sleep(1000);
+            action.scrollTo(getLocationItem(name));
             return getLocationItem(name).isDisplayed();
         } catch (NoSuchElementException e) {
             return false;
@@ -51,29 +51,28 @@ public class AddCenterMainInfoComponent extends AbstractAddCenterComponent {
 
     @Step("Choose location from checkbox list")
     public AddCenterMainInfoComponent chooseLocation(String name) {
-
-        sleep(1000);
-        scrollTo(getLocationItem(name));
+        wait.sleep(1000);
+        action.scrollTo(getLocationItem(name));
         getLocationItem(name).click();
         return new AddCenterMainInfoComponent(driver);
     }
 
     @Step("Open next modal 'Contacts'")
     public AddCenterContactComponent openNextStep() {
-        waitVisibilityOfWebElement(nextStepButton);
+        wait.visibility(nextStepButton);
         nextStepButton.click();
         return new AddCenterContactComponent(driver);
     }
 
     @Step("Verify error message is displayed")
     public boolean isErrorMessageDisplayed() {
-        waitVisibility(errorMessage);
+        wait.visibility(errorMessage);
         return errorMessage.isDisplayed();
     }
 
     @Step("Add location on center component")
     public AddCenterMainInfoComponent addLocation(Location location) {
-        sleep(1000);
+        wait.sleep(1000);
         addLocationButton.click();
         new AddLocationComponent(driver).addLocation(location);
         return this;
@@ -81,7 +80,7 @@ public class AddCenterMainInfoComponent extends AbstractAddCenterComponent {
 
     @Step("Add location on center component filling only mandatory fields")
     public AddCenterMainInfoComponent addLocationWithMandatoryFields(Location location) {
-        sleep(1000);
+        wait.sleep(1000);
         addLocationButton.click();
         new AddLocationComponent(driver).addLocationWithMandatoryFields(location);
         return this;
