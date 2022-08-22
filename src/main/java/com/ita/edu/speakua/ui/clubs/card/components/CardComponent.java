@@ -70,7 +70,7 @@ public class CardComponent extends BasePage {
     }
 
     public String getCardDescription(){
-        waitVisibility(cardDescription);
+        wait.visibility(cardDescription);
         return cardDescription.getText();
     }
 
