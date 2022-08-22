@@ -1,6 +1,6 @@
 package com.ita.edu.speakua.ui.clubs.card.components;
 
-import com.ita.edu.speakua.ui.utils.BaseMethods;
+import com.ita.edu.speakua.ui.BasePage;
 import com.ita.edu.speakua.ui.clubs.ExpandedCardComponent;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
@@ -11,7 +11,7 @@ import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
 
 import java.util.List;
 
-public class CardComponent extends BaseMethods {
+public class CardComponent extends BasePage {
     protected WebElement cardBody;
 
     @FindBy(xpath = "./parent::div")
@@ -49,7 +49,7 @@ public class CardComponent extends BaseMethods {
 
     @Step("Get full card text")
     public String getCardText() {
-        waitVisibility(cardWrapper);
+        wait.visibility(cardWrapper);
         return cardWrapper.getText();
     }
 
@@ -58,14 +58,14 @@ public class CardComponent extends BaseMethods {
     }
 
     public CardComponent waitNameRefresh(long timeoutMillis, int polling) {
-        fluentWaitStaleness(cardName, timeoutMillis, polling);
-        fluentWaitVisibility(cardName, timeoutMillis, polling);
+        wait.fluentStaleness(cardName, timeoutMillis, polling);
+        wait.fluentVisibility(cardName, timeoutMillis, polling);
         return this;
     }
 
     @Step("Get card name.")
     public String getCardName() {
-        waitVisibility(cardName);
+        wait.visibility(cardName);
         return cardName.getText();
     }
 

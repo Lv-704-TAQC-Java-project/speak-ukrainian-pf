@@ -18,7 +18,7 @@ public class CenterComponent extends CardComponent{
     }
 
     public String getTextCenterName() {
-        sleep(2000);
+        wait.sleep(2000);
         return getCenterName().getText();
     }
 }

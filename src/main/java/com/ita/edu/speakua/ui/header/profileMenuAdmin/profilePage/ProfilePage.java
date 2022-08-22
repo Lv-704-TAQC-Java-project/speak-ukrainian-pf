@@ -37,17 +37,17 @@ public class ProfilePage extends Header {
 
     @Step("Open edit profile page")
     public EditProfileComponent openEditProfilePage() {
-        sleep(1000);
-        waitClickable(editProfileButton);
+        wait.sleep(1000);
+        wait.clickable(editProfileButton);
         editProfileButton.click();
         return new EditProfileComponent(driver);
     }
 
     @Step("Open a model for adding club")
     public AddClubMainInfoComponent openAddClubModal() {
-        waitVisibility(addButton);
+        wait.visibility(addButton);
         addButton.click();
-        waitVisibility(addClubButton);
+        wait.visibility(addClubButton);
         addClubButton.click();
         return new AddClubMainInfoComponent(driver);
     }

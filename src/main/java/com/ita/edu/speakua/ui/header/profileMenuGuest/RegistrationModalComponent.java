@@ -1,14 +1,14 @@
 package com.ita.edu.speakua.ui.header.profileMenuGuest;
 
 import com.ita.edu.speakua.ui.HomePage;
-import com.ita.edu.speakua.ui.utils.BaseMethods;
+import com.ita.edu.speakua.ui.BasePage;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 
-public class RegistrationModalComponent extends BaseMethods {
+public class RegistrationModalComponent extends BasePage {
     @FindBy(xpath = "//input[@id='lastName']")
     private WebElement lastNameInputField;
 
@@ -37,13 +37,13 @@ public class RegistrationModalComponent extends BaseMethods {
 
     @Step("Fill in last name field")
     public RegistrationModalComponent fillInLastName(String lastName) {
-        waitVisibility(lastNameInputField);
+        wait.visibility(lastNameInputField);
         lastNameInputField.sendKeys(lastName);
         return this;
     }
 
     public String getLastNameValue() {
-        waitVisibility(lastNameInputField);
+        wait.visibility(lastNameInputField);
         return lastNameInputField.getAttribute("value");
     }
 

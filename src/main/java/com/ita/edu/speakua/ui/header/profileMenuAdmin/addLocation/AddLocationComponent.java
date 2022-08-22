@@ -1,6 +1,6 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.addLocation;
 
-import com.ita.edu.speakua.ui.utils.BaseMethods;
+import com.ita.edu.speakua.ui.BasePage;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -8,7 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class AddLocationComponent extends BaseMethods {
+public class AddLocationComponent extends BasePage {
     @FindBy(xpath = "//input[@id='name']")
     private WebElement locationNameField;
 
@@ -37,7 +37,7 @@ public class AddLocationComponent extends BaseMethods {
 
     @Step("Fill In {locationName}")
     public AddLocationComponent fillInLocationNameField(String locationName) {
-        waitVisibility(locationNameField);
+        wait.visibility(locationNameField);
         locationNameField.click();
         locationNameField.clear();
         locationNameField.sendKeys(locationName);
@@ -70,7 +70,7 @@ public class AddLocationComponent extends BaseMethods {
 
     @Step("Fill In {address}")
     public AddLocationComponent fillInAddressField(String address) {
-        waitVisibility(addressField);
+        wait.visibility(addressField);
         addressField.click();
         addressField.clear();
         addressField.sendKeys(address);
@@ -79,7 +79,7 @@ public class AddLocationComponent extends BaseMethods {
 
     @Step("Fill In {coordinates}")
     public AddLocationComponent fillInGeographicCoordinatesField(String coordinates) {
-        waitVisibility(geographicCoordinatesField);
+        wait.visibility(geographicCoordinatesField);
         geographicCoordinatesField.click();
         geographicCoordinatesField.clear();
         geographicCoordinatesField.sendKeys(coordinates);

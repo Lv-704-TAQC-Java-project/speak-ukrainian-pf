@@ -87,7 +87,7 @@ public class AddChallengePage extends Header {
 
     @Step("Get message")
     public String getMessageText() {
-        waitVisibilityOfWebElement(successeMessage);
+        wait.visibility(successeMessage);
         return successeMessage.getText();
     }
 

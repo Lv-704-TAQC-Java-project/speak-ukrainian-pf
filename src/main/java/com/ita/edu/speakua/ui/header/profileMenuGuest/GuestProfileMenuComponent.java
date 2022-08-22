@@ -1,13 +1,13 @@
 package com.ita.edu.speakua.ui.header.profileMenuGuest;
 
-import com.ita.edu.speakua.ui.utils.BaseMethods;
+import com.ita.edu.speakua.ui.BasePage;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 
-public class GuestProfileMenuComponent extends BaseMethods {
+public class GuestProfileMenuComponent extends BasePage {
     @FindBy(xpath = "//div[contains(text(), 'Увійти')]//ancestor::li")
     private WebElement loginButton;
 
@@ -24,8 +24,8 @@ public class GuestProfileMenuComponent extends BaseMethods {
 
     @Step("Open Login Modal")
     public LoginModalComponent openLoginModal() {
-        waitVisibility(loginButton);
-        actionsClick(loginButton);
+        wait.visibility(loginButton);
+        action.click(loginButton);
         return new LoginModalComponent(driver);
     }
 

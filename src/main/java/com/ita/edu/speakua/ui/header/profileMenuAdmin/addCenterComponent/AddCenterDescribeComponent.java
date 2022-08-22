@@ -20,7 +20,7 @@ public class AddCenterDescribeComponent extends AbstractAddCenterComponent {
 
     @Step("Add a description of center")
     public AddCenterDescribeComponent addDescribe(String text) {
-        waitVisibility(describeArea);
+        wait.visibility(describeArea);
         describeArea.sendKeys(Keys.chord(Keys.CONTROL, "a"));
         describeArea.sendKeys(Keys.chord(text));
         return new AddCenterDescribeComponent(driver);
