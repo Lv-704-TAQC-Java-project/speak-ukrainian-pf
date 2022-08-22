@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 public class AdvancedSearchVisibleTest extends SameWindowTestRunner {
     @Issue("224")
     @Test
-    public void test() {
+    public void CheckAdvancedSearchButton() {
         ClubsPage verify = new HomePage(driver)
                 .openAdvancedSearch()
                 .getAdvancedSearchPanelComponent()
