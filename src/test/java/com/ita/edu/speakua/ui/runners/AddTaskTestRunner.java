@@ -8,7 +8,7 @@ public class AddTaskTestRunner extends LoginTestRunner {
     protected AddTaskPage addTaskPage;
 
     @BeforeMethod
-    public void openEditProfile() {
+    public void openAddTaskPage() {
         addTaskPage = new HomePage(driver)
                 .openAdminProfileMenu()
                 .openAdministrationModal()

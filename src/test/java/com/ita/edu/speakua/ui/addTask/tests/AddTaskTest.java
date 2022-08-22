@@ -105,7 +105,7 @@ public class AddTaskTest extends AddTaskTestRunner {
     public void verifyCreatingTaskWithHeadingInvalidData(String invalidData, String expectedMessage) {
         String actualErrorMessage;
 
-        boolean isAllFieldsAreEmptyByDefault = addTaskPage.areFieldsEmpty();
+        boolean areAllFieldsEmptyByDefault = addTaskPage.areFieldsEmpty();
 
         addTaskPage.enterStartDate(LocalDate.now().plusDays(1).toString())
                 .uploadImage(pathToImage)
@@ -117,7 +117,7 @@ public class AddTaskTest extends AddTaskTestRunner {
 
         SoftAssert softAssert = new SoftAssert();
 
-        softAssert.assertTrue(isAllFieldsAreEmptyByDefault, "Not all fields are empty by default");
+        softAssert.assertTrue(areAllFieldsEmptyByDefault, "Not all fields are empty by default");
         actualErrorMessage = addTaskPage.getErrorMessageText();
         softAssert.assertEquals(actualErrorMessage, expectedMessage, "Expected error message did not appear");
 

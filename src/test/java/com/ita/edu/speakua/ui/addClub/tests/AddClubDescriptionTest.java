@@ -111,13 +111,13 @@ public class AddClubDescriptionTest extends AddClubDescriptionTestRunner {
     @Description("Verify the description field is filled in with valid data and the 'Завершити' button is enable")
     @Test(dataProvider = "validDescriptionData")
     public void verifyCreatingClubWithDescribeValidData(String testData) {
-        boolean btnFinishIsEnable;
+        boolean isFinishButtonEnable;
 
         SoftAssert softAssert = new SoftAssert();
 
         addClubDescriptionComponent.inputDescription(testData);
-        btnFinishIsEnable = addClubDescriptionComponent.isButtonEnable();
-        softAssert.assertTrue(btnFinishIsEnable, "'Завершити' button is disabled");
+        isFinishButtonEnable = addClubDescriptionComponent.isButtonEnable();
+        softAssert.assertTrue(isFinishButtonEnable, "'Завершити' button is disabled");
 
         softAssert.assertAll();
     }
