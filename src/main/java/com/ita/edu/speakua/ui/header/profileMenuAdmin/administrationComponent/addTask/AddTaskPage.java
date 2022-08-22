@@ -82,7 +82,7 @@ public class AddTaskPage extends Header {
 
     @Step("Select challenge: {name}")
     public AddTaskPage selectChallenge(String name) {
-        String challengeXpath = String.format("//div[contains(@class,'option-content') and contains(text(), '%s')]", name);
+        String challengeXpath = String.format("(//div[contains(@class,'option-content') and contains(text(), '%s')])[1]", name);
         String lastChallengeXpath = "(//div[contains(@class,'option-content')])[last()]";
 
         actionsClick(challengeDropdown);
@@ -93,7 +93,7 @@ public class AddTaskPage extends Header {
             actions.scrollToElement(driver.findElement(By.xpath(lastChallengeXpath))).perform();
             challenge = safeFind(challengeXpath);
         }
-        actionsClick(challenge);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", challenge);
         return this;
     }
 
