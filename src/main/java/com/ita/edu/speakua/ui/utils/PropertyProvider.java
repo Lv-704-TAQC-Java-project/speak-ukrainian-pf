@@ -18,7 +18,6 @@ public class PropertyProvider {
     }
 
     public String getJDBCLogin() {
-
         return properties.getProperty("jdbc_login");
     }
 
@@ -29,6 +28,4 @@ public class PropertyProvider {
     public String getJDBCUrl() {
         return properties.getProperty("jdbc_url");
     }
-
-
 }
