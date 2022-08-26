@@ -17,6 +17,7 @@
         <selenium-java.version>4.3.0</selenium-java.version>
         <aspectj.version>1.9.9.1</aspectj.version>
         <allure-testng.version>2.18.1</allure-testng.version>
+        <postgresql.version>42.5.0</postgresql.version>
     </properties>
     <dependencies>
         <!-- selenium -->
@@ -42,6 +43,18 @@
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-testng</artifactId>
             <version>${allure-testng.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.22</version>
+            <scope>compile</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgresql.version}</version>
         </dependency>
 
     </dependencies>
