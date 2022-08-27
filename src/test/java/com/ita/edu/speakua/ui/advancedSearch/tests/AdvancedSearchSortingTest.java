@@ -43,11 +43,11 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
         }
 
         softAssert.assertEquals(cardNamesTextDecActual.toString(), cardNamesDECExpected.toString(),
-                "Club cards are not sorted by ABC DEC when arrowUp is clicked");
+                "Club cards are not sorted by ABC in descending order when arrowUp is clicked");
 
         sortClubComponent.orderByAsc();
         softAssert.assertTrue(clubsPage.getCards().get(0).getCardName().toLowerCase().startsWith("a"),
-                "Club cards are not sorted by ABC ASC when arrowDown is clicked");
+                "Club cards are not sorted by ABC in ascending order when arrowDown is clicked");
 
         softAssert.assertAll();
     }
@@ -65,12 +65,12 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
 
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertTrue(clubsPage.getCenters().get(0).getTextCenterName().toLowerCase().startsWith("ш"),
-                "Center cards are not sorted by ABC DEC order when arrowUp is clicked");
+                "Center cards are not sorted by ABC in descending order when arrowUp is clicked");
 
         sortClubComponent.orderByAsc();
 
         softAssert.assertTrue(clubsPage.getCenters().get(0).getTextCenterName().toLowerCase().startsWith("a"),
-                "Center cards are not sorted by ABC ASC order when arrowDown is clicked");
+                "Center cards are not sorted by ABC in ascending order when arrowDown is clicked");
         softAssert.assertAll();
     }
 
@@ -88,11 +88,11 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
 
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(clubsPage.getCards().get(0).getStarRatingFullList().size(), 5,
-                "Clubs are not sorted by rating ASC when arrowUpButton is clicked");
+                "Clubs are not sorted by rating in descending order when arrowUpButton is clicked");
 
         sortClubComponent.orderByAsc();
         softAssert.assertEquals(clubsPage.getCards().get(0).getStarRatingZeroList().size(), 5,
-                "Clubs are not sorted by rating DEC when arrowDownButton is clicked");
+                "Clubs are not sorted by rating in ascending order when arrowDownButton is clicked");
         softAssert.assertAll();
     }
 
@@ -111,11 +111,11 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
 
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(clubsPage.getCards().get(0).getStarRatingFullList().size(), 5,
-                "Centers are not sorted by rating ASC when arrowUpButton is clicked");
+                "Centers are not sorted by rating in descending order when arrowUpButton is clicked");
 
         sortClubComponent.orderByAsc();
         softAssert.assertEquals(clubsPage.getCards().get(0).getStarRatingZeroList().size(), 5,
-                "Centers are not sorted by rating DEC when arrowDownButton is clicked");
+                "Centers are not sorted by rating in ascending order when arrowDownButton is clicked");
         softAssert.assertAll();
     }
 
