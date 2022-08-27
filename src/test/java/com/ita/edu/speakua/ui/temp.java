@@ -2,11 +2,11 @@ package com.ita.edu.speakua.ui;
 
 import com.ita.edu.speakua.ui.utils.jdbc.dao.CenterDAO;
 import com.ita.edu.speakua.ui.utils.jdbc.dao.CityDAO;
-import com.ita.edu.speakua.ui.utils.jdbc.entity.CenterEntity;
-import com.ita.edu.speakua.ui.utils.jdbc.entity.CenterNameEntity;
-import com.ita.edu.speakua.ui.utils.jdbc.entity.CityEntity;
+import com.ita.edu.speakua.ui.utils.jdbc.dao.ClubDAO;
+import com.ita.edu.speakua.ui.utils.jdbc.entity.*;
 import org.testng.annotations.Test;
 
+import java.sql.SQLOutput;
 import java.util.List;
 
 public class temp {
@@ -18,7 +18,7 @@ public class temp {
         CityEntity city = cityDAO.selectById(3);
         System.out.println(city);
 
-        System.out.println("=====================================================================");
+        System.out.println("===============================================");
 
         CenterDAO centerDAO = new CenterDAO();
         List<CenterEntity> centers = centerDAO.selectAll();
@@ -29,5 +29,24 @@ public class temp {
         System.out.println(firstSixCentersByNameAsc);
         System.out.println(firstSixCentersByNameDesc);
 //        System.out.println(centers);
+    }
+
+    @Test
+    public void jdbcClub() {
+        ClubDAO clubDAO = new ClubDAO();
+        ClubEntity club = clubDAO.selectById(1);
+        System.out.println(club);
+        System.out.println("===============================================");
+        List<ClubNameEntity> sixNamesAsc = clubDAO.selectSixNamesAsc();
+        System.out.println(sixNamesAsc);
+        System.out.println("===============================================");
+        List<ClubNameEntity> sixNamesDesc = clubDAO.selectSixNamesDesc();
+        System.out.println(sixNamesDesc);
+        System.out.println("===============================================");
+        List<ClubRatingEntity> sixRatingsAsc = clubDAO.selectSixRatingsAsc();
+        System.out.println(sixRatingsAsc);
+        System.out.println("===============================================");
+        List<ClubRatingEntity> sixRatingsDesc = clubDAO.selectSixRatingsDesc();
+        System.out.println(sixRatingsDesc);
     }
 }
