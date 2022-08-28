@@ -9,6 +9,9 @@ import java.util.List;
 public class ClubNameEntity {
     public static final String SELECT_SIX_NAMES_ASC = "SELECT name FROM clubs ORDER BY name ASC LIMIT 6;";
     public static final String SELECT_SIX_NAMES_DESC = "SELECT name FROM clubs ORDER BY name DESC LIMIT 6;";
+    public static final String SELECT_NAME = "SELECT name FROM clubs;";
+    public static final String SELECT_NAME_WHERE_NAME = "SELECT name FROM clubs WHERE name LIKE '%s%%';";
+
     private String name;
 
     public static ClubNameEntity parseName(List<String> row) {
