@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-public class ClubDAO  {
+public class ClubDAO {
 
     public List<ClubEntity> selectAll() {
         Statement statement = ManagerDAO.getInstance().getStatement();
@@ -87,5 +87,31 @@ public class ClubDAO  {
         }
         ManagerDAO.getInstance().closeStatement(statement);
         return ClubRatingEntity.parseRatings(rows);
+    }
+
+    public List<ClubNameEntity> selectName() {
+        Statement statement = ManagerDAO.getInstance().getStatement();
+        List<List<String>> rows;
+        try {
+            ResultSet resultSet = statement.executeQuery(ClubNameEntity.SELECT_NAME);
+            rows = ManagerDAO.getInstance().parseResultSet(resultSet);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        ManagerDAO.getInstance().closeStatement(statement);
+        return ClubNameEntity.parseNames(rows);
+    }
+
+    public List<ClubNameEntity> selectNameWhereName(String name) {
+        Statement statement = ManagerDAO.getInstance().getStatement();
+        List<List<String>> rows;
+        try {
+            ResultSet resultSet = statement.executeQuery(String.format(ClubNameEntity.SELECT_NAME_WHERE_NAME, name));
+            rows = ManagerDAO.getInstance().parseResultSet(resultSet);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        ManagerDAO.getInstance().closeStatement(statement);
+        return ClubNameEntity.parseNames(rows);
     }
 }
