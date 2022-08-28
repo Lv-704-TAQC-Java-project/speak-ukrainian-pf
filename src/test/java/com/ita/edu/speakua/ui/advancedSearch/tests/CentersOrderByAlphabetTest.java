@@ -4,11 +4,14 @@ import com.ita.edu.speakua.ui.HomePage;
 import com.ita.edu.speakua.ui.clubs.ClubsPage;
 import com.ita.edu.speakua.ui.clubs.card.components.CardComponent;
 import com.ita.edu.speakua.ui.runners.SameWindowTestRunner;
+import com.ita.edu.speakua.ui.utils.jdbc.dao.CenterDAO;
+import com.ita.edu.speakua.ui.utils.jdbc.entity.CenterNameEntity;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.util.Arrays;
 
 public class CentersOrderByAlphabetTest extends SameWindowTestRunner {
 
@@ -23,53 +26,47 @@ public class CentersOrderByAlphabetTest extends SameWindowTestRunner {
                 .getSortClubComponent()
                 .sortByAlphabet();
 
-        ClubsPage clubsPage = new ClubsPage(driver);
+        CenterDAO centerDAO = new CenterDAO();
+        String[] expectedCenterNamesAscOrder = centerDAO
+                .firstSixNamesAsc()
+                .stream()
+                .map(CenterNameEntity::getName)
+                .toArray(String[]::new);
+        System.out.println(Arrays.toString(expectedCenterNamesAscOrder));
 
+        ClubsPage clubsPage = new ClubsPage(driver);
         String[] actualCenterNamesAscOrder = clubsPage
                 .getCards()
                 .stream()
                 .map(CardComponent::getCardName)
                 .toArray(String[]::new);
-
-        String[] expectedCenterNamesAscOrder = new String[]{
-                "API testing2",
-                "BabyClub",
-                "Ccccc1",
-                "center1",
-                "Center#1",
-                "Center Baby Club"
-        };
-
-        SoftAssert softAssert = new SoftAssert();
-        for (int i = 0; i < expectedCenterNamesAscOrder.length; i++) {
-            softAssert.assertEquals(actualCenterNamesAscOrder[i], expectedCenterNamesAscOrder[i],
-                    "Incorrect cards sequence after sorting by alphabet in ascending order.");
-        }
+        System.out.println(Arrays.toString(actualCenterNamesAscOrder));
 
         clubsPage
                 .getSortClubComponent()
                 .orderByDesc();
+
+        String[] expectedCenterNamesDescOrder = centerDAO
+                .firstSixNamesDesc()
+                .stream()
+                .map(CenterNameEntity::getName)
+                .toArray(String[]::new);
+        System.out.println(Arrays.toString(expectedCenterNamesDescOrder));
 
         String[] actualCenterNamesDescOrder = clubsPage
                 .getCards()
                 .stream()
                 .map(CardComponent::getCardName)
                 .toArray(String[]::new);
+        System.out.println(Arrays.toString(actualCenterNamesDescOrder));
 
-        String[] expectedCenterNamesDescOrder = new String[]{
-                "Школа мистецтв імені Миколи Дмитровича Леонтовича",
-                "Центр творчості дітей та юнацтва",
-                "Центр розвитку",
-                "Центр позашкільної роботи Святошинського району",
-                "Центр дитячого та сімейного розвитку Одуванчик",
-                "Фольк-студія \"Правиця\""
-        };
-
+        SoftAssert softAssert = new SoftAssert();
         for (int i = 0; i < expectedCenterNamesDescOrder.length; i++) {
+            softAssert.assertEquals(actualCenterNamesAscOrder[i], expectedCenterNamesAscOrder[i],
+                    "Incorrect cards sequence after sorting by alphabet in ascending order.");
             softAssert.assertEquals(actualCenterNamesDescOrder[i], expectedCenterNamesDescOrder[i],
                     "Incorrect cards sequence after sorting by alphabet in descending order.");
         }
-
         softAssert.assertAll();
     }
 }
