@@ -9,6 +9,8 @@ import java.util.List;
 public class ClubRatingEntity {
     public static final String SIX_RESULTS_ASC = "SELECT rating FROM clubs ORDER BY name ASC LIMIT 6;";
     public static final String SIX_RESULTS_DESC = "SELECT rating FROM clubs ORDER BY name DESC LIMIT 6;";
+    public static final String ORDER_BY_RATING_ASC_SIX = "SELECT id, name, rating FROM clubs ORDER BY rating, id LIMIT 6;";
+    public static final String ORDER_BY_RATING_DESC_SIX = "SELECT id, name, rating FROM clubs ORDER BY rating DESC, id LIMIT 6;";
     private double rating;
 
     public static ClubRatingEntity parseRating(List<String> row) {
