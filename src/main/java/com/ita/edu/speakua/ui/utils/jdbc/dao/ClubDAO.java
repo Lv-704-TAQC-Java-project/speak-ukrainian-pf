@@ -1,8 +1,6 @@
 package com.ita.edu.speakua.ui.utils.jdbc.dao;
 
 import com.ita.edu.speakua.ui.utils.jdbc.entity.ClubEntity;
-import com.ita.edu.speakua.ui.utils.jdbc.entity.ClubNameEntity;
-import com.ita.edu.speakua.ui.utils.jdbc.entity.ClubRatingEntity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -37,81 +35,29 @@ public class ClubDAO {
         return ClubEntity.parseRows(rows).get(0);
     }
 
-    public List<ClubNameEntity> selectSixNamesAsc() {
+    public List<ClubEntity> parseSixNamesAsc() {
         Statement statement = ManagerDAO.getInstance().getStatement();
         List<List<String>> rows;
         try {
-            ResultSet resultSet = statement.executeQuery(ClubNameEntity.SELECT_SIX_NAMES_ASC);
+            ResultSet resultSet = statement.executeQuery(ClubEntity.SELECT_SIX_NAMES_ASC);
             rows = ManagerDAO.getInstance().parseResultSet(resultSet);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         ManagerDAO.getInstance().closeStatement(statement);
-        return ClubNameEntity.parseNames(rows);
+        return ClubEntity.parseNameRows(rows);
     }
 
-    public List<ClubNameEntity> selectSixNamesDesc() {
+    public List<ClubEntity> parseSixNamesDesc() {
         Statement statement = ManagerDAO.getInstance().getStatement();
         List<List<String>> rows;
         try {
-            ResultSet resultSet = statement.executeQuery(ClubNameEntity.SELECT_SIX_NAMES_DESC);
+            ResultSet resultSet = statement.executeQuery(ClubEntity.SELECT_SIX_NAMES_DESC);
             rows = ManagerDAO.getInstance().parseResultSet(resultSet);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         ManagerDAO.getInstance().closeStatement(statement);
-        return ClubNameEntity.parseNames(rows);
-    }
-
-    public List<ClubRatingEntity> selectSixRatingsAsc() {
-        Statement statement = ManagerDAO.getInstance().getStatement();
-        List<List<String>> rows;
-        try {
-            ResultSet resultSet = statement.executeQuery(ClubRatingEntity.SIX_RESULTS_ASC);
-            rows = ManagerDAO.getInstance().parseResultSet(resultSet);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        ManagerDAO.getInstance().closeStatement(statement);
-        return ClubRatingEntity.parseRatings(rows);
-    }
-
-    public List<ClubRatingEntity> selectSixRatingsDesc() {
-        Statement statement = ManagerDAO.getInstance().getStatement();
-        List<List<String>> rows;
-        try {
-            ResultSet resultSet = statement.executeQuery(ClubRatingEntity.SIX_RESULTS_DESC);
-            rows = ManagerDAO.getInstance().parseResultSet(resultSet);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        ManagerDAO.getInstance().closeStatement(statement);
-        return ClubRatingEntity.parseRatings(rows);
-    }
-
-    public List<ClubNameEntity> selectName() {
-        Statement statement = ManagerDAO.getInstance().getStatement();
-        List<List<String>> rows;
-        try {
-            ResultSet resultSet = statement.executeQuery(ClubNameEntity.SELECT_NAME);
-            rows = ManagerDAO.getInstance().parseResultSet(resultSet);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        ManagerDAO.getInstance().closeStatement(statement);
-        return ClubNameEntity.parseNames(rows);
-    }
-
-    public List<ClubNameEntity> selectNameWhereName(String name) {
-        Statement statement = ManagerDAO.getInstance().getStatement();
-        List<List<String>> rows;
-        try {
-            ResultSet resultSet = statement.executeQuery(String.format(ClubNameEntity.SELECT_NAME_WHERE_NAME, name));
-            rows = ManagerDAO.getInstance().parseResultSet(resultSet);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        ManagerDAO.getInstance().closeStatement(statement);
-        return ClubNameEntity.parseNames(rows);
+        return ClubEntity.parseNameRows(rows);
     }
 }
