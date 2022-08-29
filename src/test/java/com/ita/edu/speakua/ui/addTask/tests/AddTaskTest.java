@@ -15,6 +15,7 @@ import org.testng.asserts.SoftAssert;
 
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AddTaskTest extends AddTaskTestRunner {
@@ -107,12 +108,12 @@ public class AddTaskTest extends AddTaskTestRunner {
     @Test(dataProvider = "invalidHeaderData")
     public void verifyCreatingTaskWithHeadingInvalidData(String invalidData, String expectedMessage) {
         String actualErrorMessage;
-
+        String clubName = "Test task # 5/";
         boolean areAllFieldsEmptyByDefault = addTaskPage.areFieldsEmpty();
 
         addTaskPage.enterStartDate(LocalDate.now().plusDays(1).toString())
                 .uploadImage(pathToImage)
-                .enterName("Test task # 5/")
+                .enterName(clubName)
                 .enterTitle(invalidData)
                 .enterDescription(description)
                 .selectChallenge(challenge)
@@ -123,6 +124,13 @@ public class AddTaskTest extends AddTaskTestRunner {
         softAssert.assertTrue(areAllFieldsEmptyByDefault, "Not all fields are empty by default");
         actualErrorMessage = addTaskPage.getErrorMessageText();
         softAssert.assertEquals(actualErrorMessage, expectedMessage, "Expected error message did not appear");
+
+        List<String> clubs = new ArrayList<>();
+        new TaskDAO()
+                .selectLikeName(clubName)
+                .forEach(club -> clubs.add(club.toString()));
+
+        softAssert.assertTrue(clubs.isEmpty());
 
         softAssert.assertAll();
     }
