@@ -2,7 +2,6 @@ package com.ita.edu.speakua.ui.addTask.tests;
 
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.addTask.TaskPage;
 import com.ita.edu.speakua.ui.runners.AddTaskTestRunner;
-import com.ita.edu.speakua.ui.utils.jdbc.dao.ClubDAO;
 import com.ita.edu.speakua.ui.utils.jdbc.dao.TaskDAO;
 import com.ita.edu.speakua.ui.utils.jdbc.entity.TaskEntity;
 import io.qameta.allure.Description;
@@ -126,12 +125,12 @@ public class AddTaskTest extends AddTaskTestRunner {
         actualErrorMessage = addTaskPage.getErrorMessageText();
         softAssert.assertEquals(actualErrorMessage, expectedMessage, "Expected error message did not appear");
 
-        List<String> clubNames = new ArrayList<>();
-        new ClubDAO()
-                .selectNameWhereName(clubName)
-                .forEach(name -> clubNames.add(name.toString()));
+        List<String> clubs = new ArrayList<>();
+        new TaskDAO()
+                .selectLikeName(clubName)
+                .forEach(club -> clubs.add(club.toString()));
 
-        softAssert.assertTrue(clubNames.isEmpty());
+        softAssert.assertTrue(clubs.isEmpty());
 
         softAssert.assertAll();
     }
