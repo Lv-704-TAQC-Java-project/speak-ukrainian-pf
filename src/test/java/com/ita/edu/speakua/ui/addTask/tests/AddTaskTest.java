@@ -2,6 +2,7 @@ package com.ita.edu.speakua.ui.addTask.tests;
 
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.addTask.TaskPage;
 import com.ita.edu.speakua.ui.runners.AddTaskTestRunner;
+import com.ita.edu.speakua.ui.utils.jdbc.dao.ClubDAO;
 import com.ita.edu.speakua.ui.utils.jdbc.dao.TaskDAO;
 import com.ita.edu.speakua.ui.utils.jdbc.entity.TaskEntity;
 import io.qameta.allure.Description;
@@ -15,6 +16,7 @@ import org.testng.asserts.SoftAssert;
 
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AddTaskTest extends AddTaskTestRunner {
@@ -107,12 +109,12 @@ public class AddTaskTest extends AddTaskTestRunner {
     @Test(dataProvider = "invalidHeaderData")
     public void verifyCreatingTaskWithHeadingInvalidData(String invalidData, String expectedMessage) {
         String actualErrorMessage;
-
+        String clubName = "Test task # 5/";
         boolean areAllFieldsEmptyByDefault = addTaskPage.areFieldsEmpty();
 
         addTaskPage.enterStartDate(LocalDate.now().plusDays(1).toString())
                 .uploadImage(pathToImage)
-                .enterName("Test task # 5/")
+                .enterName(clubName)
                 .enterTitle(invalidData)
                 .enterDescription(description)
                 .selectChallenge(challenge)
@@ -123,6 +125,13 @@ public class AddTaskTest extends AddTaskTestRunner {
         softAssert.assertTrue(areAllFieldsEmptyByDefault, "Not all fields are empty by default");
         actualErrorMessage = addTaskPage.getErrorMessageText();
         softAssert.assertEquals(actualErrorMessage, expectedMessage, "Expected error message did not appear");
+
+        List<String> clubNames = new ArrayList<>();
+        new ClubDAO()
+                .selectNameWhereName(clubName)
+                .forEach(name -> clubNames.add(name.toString()));
+
+        softAssert.assertTrue(clubNames.isEmpty());
 
         softAssert.assertAll();
     }
