@@ -5,7 +5,7 @@ import com.ita.edu.speakua.ui.clubs.ClubsPage;
 import com.ita.edu.speakua.ui.clubs.card.components.CardComponent;
 import com.ita.edu.speakua.ui.runners.SameWindowTestRunner;
 import com.ita.edu.speakua.ui.utils.jdbc.dao.CenterDAO;
-import com.ita.edu.speakua.ui.utils.jdbc.entity.CenterNameEntity;
+import com.ita.edu.speakua.ui.utils.jdbc.entity.CenterEntity;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.testng.annotations.Test;
@@ -30,7 +30,7 @@ public class CentersOrderByAlphabetTest extends SameWindowTestRunner {
         String[] expectedCenterNamesAscOrder = centerDAO
                 .firstSixNamesAsc()
                 .stream()
-                .map(CenterNameEntity::getName)
+                .map(CenterEntity::getName)
                 .toArray(String[]::new);
         System.out.println(Arrays.toString(expectedCenterNamesAscOrder));
 
@@ -49,7 +49,7 @@ public class CentersOrderByAlphabetTest extends SameWindowTestRunner {
         String[] expectedCenterNamesDescOrder = centerDAO
                 .firstSixNamesDesc()
                 .stream()
-                .map(CenterNameEntity::getName)
+                .map(CenterEntity::getName)
                 .toArray(String[]::new);
         System.out.println(Arrays.toString(expectedCenterNamesDescOrder));
 

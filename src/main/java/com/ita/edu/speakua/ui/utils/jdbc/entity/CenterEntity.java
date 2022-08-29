@@ -10,6 +10,8 @@ public class CenterEntity {
     public static final String SELECT_ALL = "SELECT * FROM centers ORDER BY id;";
     public static final String SELECT_WHERE_NAME = "SELECT * FROM centers WHERE name = '%s';";
     public static final String SELECT_BY_ID = "SELECT * FROM centers WHERE id = '%s';";
+    public static final String FIRST_SIX_NAMES_ASC = "SELECT name FROM centers ORDER BY name ASC LIMIT 6;";
+    public static final String FIRST_SIX_NAMES_DESC = "SELECT name FROM centers ORDER BY name DESC LIMIT 6;";
 
     private long id;
     private long centerExternalId;
@@ -43,6 +45,20 @@ public class CenterEntity {
         List<CenterEntity> centerEntities = new ArrayList<>();
         for (List<String> row : rows) {
             centerEntities.add(parseRow(row));
+        }
+        return centerEntities;
+    }
+
+    public static CenterEntity parseNameRow(List<String> row) {
+        CenterEntity centerEntity = new CenterEntity();
+        centerEntity.setName(row.get(0));
+        return centerEntity;
+    }
+
+    public static List<CenterEntity> parseNameRows(List<List<String>> rows) {
+        List<CenterEntity> centerEntities = new ArrayList<>();
+        for (List<String> row : rows) {
+            centerEntities.add(parseNameRow(row));
         }
         return centerEntities;
     }

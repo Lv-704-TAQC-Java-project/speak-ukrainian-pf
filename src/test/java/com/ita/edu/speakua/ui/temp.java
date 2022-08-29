@@ -24,11 +24,11 @@ public class temp {
         CenterDAO centerDAO = new CenterDAO();
         List<CenterEntity> centers = centerDAO.selectAll();
         CenterEntity center = centerDAO.selectById(1);
-        List<CenterNameEntity> firstSixCentersByNameAsc = centerDAO.firstSixNamesAsc();
-        List<CenterNameEntity> firstSixCentersByNameDesc = centerDAO.firstSixNamesDesc();
+//        List<CenterNameEntity> firstSixCentersByNameAsc = centerDAO.firstSixNamesAsc();
+//        List<CenterNameEntity> firstSixCentersByNameDesc = centerDAO.firstSixNamesDesc();
         System.out.println(center);
-        System.out.println(firstSixCentersByNameAsc);
-        System.out.println(firstSixCentersByNameDesc);
+//        System.out.println(firstSixCentersByNameAsc);
+//        System.out.println(firstSixCentersByNameDesc);
 //        System.out.println(centers);
 
         TaskDAO taskDAO = new TaskDAO();

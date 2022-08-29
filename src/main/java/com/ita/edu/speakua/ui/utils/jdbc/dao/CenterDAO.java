@@ -1,7 +1,6 @@
 package com.ita.edu.speakua.ui.utils.jdbc.dao;
 
 import com.ita.edu.speakua.ui.utils.jdbc.entity.CenterEntity;
-import com.ita.edu.speakua.ui.utils.jdbc.entity.CenterNameEntity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -35,30 +34,29 @@ public class CenterDAO {
         return CenterEntity.parseRows(rows).get(0);
     }
 
-    public List<CenterNameEntity> firstSixNamesAsc() {
+    public List<CenterEntity> firstSixNamesAsc() {
         Statement statement = ManagerDAO.getInstance().getStatement();
         List<List<String>> rows;
         try {
-            ResultSet resultSet = statement.executeQuery(CenterNameEntity.FIRST_SIX_NAMES_ASC);
+            ResultSet resultSet = statement.executeQuery(CenterEntity.FIRST_SIX_NAMES_ASC);
             rows = ManagerDAO.getInstance().parseResultSet(resultSet);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         ManagerDAO.getInstance().closeStatement(statement);
-        return CenterNameEntity.parseNames(rows);
+        return CenterEntity.parseNameRows(rows);
     }
 
-    public List<CenterNameEntity> firstSixNamesDesc() {
+    public List<CenterEntity> firstSixNamesDesc() {
         Statement statement = ManagerDAO.getInstance().getStatement();
         List<List<String>> rows;
         try {
-            ResultSet resultSet = statement.executeQuery(CenterNameEntity.FIRST_SIX_NAMES_DESC);
+            ResultSet resultSet = statement.executeQuery(CenterEntity.FIRST_SIX_NAMES_DESC);
             rows = ManagerDAO.getInstance().parseResultSet(resultSet);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         ManagerDAO.getInstance().closeStatement(statement);
-        return CenterNameEntity.parseNames(rows);
+        return CenterEntity.parseNameRows(rows);
     }
-
 }
