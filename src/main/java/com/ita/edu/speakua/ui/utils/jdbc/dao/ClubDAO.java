@@ -60,4 +60,30 @@ public class ClubDAO {
         ManagerDAO.getInstance().closeStatement(statement);
         return ClubEntity.parseNameRows(rows);
     }
+
+    public List<ClubEntity> selectName() {
+        Statement statement = ManagerDAO.getInstance().getStatement();
+        List<List<String>> rows;
+        try {
+            ResultSet resultSet = statement.executeQuery(ClubEntity.SELECT_NAME);
+            rows = ManagerDAO.getInstance().parseResultSet(resultSet);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        ManagerDAO.getInstance().closeStatement(statement);
+        return ClubEntity.parseNameRows(rows);
+    }
+
+    public List<ClubEntity> selectNameWhereName(String name) {
+        Statement statement = ManagerDAO.getInstance().getStatement();
+        List<List<String>> rows;
+        try {
+            ResultSet resultSet = statement.executeQuery(String.format(ClubEntity.SELECT_NAME_WHERE_NAME, name));
+            rows = ManagerDAO.getInstance().parseResultSet(resultSet);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        ManagerDAO.getInstance().closeStatement(statement);
+        return ClubEntity.parseNameRows(rows);
+    }
 }
