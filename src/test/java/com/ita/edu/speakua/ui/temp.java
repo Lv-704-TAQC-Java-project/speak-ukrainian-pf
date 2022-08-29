@@ -7,7 +7,6 @@ import com.ita.edu.speakua.ui.utils.jdbc.dao.TaskDAO;
 import com.ita.edu.speakua.ui.utils.jdbc.entity.*;
 import org.testng.annotations.Test;
 
-import java.sql.SQLOutput;
 import java.util.List;
 
 public class temp {
@@ -42,16 +41,8 @@ public class temp {
         ClubEntity club = clubDAO.selectById(1);
         System.out.println(club);
         System.out.println("===============================================");
-        List<ClubNameEntity> sixNamesAsc = clubDAO.selectSixNamesAsc();
-        System.out.println(sixNamesAsc);
-        System.out.println("===============================================");
-        List<ClubNameEntity> sixNamesDesc = clubDAO.selectSixNamesDesc();
-        System.out.println(sixNamesDesc);
-        System.out.println("===============================================");
-        List<ClubRatingEntity> sixRatingsAsc = clubDAO.selectSixRatingsAsc();
-        System.out.println(sixRatingsAsc);
-        System.out.println("===============================================");
-        List<ClubRatingEntity> sixRatingsDesc = clubDAO.selectSixRatingsDesc();
-        System.out.println(sixRatingsDesc);
+//        List<ClubEntity> sixNamesAsc = clubDAO.parseSixNamesAsc();
+//        System.out.println(sixNamesAsc);
+
     }
 }
