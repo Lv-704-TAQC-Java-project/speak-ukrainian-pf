@@ -7,15 +7,17 @@ import java.util.List;
 
 @Data
 public class TaskEntity {
+    public static final String SELECT_ALL = "SELECT * FROM tasks;";
     public static final String SELECT_WHERE_NAME = "SELECT * FROM tasks WHERE name = '%s';";
+    public static final String SELECT_LIKE_NAME = "SELECT * FROM tasks WHERE name LIKE '%s';";
 
     private long id;
     private String description;
     private String name;
     private String picture;
-    private String start_date;
-    private long challenge_id;
-    private String header_text;
+    private String startDate;
+//    private long challenge_id;
+    private String headerText;
 
     public static TaskEntity parseRow(List<String> row) {
         TaskEntity taskEntity = new TaskEntity();
@@ -24,9 +26,9 @@ public class TaskEntity {
         taskEntity.setDescription(row.get(1));
         taskEntity.setName(row.get(2));
         taskEntity.setPicture(row.get(3));
-        taskEntity.setStart_date(row.get(4));
-        taskEntity.setChallenge_id(Long.parseLong(row.get(5)));
-        taskEntity.setHeader_text(row.get(6));
+        taskEntity.setStartDate(row.get(4));
+//        taskEntity.setChallenge_id(Long.parseLong(row.get(5)));
+        taskEntity.setHeaderText(row.get(6));
 
         return taskEntity;
     }

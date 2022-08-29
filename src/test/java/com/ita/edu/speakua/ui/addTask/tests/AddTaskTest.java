@@ -2,6 +2,8 @@ package com.ita.edu.speakua.ui.addTask.tests;
 
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.addTask.TaskPage;
 import com.ita.edu.speakua.ui.runners.AddTaskTestRunner;
+import com.ita.edu.speakua.ui.utils.jdbc.dao.TaskDAO;
+import com.ita.edu.speakua.ui.utils.jdbc.entity.TaskEntity;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Severity;
@@ -13,6 +15,7 @@ import org.testng.asserts.SoftAssert;
 
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.util.List;
 
 public class AddTaskTest extends AddTaskTestRunner {
     private final String tomorrow = LocalDate.now().plusDays(1).toString();
@@ -215,7 +218,7 @@ public class AddTaskTest extends AddTaskTestRunner {
     @Description("Verify that admin can create a task on 'Add task' page")
     @Test
     public void verifyCreateTask() {
-        String name = "Maksym test";
+        String name = "Maksym test " + System.currentTimeMillis();
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertTrue(addTaskPage.areFieldsEmpty(),
                 "Create task form fields should be empty by default.");
@@ -228,6 +231,13 @@ public class AddTaskTest extends AddTaskTestRunner {
                 .selectChallenge(challenge);
 
         TaskPage taskPage = addTaskPage.save();
+        TaskDAO taskDAO = new TaskDAO();
+        List<TaskEntity> tasks = taskDAO.selectLikeName(name);
+
+        softAssert.assertEquals(tasks.get(0).getName(), name, "Name");
+        softAssert.assertEquals(tasks.get(0).getStartDate(), tomorrow, "Date");
+        softAssert.assertEquals(tasks.get(0).getHeaderText(), "<p>" + title + "</p>", "Description");
+        softAssert.assertEquals(tasks.get(0).getDescription(), "<p>" + description + "</p>", "Header title");
 
         softAssert.assertEquals(addTaskPage.getSuccessMessage(),
                 String.format("Завдання '%s' успішно додане!", name),
