@@ -18,7 +18,6 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class AddTaskTest extends AddTaskTestRunner {
     private final String tomorrow = LocalDate.now().plusDays(1).toString();
@@ -124,15 +123,11 @@ public class AddTaskTest extends AddTaskTestRunner {
         SoftAssert softAssert = new SoftAssert();
 
         softAssert.assertTrue(areAllFieldsEmptyByDefault, "Not all fields are empty by default");
+
         actualErrorMessage = addTaskPage.getErrorMessageText();
         softAssert.assertEquals(actualErrorMessage, expectedMessage, "Expected error message did not appear");
 
-        List<String> clubs = new TaskDAO()
-                .selectLikeName(clubName)
-                .stream()
-                .map(TaskEntity::getName)
-                .collect(Collectors.toList());
-
+        List<String> clubs = taskService.getAllNameWhere(clubName);
         softAssert.assertTrue(clubs.isEmpty());
 
         softAssert.assertAll();
@@ -242,7 +237,7 @@ public class AddTaskTest extends AddTaskTestRunner {
 
         TaskPage taskPage = addTaskPage.save();
         TaskDAO taskDAO = new TaskDAO();
-        List<TaskEntity> tasks = taskDAO.selectLikeName(name);
+        List<TaskEntity> tasks = taskDAO.selectWhereNameLike(name);
 
         softAssert.assertEquals(tasks.get(0).getName(), name, "Name");
         softAssert.assertEquals(tasks.get(0).getStartDate(), tomorrow, "Date");
