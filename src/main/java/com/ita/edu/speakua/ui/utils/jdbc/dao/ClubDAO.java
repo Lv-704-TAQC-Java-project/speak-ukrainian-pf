@@ -78,7 +78,7 @@ public class ClubDAO {
         Statement statement = ManagerDAO.getInstance().getStatement();
         List<List<String>> rows;
         try {
-            ResultSet resultSet = statement.executeQuery(String.format(ClubEntity.SELECT_NAME_WHERE_NAME, name));
+            ResultSet resultSet = statement.executeQuery(String.format(ClubEntity.SELECT_NAME_WHERE_NAME_LIKE, name));
             rows = ManagerDAO.getInstance().parseResultSet(resultSet);
         } catch (SQLException e) {
             throw new RuntimeException(e);

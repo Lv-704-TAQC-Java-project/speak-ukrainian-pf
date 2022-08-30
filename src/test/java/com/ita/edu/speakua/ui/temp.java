@@ -5,11 +5,13 @@ import com.ita.edu.speakua.ui.utils.jdbc.dao.CityDAO;
 import com.ita.edu.speakua.ui.utils.jdbc.dao.ClubDAO;
 import com.ita.edu.speakua.ui.utils.jdbc.dao.TaskDAO;
 import com.ita.edu.speakua.ui.utils.jdbc.entity.*;
+import com.ita.edu.speakua.ui.utils.jdbc.services.ClubService;
 import org.testng.annotations.Test;
 
 import java.util.List;
 
 public class temp {
+    ClubService clubService = new ClubService();
     @Test
     public void jdbs() {
         CityDAO cityDAO = new CityDAO();
@@ -37,8 +39,8 @@ public class temp {
 
     @Test
     public void jdbcClub() {
-        ClubDAO clubDAO = new ClubDAO();
-        ClubEntity club = clubDAO.selectById(1);
+
+        ClubEntity club = clubService.selectById(1);
         System.out.println(club);
         System.out.println("===============================================");
 //        List<ClubEntity> sixNamesAsc = clubDAO.parseSixNamesAsc();

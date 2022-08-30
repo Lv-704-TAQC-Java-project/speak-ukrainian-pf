@@ -15,10 +15,11 @@ public class ClubEntity {
     public static final String SELECT_SIX_NAMES_ORDER_BY_RATING_ASC = "SELECT name FROM clubs ORDER BY rating, id LIMIT 6;";
     public static final String SELECT_SIX_NAMES_ORDER_BY_RATING_DEC = "SELECT name FROM clubs ORDER BY rating, id LIMIT 6;";
     public static final String SELECT_NAME = "SELECT name FROM clubs;";
-    public static final String SELECT_NAME_WHERE_NAME = "SELECT name FROM clubs WHERE name LIKE '%s%%';";
+    public static final String SELECT_NAME_WHERE_NAME_LIKE = "SELECT name FROM clubs WHERE name LIKE '%s%%';";
 
     public static final String ORDER_BY_RATING_ASC_SIX = "SELECT id, name, rating FROM clubs ORDER BY rating, id LIMIT 6;";
     public static final String ORDER_BY_RATING_DESC_SIX = "SELECT id, name, rating FROM clubs ORDER BY rating DESC, id LIMIT 6;";
+
 
     private long id;
     private int age_from;
