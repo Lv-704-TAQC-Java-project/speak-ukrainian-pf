@@ -35,55 +35,55 @@ public class ClubDAO {
         return ClubEntity.parseRows(rows).get(0);
     }
 
-    public List<ClubEntity> selectSixNamesAscending() {
-        Statement statement = ManagerDAO.getInstance().getStatement();
-        List<List<String>> rows;
-        try {
-            ResultSet resultSet = statement.executeQuery(ClubEntity.SELECT_SIX_NAMES_ASC);
-            rows = ManagerDAO.getInstance().parseResultSet(resultSet);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        ManagerDAO.getInstance().closeStatement(statement);
-        return ClubEntity.parseNameRows(rows);
-    }
-
-    public List<ClubEntity> selectSixNamesDescending() {
-        Statement statement = ManagerDAO.getInstance().getStatement();
-        List<List<String>> rows;
-        try {
-            ResultSet resultSet = statement.executeQuery(ClubEntity.SELECT_SIX_NAMES_DESC);
-            rows = ManagerDAO.getInstance().parseResultSet(resultSet);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        ManagerDAO.getInstance().closeStatement(statement);
-        return ClubEntity.parseNameRows(rows);
-    }
-
-    public List<ClubEntity> selectName() {
-        Statement statement = ManagerDAO.getInstance().getStatement();
-        List<List<String>> rows;
-        try {
-            ResultSet resultSet = statement.executeQuery(ClubEntity.SELECT_NAME);
-            rows = ManagerDAO.getInstance().parseResultSet(resultSet);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        ManagerDAO.getInstance().closeStatement(statement);
-        return ClubEntity.parseNameRows(rows);
-    }
-
-    public List<ClubEntity> selectNameWhereName(String name) {
-        Statement statement = ManagerDAO.getInstance().getStatement();
-        List<List<String>> rows;
-        try {
-            ResultSet resultSet = statement.executeQuery(String.format(ClubEntity.SELECT_NAME_WHERE_NAME_LIKE, name));
-            rows = ManagerDAO.getInstance().parseResultSet(resultSet);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        ManagerDAO.getInstance().closeStatement(statement);
-        return ClubEntity.parseNameRows(rows);
-    }
+//    public List<ClubEntity> selectSixNamesAscending() {
+//        Statement statement = ManagerDAO.getInstance().getStatement();
+//        List<List<String>> rows;
+//        try {
+//            ResultSet resultSet = statement.executeQuery(ClubEntity.SELECT_SIX_NAMES_ASC);
+//            rows = ManagerDAO.getInstance().parseResultSet(resultSet);
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//        ManagerDAO.getInstance().closeStatement(statement);
+//        return ClubEntity.parseNameRows(rows);
+//    }
+//
+//    public List<ClubEntity> selectSixNamesDescending() {
+//        Statement statement = ManagerDAO.getInstance().getStatement();
+//        List<List<String>> rows;
+//        try {
+//            ResultSet resultSet = statement.executeQuery(ClubEntity.SELECT_SIX_NAMES_DESC);
+//            rows = ManagerDAO.getInstance().parseResultSet(resultSet);
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//        ManagerDAO.getInstance().closeStatement(statement);
+//        return ClubEntity.parseNameRows(rows);
+//    }
+//
+//    public List<ClubEntity> selectName() {
+//        Statement statement = ManagerDAO.getInstance().getStatement();
+//        List<List<String>> rows;
+//        try {
+//            ResultSet resultSet = statement.executeQuery(ClubEntity.SELECT_NAME);
+//            rows = ManagerDAO.getInstance().parseResultSet(resultSet);
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//        ManagerDAO.getInstance().closeStatement(statement);
+//        return ClubEntity.parseNameRows(rows);
+//    }
+//
+//    public List<ClubEntity> selectNameWhereName(String name) {
+//        Statement statement = ManagerDAO.getInstance().getStatement();
+//        List<List<String>> rows;
+//        try {
+//            ResultSet resultSet = statement.executeQuery(String.format(ClubEntity.SELECT_NAME_WHERE_NAME_LIKE, name));
+//            rows = ManagerDAO.getInstance().parseResultSet(resultSet);
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//        ManagerDAO.getInstance().closeStatement(statement);
+//        return ClubEntity.parseNameRows(rows);
+//    }
 }
