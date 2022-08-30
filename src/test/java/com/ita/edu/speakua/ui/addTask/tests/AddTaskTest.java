@@ -15,8 +15,8 @@ import org.testng.asserts.SoftAssert;
 
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AddTaskTest extends AddTaskTestRunner {
     private final String tomorrow = LocalDate.now().plusDays(1).toString();
@@ -125,16 +125,16 @@ public class AddTaskTest extends AddTaskTestRunner {
         actualErrorMessage = addTaskPage.getErrorMessageText();
         softAssert.assertEquals(actualErrorMessage, expectedMessage, "Expected error message did not appear");
 
-        List<String> clubs = new ArrayList<>();
-        new TaskDAO()
+        List<String> clubs = new TaskDAO()
                 .selectLikeName(clubName)
-                .forEach(club -> clubs.add(club.toString()));
+                .stream()
+                .map(TaskEntity::getName)
+                .collect(Collectors.toList());
 
         softAssert.assertTrue(clubs.isEmpty());
 
         softAssert.assertAll();
     }
-
 
     @Issue("TUA-526")
     @Test
