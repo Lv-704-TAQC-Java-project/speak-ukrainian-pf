@@ -10,7 +10,7 @@ import java.util.List;
 public class TaskDAO {
     public List<TaskEntity> selectAll() {
         Statement statement = ManagerDAO.getInstance().getStatement();
-        List<List<String>> rows = null;
+        List<List<String>> rows;
         try {
             ResultSet resultSet = statement.executeQuery(TaskEntity.SELECT_ALL);
             rows = ManagerDAO.getInstance().parseResultSet(resultSet);
@@ -25,7 +25,7 @@ public class TaskDAO {
         Statement statement = ManagerDAO.getInstance().getStatement();
         List<List<String>> rows;
         try {
-            ResultSet resultSet = statement.executeQuery(String.format(TaskEntity.SELECT_WHERE_NAME, name));
+            ResultSet resultSet = statement.executeQuery(String.format(TaskEntity.SELECT_ALL_WHERE_NAME, name));
             rows = ManagerDAO.getInstance().parseResultSet(resultSet);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -34,11 +34,11 @@ public class TaskDAO {
         return TaskEntity.parseRows(rows);
     }
 
-    public List<TaskEntity> selectLikeName(String name) {
+    public List<TaskEntity> selectWhereNameLike(String name) {
         Statement statement = ManagerDAO.getInstance().getStatement();
         List<List<String>> rows;
         try {
-            ResultSet resultSet = statement.executeQuery(String.format(TaskEntity.SELECT_LIKE_NAME, name));
+            ResultSet resultSet = statement.executeQuery(String.format(TaskEntity.SELECT_ALL_WHERE_NAME_LIKE, name));
             rows = ManagerDAO.getInstance().parseResultSet(resultSet);
         } catch (SQLException e) {
             throw new RuntimeException(e);

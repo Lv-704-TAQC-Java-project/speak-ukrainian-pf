@@ -20,7 +20,7 @@ public class CardComponent extends BasePage {
     @FindBy(xpath = ".//div[@class='title']")
     protected WebElement cardTitle;
 
-    @FindBy(xpath = ".//div[contains(@class, 'name')]")
+    @FindBy(xpath = "//div[@class='title']//div[@class='name']")
     protected WebElement cardName;
 
     @FindBy(xpath = ".//*[@class='description']")
@@ -69,7 +69,7 @@ public class CardComponent extends BasePage {
         return cardName.getText();
     }
 
-    public String getCardDescription(){
+    public String getCardDescription() {
         wait.visibility(cardDescription);
         return cardDescription.getText();
     }
