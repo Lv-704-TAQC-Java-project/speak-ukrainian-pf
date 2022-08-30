@@ -35,7 +35,7 @@ public class ClubDAO {
         return ClubEntity.parseRows(rows).get(0);
     }
 
-    public List<ClubEntity> parseSixNamesAsc() {
+    public List<ClubEntity> selectSixNamesAscending() {
         Statement statement = ManagerDAO.getInstance().getStatement();
         List<List<String>> rows;
         try {
@@ -48,7 +48,7 @@ public class ClubDAO {
         return ClubEntity.parseNameRows(rows);
     }
 
-    public List<ClubEntity> parseSixNamesDesc() {
+    public List<ClubEntity> selectSixNamesDescending() {
         Statement statement = ManagerDAO.getInstance().getStatement();
         List<List<String>> rows;
         try {
