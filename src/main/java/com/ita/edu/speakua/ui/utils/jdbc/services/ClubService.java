@@ -33,7 +33,7 @@ public class ClubService {
             ClubWithCenterDTO clubDTO = new ClubWithCenterDTO();
             clubDTO.setClub(club);
             CenterDTO center = new CenterDTO();
-            center.setCenter(centerDAO.selectById(club.getCenter_id()));
+            center.setCenter(centerDAO.selectById(club.getCenterId()));
             clubs.add(clubDTO);
         }
         return clubs;
