@@ -14,7 +14,9 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,7 +50,7 @@ public class AddTaskTest extends AddTaskTestRunner {
         addTaskPage = addTaskPage
                 .enterStartDate(LocalDate.now().plusDays(2).toString())
                 .uploadImage(pathToImage)
-                .enterName("Yaroslav test")
+                .enterName("Yaroslav test" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()))
                 .enterTitle("Some forty character text for the test!!")
                 .enterDescription(textDescription)
                 .selectChallenge(challenge);
@@ -80,7 +82,7 @@ public class AddTaskTest extends AddTaskTestRunner {
         addTaskPage = addTaskPage
                 .enterStartDate(actualDate)
                 .uploadImage(pathToImage)
-                .enterName("Yaroslav test")
+                .enterName("Yaroslav test" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()))
                 .enterTitle(descriptionInput.substring(0, 50))
                 .enterDescription(descriptionInput.substring(0, 500))
                 .selectChallenge("Example name");
