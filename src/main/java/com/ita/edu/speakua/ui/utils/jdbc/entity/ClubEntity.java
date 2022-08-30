@@ -47,8 +47,8 @@ public class ClubEntity {
         clubEntity.setId(Long.parseLong(row.get(0)));
         clubEntity.setAgeFrom(Integer.parseInt(row.get(1)));
         clubEntity.setAgeTo(Integer.parseInt(row.get(2)));
-        clubEntity.setCenterExternalId(Long.parseLong(row.get(3)));
-        clubEntity.setClubExternalId(Long.parseLong(row.get(4)));
+        clubEntity.setCenterExternalId(Long.parseLong(row.get(3)== null ? "0" : row.get(3)));
+        clubEntity.setClubExternalId(Long.parseLong(row.get(4)== null ? "0" : row.get(4)));
         clubEntity.setContacts(row.get(5));
         clubEntity.setDescription(row.get(6));
         clubEntity.setApproved(Boolean.parseBoolean(row.get(7)));

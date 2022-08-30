@@ -2,7 +2,9 @@ package com.ita.edu.speakua.ui.advancedSearch.tests;
 
 import com.ita.edu.speakua.ui.clubs.ClubsPage;
 import com.ita.edu.speakua.ui.clubs.SortClubComponent;
+import com.ita.edu.speakua.ui.clubs.card.components.CardComponent;
 import com.ita.edu.speakua.ui.runners.AdvancedSearchTestRunner;
+import com.ita.edu.speakua.ui.utils.jdbc.services.ClubService;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Severity;
@@ -123,8 +125,10 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
     @Severity(SeverityLevel.CRITICAL)
     @Description("Verify that the clubs can be sorted by rating")
     @Test
-    public void verifySortingClubsByRate() {
-        advancedSearchPanel.selectClubFilter();
+    public void verifySortingClubsByRating() {
+        advancedSearchPanel
+                .selectClubFilter()
+                .clearCitySelector();
         ClubsPage clubsPage = new ClubsPage(driver);
 
         SortClubComponent sort = clubsPage
@@ -132,20 +136,36 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
                 .sortByRating();
 
         SoftAssert softAssert = new SoftAssert();
-        List<Integer> cardCountOfStars = new ArrayList<>();
-        for (int i = 0; i < clubsPage.getCards().size(); i++) {
-            cardCountOfStars.add(clubsPage.getCards().get(i).getStarRatingZeroList().size());
-            boolean result = cardCountOfStars.get(i) == 5;
-            softAssert.assertTrue(result, "Club cards are not sorted by Rate when advancedSearch is opened");
+        ClubService clubService = new ClubService();
+        long countOfCardsOnPage = clubsPage.getCards().size();
+        List<String> cardNames = clubService.getAllNamesOrderByRatingIdAscLimit(countOfCardsOnPage);
+        List<Double> cardRatings = clubService.getAllRatingsOrderByRatingIdAscLimit(countOfCardsOnPage);
+        for (int i = 0; i < countOfCardsOnPage; i++) {
+            int cardCountOfStarsActual = clubsPage.getCards().get(i).getStarRatingFullList().size();
+            double cardCountOfStarsExpected = cardRatings.get(i);
+
+            softAssert.assertEquals(cardCountOfStarsActual, (int) cardCountOfStarsExpected);
+
+            String cardNameActual = clubsPage.getCards().get(i).getCardName();
+            String cardNameExpected = cardNames.get(i);
+
+            softAssert.assertEquals(cardNameActual, cardNameExpected);
         }
 
         sort.orderByDesc();
 
-        cardCountOfStars = new ArrayList<>();
-        for (int i = 0; i < clubsPage.getCards().size(); i++) {
-            cardCountOfStars.add(i, clubsPage.getCards().get(i).getStarRatingFullList().size());
-            boolean result = cardCountOfStars.get(i) == 5;
-            softAssert.assertTrue(result, "Club cards are not sorted by Rate when advancedSearch is opened");
+        cardNames = clubService.getAllNamesOrderByRatingIdDescLimit(countOfCardsOnPage);
+        cardRatings = clubService.getAllRatingsOrderByRatingIdDescLimit(countOfCardsOnPage);
+        for (int i = 0; i < countOfCardsOnPage; i++) {
+            int cardCountOfStarsActual = clubsPage.getCards().get(i).getStarRatingFullList().size();
+            double cardCountOfStarsExpected = cardRatings.get(i);
+
+            softAssert.assertEquals(cardCountOfStarsActual, (int) cardCountOfStarsExpected);
+
+            String cardNameActual = clubsPage.getCards().get(i).getCardName();
+            String cardNameExpected = cardNames.get(i);
+
+            softAssert.assertEquals(cardNameActual, cardNameExpected);
         }
         softAssert.assertAll();
     }
