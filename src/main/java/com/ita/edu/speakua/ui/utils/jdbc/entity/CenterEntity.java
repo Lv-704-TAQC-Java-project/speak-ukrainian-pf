@@ -7,11 +7,28 @@ import java.util.List;
 
 @Data
 public class CenterEntity {
-    public static final String SELECT_ALL = "SELECT * FROM centers ORDER BY id;";
-    public static final String SELECT_WHERE_NAME = "SELECT * FROM centers WHERE name = '%s';";
-    public static final String SELECT_BY_ID = "SELECT * FROM centers WHERE id = '%s';";
-    public static final String FIRST_SIX_NAMES_ASC = "SELECT name FROM centers ORDER BY name ASC LIMIT 6;";
-    public static final String FIRST_SIX_NAMES_DESC = "SELECT name FROM centers ORDER BY name DESC LIMIT 6;";
+    public static final String ALL_FIELDS = "id, center_external_id, contacts, description, name, " +
+            "url_background_picture, url_logo, url_web, user_id, club_count, rating";
+    public static final String ALL_FIELDS_CENTER = "centers.id, centers.center_external_id, centers.contacts, " +
+            "centers.description, centers.name, centers.url_background_picture, centers.url_logo, centers.url_web, " +
+            "centers.user_id, centers.club_count, centers.rating";
+    public static final String SELECT_ALL_FIELDS = "SELECT " + ALL_FIELDS;
+
+    public static final String SELECT_ALL = SELECT_ALL_FIELDS + " FROM centers ORDER BY id;";
+    public static final String SELECT_WHERE_NAME = SELECT_ALL_FIELDS + " FROM centers WHERE name = '%s';";
+    public static final String SELECT_BY_ID = SELECT_ALL_FIELDS + " FROM centers WHERE id = '%s';";
+    public static final String FIRST_NAMES_ASC_LIMIT = SELECT_ALL_FIELDS + " FROM centers ORDER BY name ASC LIMIT %d;";
+    public static final String FIRST_NAMES_DESC_LIMIT = SELECT_ALL_FIELDS + " FROM centers ORDER BY name DESC LIMIT %d;";
+    public static final String FIRST_NAMES_IN_KYIV_ASC_LIMIT = "SELECT DISTINCT " + ALL_FIELDS_CENTER + " FROM centers" +
+            " JOIN locations ON locations.center_id = centers.id" +
+            " JOIN cities ON cities.id = locations.city_id" +
+            " Where cities.name='Київ'" +
+            " ORDER BY centers.name ASC LIMIT %d;";
+    public static final String FIRST_NAMES_IN_KYIV_DESC_LIMIT = "SELECT DISTINCT " + ALL_FIELDS_CENTER + " FROM centers" +
+            " JOIN locations ON locations.center_id = centers.id" +
+            " JOIN cities ON cities.id = locations.city_id" +
+            " Where cities.name='Київ'" +
+            " ORDER BY centers.name DESC LIMIT %d;";
 
     private long id;
     private long centerExternalId;
@@ -45,20 +62,6 @@ public class CenterEntity {
         List<CenterEntity> centerEntities = new ArrayList<>();
         for (List<String> row : rows) {
             centerEntities.add(parseRow(row));
-        }
-        return centerEntities;
-    }
-
-    public static CenterEntity parseNameRow(List<String> row) {
-        CenterEntity centerEntity = new CenterEntity();
-        centerEntity.setName(row.get(0));
-        return centerEntity;
-    }
-
-    public static List<CenterEntity> parseNameRows(List<List<String>> rows) {
-        List<CenterEntity> centerEntities = new ArrayList<>();
-        for (List<String> row : rows) {
-            centerEntities.add(parseNameRow(row));
         }
         return centerEntities;
     }

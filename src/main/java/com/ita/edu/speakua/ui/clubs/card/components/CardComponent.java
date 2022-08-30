@@ -20,7 +20,7 @@ public class CardComponent extends BasePage {
     @FindBy(xpath = ".//div[@class='title']")
     protected WebElement cardTitle;
 
-    @FindBy(xpath = "//div[@class='title']//div[@class='name']")
+    @FindBy(xpath = "//div[contains(@class, 'title')]//div[contains(@class, 'name')]")
     protected WebElement cardName;
 
     @FindBy(xpath = ".//*[@class='description']")

@@ -14,11 +14,12 @@ public class CenterComponent extends CardComponent{
     }
 
     public WebElement getCenterName() {
+        wait.visibility(centerName);
         return centerName;
     }
 
     public String getTextCenterName() {
-        wait.sleep(2000);
+//        wait.sleep(2000);
         return getCenterName().getText();
     }
 }
