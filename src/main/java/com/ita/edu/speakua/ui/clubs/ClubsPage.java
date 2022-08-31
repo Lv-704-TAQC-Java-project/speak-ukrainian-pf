@@ -110,7 +110,12 @@ public class ClubsPage extends Header {
     public void clickManagingClubsPageElement(WebElement element) {
         List<CardComponent> cards = new ClubsPage(driver).getCards();
         element.click();
-        wait.sleep(4000);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+            try {
+                wait.staleness(cards.get(0).getCardBody());
+                wait.staleness(cards.get(cards.size() - 1).getCardBody());
+            } catch (TimeoutException ignored) {
+        }
     }
 
     @Step("Is closed advanced search panel")
