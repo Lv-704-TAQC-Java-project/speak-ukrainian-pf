@@ -45,7 +45,7 @@ public class ClubService {
     public List<String> getAllNamesOrderByRatingIdAscLimit(long number) {
         List<String> names = new ArrayList<>();
         for (ClubEntity club : clubDAO.selectAllOrderByRatingIdAscLimit(number)) {
-            names.add(club.getName());
+            names.add(club.getName().trim());
         }
         return names;
     }
@@ -53,7 +53,7 @@ public class ClubService {
     public List<String> getAllNamesOrderByRatingIdDescLimit(long number) {
         List<String> names = new ArrayList<>();
         for (ClubEntity club : clubDAO.selectAllOrderByRatingIdDescLimit(number)) {
-            names.add(club.getName());
+            names.add(club.getName().trim());
         }
         return names;
     }
