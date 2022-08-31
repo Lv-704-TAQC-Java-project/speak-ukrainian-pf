@@ -158,7 +158,7 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
         cardRatings = clubService.getAllRatingsOrderByRatingIdDescLimit(countOfCardsOnPage);
         for (int i = 0; i < countOfCardsOnPage; i++) {
             int cardCountOfStarsActual = clubsPage.getCards().get(i).getStarRatingFullList().size();
-            double cardCountOfStarsExpected = cardRatings.get(i);
+            double cardCountOfStarsExpected = cardRatings.get(i) <= 5 ? cardRatings.get(i) : 5;
 
             softAssert.assertEquals(cardCountOfStarsActual, (int) cardCountOfStarsExpected);
 
