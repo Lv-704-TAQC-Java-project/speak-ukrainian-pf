@@ -16,11 +16,19 @@ public class ClubEntity {
     public static final String SELECT_ALL = SELECT_ALL_FIELDS + " FROM clubs ORDER BY id;";
     public static final String SELECT_BY_ID = SELECT_ALL_FIELDS + " FROM clubs WHERE id = '%s';";
 
-    public static final String SELECT_ALL_ORDER_BY_NAME_ASC_LIMIT = SELECT_ALL_FIELDS + " FROM clubs ORDER BY name ASC LIMIT %d;";
-    public static final String SELECT_ALL_ORDER_BY_NAME_DEC_LIMIT = SELECT_ALL_FIELDS + " FROM clubs ORDER BY name DESC LIMIT %d;";
+    public static final String SELECT_ALL_ORDER_BY_NAME_ASC_LIMIT = SELECT_ALL_FIELDS
+            + " FROM clubs WHERE name IS NOT NULL AND length(trim(name)) > 1 ORDER BY name ASC LIMIT %d;";
+    public static final String SELECT_ALL_ORDER_BY_NAME_DEC_LIMIT = SELECT_ALL_FIELDS
+            + " FROM clubs WHERE name IS NOT NULL AND length(trim(name)) > 1 ORDER BY name DESC LIMIT %d;";
 
-    public static final String SELECT_ALL_ORDER_BY_RATING_ID_ASC_LIMIT = SELECT_ALL_FIELDS + " FROM clubs ORDER BY rating ASC, id LIMIT %d;";
-    public static final String SELECT_ALL_ORDER_BY_RATING_ID_DESC_LIMIT = SELECT_ALL_FIELDS + " FROM clubs ORDER BY rating DESC, id LIMIT %d;";
+    public static final String SELECT_ALL_ORDER_BY_RATING_ID_ASC_LIMIT = SELECT_ALL_FIELDS + " FROM clubs " +
+            "WHERE id IN (SELECT DISTINCT club_category.club_id " +
+            "from club_category) " +
+            "ORDER BY rating ASC, id LIMIT %d;";
+    public static final String SELECT_ALL_ORDER_BY_RATING_ID_DESC_LIMIT = SELECT_ALL_FIELDS + " FROM clubs " +
+            "WHERE id IN (SELECT DISTINCT club_category.club_id " +
+            "from club_category) " +
+            "ORDER BY rating DESC, id LIMIT %d;";
     public static final String SELECT_ALL_WHERE_NAME_LIKE = SELECT_ALL_FIELDS + " FROM clubs WHERE name LIKE '%s%%';";
 
     private long id;
@@ -59,9 +67,9 @@ public class ClubEntity {
         clubEntity.setUrlLogo(row.get(12));
         clubEntity.setUrlWeb(row.get(13));
         clubEntity.setWorkTime(row.get(14));
-        clubEntity.setCenterId(Long.parseLong(row.get(16) == null ? "0" : row.get(15)));
+        clubEntity.setCenterId(Long.parseLong(row.get(15) == null ? "0" : row.get(15)));
         clubEntity.setUserId(Long.parseLong(row.get(16) == null ? "0" : row.get(16)));
-        clubEntity.setFeedbackCount(Integer.parseInt(row.get(17)));
+        clubEntity.setFeedbackCount(Integer.parseInt(row.get(17) == null ? "0" : row.get(17)));
         return clubEntity;
     }
 

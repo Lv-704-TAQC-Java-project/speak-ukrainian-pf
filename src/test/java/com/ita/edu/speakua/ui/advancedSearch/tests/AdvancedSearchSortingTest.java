@@ -2,7 +2,6 @@ package com.ita.edu.speakua.ui.advancedSearch.tests;
 
 import com.ita.edu.speakua.ui.clubs.ClubsPage;
 import com.ita.edu.speakua.ui.clubs.SortClubComponent;
-import com.ita.edu.speakua.ui.clubs.card.components.CardComponent;
 import com.ita.edu.speakua.ui.runners.AdvancedSearchTestRunner;
 import com.ita.edu.speakua.ui.utils.jdbc.services.ClubService;
 import io.qameta.allure.Description;
@@ -12,7 +11,6 @@ import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
@@ -21,6 +19,7 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
     @Description("Verify that clubs are sorted by ABC")
     @Test
     public void advancedSearchABCSortClubTest() {
+        advancedSearchPanel.clearCitySelector();
         advancedSearchPanel.selectClubFilter();
         ClubsPage clubsPage = new ClubsPage(driver);
 
@@ -29,28 +28,26 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
                 .sortByAlphabet()
                 .orderByDesc();
 
+        int cardsLimit = 6;
+
+        ClubService clubService = new ClubService();
         SoftAssert softAssert = new SoftAssert();
 
-        List<String> cardNamesDECExpected = new ArrayList<>();
-        cardNamesDECExpected.add("ячсячячс");
-        cardNamesDECExpected.add("школа танців dream team");
-        cardNamesDECExpected.add("школа робототехніки та програмування для дітей robocode");
-        cardNamesDECExpected.add("школа лідерства і бізнесу kidbi");
-        cardNamesDECExpected.add("школа джазового та естрадного мистецтв");
-        cardNamesDECExpected.add("школа бойового гопака «шаблезуб»");
-
-        List<String> cardNamesTextDecActual = new ArrayList<>();
+        List<String> cardNamesDescExpected = clubService.getNamesOrderByDescending(cardsLimit);
         for (int i = 0; i < clubsPage.getCards().size(); i++) {
-            cardNamesTextDecActual.add(i, clubsPage.getCards().get(i).getCardName().toLowerCase());
+            softAssert.assertEquals(clubsPage.getCards().get(i).getCardName().replaceAll("[\n\r]", ""),
+                    cardNamesDescExpected.get(i).replaceAll("[\n\r]", ""),
+                    "Club cards are not sorted by ABC DEC when arrowUp is clicked");
         }
 
-        softAssert.assertEquals(cardNamesTextDecActual.toString(), cardNamesDECExpected.toString(),
-                "Club cards are not sorted by ABC DEC when arrowUp is clicked");
-
         sortClubComponent.orderByAsc();
-        softAssert.assertTrue(clubsPage.getCards().get(0).getCardName().toLowerCase().startsWith("a"),
-                "Club cards are not sorted by ABC ASC when arrowDown is clicked");
 
+        List<String> cardNamesAscExpected = clubService.getNamesOrderByAscending(cardsLimit);
+        for (int i = 0; i < clubsPage.getCards().size(); i++) {
+            softAssert.assertEquals(clubsPage.getCards().get(i).getCardName(),
+                    cardNamesAscExpected.get(i),
+                    "Club cards are not sorted by ABC ASC when arrowDown is clicked");
+        }
         softAssert.assertAll();
     }
 
@@ -158,7 +155,7 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
         cardRatings = clubService.getAllRatingsOrderByRatingIdDescLimit(countOfCardsOnPage);
         for (int i = 0; i < countOfCardsOnPage; i++) {
             int cardCountOfStarsActual = clubsPage.getCards().get(i).getStarRatingFullList().size();
-            double cardCountOfStarsExpected = cardRatings.get(i);
+            double cardCountOfStarsExpected = cardRatings.get(i) <= 5 ? cardRatings.get(i) : 5;
 
             softAssert.assertEquals(cardCountOfStarsActual, (int) cardCountOfStarsExpected);
 

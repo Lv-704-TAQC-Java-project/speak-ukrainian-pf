@@ -8,6 +8,7 @@ import com.ita.edu.speakua.ui.utils.jdbc.entity.ClubEntity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ClubService {
     private final ClubDAO clubDAO;
@@ -73,6 +74,23 @@ public class ClubService {
         }
         return rating;
     }
+
+    public List<String> getNamesOrderByAscending(int limit) {
+        return clubDAO
+                .selectAllOrderByNameAsc(limit)
+                .stream()
+                .map(ClubEntity::getName)
+                .collect(Collectors.toList());
+    }
+
+    public List<String> getNamesOrderByDescending(int limit) {
+        return clubDAO
+                .selectAllOrderByNameDesc(limit)
+                .stream()
+                .map(ClubEntity::getName)
+                .collect(Collectors.toList());
+    }
+
 
     public ClubEntity selectById(long id) {
         return clubDAO.selectById(id);
