@@ -51,7 +51,7 @@ public class CenterDAO {
         Statement statement = ManagerDAO.getInstance().getStatement();
         List<List<String>> rows;
         try {
-            ResultSet resultSet = statement.executeQuery(String.format(CenterEntity.FIRST_NAMES_LIMIT, desc ? "DESC" : "", limit));
+            ResultSet resultSet = statement.executeQuery(String.format(CenterEntity.FIRST_NAMES_LIMIT, desc ? "DESC" : "ASC", limit));
             rows = ManagerDAO.getInstance().parseResultSet(resultSet);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -64,7 +64,7 @@ public class CenterDAO {
         Statement statement = ManagerDAO.getInstance().getStatement();
         List<List<String>> rows;
         try {
-            ResultSet resultSet = statement.executeQuery(String.format(CenterEntity.FIRST_NAMES_IN_KYIV_LIMIT, desc, limit));
+            ResultSet resultSet = statement.executeQuery(String.format(CenterEntity.FIRST_NAMES_IN_KYIV_LIMIT, desc ? "DESC" : "ASC", limit));
             rows = ManagerDAO.getInstance().parseResultSet(resultSet);
         } catch (SQLException e) {
             throw new RuntimeException(e);

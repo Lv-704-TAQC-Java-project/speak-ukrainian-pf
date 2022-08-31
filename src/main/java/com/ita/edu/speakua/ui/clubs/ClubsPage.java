@@ -110,7 +110,7 @@ public class ClubsPage extends Header {
     public void clickManagingClubsPageElement(WebElement element) {
         List<CardComponent> cards = new ClubsPage(driver).getCards();
         element.click();
-        wait.sleep(4);
+        wait.sleep(4000);
     }
 
     @Step("Is closed advanced search panel")
