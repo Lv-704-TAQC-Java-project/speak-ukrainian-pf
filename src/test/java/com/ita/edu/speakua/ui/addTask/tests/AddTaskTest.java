@@ -4,6 +4,7 @@ import com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.ad
 import com.ita.edu.speakua.ui.runners.AddTaskTestRunner;
 import com.ita.edu.speakua.ui.utils.jdbc.dao.TaskDAO;
 import com.ita.edu.speakua.ui.utils.jdbc.entity.TaskEntity;
+import com.ita.edu.speakua.ui.utils.jdbc.services.TaskService;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Severity;
@@ -46,10 +47,11 @@ public class AddTaskTest extends AddTaskTestRunner {
     @Test(dataProvider = "invalidDescriptionData")
     public void verifyCreateTaskInvalidDescription(String textDescription, String expectedMessage) {
         boolean allFieldsAreEmpty = addTaskPage.areFieldsEmpty();
+        String clubName = "Yaroslav test" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
         addTaskPage = addTaskPage
                 .enterStartDate(LocalDate.now().plusDays(2).toString())
                 .uploadImage(pathToImage)
-                .enterName("Yaroslav test" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()))
+                .enterName(clubName)
                 .enterTitle("Some forty character text for the test!!")
                 .enterDescription(textDescription)
                 .selectChallenge(challenge);
@@ -58,7 +60,11 @@ public class AddTaskTest extends AddTaskTestRunner {
 
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertTrue(allFieldsAreEmpty);
-        softAssert.assertEquals(errorMessage, expectedMessage);
+        softAssert.assertEquals(errorMessage, expectedMessage, "Message should be displayed ");
+
+        TaskService taskService = new TaskService();
+        List<String> clubNamesInDataBase = taskService.getAllNameWhere(clubName);
+        softAssert.assertTrue(clubNamesInDataBase.size() == 0, "Database shouldn't contain tasks with the name " + clubName);
         softAssert.assertAll();
     }
 
@@ -76,18 +82,24 @@ public class AddTaskTest extends AddTaskTestRunner {
     @Test(dataProvider = "invalidDateData")
     public void verifyCreateTaskInvalidDateData(String actualDate, String expectedErrorMessage) {
         String descriptionInput = new String(new char[350]).replace("\0", "Lorem Ipsu");
+        String clubName = "Yaroslav test" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertTrue(addTaskPage.areFieldsEmpty());
         addTaskPage = addTaskPage
                 .enterStartDate(actualDate)
                 .uploadImage(pathToImage)
-                .enterName("Yaroslav test" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()))
+                .enterName(clubName)
                 .enterTitle(descriptionInput.substring(0, 50))
                 .enterDescription(descriptionInput.substring(0, 500))
                 .selectChallenge("Example name");
         addTaskPage.save();
         String actualErrorMessage = addTaskPage.getErrorMessageText();
         softAssert.assertEquals(actualErrorMessage, expectedErrorMessage);
+
+        TaskService taskService = new TaskService();
+        List<String> clubNamesInDataBase = taskService.getAllNameWhere(clubName);
+
+        softAssert.assertTrue(clubNamesInDataBase.size() == 0, "Database shouldn't contain tasks with the name " + clubName);
         softAssert.assertAll();
     }
 
