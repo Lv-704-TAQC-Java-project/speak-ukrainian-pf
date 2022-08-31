@@ -18,10 +18,10 @@ public class CenterEntity {
     public static final String SELECT_WHERE_NAME = SELECT_ALL_FIELDS + " FROM centers WHERE name = '%s';";
     public static final String SELECT_BY_ID = SELECT_ALL_FIELDS + " FROM centers WHERE id = '%s';";
     public static final String FIRST_NAMES_LIMIT = SELECT_ALL_FIELDS + " FROM centers ORDER BY name %s LIMIT %d;";
-    public static final String FIRST_NAMES_IN_KYIV_LIMIT = "SELECT DISTINCT " + ALL_FIELDS_CENTER + " FROM centers" +
+    public static final String FIRST_NAMES_IN_CITY_LIMIT = "SELECT DISTINCT " + ALL_FIELDS_CENTER + " FROM centers" +
             " JOIN locations ON locations.center_id = centers.id" +
             " JOIN cities ON cities.id = locations.city_id" +
-            " Where cities.name='Київ'" +
+            " Where cities.name='%s'" +
             " ORDER BY centers.name %s LIMIT %d;";
 
     private long id;
