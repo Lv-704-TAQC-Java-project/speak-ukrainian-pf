@@ -169,4 +169,12 @@ public class ClubsPage extends Header {
     public int getSearchInputLength() {
         return searchInput.getAttribute("value").length();
     }
+
+    public String[] getCenterNames() {
+        return this
+                .getCenters()
+                .stream()
+                .map(CenterComponent::getTextCenterName)
+                .toArray(String[]::new);
+    }
 }

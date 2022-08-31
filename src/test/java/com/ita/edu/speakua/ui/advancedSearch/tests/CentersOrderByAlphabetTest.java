@@ -1,8 +1,6 @@
 package com.ita.edu.speakua.ui.advancedSearch.tests;
 
-import com.ita.edu.speakua.ui.HomePage;
 import com.ita.edu.speakua.ui.clubs.ClubsPage;
-import com.ita.edu.speakua.ui.clubs.card.components.CenterComponent;
 import com.ita.edu.speakua.ui.runners.SameWindowTestRunner;
 import com.ita.edu.speakua.ui.utils.jdbc.services.CenterService;
 import io.qameta.allure.Description;
@@ -10,16 +8,16 @@ import io.qameta.allure.Issue;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import java.util.List;
-
 public class CentersOrderByAlphabetTest extends SameWindowTestRunner {
+    private ClubsPage clubsPage;
 
     @Issue("TUA-440")
-    @Description("Verify that the user can sort Centers in alphabetical order")
+    @Description("Verify user can sort Centers in alphabetical order")
     @Test
     public void verifyCentersOrderByAlphabetSortFunctionality() {
-        new HomePage(driver)
-                .openAdvancedSearch()
+        clubsPage = getHomePage().openAdvancedSearch();
+
+        clubsPage
                 .getAdvancedSearchPanelComponent()
                 .selectCenterFilter()
                 .getSortClubComponent()
@@ -27,34 +25,23 @@ public class CentersOrderByAlphabetTest extends SameWindowTestRunner {
 
         long cardsQuantity = 6;
         CenterService centerService = new CenterService();
-        List<String> expectedCenterNamesAscOrder = centerService.getNamesInKyivOrderByName("Київ", false, cardsQuantity);
-
-        ClubsPage clubsPage = new ClubsPage(driver);
-        String[] actualCenterNamesAscOrder = clubsPage
-                .getCenters()
-                .stream()
-                .map(CenterComponent::getTextCenterName)
-                .toArray(String[]::new);
+        String[] actualCenterNamesAscOrder = clubsPage.getCenterNames();
+        String[] expectedCenterNamesAscOrder = centerService.getCenterNames("Київ", "name", false, cardsQuantity);
 
         clubsPage
                 .getSortClubComponent()
                 .orderByDesc();
 
-        List<String> expectedCenterNamesDescOrder = centerService.getNamesInKyivOrderByName("Київ", true, cardsQuantity);
-
-        String[] actualCenterNamesDescOrder = clubsPage
-                .getCenters()
-                .stream()
-                .map(CenterComponent::getTextCenterName)
-                .toArray(String[]::new);
+        String[] actualCenterNamesDescOrder = clubsPage.getCenterNames();
+        String[] expectedCenterNamesDescOrder = centerService.getCenterNames("Київ", "name",true, cardsQuantity);
 
         SoftAssert softAssert = new SoftAssert();
         for (int i = 0; i < cardsQuantity; i++) {
             softAssert.assertEquals(actualCenterNamesAscOrder[i],
-                    expectedCenterNamesAscOrder.get(i),
+                    expectedCenterNamesAscOrder[i],
                     "Incorrect cards sequence after sorting by alphabet in ascending order.");
             softAssert.assertEquals(actualCenterNamesDescOrder[i],
-                    expectedCenterNamesDescOrder.get(i),
+                    expectedCenterNamesDescOrder[i],
                     "Incorrect cards sequence after sorting by alphabet in descending order.");
         }
         softAssert.assertAll();

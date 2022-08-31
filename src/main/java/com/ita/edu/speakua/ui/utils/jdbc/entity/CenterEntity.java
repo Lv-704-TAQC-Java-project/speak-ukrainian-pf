@@ -22,7 +22,7 @@ public class CenterEntity {
             " JOIN locations ON locations.center_id = centers.id" +
             " JOIN cities ON cities.id = locations.city_id" +
             " Where cities.name='%s'" +
-            " ORDER BY centers.name %s LIMIT %d;";
+            " ORDER BY centers.%s %s LIMIT %d;";
 
     private long id;
     private long centerExternalId;
