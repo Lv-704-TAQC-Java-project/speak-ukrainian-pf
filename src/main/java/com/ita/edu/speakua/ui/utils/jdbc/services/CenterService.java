@@ -41,18 +41,10 @@ public class CenterService {
         return names;
     }
 
-    public List<String> getNamesInKyivOrderByNameAsc(long limit) {
+    public List<String> getNamesInKyivOrderByName(String city, boolean desc, long limit) {
         List<String> names = new ArrayList<>();
-        for (CenterEntity center : centerDAO.selectInCityOrderByName("Київ", false, limit)) {
-            names.add(center.getName());
-        }
-        return names;
-    }
-
-    public List<String> getNamesInKyivOrderByNameDesc(long limit) {
-        List<String> names = new ArrayList<>();
-        for (CenterEntity center : centerDAO.selectInCityOrderByName("Київ", true, limit)) {
-            names.add(center.getName());
+        for (CenterEntity center : centerDAO.selectInCityOrderByName("Київ", desc, limit)) {
+            names.add(center.getName().trim().replaceAll("\\s+", " "));
         }
         return names;
     }

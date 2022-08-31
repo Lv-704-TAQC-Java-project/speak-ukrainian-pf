@@ -27,7 +27,7 @@ public class CentersOrderByAlphabetTest extends SameWindowTestRunner {
 
         long cardsQuantity = 6;
         CenterService centerService = new CenterService();
-        List<String> expectedCenterNamesAscOrder = centerService.getNamesInKyivOrderByNameAsc(cardsQuantity);
+        List<String> expectedCenterNamesAscOrder = centerService.getNamesInKyivOrderByName("Київ", false, cardsQuantity);
 
         ClubsPage clubsPage = new ClubsPage(driver);
         String[] actualCenterNamesAscOrder = clubsPage
@@ -40,7 +40,7 @@ public class CentersOrderByAlphabetTest extends SameWindowTestRunner {
                 .getSortClubComponent()
                 .orderByDesc();
 
-        List<String> expectedCenterNamesDescOrder = centerService.getNamesInKyivOrderByNameDesc(cardsQuantity);
+        List<String> expectedCenterNamesDescOrder = centerService.getNamesInKyivOrderByName("Київ", true, cardsQuantity);
 
         String[] actualCenterNamesDescOrder = clubsPage
                 .getCenters()
@@ -51,10 +51,10 @@ public class CentersOrderByAlphabetTest extends SameWindowTestRunner {
         SoftAssert softAssert = new SoftAssert();
         for (int i = 0; i < cardsQuantity; i++) {
             softAssert.assertEquals(actualCenterNamesAscOrder[i],
-                    expectedCenterNamesAscOrder.get(i).trim().replaceAll("\\s+", " "),
+                    expectedCenterNamesAscOrder.get(i),
                     "Incorrect cards sequence after sorting by alphabet in ascending order.");
             softAssert.assertEquals(actualCenterNamesDescOrder[i],
-                    expectedCenterNamesDescOrder.get(i).trim().replaceAll("\\s+", " "),
+                    expectedCenterNamesDescOrder.get(i),
                     "Incorrect cards sequence after sorting by alphabet in descending order.");
         }
         softAssert.assertAll();
