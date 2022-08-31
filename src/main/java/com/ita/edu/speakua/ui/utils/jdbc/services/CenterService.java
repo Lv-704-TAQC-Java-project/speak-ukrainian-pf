@@ -27,7 +27,7 @@ public class CenterService {
 
     public List<String> getNamesOrderByNameAsc(long limit) {
         List<String> names = new ArrayList<>();
-        for (CenterEntity center : centerDAO.selectOrderByNameAsc(limit)) {
+        for (CenterEntity center : centerDAO.selectOrderByName(false, limit)) {
             names.add(center.getName());
         }
         return names;
@@ -35,7 +35,7 @@ public class CenterService {
 
     public List<String> getNamesOrderByNameDesc(long limit) {
         List<String> names = new ArrayList<>();
-        for (CenterEntity center : centerDAO.selectOrderByNameDesc(limit)) {
+        for (CenterEntity center : centerDAO.selectOrderByName(true, limit)) {
             names.add(center.getName());
         }
         return names;
@@ -43,7 +43,7 @@ public class CenterService {
 
     public List<String> getNamesInKyivOrderByNameAsc(long limit) {
         List<String> names = new ArrayList<>();
-        for (CenterEntity center : centerDAO.selectInKyivOrderByNameAsc(limit)) {
+        for (CenterEntity center : centerDAO.selectInKyivOrderByName(false, limit)) {
             names.add(center.getName());
         }
         return names;
@@ -51,7 +51,7 @@ public class CenterService {
 
     public List<String> getNamesInKyivOrderByNameDesc(long limit) {
         List<String> names = new ArrayList<>();
-        for (CenterEntity center : centerDAO.selectInKyivOrderByNameDesc(limit)) {
+        for (CenterEntity center : centerDAO.selectInKyivOrderByName(true, limit)) {
             names.add(center.getName());
         }
         return names;
