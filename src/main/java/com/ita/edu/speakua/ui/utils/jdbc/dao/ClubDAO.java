@@ -61,6 +61,32 @@ public class ClubDAO {
         return ClubEntity.parseRows(rows);
     }
 
+    public List<ClubEntity> selectAllOrderByNameAsc(int limit) {
+        Statement statement = ManagerDAO.getInstance().getStatement();
+        List<List<String>> rows = null;
+        try {
+            ResultSet resultSet = statement.executeQuery(String.format(ClubEntity.SELECT_ALL_ORDER_BY_NAME_ASC_LIMIT, limit));
+            rows = ManagerDAO.getInstance().parseResultSet(resultSet);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        ManagerDAO.getInstance().closeStatement(statement);
+        return ClubEntity.parseRows(rows);
+    }
+
+    public List<ClubEntity> selectAllOrderByNameDesc(int limit) {
+        Statement statement = ManagerDAO.getInstance().getStatement();
+        List<List<String>> rows = null;
+        try {
+            ResultSet resultSet = statement.executeQuery(String.format(ClubEntity.SELECT_ALL_ORDER_BY_NAME_DEC_LIMIT, limit));
+            rows = ManagerDAO.getInstance().parseResultSet(resultSet);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        ManagerDAO.getInstance().closeStatement(statement);
+        return ClubEntity.parseRows(rows);
+    }
+
 //    public List<ClubEntity> selectSixNamesAscending() {
 //        Statement statement = ManagerDAO.getInstance().getStatement();
 //        List<List<String>> rows;
