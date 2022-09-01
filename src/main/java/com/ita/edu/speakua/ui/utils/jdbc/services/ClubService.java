@@ -95,4 +95,16 @@ public class ClubService {
     public ClubEntity selectById(long id) {
         return clubDAO.selectById(id);
     }
+
+    public List<ClubEntity> getAllNameWhereNameLike(String name) {
+        return clubDAO.selectNameWhereNameLike(name);
+    }
+
+    public List<String> getAllNameByCity(String city) {
+        return clubDAO
+                .selectAllWhereCity(city)
+                .stream()
+                .map(ClubEntity::getName)
+                .collect(Collectors.toList());
+    }
 }

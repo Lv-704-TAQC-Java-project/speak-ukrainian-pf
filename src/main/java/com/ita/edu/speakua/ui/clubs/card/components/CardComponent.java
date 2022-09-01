@@ -82,7 +82,8 @@ public class CardComponent extends BasePage {
         return starRatingZeroList;
     }
 
-    public ExpandedCardComponent cardTitleClick() {
+    @Step("Card component: expand card")
+    public ExpandedCardComponent expandCard() {
         cardTitle.click();
         return new ExpandedCardComponent(driver);
     }
