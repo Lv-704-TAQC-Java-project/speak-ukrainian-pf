@@ -8,14 +8,13 @@ import io.qameta.allure.Issue;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-public class CentersOrderByAlphabetTest extends SameWindowTestRunner {
-    private ClubsPage clubsPage;
+public class CentersSortingTest extends SameWindowTestRunner {
 
     @Issue("TUA-440")
-    @Description("Verify user can sort Centers in alphabetical order")
+    @Description("Verify user can sort Centers in alphabetically")
     @Test
-    public void verifyCentersOrderByAlphabetSortFunctionality() {
-        clubsPage = getHomePage().openAdvancedSearch();
+    public void verifyCentersAlphabeticSortFunctionality() {
+        ClubsPage clubsPage = getHomePage().openAdvancedSearch();
 
         clubsPage
                 .getAdvancedSearchPanelComponent()

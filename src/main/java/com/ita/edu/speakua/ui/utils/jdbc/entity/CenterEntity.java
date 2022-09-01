@@ -18,17 +18,11 @@ public class CenterEntity {
     public static final String SELECT_WHERE_NAME = SELECT_ALL_FIELDS + " FROM centers WHERE name = '%s';";
     public static final String SELECT_BY_ID = SELECT_ALL_FIELDS + " FROM centers WHERE id = '%s';";
     public static final String FIRST_NAMES_LIMIT = SELECT_ALL_FIELDS + " FROM centers ORDER BY name %s LIMIT %d;";
-//    public static final String SELECT_FROM_CITY_WITH_LIMIT = "SELECT DISTINCT " + ALL_FIELDS_CENTER + " FROM centers" +
-//            " JOIN locations ON locations.center_id = centers.id" +
-//            " JOIN cities ON cities.id = locations.city_id" +
-//            " Where cities.name='%s'" +
-//            " ORDER BY centers.%s %s LIMIT %d;";
-
-    public static final String SELECT_FROM_CITY_WITH_LIMIT = "WITH filtered_cities AS (SELECT * FROM cities WHERE cities.name='%s') SELECT DISTINCT " +
-            ALL_FIELDS_CENTER + " FROM filtered_cities " +
-            "JOIN locations ON filtered_cities.id = locations.city_id " +
-            "JOIN centers ON locations.center_id = centers.id " +
-            "ORDER BY centers.%s %s LIMIT %d";
+    public static final String SELECT_FROM_CITY_ORDERED_AND_SORTED_WITH_LIMIT = "SELECT DISTINCT " + ALL_FIELDS_CENTER + " FROM centers" +
+            " JOIN locations ON locations.center_id = centers.id" +
+            " JOIN cities ON cities.id = locations.city_id" +
+            " Where cities.name='%s'" +
+            " ORDER BY centers.%s %s LIMIT %d;";
 
     private long id;
     private long centerExternalId;

@@ -64,7 +64,7 @@ public class CenterDAO {
         Statement statement = ManagerDAO.getInstance().getStatement();
         List<List<String>> rows;
         try {
-            ResultSet resultSet = statement.executeQuery(String.format(CenterEntity.SELECT_FROM_CITY_WITH_LIMIT, city, orderBy, desc ? "DESC" : "ASC", limit));
+            ResultSet resultSet = statement.executeQuery(String.format(CenterEntity.SELECT_FROM_CITY_ORDERED_AND_SORTED_WITH_LIMIT, city, orderBy, desc ? "DESC" : "ASC", limit));
             rows = ManagerDAO.getInstance().parseResultSet(resultSet);
         } catch (SQLException e) {
             throw new RuntimeException(e);
