@@ -11,7 +11,7 @@ import org.testng.asserts.SoftAssert;
 public class CentersSortingTest extends SameWindowTestRunner {
 
     @Issue("TUA-440")
-    @Description("Verify user can sort Centers in alphabetically")
+    @Description("Verify user can sort Centers alphabetically")
     @Test
     public void verifyCentersAlphabeticSortFunctionality() {
         ClubsPage clubsPage = getHomePage().openAdvancedSearch();
