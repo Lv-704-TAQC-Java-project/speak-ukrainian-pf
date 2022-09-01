@@ -24,7 +24,7 @@ public class HomePage extends Header {
         super(driver);
     }
 
-    public ClubsPage fillInSearch(String query) {
+    public ClubsPage search(String query) {
         action.setNewValueForInput(searchInput, query);
         return new ClubsPage(driver);
     }
@@ -36,7 +36,7 @@ public class HomePage extends Header {
         return new ClubsPage(driver);
     }
 
-    public boolean isHomePageOpened(){
+    public boolean isHomePageOpened() {
         wait.pageReload();
         WebElement banner = driver.findElement(By.xpath("//div[@class='ant-carousel']"));
         return banner.isDisplayed();

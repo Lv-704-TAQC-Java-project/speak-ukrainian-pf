@@ -20,7 +20,7 @@ public class CardComponent extends BasePage {
     @FindBy(xpath = ".//div[@class='title']")
     protected WebElement cardTitle;
 
-    @FindBy(xpath = "//div[@class='title']//div[@class='name']")
+    @FindBy(xpath = ".//div[@class='title']//div[@class='name']")
     protected WebElement cardName;
 
     @FindBy(xpath = ".//*[@class='description']")
@@ -82,7 +82,8 @@ public class CardComponent extends BasePage {
         return starRatingZeroList;
     }
 
-    public ExpandedCardComponent cardTitleClick() {
+    @Step("Card component: expand card")
+    public ExpandedCardComponent expandCard() {
         cardTitle.click();
         return new ExpandedCardComponent(driver);
     }

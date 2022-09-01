@@ -2,9 +2,9 @@ package com.ita.edu.speakua.ui;
 
 import com.ita.edu.speakua.ui.utils.jdbc.dao.CenterDAO;
 import com.ita.edu.speakua.ui.utils.jdbc.dao.CityDAO;
-import com.ita.edu.speakua.ui.utils.jdbc.dao.ClubDAO;
-import com.ita.edu.speakua.ui.utils.jdbc.dao.TaskDAO;
-import com.ita.edu.speakua.ui.utils.jdbc.entity.*;
+import com.ita.edu.speakua.ui.utils.jdbc.entity.CenterEntity;
+import com.ita.edu.speakua.ui.utils.jdbc.entity.CityEntity;
+import com.ita.edu.speakua.ui.utils.jdbc.entity.ClubEntity;
 import com.ita.edu.speakua.ui.utils.jdbc.services.ClubService;
 import org.testng.annotations.Test;
 
@@ -12,6 +12,7 @@ import java.util.List;
 
 public class temp {
     ClubService clubService = new ClubService();
+
     @Test
     public void jdbs() {
         CityDAO cityDAO = new CityDAO();
@@ -31,10 +32,6 @@ public class temp {
 //        System.out.println(firstSixCentersByNameAsc);
 //        System.out.println(firstSixCentersByNameDesc);
 //        System.out.println(centers);
-
-        TaskDAO taskDAO = new TaskDAO();
-        List<TaskEntity> tasks = taskDAO.selectLikeName("Maksym test");
-        System.out.println(tasks);
     }
 
     @Test

@@ -35,7 +35,7 @@ public class ClubDAO {
         return ClubEntity.parseRows(rows).get(0);
     }
 
-//    public List<ClubEntity> selectSixNamesAscending() {
+    //    public List<ClubEntity> selectSixNamesAscending() {
 //        Statement statement = ManagerDAO.getInstance().getStatement();
 //        List<List<String>> rows;
 //        try {
@@ -61,29 +61,29 @@ public class ClubDAO {
 //        return ClubEntity.parseNameRows(rows);
 //    }
 //
-//    public List<ClubEntity> selectName() {
-//        Statement statement = ManagerDAO.getInstance().getStatement();
-//        List<List<String>> rows;
-//        try {
-//            ResultSet resultSet = statement.executeQuery(ClubEntity.SELECT_NAME);
-//            rows = ManagerDAO.getInstance().parseResultSet(resultSet);
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//        ManagerDAO.getInstance().closeStatement(statement);
-//        return ClubEntity.parseNameRows(rows);
-//    }
-//
-//    public List<ClubEntity> selectNameWhereName(String name) {
-//        Statement statement = ManagerDAO.getInstance().getStatement();
-//        List<List<String>> rows;
-//        try {
-//            ResultSet resultSet = statement.executeQuery(String.format(ClubEntity.SELECT_NAME_WHERE_NAME_LIKE, name));
-//            rows = ManagerDAO.getInstance().parseResultSet(resultSet);
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//        ManagerDAO.getInstance().closeStatement(statement);
-//        return ClubEntity.parseNameRows(rows);
-//    }
+    public List<ClubEntity> selectNameWhereNameLike(String name) {
+        Statement statement = ManagerDAO.getInstance().getStatement();
+        List<List<String>> rows;
+        try {
+            ResultSet resultSet = statement.executeQuery(String.format(ClubEntity.SELECT_ALL_WHERE_NAME_LIKE, name));
+            rows = ManagerDAO.getInstance().parseResultSet(resultSet);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        ManagerDAO.getInstance().closeStatement(statement);
+        return ClubEntity.parseRows(rows);
+    }
+
+    public List<ClubEntity> selectAllWhereCity(String city) {
+        Statement statement = ManagerDAO.getInstance().getStatement();
+        List<List<String>> rows;
+        try {
+            ResultSet resultSet = statement.executeQuery(String.format(ClubEntity.SELECT_ALL_WHERE_CITY, city));
+            rows = ManagerDAO.getInstance().parseResultSet(resultSet);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        ManagerDAO.getInstance().closeStatement(statement);
+        return ClubEntity.parseRows(rows);
+    }
 }
