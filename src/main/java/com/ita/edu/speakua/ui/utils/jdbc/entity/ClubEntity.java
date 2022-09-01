@@ -16,10 +16,8 @@ public class ClubEntity {
     public static final String SELECT_ALL = SELECT_ALL_FIELDS + " FROM clubs ORDER BY id;";
     public static final String SELECT_BY_ID = SELECT_ALL_FIELDS + " FROM clubs WHERE id = '%s';";
 
-    public static final String SELECT_ALL_ORDER_BY_NAME_ASC_LIMIT = SELECT_ALL_FIELDS
-            + " FROM clubs WHERE name IS NOT NULL AND length(trim(name)) > 1 ORDER BY name ASC LIMIT %d;";
-    public static final String SELECT_ALL_ORDER_BY_NAME_DEC_LIMIT = SELECT_ALL_FIELDS
-            + " FROM clubs WHERE name IS NOT NULL AND length(trim(name)) > 1 ORDER BY name DESC LIMIT %d;";
+    public static final String SELECT_ALL_ORDER_BY_NAME_LIMIT = SELECT_ALL_FIELDS
+            + " FROM clubs WHERE name IS NOT NULL AND length(trim(name)) > 1 ORDER BY name %s LIMIT %d;";
 
     public static final String SELECT_ALL_ORDER_BY_RATING_ID_ASC_LIMIT = SELECT_ALL_FIELDS + " FROM clubs " +
             "WHERE id IN (SELECT DISTINCT club_category.club_id " +
@@ -65,8 +63,8 @@ public class ClubEntity {
         clubEntity.setId(Long.parseLong(row.get(0)));
         clubEntity.setAgeFrom(Integer.parseInt(row.get(1)));
         clubEntity.setAgeTo(Integer.parseInt(row.get(2)));
-        clubEntity.setCenterExternalId(Long.parseLong(row.get(3)== null ? "0" : row.get(3)));
-        clubEntity.setClubExternalId(Long.parseLong(row.get(4)== null ? "0" : row.get(4)));
+        clubEntity.setCenterExternalId(Long.parseLong(row.get(3) == null ? "0" : row.get(3)));
+        clubEntity.setClubExternalId(Long.parseLong(row.get(4) == null ? "0" : row.get(4)));
         clubEntity.setContacts(row.get(5));
         clubEntity.setDescription(row.get(6));
         clubEntity.setApproved(Boolean.parseBoolean(row.get(7)));
