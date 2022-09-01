@@ -77,7 +77,7 @@ public class ClubService {
 
     public List<String> getNamesOrderByAscending(int limit) {
         return clubDAO
-                .selectAllOrderByNameAsc(limit)
+                .selectAllOrderByName(false, limit)
                 .stream()
                 .map(ClubEntity::getName)
                 .collect(Collectors.toList());
@@ -85,7 +85,7 @@ public class ClubService {
 
     public List<String> getNamesOrderByDescending(int limit) {
         return clubDAO
-                .selectAllOrderByNameDesc(limit)
+                .selectAllOrderByName(true, limit)
                 .stream()
                 .map(ClubEntity::getName)
                 .collect(Collectors.toList());
