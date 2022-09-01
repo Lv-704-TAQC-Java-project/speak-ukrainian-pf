@@ -18,19 +18,15 @@ public class TaskService {
         return taskDAO.selectAll();
     }
 
-    public List<String> getAllNameWhereNameLike(String name) {
-        return taskDAO
-                .selectWhereNameLike(name)
-                .stream()
-                .map(TaskEntity::getName)
-                .collect(Collectors.toList());
-    }
-
     public List<String> getAllNameWhere(String name) {
         return taskDAO
                 .selectWhereName(name)
                 .stream()
                 .map(TaskEntity::getName)
                 .collect(Collectors.toList());
+    }
+
+    public List<TaskEntity> getTasksWithName(String name, String orderBy, boolean desc) {
+        return taskDAO.selectWithName(name, orderBy, desc);
     }
 }

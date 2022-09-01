@@ -34,11 +34,11 @@ public class TaskDAO {
         return TaskEntity.parseRows(rows);
     }
 
-    public List<TaskEntity> selectWhereNameLike(String name) {
+    public List<TaskEntity> selectWithName(String name, String orderBy, boolean desc) {
         Statement statement = ManagerDAO.getInstance().getStatement();
         List<List<String>> rows;
         try {
-            ResultSet resultSet = statement.executeQuery(String.format(TaskEntity.SELECT_ALL_WHERE_NAME_LIKE, name));
+            ResultSet resultSet = statement.executeQuery(String.format(TaskEntity.SELECT_ALL_WITH_NAME_ORDERED_AND_SORTED, name, orderBy, desc ? "DESC" : "ASC"));
             rows = ManagerDAO.getInstance().parseResultSet(resultSet);
         } catch (SQLException e) {
             throw new RuntimeException(e);

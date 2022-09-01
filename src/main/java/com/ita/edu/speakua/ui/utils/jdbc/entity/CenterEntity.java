@@ -7,12 +7,12 @@ import java.util.List;
 
 @Data
 public class CenterEntity {
-    public static final String ALL_FIELDS = "id, center_external_id, contacts, description, name, " +
+    private static final String ALL_FIELDS = "id, center_external_id, contacts, description, name, " +
             "url_background_picture, url_logo, url_web, user_id, club_count, rating";
-    public static final String ALL_FIELDS_CENTER = "centers.id, centers.center_external_id, centers.contacts, " +
+    private static final String ALL_FIELDS_CENTER = "centers.id, centers.center_external_id, centers.contacts, " +
             "centers.description, centers.name, centers.url_background_picture, centers.url_logo, centers.url_web, " +
             "centers.user_id, centers.club_count, centers.rating";
-    public static final String SELECT_ALL_FIELDS = "SELECT " + ALL_FIELDS;
+    private static final String SELECT_ALL_FIELDS = "SELECT " + ALL_FIELDS;
 
     public static final String SELECT_ALL = SELECT_ALL_FIELDS + " FROM centers ORDER BY id;";
     public static final String SELECT_WHERE_NAME = SELECT_ALL_FIELDS + " FROM centers WHERE name = '%s';";

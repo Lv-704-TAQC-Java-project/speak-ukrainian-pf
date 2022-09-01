@@ -2,7 +2,6 @@ package com.ita.edu.speakua.ui.addTask.tests;
 
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.addTask.TaskPage;
 import com.ita.edu.speakua.ui.runners.AddTaskTestRunner;
-import com.ita.edu.speakua.ui.utils.jdbc.dao.TaskDAO;
 import com.ita.edu.speakua.ui.utils.jdbc.entity.TaskEntity;
 import com.ita.edu.speakua.ui.utils.jdbc.services.TaskService;
 import io.qameta.allure.Description;
@@ -232,9 +231,9 @@ public class AddTaskTest extends AddTaskTestRunner {
 
     @Issue("TUA-520")
     @Severity(SeverityLevel.CRITICAL)
-    @Description("Verify that admin can create a task on 'Add task' page")
+    @Description("Verify admin can create a new task")
     @Test
-    public void verifyCreateTask() {
+    public void verifyTaskCreation() {
         String name = "Maksym test " + System.currentTimeMillis();
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertTrue(addTaskPage.areFieldsEmpty(),
@@ -246,25 +245,41 @@ public class AddTaskTest extends AddTaskTestRunner {
                 .enterTitle(title)
                 .enterDescription(description)
                 .selectChallenge(challenge);
-
         TaskPage taskPage = addTaskPage.save();
-        TaskDAO taskDAO = new TaskDAO();
-        List<TaskEntity> tasks = taskDAO.selectWhereNameLike(name);
 
-        softAssert.assertEquals(tasks.get(0).getName(), name, "Name");
-        softAssert.assertEquals(tasks.get(0).getStartDate(), tomorrow, "Date");
-        softAssert.assertEquals(tasks.get(0).getHeaderText(), "<p>" + title + "</p>", "Description");
-        softAssert.assertEquals(tasks.get(0).getDescription(), "<p>" + description + "</p>", "Header title");
+        TaskEntity lastTask = new TaskService()
+                .getTasksWithName(name, "id", true)
+                .get(0);
+
+        softAssert.assertEquals(lastTask.getStartDate(), tomorrow,
+                "Date in DB should be equal to entered task date");
+        softAssert.assertEquals(lastTask.getName(), name,
+                "Name in DB should be equal to entered task name");
+        softAssert.assertEquals(lastTask.getHeaderText(), "<p>" + title + "</p>",
+                "Description in DB should be equal to entered task description");
+        softAssert.assertEquals(lastTask.getDescription(), "<p>" + description + "</p>",
+                "Header title in DB should be equal to entered task header title");
+        softAssert.assertEquals(lastTask.getChallengeName(), challenge,
+                "Challenge name in DB should be equal to chosen challenge name");
+
+//        ChallengeService challengeService = new ChallengeService();
+//        ChallengeEntity lastTaskChallenge = challengeService.getById(lastTask.getChallengeId());
+//
+//        softAssert.assertEquals(lastTaskChallenge.getName(), challenge, "Challenge");
+
+        softAssert.assertEquals(taskPage.getImageURL(),
+                configProps.getBaseUrl() + lastTask.getPicture(),
+                "Image path in DB should be equal to image path on Task page");
 
         softAssert.assertEquals(addTaskPage.getSuccessMessage(),
                 String.format("Завдання '%s' успішно додане!", name),
-                "Incorrect popup success message.");
+                "Incorrect popup success message");
         softAssert.assertEquals(taskPage.getNameText(), name,
-                "Incorrect name of created task.");
+                "Incorrect name of created task");
         softAssert.assertEquals(taskPage.getTitleText(), title,
-                "Incorrect title of created task.");
+                "Incorrect title of created task");
         softAssert.assertEquals(taskPage.getDescriptionText(), description,
-                "Incorrect description of created task.");
+                "Incorrect description of created task");
 
         softAssert.assertAll();
     }

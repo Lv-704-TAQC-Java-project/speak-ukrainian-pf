@@ -1,5 +1,6 @@
 package com.ita.edu.speakua.ui.utils.jdbc.entity;
 
+import com.ita.edu.speakua.ui.utils.jdbc.services.ChallengeService;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -11,14 +12,14 @@ public class TaskEntity {
     public static final String SELECT_ALL_FIELDS = "SELECT " + ALL_FIELDS;
     public static final String SELECT_ALL = SELECT_ALL_FIELDS + " FROM tasks;";
     public static final String SELECT_ALL_WHERE_NAME = SELECT_ALL_FIELDS + " FROM tasks WHERE name = '%s';";
-    public static final String SELECT_ALL_WHERE_NAME_LIKE = SELECT_ALL_FIELDS + " FROM tasks WHERE name LIKE '%s';";
+    public static final String SELECT_ALL_WITH_NAME_ORDERED_AND_SORTED = SELECT_ALL_FIELDS + " FROM tasks WHERE name='%s' ORDER BY %s %s;";
 
     private long id;
     private String description;
     private String name;
     private String picture;
     private String startDate;
-    private long challenge_id;
+    private long challengeId;
     private String headerText;
 
     public static TaskEntity parseRow(List<String> row) {
@@ -29,7 +30,7 @@ public class TaskEntity {
         taskEntity.setName(row.get(2));
         taskEntity.setPicture(row.get(3));
         taskEntity.setStartDate(row.get(4));
-        taskEntity.setChallenge_id(Long.parseLong(row.get(5) == null ? "0" : row.get(5)));
+        taskEntity.setChallengeId(Long.parseLong(row.get(5) == null ? "0" : row.get(5)));
         taskEntity.setHeaderText(row.get(6));
 
         return taskEntity;
@@ -42,5 +43,9 @@ public class TaskEntity {
         }
 
         return taskEntities;
+    }
+
+    public String getChallengeName() {
+        return new ChallengeService().getById(this.challengeId).getName();
     }
 }
