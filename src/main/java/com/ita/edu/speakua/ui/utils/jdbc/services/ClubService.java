@@ -43,6 +43,55 @@ public class ClubService {
         return clubs;
     }
 
+    public List<String> getAllNamesOrderByRatingIdAscLimit(long number) {
+        List<String> names = new ArrayList<>();
+        for (ClubEntity club : clubDAO.selectAllOrderByRatingIdAscLimit(number)) {
+            names.add(club.getName().trim());
+        }
+        return names;
+    }
+
+    public List<String> getAllNamesOrderByRatingIdDescLimit(long number) {
+        List<String> names = new ArrayList<>();
+        for (ClubEntity club : clubDAO.selectAllOrderByRatingIdDescLimit(number)) {
+            names.add(club.getName().trim());
+        }
+        return names;
+    }
+
+    public List<Double> getAllRatingsOrderByRatingIdAscLimit(long number) {
+        List<Double> rating = new ArrayList<>();
+        for (ClubEntity club : clubDAO.selectAllOrderByRatingIdAscLimit(number)) {
+            rating.add(club.getRating());
+        }
+        return rating;
+    }
+
+    public List<Double> getAllRatingsOrderByRatingIdDescLimit(long number) {
+        List<Double> rating = new ArrayList<>();
+        for (ClubEntity club : clubDAO.selectAllOrderByRatingIdDescLimit(number)) {
+            rating.add(club.getRating());
+        }
+        return rating;
+    }
+
+    public List<String> getNamesOrderByAscending(int limit) {
+        return clubDAO
+                .selectAllOrderByNameAsc(limit)
+                .stream()
+                .map(ClubEntity::getName)
+                .collect(Collectors.toList());
+    }
+
+    public List<String> getNamesOrderByDescending(int limit) {
+        return clubDAO
+                .selectAllOrderByNameDesc(limit)
+                .stream()
+                .map(ClubEntity::getName)
+                .collect(Collectors.toList());
+    }
+
+
     public ClubEntity selectById(long id) {
         return clubDAO.selectById(id);
     }

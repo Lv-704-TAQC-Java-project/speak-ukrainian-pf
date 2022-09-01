@@ -4,7 +4,10 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+
+import javax.swing.*;
 
 public class AdvancedSearchPanelComponent extends ClubsPage {
 
@@ -34,6 +37,12 @@ public class AdvancedSearchPanelComponent extends ClubsPage {
 
     @FindBy(xpath = "//span[@id='basic_age']//input")
     private WebElement childAgeInput;
+
+    @FindBy(xpath = "//label[@for='basic_cityName']/../following-sibling::div//span[@class='ant-select-arrow']")
+    private WebElement citySelectArrow;
+
+    @FindBy(xpath = "//label[@for='basic_cityName']/../following-sibling::div//span[@class='ant-select-clear']")
+    private WebElement citySelectClear;
 
     public AdvancedSearchPanelComponent(WebDriver driver) {
         super(driver);
@@ -92,5 +101,13 @@ public class AdvancedSearchPanelComponent extends ClubsPage {
 
     public int getChildAge() {
         return Integer.parseInt(childAgeInput.getAttribute("value"));
+    }
+
+    public AdvancedSearchPanelComponent clearCitySelector(){
+        new Actions(driver)
+                .moveToElement(citySelectArrow)
+                .perform();
+        citySelectClear.click();
+        return this;
     }
 }

@@ -110,13 +110,13 @@ public class ClubsPage extends Header {
     public void clickManagingClubsPageElement(WebElement element) {
         List<CardComponent> cards = new ClubsPage(driver).getCards();
         element.click();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(4));
-        for (CardComponent card : cards) {
-            try {
-                wait.staleness(card.getCardBody());
-            } catch (TimeoutException ignored) {
-            }
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+        try {
+            wait.staleness(cards.get(0).getCardBody());
+            wait.staleness(cards.get(cards.size() - 1).getCardBody());
+        } catch (TimeoutException ignored) {
         }
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
     }
 
     @Step("Is closed advanced search panel")
@@ -169,5 +169,13 @@ public class ClubsPage extends Header {
 
     public int getSearchInputLength() {
         return searchInput.getAttribute("value").length();
+    }
+
+    public String[] getCenterNames() {
+        return this
+                .getCenters()
+                .stream()
+                .map(CenterComponent::getTextCenterName)
+                .toArray(String[]::new);
     }
 }

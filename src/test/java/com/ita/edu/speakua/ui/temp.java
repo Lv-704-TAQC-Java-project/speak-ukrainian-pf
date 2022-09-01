@@ -32,6 +32,10 @@ public class temp {
 //        System.out.println(firstSixCentersByNameAsc);
 //        System.out.println(firstSixCentersByNameDesc);
 //        System.out.println(centers);
+
+//        TaskDAO taskDAO = new TaskDAO();
+//        List<TaskEntity> tasks = taskDAO.selectLikeName("Maksym test");
+//        System.out.println(tasks);
     }
 
     @Test

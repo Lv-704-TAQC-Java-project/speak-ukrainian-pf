@@ -1,5 +1,6 @@
 package com.ita.edu.speakua.ui.runners;
 
+import com.ita.edu.speakua.ui.HomePage;
 import com.ita.edu.speakua.ui.utils.ConfigProperties;
 import com.ita.edu.speakua.ui.utils.TestNgListener;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -49,5 +50,9 @@ public class BaseSetupTestRunner {
         if (driver != null) {
             driver.quit();
         }
+    }
+
+    public HomePage getHomePage() {
+        return new HomePage(driver);
     }
 }
