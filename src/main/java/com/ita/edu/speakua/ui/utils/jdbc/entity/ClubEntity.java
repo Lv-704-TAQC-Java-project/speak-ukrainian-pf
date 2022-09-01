@@ -32,6 +32,14 @@ public class ClubEntity {
             "ORDER BY rating DESC, id " +
             "LIMIT %d;";
     public static final String SELECT_ALL_WHERE_NAME_LIKE = SELECT_ALL_FIELDS + " FROM clubs WHERE name LIKE '%s%%';";
+    public static final String SELECT_ALL_WHERE_CITY = "SELECT cl.id, cl.age_from, cl.age_to, " +
+            "cl.center_external_id, cl.club_external_id, cl.contacts, cl.description, cl.is_approved, cl.is_online, " +
+            "cl.name, cl.rating, cl.url_background, cl.url_logo, cl.url_web, cl.work_time, cl.center_id, " +
+            "cl.user_id, cl.feedback_count " +
+            "FROM clubs as cl " +
+            "JOIN locations l ON cl.id = l.club_id " +
+            "JOIN cities ct ON l.city_id = ct.id " +
+            "WHERE ct.name = '%s';";
 
     private long id;
     private int ageFrom;
