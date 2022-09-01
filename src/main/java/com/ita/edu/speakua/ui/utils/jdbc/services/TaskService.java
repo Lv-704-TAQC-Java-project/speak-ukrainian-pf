@@ -29,4 +29,8 @@ public class TaskService {
     public List<TaskEntity> getTasksWithName(String name, String orderBy, boolean desc) {
         return taskDAO.selectWithName(name, orderBy, desc);
     }
+
+    public long getTasksCountWithName(String name) {
+        return taskDAO.selectWhereName(name).size();
+    }
 }

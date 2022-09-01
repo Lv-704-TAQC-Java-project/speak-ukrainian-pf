@@ -19,6 +19,8 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
+import static java.lang.String.format;
+
 public class AddTaskTest extends AddTaskTestRunner {
     private final String tomorrow = LocalDate.now().plusDays(1).toString();
     private final String pathToImage = Paths.get(Paths.get(System.getProperty("user.dir")).toString(),
@@ -210,23 +212,30 @@ public class AddTaskTest extends AddTaskTestRunner {
 
     @Issue("TUA-522")
     @Severity(SeverityLevel.CRITICAL)
-    @Description("Verify that admin can't create a task without image on 'Add task' page")
+    @Description("Verify admin can't create a new task without image")
     @Test
-    public void verifyCreateTaskWithoutImageError() {
-        SoftAssert softAssert = new SoftAssert();
-        softAssert.assertTrue(addTaskPage.areFieldsEmpty(),
-                "Create task form fields should be empty by default.");
+    public void verifyTaskCreationFailsWithoutImage() {
+        SoftAssert softly = new SoftAssert();
+        softly.assertTrue(addTaskPage.areFieldsEmpty(),
+                "Create task form fields should be empty by default");
+
+        String name = "Maksym test " + System.currentTimeMillis();
         addTaskPage = addTaskPage
                 .enterStartDate(tomorrow)
-                .enterName("Maksym test")
+                .enterName(name)
                 .enterTitle(title)
                 .enterDescription(description)
                 .selectChallenge(challenge);
         addTaskPage.save();
+
         String actualErrorMessage = addTaskPage.getErrorMessageText();
-        softAssert.assertEquals(actualErrorMessage, "Фото не може бути пустим",
-                "Incorrect error message when creating task without image.");
-        softAssert.assertAll();
+        softly.assertEquals(actualErrorMessage, "Фото не може бути пустим",
+                "Incorrect 'no image' error message");
+
+        long tasksQuantityWithChosenName = new TaskService().getTasksCountWithName(name);
+        softly.assertTrue(tasksQuantityWithChosenName == 0,
+                format("Should be 0 tasks in DB with '%s' name, but found %d", name, tasksQuantityWithChosenName));
+        softly.assertAll();
     }
 
     @Issue("TUA-520")
@@ -234,10 +243,11 @@ public class AddTaskTest extends AddTaskTestRunner {
     @Description("Verify admin can create a new task")
     @Test
     public void verifyTaskCreation() {
+        SoftAssert softly = new SoftAssert();
+        softly.assertTrue(addTaskPage.areFieldsEmpty(),
+                "Create task form fields should be empty by default");
+
         String name = "Maksym test " + System.currentTimeMillis();
-        SoftAssert softAssert = new SoftAssert();
-        softAssert.assertTrue(addTaskPage.areFieldsEmpty(),
-                "Create task form fields should be empty by default.");
         addTaskPage = addTaskPage
                 .enterStartDate(tomorrow)
                 .uploadImage(pathToImage)
@@ -251,36 +261,34 @@ public class AddTaskTest extends AddTaskTestRunner {
                 .getTasksWithName(name, "id", true)
                 .get(0);
 
-        softAssert.assertEquals(lastTask.getStartDate(), tomorrow,
+        softly.assertEquals(lastTask.getStartDate(), tomorrow,
                 "Date in DB should be equal to entered task date");
-        softAssert.assertEquals(lastTask.getName(), name,
+        softly.assertEquals(lastTask.getName(), name,
                 "Name in DB should be equal to entered task name");
-        softAssert.assertEquals(lastTask.getHeaderText(), "<p>" + title + "</p>",
+        softly.assertEquals(lastTask.getHeaderText(), "<p>" + title + "</p>",
                 "Description in DB should be equal to entered task description");
-        softAssert.assertEquals(lastTask.getDescription(), "<p>" + description + "</p>",
+        softly.assertEquals(lastTask.getDescription(), "<p>" + description + "</p>",
                 "Header title in DB should be equal to entered task header title");
-        softAssert.assertEquals(lastTask.getChallengeName(), challenge,
+        softly.assertEquals(lastTask.getChallengeName(), challenge,
                 "Challenge name in DB should be equal to chosen challenge name");
 
 //        ChallengeService challengeService = new ChallengeService();
 //        ChallengeEntity lastTaskChallenge = challengeService.getById(lastTask.getChallengeId());
-//
 //        softAssert.assertEquals(lastTaskChallenge.getName(), challenge, "Challenge");
 
-        softAssert.assertEquals(taskPage.getImageURL(),
+        softly.assertEquals(taskPage.getImageURL(),
                 configProps.getBaseUrl() + lastTask.getPicture(),
                 "Image path in DB should be equal to image path on Task page");
 
-        softAssert.assertEquals(addTaskPage.getSuccessMessage(),
-                String.format("Завдання '%s' успішно додане!", name),
+        softly.assertEquals(addTaskPage.getSuccessMessage(),
+                format("Завдання '%s' успішно додане!", name),
                 "Incorrect popup success message");
-        softAssert.assertEquals(taskPage.getNameText(), name,
+        softly.assertEquals(taskPage.getNameText(), name,
                 "Incorrect name of created task");
-        softAssert.assertEquals(taskPage.getTitleText(), title,
+        softly.assertEquals(taskPage.getTitleText(), title,
                 "Incorrect title of created task");
-        softAssert.assertEquals(taskPage.getDescriptionText(), description,
+        softly.assertEquals(taskPage.getDescriptionText(), description,
                 "Incorrect description of created task");
-
-        softAssert.assertAll();
+        softly.assertAll();
     }
 }

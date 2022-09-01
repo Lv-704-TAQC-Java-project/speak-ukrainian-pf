@@ -13,6 +13,7 @@ public class TaskEntity {
     public static final String SELECT_ALL = SELECT_ALL_FIELDS + " FROM tasks;";
     public static final String SELECT_ALL_WHERE_NAME = SELECT_ALL_FIELDS + " FROM tasks WHERE name = '%s';";
     public static final String SELECT_ALL_WITH_NAME_ORDERED_AND_SORTED = SELECT_ALL_FIELDS + " FROM tasks WHERE name='%s' ORDER BY %s %s;";
+//    public static final String COUNT_WITH_NAME = "SELECT COUNT(*) FROM tasks WHERE name='%s';";
 
     private long id;
     private String description;
