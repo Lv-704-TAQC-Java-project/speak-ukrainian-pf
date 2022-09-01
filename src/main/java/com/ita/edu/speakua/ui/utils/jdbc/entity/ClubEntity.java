@@ -18,8 +18,6 @@ public class ClubEntity {
 
     public static final String SELECT_ALL_ORDER_BY_NAME_LIMIT = SELECT_ALL_FIELDS
             + " FROM clubs WHERE name IS NOT NULL AND length(trim(name)) > 1 ORDER BY name %s LIMIT %d;";
-//    public static final String SELECT_ALL_ORDER_BY_NAME_DEC_LIMIT = SELECT_ALL_FIELDS
-//            + " FROM clubs WHERE name IS NOT NULL AND length(trim(name)) > 1 ORDER BY name DESC LIMIT %d;";
 
     public static final String SELECT_ALL_ORDER_BY_RATING_ID_ASC_LIMIT = SELECT_ALL_FIELDS + " FROM clubs " +
             "WHERE id IN (SELECT DISTINCT club_category.club_id " +

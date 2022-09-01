@@ -75,32 +75,6 @@ public class ClubDAO {
         return ClubEntity.parseRows(rows);
     }
 
-//    public List<ClubEntity> selectSixNamesAscending() {
-//        Statement statement = ManagerDAO.getInstance().getStatement();
-//        List<List<String>> rows;
-//        try {
-//            ResultSet resultSet = statement.executeQuery(ClubEntity.SELECT_SIX_NAMES_ASC);
-//            rows = ManagerDAO.getInstance().parseResultSet(resultSet);
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//        ManagerDAO.getInstance().closeStatement(statement);
-//        return ClubEntity.parseNameRows(rows);
-//    }
-//
-//    public List<ClubEntity> selectSixNamesDescending() {
-//        Statement statement = ManagerDAO.getInstance().getStatement();
-//        List<List<String>> rows;
-//        try {
-//            ResultSet resultSet = statement.executeQuery(ClubEntity.SELECT_SIX_NAMES_DESC);
-//            rows = ManagerDAO.getInstance().parseResultSet(resultSet);
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//        ManagerDAO.getInstance().closeStatement(statement);
-//        return ClubEntity.parseNameRows(rows);
-//    }
-//
     public List<ClubEntity> selectNameWhereNameLike(String name) {
         Statement statement = ManagerDAO.getInstance().getStatement();
         List<List<String>> rows;

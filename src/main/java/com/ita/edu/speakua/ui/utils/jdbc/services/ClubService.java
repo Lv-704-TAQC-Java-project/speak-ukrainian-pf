@@ -90,8 +90,7 @@ public class ClubService {
                 .map(ClubEntity::getName)
                 .collect(Collectors.toList());
     }
-
-
+    
     public ClubEntity selectById(long id) {
         return clubDAO.selectById(id);
     }
