@@ -99,7 +99,7 @@ public class AddTaskTest extends AddTaskTestRunner {
         TaskService taskService = new TaskService();
         List<String> clubNamesInDataBase = taskService.getAllNameWhere(clubName);
 
-        softAssert.assertTrue(clubNamesInDataBase.size() == 0, "Database shouldn't contain tasks with the name " + clubName);
+        softAssert.assertTrue(clubNamesInDataBase.size() == 0, "Database shouldn't contain tasks with name " + clubName);
         softAssert.assertAll();
     }
 

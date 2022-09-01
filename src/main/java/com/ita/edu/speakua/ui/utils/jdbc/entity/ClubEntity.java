@@ -23,12 +23,14 @@ public class ClubEntity {
 
     public static final String SELECT_ALL_ORDER_BY_RATING_ID_ASC_LIMIT = SELECT_ALL_FIELDS + " FROM clubs " +
             "WHERE id IN (SELECT DISTINCT club_category.club_id " +
-            "from club_category) " +
-            "ORDER BY rating ASC, id LIMIT %d;";
+            "FROM club_category) " +
+            "ORDER BY rating ASC, id " +
+            "LIMIT %d;";
     public static final String SELECT_ALL_ORDER_BY_RATING_ID_DESC_LIMIT = SELECT_ALL_FIELDS + " FROM clubs " +
             "WHERE id IN (SELECT DISTINCT club_category.club_id " +
-            "from club_category) " +
-            "ORDER BY rating DESC, id LIMIT %d;";
+            "FROM club_category) " +
+            "ORDER BY rating DESC, id " +
+            "LIMIT %d;";
     public static final String SELECT_ALL_WHERE_NAME_LIKE = SELECT_ALL_FIELDS + " FROM clubs WHERE name LIKE '%s%%';";
 
     private long id;

@@ -139,9 +139,9 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
         List<Double> cardRatings = clubService.getAllRatingsOrderByRatingIdAscLimit(countOfCardsOnPage);
         for (int i = 0; i < countOfCardsOnPage; i++) {
             int cardCountOfStarsActual = clubsPage.getCards().get(i).getStarRatingFullList().size();
-            double cardCountOfStarsExpected = cardRatings.get(i);
+            int cardCountOfStarsExpected = (int) Math.floor(cardRatings.get(i));
 
-            softAssert.assertEquals(cardCountOfStarsActual, (int) cardCountOfStarsExpected);
+            softAssert.assertEquals(cardCountOfStarsActual, cardCountOfStarsExpected);
 
             String cardNameActual = clubsPage.getCards().get(i).getCardName();
             String cardNameExpected = cardNames.get(i);
@@ -155,9 +155,9 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
         cardRatings = clubService.getAllRatingsOrderByRatingIdDescLimit(countOfCardsOnPage);
         for (int i = 0; i < countOfCardsOnPage; i++) {
             int cardCountOfStarsActual = clubsPage.getCards().get(i).getStarRatingFullList().size();
-            double cardCountOfStarsExpected = cardRatings.get(i) <= 5 ? cardRatings.get(i) : 5;
+            int cardCountOfStarsExpected = cardRatings.get(i) <= 5 ? (int) Math.floor(cardRatings.get(i)) : 5;
 
-            softAssert.assertEquals(cardCountOfStarsActual, (int) cardCountOfStarsExpected);
+            softAssert.assertEquals(cardCountOfStarsActual, cardCountOfStarsExpected);
 
             String cardNameActual = clubsPage.getCards().get(i).getCardName();
             String cardNameExpected = cardNames.get(i);
