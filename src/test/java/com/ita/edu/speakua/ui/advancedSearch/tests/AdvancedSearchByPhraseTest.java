@@ -18,7 +18,7 @@ public class AdvancedSearchByPhraseTest extends SameWindowTestRunner {
                 .openAdvancedSearch();
     }
 
-    @DataProvider(name = "verifySearchByPhraseFunctionality")
+    @DataProvider(name = "searchData")
     public static Object[][] searchData() {
         return new Object[][]{
                 {"С", false},
