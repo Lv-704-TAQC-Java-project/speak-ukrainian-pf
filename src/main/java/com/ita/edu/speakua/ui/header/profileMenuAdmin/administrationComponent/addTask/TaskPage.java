@@ -16,6 +16,9 @@ public class TaskPage extends Header {
     @FindBy(xpath = "//div[@class='task-content']//p")
     private WebElement description;
 
+    @FindBy(xpath = "//div[@class='task-image-par']//img")
+    private WebElement image;
+
     public TaskPage(WebDriver driver) {
         super(driver);
     }
@@ -33,5 +36,10 @@ public class TaskPage extends Header {
     public String getDescriptionText() {
         wait.visibility(description);
         return description.getText();
+    }
+
+    public String getImageURL() {
+        wait.visibility(image);
+        return image.getAttribute("src");
     }
 }

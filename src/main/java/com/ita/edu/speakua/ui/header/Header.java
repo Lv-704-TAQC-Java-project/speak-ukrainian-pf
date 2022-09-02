@@ -22,6 +22,9 @@ public class Header extends BasePage {
     @FindBy(xpath = "//div[contains(@class, 'user-profile')]")
     private WebElement profileMenuBtn;
 
+    @FindBy(xpath = "//header//div[contains(@class, 'city')]")
+    private WebElement city;
+
 
     public Header(WebDriver driver) {
         super(driver);
@@ -55,8 +58,13 @@ public class Header extends BasePage {
         profileMenuButton.click();
         return getAdminProfileMenuComponent();
     }
+
     public Header getHomePageReload() {
         wait.pageReload();
         return new Header(driver);
+    }
+
+    public String getLocationFromHeader() {
+        return city.getText();
     }
 }
