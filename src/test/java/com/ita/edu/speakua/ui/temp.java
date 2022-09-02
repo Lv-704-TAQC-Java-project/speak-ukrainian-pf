@@ -3,10 +3,10 @@ package com.ita.edu.speakua.ui;
 import com.ita.edu.speakua.ui.utils.jdbc.dao.CenterDAO;
 import com.ita.edu.speakua.ui.utils.jdbc.dao.CityDAO;
 import com.ita.edu.speakua.ui.utils.jdbc.dao.ClubDAO;
+import com.ita.edu.speakua.ui.utils.jdbc.dao.LocationsDAO;
 import com.ita.edu.speakua.ui.utils.jdbc.entity.*;
 import org.testng.annotations.Test;
 
-import java.sql.SQLOutput;
 import java.util.List;
 
 public class temp {
@@ -48,5 +48,14 @@ public class temp {
         System.out.println("===============================================");
         List<ClubRatingEntity> sixRatingsDesc = clubDAO.selectSixRatingsDesc();
         System.out.println(sixRatingsDesc);
+    }
+
+    @Test
+    public void location() {
+        LocationsDAO locationsDAO = new LocationsDAO();
+        List<LocationsEntity> locations = locationsDAO.selectByName("club_loc_!!!");
+//        List<LocationsEntity> locations = locationsDAO.selectByName("center_location_first.....");
+
+        System.out.println(locations.toString());
     }
 }
