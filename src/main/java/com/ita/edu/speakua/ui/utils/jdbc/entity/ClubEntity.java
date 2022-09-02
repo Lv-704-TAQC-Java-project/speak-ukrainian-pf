@@ -7,11 +7,10 @@ import java.util.List;
 
 @Data
 public class ClubEntity {
-
-    public static final String ALL_FIELDS = "id, age_from, age_to, center_external_id, club_external_id, " +
+    private static final String ALL_FIELDS = "id, age_from, age_to, center_external_id, club_external_id, " +
             "contacts, description, is_approved, is_online, name, rating, url_background, url_logo, url_web, " +
             "work_time, center_id, user_id, feedback_count";
-    public static final String SELECT_ALL_FIELDS = "SELECT " + ALL_FIELDS;
+    private static final String SELECT_ALL_FIELDS = "SELECT " + ALL_FIELDS;
 
     public static final String SELECT_ALL = SELECT_ALL_FIELDS + " FROM clubs ORDER BY id;";
     public static final String SELECT_BY_ID = SELECT_ALL_FIELDS + " FROM clubs WHERE id = '%s';";

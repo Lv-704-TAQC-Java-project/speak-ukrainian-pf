@@ -2,7 +2,7 @@ package com.ita.edu.speakua.ui.addTask.tests;
 
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.addTask.TaskPage;
 import com.ita.edu.speakua.ui.runners.AddTaskTestRunner;
-import com.ita.edu.speakua.ui.utils.jdbc.entity.TaskEntity;
+import com.ita.edu.speakua.ui.utils.jdbc.dto.TaskJoinChallengeDTO;
 import com.ita.edu.speakua.ui.utils.jdbc.services.TaskService;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -232,7 +232,7 @@ public class AddTaskTest extends AddTaskTestRunner {
         softly.assertEquals(actualErrorMessage, "Фото не може бути пустим",
                 "Incorrect 'no image' error message");
 
-        long tasksQuantityWithChosenName = new TaskService().getTasksCountWithName(name);
+        long tasksQuantityWithChosenName = new TaskService().getTasksCount(name);
         softly.assertTrue(tasksQuantityWithChosenName == 0,
                 format("Should be 0 tasks in DB with '%s' name, but found %d", name, tasksQuantityWithChosenName));
         softly.assertAll();
@@ -257,27 +257,22 @@ public class AddTaskTest extends AddTaskTestRunner {
                 .selectChallenge(challenge);
         TaskPage taskPage = addTaskPage.save();
 
-        TaskEntity lastTask = new TaskService()
-                .getTasksWithName(name, "id", true)
+        TaskJoinChallengeDTO lastTaskJoinChallenge = new TaskService()
+                .getTasksJoinChallengeDTO(name, "id", true)
                 .get(0);
 
-        softly.assertEquals(lastTask.getStartDate(), tomorrow,
+        softly.assertEquals(lastTaskJoinChallenge.getStartDate(), tomorrow,
                 "Date in DB should be equal to entered task date");
-        softly.assertEquals(lastTask.getName(), name,
+        softly.assertEquals(lastTaskJoinChallenge.getName(), name,
                 "Name in DB should be equal to entered task name");
-        softly.assertEquals(lastTask.getHeaderText(), "<p>" + title + "</p>",
+        softly.assertEquals(lastTaskJoinChallenge.getHeaderText(), "<p>" + title + "</p>",
                 "Description in DB should be equal to entered task description");
-        softly.assertEquals(lastTask.getDescription(), "<p>" + description + "</p>",
+        softly.assertEquals(lastTaskJoinChallenge.getDescription(), "<p>" + description + "</p>",
                 "Header title in DB should be equal to entered task header title");
-        softly.assertEquals(lastTask.getChallengeName(), challenge,
+        softly.assertEquals(lastTaskJoinChallenge.getChallenge().getName(), challenge,
                 "Challenge name in DB should be equal to chosen challenge name");
-
-//        ChallengeService challengeService = new ChallengeService();
-//        ChallengeEntity lastTaskChallenge = challengeService.getById(lastTask.getChallengeId());
-//        softAssert.assertEquals(lastTaskChallenge.getName(), challenge, "Challenge");
-
         softly.assertEquals(taskPage.getImageURL(),
-                configProps.getBaseUrl() + lastTask.getPicture(),
+                configProps.getBaseUrl() + lastTaskJoinChallenge.getPicture(),
                 "Image path in DB should be equal to image path on Task page");
 
         softly.assertEquals(addTaskPage.getSuccessMessage(),

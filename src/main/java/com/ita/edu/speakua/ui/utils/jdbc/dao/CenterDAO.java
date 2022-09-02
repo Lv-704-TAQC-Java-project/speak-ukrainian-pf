@@ -8,11 +8,11 @@ import java.sql.Statement;
 import java.util.List;
 
 public class CenterDAO {
-    public List<CenterEntity> selectAll() {
+    public List<CenterEntity> selectAllCenters() {
         Statement statement = ManagerDAO.getInstance().getStatement();
         List<List<String>> rows;
         try {
-            ResultSet resultSet = statement.executeQuery(CenterEntity.SELECT_ALL);
+            ResultSet resultSet = statement.executeQuery(CenterEntity.SELECT_ALL_CENTERS);
             rows = ManagerDAO.getInstance().parseResultSet(resultSet);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -21,24 +21,11 @@ public class CenterDAO {
         return CenterEntity.parseRows(rows);
     }
 
-    public List<CenterEntity> selectByName(String name) {
+    public CenterEntity selectCenterById(long id) {
         Statement statement = ManagerDAO.getInstance().getStatement();
         List<List<String>> rows;
         try {
-            ResultSet resultSet = statement.executeQuery(String.format(CenterEntity.SELECT_WHERE_NAME, name));
-            rows = ManagerDAO.getInstance().parseResultSet(resultSet);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        ManagerDAO.getInstance().closeStatement(statement);
-        return CenterEntity.parseRows(rows);
-    }
-
-    public CenterEntity selectById(long id) {
-        Statement statement = ManagerDAO.getInstance().getStatement();
-        List<List<String>> rows;
-        try {
-            ResultSet resultSet = statement.executeQuery(String.format(CenterEntity.SELECT_BY_ID, id));
+            ResultSet resultSet = statement.executeQuery(String.format(CenterEntity.SELECT_CENTER_BY_ID, id));
             rows = ManagerDAO.getInstance().parseResultSet(resultSet);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -47,24 +34,11 @@ public class CenterDAO {
         return CenterEntity.parseRows(rows).get(0);
     }
 
-    public List<CenterEntity> selectOrderByName(boolean desc, long limit) {
-        Statement statement = ManagerDAO.getInstance().getStatement();
-        List<List<String>> rows;
-        try {
-            ResultSet resultSet = statement.executeQuery(String.format(CenterEntity.FIRST_NAMES_LIMIT, desc ? "DESC" : "ASC", limit));
-            rows = ManagerDAO.getInstance().parseResultSet(resultSet);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        ManagerDAO.getInstance().closeStatement(statement);
-        return CenterEntity.parseRows(rows);
-    }
-
     public List<CenterEntity> selectCenters(String city, String orderBy, boolean desc, long limit) {
         Statement statement = ManagerDAO.getInstance().getStatement();
         List<List<String>> rows;
         try {
-            ResultSet resultSet = statement.executeQuery(String.format(CenterEntity.SELECT_FROM_CITY_ORDERED_AND_SORTED_WITH_LIMIT, city, orderBy, desc ? "DESC" : "ASC", limit));
+            ResultSet resultSet = statement.executeQuery(String.format(CenterEntity.SELECT_CENTERS_FROM_CITY_ORDERED_AND_SORTED_WITH_LIMIT, city, orderBy, desc ? "DESC" : "ASC", limit));
             rows = ManagerDAO.getInstance().parseResultSet(resultSet);
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -3,7 +3,7 @@ package com.ita.edu.speakua.ui.utils.jdbc.services;
 import com.ita.edu.speakua.ui.utils.jdbc.dao.CenterDAO;
 import com.ita.edu.speakua.ui.utils.jdbc.dao.ClubDAO;
 import com.ita.edu.speakua.ui.utils.jdbc.dto.CenterDTO;
-import com.ita.edu.speakua.ui.utils.jdbc.dto.ClubWithCenterDTO;
+import com.ita.edu.speakua.ui.utils.jdbc.dto.ClubJoinCenterDTO;
 import com.ita.edu.speakua.ui.utils.jdbc.entity.ClubEntity;
 
 import java.util.ArrayList;
@@ -31,14 +31,14 @@ public class ClubService {
         return names;
     }
 
-    public List<ClubWithCenterDTO> getAllClubWithCenter() {
-        List<ClubWithCenterDTO> clubs = new ArrayList<>();
+    public List<ClubJoinCenterDTO> getAllClubWithCenter() {
+        List<ClubJoinCenterDTO> clubs = new ArrayList<>();
         for (ClubEntity club : clubDAO.selectAll()) {
-            ClubWithCenterDTO clubDTO = new ClubWithCenterDTO();
-            clubDTO.setClub(club);
+            ClubJoinCenterDTO clubJoinCenterDTO = new ClubJoinCenterDTO();
+            clubJoinCenterDTO.setClub(club);
             CenterDTO center = new CenterDTO();
-            center.setCenter(centerDAO.selectById(club.getCenterId()));
-            clubs.add(clubDTO);
+            center.setCenter(centerDAO.selectCenterById(club.getCenterId()));
+            clubs.add(clubJoinCenterDTO);
         }
         return clubs;
     }

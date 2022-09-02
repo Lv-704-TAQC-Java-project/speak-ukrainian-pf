@@ -3,6 +3,7 @@ package com.ita.edu.speakua.ui.clubs.card.components;
 import com.ita.edu.speakua.ui.BasePage;
 import com.ita.edu.speakua.ui.clubs.ExpandedCardComponent;
 import io.qameta.allure.Step;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -49,7 +50,8 @@ public class CardComponent extends BasePage {
 
     @Step("Get full card text")
     public String getCardText() {
-        wait.visibility(cardWrapper);
+        waitNameRefresh(1000, 100);
+        waitNameRefresh(1000, 100);
         return cardWrapper.getText();
     }
 
@@ -58,8 +60,11 @@ public class CardComponent extends BasePage {
     }
 
     public CardComponent waitNameRefresh(long timeoutMillis, int polling) {
-        wait.fluentStaleness(cardName, timeoutMillis, polling);
-        wait.fluentVisibility(cardName, timeoutMillis, polling);
+        try {
+            wait.fluentStaleness(cardName, timeoutMillis, polling);
+            wait.fluentVisibility(cardName, timeoutMillis, polling);
+        } catch (StaleElementReferenceException ignore) {
+        }
         return this;
     }
 

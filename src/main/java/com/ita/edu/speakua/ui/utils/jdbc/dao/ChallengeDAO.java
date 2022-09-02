@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.List;
 
 public class ChallengeDAO {
-    public List<ChallengeEntity> selectAll() {
+    public List<ChallengeEntity> selectAllChallenges() {
         Statement statement = ManagerDAO.getInstance().getStatement();
         List<List<String>> rows;
         try {
@@ -21,11 +21,11 @@ public class ChallengeDAO {
         return ChallengeEntity.parseRows(rows);
     }
 
-    public ChallengeEntity selectById(long id) {
+    public ChallengeEntity selectChallengeById(long id) {
         Statement statement = ManagerDAO.getInstance().getStatement();
         List<List<String>> rows;
         try {
-            ResultSet resultSet = statement.executeQuery(String.format(ChallengeEntity.SELECT_BY_ID, id));
+            ResultSet resultSet = statement.executeQuery(String.format(ChallengeEntity.SELECT_CHALLENGE_BY_ID, id));
             rows = ManagerDAO.getInstance().parseResultSet(resultSet);
         } catch (SQLException e) {
             throw new RuntimeException(e);

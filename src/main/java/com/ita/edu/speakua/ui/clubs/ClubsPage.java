@@ -178,4 +178,12 @@ public class ClubsPage extends Header {
                 .map(CenterComponent::getTextCenterName)
                 .toArray(String[]::new);
     }
+
+    public String[] getClubsNames() {
+        return this
+                .getCards()
+                .stream()
+                .map(CardComponent::getCardText)
+                .toArray(String[]::new);
+    }
 }
