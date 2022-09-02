@@ -103,11 +103,13 @@ public class AdvancedSearchPanelComponent extends ClubsPage {
         return Integer.parseInt(childAgeInput.getAttribute("value"));
     }
 
-    public AdvancedSearchPanelComponent clearCitySelector(){
+    public AdvancedSearchPanelComponent clearCitySelector() {
         new Actions(driver)
                 .moveToElement(citySelectArrow)
                 .perform();
-        citySelectClear.click();
+        if (action.isVisible(citySelectClear)) {
+            citySelectClear.click();
+        }
         return this;
     }
 }
