@@ -50,8 +50,7 @@ public class CardComponent extends BasePage {
 
     @Step("Get full card text")
     public String getCardText() {
-        waitNameRefresh(2000, 100);
-        waitNameRefresh(2000, 100);
+        wait.visibility(cardWrapper);
         return cardWrapper.getText();
     }
 

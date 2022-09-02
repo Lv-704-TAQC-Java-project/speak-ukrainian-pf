@@ -180,6 +180,7 @@ public class ClubsPage extends Header {
     }
 
     public String[] getClubsNames() {
+        wait.sleep(1000);
         return this
                 .getCards()
                 .stream()
