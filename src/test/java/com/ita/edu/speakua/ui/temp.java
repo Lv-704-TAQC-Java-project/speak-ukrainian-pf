@@ -6,6 +6,7 @@ import com.ita.edu.speakua.ui.utils.jdbc.entity.CenterEntity;
 import com.ita.edu.speakua.ui.utils.jdbc.entity.CityEntity;
 import com.ita.edu.speakua.ui.utils.jdbc.dao.LocationsDAO;
 import com.ita.edu.speakua.ui.utils.jdbc.entity.ClubEntity;
+import com.ita.edu.speakua.ui.utils.jdbc.entity.LocationsEntity;
 import com.ita.edu.speakua.ui.utils.jdbc.services.ClubService;
 import org.testng.annotations.Test;
 
@@ -50,7 +51,7 @@ public class temp {
 
     }
 
-    @Test
+    @Test()
     public void location() {
         LocationsDAO locationsDAO = new LocationsDAO();
         List<LocationsEntity> locations = locationsDAO.selectByName("club_loc_!!!");

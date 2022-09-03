@@ -25,8 +25,8 @@ public class LocationsEntity {
         LocationsEntity locationsEntity = new LocationsEntity();
         locationsEntity.setId(Long.parseLong(row.get(0)));
         locationsEntity.setAddress(row.get(1));
-        locationsEntity.setLatitude(Double.parseDouble(row.get(2)));
-        locationsEntity.setLongitude(Double.parseDouble(row.get(3)));
+        locationsEntity.setLatitude(Double.parseDouble(row.get(2) == null ? "0" : row.get(2)));
+        locationsEntity.setLongitude(Double.parseDouble(row.get(3) == null ? "0" : row.get(3)));
         locationsEntity.setName(row.get(4));
         locationsEntity.setCenterId(Long.parseLong(row.get(5) == null ? "0" : row.get(5)));
         locationsEntity.setCityId(Long.parseLong(row.get(6)));
@@ -44,5 +44,4 @@ public class LocationsEntity {
         }
         return locationsEntities;
     }
-
 }
