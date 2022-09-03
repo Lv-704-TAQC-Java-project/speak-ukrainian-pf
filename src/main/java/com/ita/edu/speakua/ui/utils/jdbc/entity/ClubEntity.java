@@ -10,6 +10,10 @@ public class ClubEntity {
     private static final String ALL_FIELDS = "id, age_from, age_to, center_external_id, club_external_id, " +
             "contacts, description, is_approved, is_online, name, rating, url_background, url_logo, url_web, " +
             "work_time, center_id, user_id, feedback_count";
+    private static final String ALL_FIELDS_EXPLICIT = "clubs.id, clubs.age_from, clubs.age_to, clubs.center_external_id, " +
+            "clubs.club_external_id, clubs.contacts, clubs.description, clubs.is_approved, clubs.is_online, clubs.name, " +
+            "clubs.rating, clubs.url_background, clubs.url_logo, clubs.url_web, clubs.work_time, clubs.center_id, " +
+            "clubs.user_id, clubs.feedback_count";
     private static final String SELECT_ALL_FIELDS = "SELECT " + ALL_FIELDS;
 
     public static final String SELECT_ALL = SELECT_ALL_FIELDS + " FROM clubs ORDER BY id;";
@@ -37,6 +41,15 @@ public class ClubEntity {
             "JOIN locations l ON cl.id = l.club_id " +
             "JOIN cities ct ON l.city_id = ct.id " +
             "WHERE ct.name = '%s';";
+    public static final String SELECT_CLUBS_FROM_CITY_BY_SEARCH_PHRASE_WITH_LIMIT = "SELECT DISTINCT " + ALL_FIELDS_EXPLICIT +
+            " FROM clubs " +
+            "JOIN locations ON locations.club_id = clubs.id " +
+            "JOIN cities ON cities.id = locations.city_id " +
+            "JOIN club_category ON locations.club_id = club_category.club_id " +
+            "JOIN categories ON club_category.category_id = categories.id " +
+            "WHERE cities.name='%s' AND (clubs.name ILIKE '%%%s%%' OR clubs.description ILIKE '%%%s%%') " +
+            "ORDER BY clubs.name " +
+            "LIMIT %d;";
 
     private long id;
     private int ageFrom;

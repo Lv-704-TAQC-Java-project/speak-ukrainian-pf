@@ -100,4 +100,17 @@ public class ClubDAO {
         ManagerDAO.getInstance().closeStatement(statement);
         return ClubEntity.parseRows(rows);
     }
+
+    public List<ClubEntity> selectClubsFromCityBySearchPhrase(String city, String phrase, int limit) {
+        Statement statement = ManagerDAO.getInstance().getStatement();
+        List<List<String>> rows;
+        try {
+            ResultSet resultSet = statement.executeQuery(String.format(ClubEntity.SELECT_CLUBS_FROM_CITY_BY_SEARCH_PHRASE_WITH_LIMIT, city, phrase, phrase, limit));
+            rows = ManagerDAO.getInstance().parseResultSet(resultSet);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        ManagerDAO.getInstance().closeStatement(statement);
+        return ClubEntity.parseRows(rows);
+    }
 }

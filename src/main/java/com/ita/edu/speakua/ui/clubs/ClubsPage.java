@@ -10,6 +10,7 @@ import org.openqa.selenium.support.FindBy;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ClubsPage extends Header {
 
@@ -35,6 +36,9 @@ public class ClubsPage extends Header {
 
     @FindBy(xpath = "//input[contains(@id, 'rc_select')]")
     private WebElement searchInput;
+
+    @FindBy(xpath = "//div[@class='search']//span[contains(@class, 'anticon-search')]")
+    private WebElement submitSearchButton;
 
     public ClubsPage(WebDriver driver) {
         super(driver);
@@ -124,39 +128,17 @@ public class ClubsPage extends Header {
         return advancedSearchButton == null;
     }
 
-    @Step("Search phrase by entering separate characters in search field: {query}")
-    public ClubsPage fillInSearch(String query) {
+    @Step("Clubs page: Search by {phrase}")
+    public ClubsPage fillInSearch(String phrase) {
         action.clearInput(searchInput);
         searchInput.click();
-        char[] chars = query.toCharArray();
+        char[] chars = phrase.toCharArray();
         for (int i = 0; i < chars.length; i++) {
             searchInput.sendKeys(String.valueOf(chars[i]));
             waitCardsRefresh(i == 0 ? 1000 : 500, 100);
         }
-        return this;
-    }
-
-    @Step("Search phrase by pasting input in search field: {query}. Maximum input length is {maxLength}.")
-    public ClubsPage pasteInSearch(String query, int maxLength) {
-        action.clearInput(searchInput);
-        searchInput.click();
-        JavascriptExecutor executor = (JavascriptExecutor) driver;
-        String pasteQuery = query.length() < maxLength
-                ? query
-                : query.substring(0, maxLength - 1);
-        String typeQuery = query.length() < maxLength
-                ? query.substring(query.length() - 2)
-                : query.substring(maxLength - 2);
-        executor.executeScript(String.format("arguments[0].value='%s'", pasteQuery), searchInput);
-
-        searchInput.sendKeys(Keys.BACK_SPACE);
-        waitCardsRefresh(500, 100);
-
-        char[] chars = typeQuery.toCharArray();
-        for (char aChar : chars) {
-            searchInput.sendKeys(String.valueOf(aChar));
-            waitCardsRefresh(500, 100);
-        }
+        submitSearchButton.click();
+        waitCardsRefresh(1000, 100);
         return this;
     }
 
@@ -179,12 +161,11 @@ public class ClubsPage extends Header {
                 .toArray(String[]::new);
     }
 
-    public String[] getClubsNames() {
-        wait.sleep(1000);
+    public List<String> getClubNames() {
         return this
                 .getCards()
                 .stream()
-                .map(CardComponent::getCardText)
-                .toArray(String[]::new);
+                .map(CardComponent::getCardName)
+                .collect(Collectors.toList());
     }
 }
