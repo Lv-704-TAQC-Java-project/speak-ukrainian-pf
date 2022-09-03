@@ -26,8 +26,8 @@ public class temp {
         System.out.println("===============================================");
 
         CenterDAO centerDAO = new CenterDAO();
-        List<CenterEntity> centers = centerDAO.selectAll();
-        CenterEntity center = centerDAO.selectById(1);
+        List<CenterEntity> centers = centerDAO.selectAllCenters();
+        CenterEntity center = centerDAO.selectCenterById(1);
 //        List<CenterNameEntity> firstSixCentersByNameAsc = centerDAO.firstSixNamesAsc();
 //        List<CenterNameEntity> firstSixCentersByNameDesc = centerDAO.firstSixNamesDesc();
         System.out.println(center);

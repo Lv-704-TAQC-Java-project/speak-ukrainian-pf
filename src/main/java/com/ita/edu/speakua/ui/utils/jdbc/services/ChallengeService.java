@@ -12,11 +12,11 @@ public class ChallengeService {
         centerDAO = new ChallengeDAO();
     }
 
-    public List<ChallengeEntity> getAll() {
-        return centerDAO.selectAll();
+    public List<ChallengeEntity> getAllChallenges() {
+        return centerDAO.selectAllChallenges();
     }
 
-    public ChallengeEntity getById(long id) {
-        return centerDAO.selectById(id);
+    public ChallengeEntity getChallengeById(long id) {
+        return centerDAO.selectChallengeById(id);
     }
 }

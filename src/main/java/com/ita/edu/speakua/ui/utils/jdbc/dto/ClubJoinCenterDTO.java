@@ -2,7 +2,7 @@ package com.ita.edu.speakua.ui.utils.jdbc.dto;
 
 import com.ita.edu.speakua.ui.utils.jdbc.entity.ClubEntity;
 
-public class ClubWithCenterDTO {
+public class ClubJoinCenterDTO {
     private long id;
     private int age_from;
     private int age_to;

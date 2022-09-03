@@ -101,6 +101,4 @@ public class ManagerDAO {
             } result.add(row);
         } return result;
     }
-
-
 }

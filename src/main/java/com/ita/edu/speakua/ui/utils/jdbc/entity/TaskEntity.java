@@ -1,6 +1,5 @@
 package com.ita.edu.speakua.ui.utils.jdbc.entity;
 
-import com.ita.edu.speakua.ui.utils.jdbc.services.ChallengeService;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -8,12 +7,13 @@ import java.util.List;
 
 @Data
 public class TaskEntity {
-    public static final String ALL_FIELDS = "id, description, name, picture, start_date, challenge_id, header_text";
-    public static final String SELECT_ALL_FIELDS = "SELECT " + ALL_FIELDS;
-    public static final String SELECT_ALL = SELECT_ALL_FIELDS + " FROM tasks;";
-    public static final String SELECT_ALL_WHERE_NAME = SELECT_ALL_FIELDS + " FROM tasks WHERE name = '%s';";
-    public static final String SELECT_ALL_WITH_NAME_ORDERED_AND_SORTED = SELECT_ALL_FIELDS + " FROM tasks WHERE name='%s' ORDER BY %s %s;";
-//    public static final String COUNT_WITH_NAME = "SELECT COUNT(*) FROM tasks WHERE name='%s';";
+    private static final String ALL_FIELDS = "id, description, name, picture, start_date, challenge_id, header_text";
+    private static final String SELECT_ALL_FIELDS = "SELECT " + ALL_FIELDS;
+
+    public static final String SELECT_ALL_TASKS = SELECT_ALL_FIELDS + " FROM tasks;";
+    public static final String SELECT_TASKS_WITH_NAME = SELECT_ALL_FIELDS + " FROM tasks WHERE name = '%s';";
+    public static final String SELECT_TASKS_WITH_NAME_ORDERED_AND_SORTED = SELECT_ALL_FIELDS + " FROM tasks WHERE name='%s' ORDER BY %s %s;";
+    public static final String COUNT_TASKS_WITH_NAME = "SELECT COUNT(*) FROM tasks WHERE name='%s';";
 
     private long id;
     private String description;
@@ -44,9 +44,5 @@ public class TaskEntity {
         }
 
         return taskEntities;
-    }
-
-    public String getChallengeName() {
-        return new ChallengeService().getById(this.challengeId).getName();
     }
 }

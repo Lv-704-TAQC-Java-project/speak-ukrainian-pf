@@ -12,7 +12,7 @@ public class ChallengeEntity {
     private static final String SELECT_ALL_FIELDS = "SELECT " + ALL_FIELDS;
 
     public static final String SELECT_ALL_CHALLENGES = SELECT_ALL_FIELDS + " FROM challenges;";
-    public static final String SELECT_BY_ID = SELECT_ALL_FIELDS + " FROM challenges WHERE id='%s';";
+    public static final String SELECT_CHALLENGE_BY_ID = SELECT_ALL_FIELDS + " FROM challenges WHERE id='%s';";
 
     private long id;
     private String description;

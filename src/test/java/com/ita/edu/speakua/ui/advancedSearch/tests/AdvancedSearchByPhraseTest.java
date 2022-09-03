@@ -2,7 +2,6 @@ package com.ita.edu.speakua.ui.advancedSearch.tests;
 
 import com.ita.edu.speakua.ui.HomePage;
 import com.ita.edu.speakua.ui.clubs.ClubsPage;
-import com.ita.edu.speakua.ui.clubs.card.components.CardComponent;
 import com.ita.edu.speakua.ui.runners.SameWindowTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -22,7 +21,7 @@ public class AdvancedSearchByPhraseTest extends SameWindowTestRunner {
     @DataProvider(name = "searchData")
     public static Object[][] searchData() {
         return new Object[][]{
-                {"я", false},
+                {"С", false},
                 {"bVFGgqFhQnbPWUxedbdQTMZFgHQACFuyDPcdAinKpWlKXffivF", false},
                 {"Журналістика, дитяче телебачення, монтаж відео, влогів", false},
                 {"bVFGgqFhQnbPWUxedbdQTMZFgHQACFuyDPcdAinKpWlKXffivF", true},
@@ -38,14 +37,10 @@ public class AdvancedSearchByPhraseTest extends SameWindowTestRunner {
     @Issue("TUA-428")
     @Description("Verify search field behavior for strings of different length, that we enter as separate keystrokes or paste as a phrase.")
     @Test(dataProvider = "searchData")
-    public void verifySearchFunctionality(String query, boolean isTypeOfInputPaste) {
+    public void verifySearchByPhraseFunctionality(String query, boolean isTypeOfInputPaste) {
         final int maxInputValueLength = 50;
 
-        String[] cardsTextBeforeSearch = clubsPage
-                .getCards()
-                .stream()
-                .map(CardComponent::getCardText)
-                .toArray(String[]::new);
+        String[] cardsTextBeforeSearch = clubsPage.getClubsNames();
 
         if (isTypeOfInputPaste) {
             clubsPage.pasteInSearch(query, maxInputValueLength);
@@ -53,29 +48,23 @@ public class AdvancedSearchByPhraseTest extends SameWindowTestRunner {
             clubsPage.fillInSearch(query);
         }
 
-        String[] cardsTextAfterSearch = clubsPage
-                .getCards()
-                .stream()
-                .map(CardComponent::getCardText)
-                .toArray(String[]::new);
+        String[] cardsTextAfterSearch = clubsPage.getClubsNames();
 
         boolean areCardsDifferentAfterSearch = false;
-        SoftAssert softAssert = new SoftAssert();
+        SoftAssert softly = new SoftAssert();
 
         for (int i = 0; i < Math.min(cardsTextAfterSearch.length, cardsTextBeforeSearch.length); i++) {
-            softAssert.assertTrue(cardsTextAfterSearch[i].toLowerCase().contains(query.toLowerCase()),
+            softly.assertTrue(cardsTextAfterSearch[i].toLowerCase().contains(query.toLowerCase()),
                     String.format("%s\nShould contain:\n%s", cardsTextAfterSearch[i], query));
-            softAssert.assertTrue(query.length() > maxInputValueLength
-                            ? clubsPage.getSearchInputLength() == maxInputValueLength
-                            : clubsPage.getSearchInputLength() == query.length(),
-                    "Input value should be equal query length or do not exceed " + maxInputValueLength);
+            softly.assertTrue(clubsPage.getSearchInputLength() <= maxInputValueLength,
+                    "Input value length should not exceed " + maxInputValueLength);
             if (!cardsTextBeforeSearch[i].equals(cardsTextAfterSearch[i])) {
                 areCardsDifferentAfterSearch = true;
                 break;
             }
         }
 
-        softAssert.assertTrue(areCardsDifferentAfterSearch, "Cards must be different after search.");
-        softAssert.assertAll();
+        softly.assertTrue(areCardsDifferentAfterSearch, "Cards must be different after search.");
+        softly.assertAll();
     }
 }

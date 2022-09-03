@@ -1,7 +1,6 @@
 package com.ita.edu.speakua.ui.utils.jdbc.dto;
 
 import com.ita.edu.speakua.ui.utils.jdbc.entity.CenterEntity;
-import com.ita.edu.speakua.ui.utils.jdbc.entity.ClubEntity;
 
 public class CenterDTO {
     private long id;
