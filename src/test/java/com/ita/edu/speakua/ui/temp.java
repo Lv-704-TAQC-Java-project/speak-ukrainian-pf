@@ -4,10 +4,9 @@ import com.ita.edu.speakua.ui.utils.jdbc.dao.CenterDAO;
 import com.ita.edu.speakua.ui.utils.jdbc.dao.CityDAO;
 import com.ita.edu.speakua.ui.utils.jdbc.entity.CenterEntity;
 import com.ita.edu.speakua.ui.utils.jdbc.entity.CityEntity;
-import com.ita.edu.speakua.ui.utils.jdbc.dao.LocationsDAO;
 import com.ita.edu.speakua.ui.utils.jdbc.entity.ClubEntity;
-import com.ita.edu.speakua.ui.utils.jdbc.entity.LocationsEntity;
 import com.ita.edu.speakua.ui.utils.jdbc.services.ClubService;
+import com.ita.edu.speakua.ui.utils.jdbc.services.LocationService;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -53,10 +52,7 @@ public class temp {
 
     @Test()
     public void location() {
-        LocationsDAO locationsDAO = new LocationsDAO();
-        List<LocationsEntity> locations = locationsDAO.selectByName("club_loc_!!!");
-//        List<LocationsEntity> locations = locationsDAO.selectByName("center_location_first.....");
-
-        System.out.println(locations.toString());
+        LocationService locationService = new LocationService();
+        System.out.println(locationService.getLocationByName("club_loc_!!!"));
     }
 }

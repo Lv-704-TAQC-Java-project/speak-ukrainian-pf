@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class LocationsEntity {
+public class LocationEntity {
     public static final String SELECT_BY_NAME = "SELECT * FROM locations WHERE name = '%s';";
 
     private long id;
@@ -21,8 +21,8 @@ public class LocationsEntity {
     private long stationId;
     private String phone;
 
-    public static LocationsEntity parseRow(List<String> row) {
-        LocationsEntity locationsEntity = new LocationsEntity();
+    public static LocationEntity parseRow(List<String> row) {
+        LocationEntity locationsEntity = new LocationEntity();
         locationsEntity.setId(Long.parseLong(row.get(0)));
         locationsEntity.setAddress(row.get(1));
         locationsEntity.setLatitude(Double.parseDouble(row.get(2) == null ? "0" : row.get(2)));
@@ -37,8 +37,8 @@ public class LocationsEntity {
         return locationsEntity;
     }
 
-    public static List<LocationsEntity> parseRows(List<List<String>> rows) {
-        List<LocationsEntity> locationsEntities = new ArrayList<>();
+    public static List<LocationEntity> parseRows(List<List<String>> rows) {
+        List<LocationEntity> locationsEntities = new ArrayList<>();
         for (List<String> row : rows) {
             locationsEntities.add(parseRow(row));
         }

@@ -10,7 +10,6 @@ public class LoginTestRunner extends SameWindowTestRunner {
         Header header = new Header(driver);
         header.openGuestProfileMenu()
                 .openLoginModal()
-                .clickLoginButton()
                 .fillInEmail(configProps.getUserEmail())
                 .fillInPassword(configProps.getUserPassword())
                 .clickLoginButton();
