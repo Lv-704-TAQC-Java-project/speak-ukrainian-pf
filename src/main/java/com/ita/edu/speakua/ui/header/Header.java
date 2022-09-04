@@ -1,6 +1,7 @@
 package com.ita.edu.speakua.ui.header;
 
 import com.ita.edu.speakua.ui.BasePage;
+import com.ita.edu.speakua.ui.clubs.ClubsPage;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.AdminProfileMenuComponent;
 import com.ita.edu.speakua.ui.header.profileMenuGuest.GuestProfileMenuComponent;
 import io.qameta.allure.Step;
@@ -77,26 +78,26 @@ public class Header extends BasePage {
     }
 
     @Step("Header: Search by {phrase}")
-    public Header searchBy(String phrase) {
+    public ClubsPage searchBy(String phrase) {
         action.setNewValueForInput(searchInputField, phrase);
-        wait.sleep((phrase.length() / 10 + 1) * 4000);
+        wait.sleep((phrase.length() / 10 + 1) * 4500L);
         submitSearchButton.click();
-        wait.sleep(1000);
-        return this;
+        wait.sleep(500);
+        return new ClubsPage(driver);
     }
 
-    @Step("Header: Search {phrase} by setting value of search field in {inputMaxLength} range and typing rest.")
-    public Header fastSearchBy(String phrase, int inputMaxLength) {
+    @Step("Header: Search {phrase} using JS set search field value. Maximum search field length {inputFieldMaxLength} chars.")
+    public ClubsPage searchByPhraseUsingPaste(String phrase, int inputFieldMaxLength) {
         wait.sleep(1000);
         searchInputField.click();
         wait.sleep(500);
         JavascriptExecutor executor = (JavascriptExecutor) driver;
-        String phraseSubstringInMaxLengthRange = phrase.length() < inputMaxLength
+        String phraseSubstringInMaxLengthRange = phrase.length() < inputFieldMaxLength
                 ? phrase
-                : phrase.substring(0, inputMaxLength - 1);
-        String phraseSubstringOverMaxLengthRange = phrase.length() < inputMaxLength
+                : phrase.substring(0, inputFieldMaxLength - 1);
+        String phraseSubstringOverMaxLengthRange = phrase.length() < inputFieldMaxLength
                 ? phrase.substring(phrase.length() - 1)
-                : phrase.substring(inputMaxLength - 2);
+                : phrase.substring(inputFieldMaxLength - 2);
         executor.executeScript(String.format("arguments[0].value='%s'", phraseSubstringInMaxLengthRange), searchInputField);
 
         searchInputField.sendKeys(Keys.BACK_SPACE);
@@ -104,7 +105,7 @@ public class Header extends BasePage {
         searchInputField.sendKeys(phraseSubstringOverMaxLengthRange);
         wait.sleep(500);
         submitSearchButton.click();
-        wait.sleep(1000);
-        return this;
+        wait.sleep(500);
+        return new ClubsPage(driver);
     }
 }

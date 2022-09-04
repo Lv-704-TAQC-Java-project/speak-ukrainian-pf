@@ -24,8 +24,15 @@ public class AdvancedSearchByPhraseTest extends SameWindowTestRunner {
                 .openAdvancedSearch();
     }
 
-    @DataProvider(name = "searchData")
-    public static Object[][] searchData() {
+    @Issue("TUA-428")
+    @Description("User should be able to search clubs by phrase")
+    @Test(dataProvider = "searchByPhraseData")
+    public void verifySearchByPhraseFunctionality(String phrase) {
+        searchByPhrase(phrase, false);
+    }
+
+    @DataProvider(name = "searchByPhraseData")
+    public static Object[][] searchByPhraseData() {
         return new Object[][]{
                 {"вивчаємо все, що можна уявити в ІТ і навіть більше"},
                 {"С"},
@@ -34,14 +41,14 @@ public class AdvancedSearchByPhraseTest extends SameWindowTestRunner {
     }
 
     @Issue("TUA-428")
-    @Description("User should be able to search clubs by phrase")
-    @Test(dataProvider = "searchData")
-    public void verifySearchByPhraseFunctionality(String phrase) {
-        searchByPhrase(phrase, false);
+    @Description("User should be able to search clubs by pasting search phrase into search field")
+    @Test(dataProvider = "pastingSearchPhraseData")
+    public void verifyFastSearchByPhraseFunctionality(String phrase) {
+        searchByPhrase(phrase, true);
     }
 
-    @DataProvider(name = "fastSearchData")
-    public static Object[][] fastSearchData() {
+    @DataProvider(name = "pastingSearchPhraseData")
+    public static Object[][] pastingSearchPhraseData() {
         return new Object[][]{
                 {"хореографія"},
                 {"вивчаємо все, що можна уявити в ІТ і навіть більше"},
@@ -49,19 +56,12 @@ public class AdvancedSearchByPhraseTest extends SameWindowTestRunner {
         };
     }
 
-    @Issue("TUA-428")
-    @Description("User should be able to search clubs by phrase (paste searched phrase into search field)")
-    @Test(dataProvider = "fastSearchData")
-    public void verifyFastSearchByPhraseFunctionality(String phrase) {
-        searchByPhrase(phrase, true);
-    }
-
-    private void searchByPhrase(String phrase, boolean fastSearch) {
+    private void searchByPhrase(String phrase, boolean isSearchByPhraseUsingPaste) {
         List<String> clubNamesInDataBase = new ClubService().getAllClubNamesFromCityBySearchPhrase("Київ", phrase, 6);
-        final int maxInputValueLength = 50;
+        final int maxInputFieldLength = 50;
 
-        if (fastSearch) {
-            clubsPage.fastSearchBy(phrase, maxInputValueLength);
+        if (isSearchByPhraseUsingPaste) {
+            clubsPage.searchByPhraseUsingPaste(phrase, maxInputFieldLength);
         } else {
             clubsPage.searchBy(phrase);
         }
@@ -76,8 +76,8 @@ public class AdvancedSearchByPhraseTest extends SameWindowTestRunner {
             softly.assertEquals(clubNamesOnPage.get(i).trim(), clubNamesInDataBase.get(i).trim(),
                     format("Club name %s on page should be equal to club name in DB\n", i + 1));
         }
-        softly.assertTrue(clubsPage.getSearchInputLength() <= maxInputValueLength,
-                "Input value length should not exceed " + maxInputValueLength);
+        softly.assertTrue(clubsPage.getSearchInputLength() <= maxInputFieldLength,
+                "Input value length should not exceed " + maxInputFieldLength);
         softly.assertAll();
     }
 }
