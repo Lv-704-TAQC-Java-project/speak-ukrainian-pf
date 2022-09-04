@@ -6,6 +6,7 @@ import com.ita.edu.speakua.ui.utils.jdbc.entity.CenterEntity;
 import com.ita.edu.speakua.ui.utils.jdbc.entity.CityEntity;
 import com.ita.edu.speakua.ui.utils.jdbc.entity.ClubEntity;
 import com.ita.edu.speakua.ui.utils.jdbc.services.ClubService;
+import com.ita.edu.speakua.ui.utils.jdbc.services.LocationService;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -47,5 +48,11 @@ public class temp {
 //        List<ClubEntity> sixNamesAsc = clubDAO.parseSixNamesAsc();
 //        System.out.println(sixNamesAsc);
 
+    }
+
+    @Test()
+    public void location() {
+        LocationService locationService = new LocationService();
+        System.out.println(locationService.getLocationByName("club_loc_!!!"));
     }
 }

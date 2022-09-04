@@ -149,9 +149,10 @@ public class AddTaskTest extends AddTaskTestRunner {
     @Issue("TUA-526")
     @Test
     public void verifyCreateTaskWithoutChallenge() {
+        String title = "Title " + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
         addTaskPage = addTaskPage
                 .enterStartDate("2023-01-01")
-                .enterName("Lorem Ipsum")
+                .enterName(title)
                 .enterTitle("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has " +
                         "been the industry's standard dummy text ever since the 1500s, when an unknown printer took a " +
                         "galley of type and scrambled it to make a type specimen book. It has survived not only five " +
@@ -165,6 +166,8 @@ public class AddTaskTest extends AddTaskTestRunner {
 
 
         Assert.assertTrue(addTaskPage.errorMessageIsEmptyIsVisible(), "Error message didn't find");
+        TaskService taskService = new TaskService();
+        Assert.assertEquals(taskService.getAllNameWhere(title).size(), 0);
     }
 
     @DataProvider(name = "invalidNameData")
