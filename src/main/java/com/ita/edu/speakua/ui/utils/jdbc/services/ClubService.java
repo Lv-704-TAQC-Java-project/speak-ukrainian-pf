@@ -106,4 +106,11 @@ public class ClubService {
                 .map(ClubEntity::getName)
                 .collect(Collectors.toList());
     }
+
+    public List<String> getAllClubNamesFromCityBySearchPhrase(String city, String phrase, int limit) {
+        return clubDAO.selectClubsFromCityBySearchPhrase(city, phrase, limit)
+                .stream()
+                .map(ClubEntity::getName)
+                .collect(Collectors.toList());
+    }
 }
