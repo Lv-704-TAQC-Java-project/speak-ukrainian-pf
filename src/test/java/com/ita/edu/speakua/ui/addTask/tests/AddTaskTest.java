@@ -260,6 +260,16 @@ public class AddTaskTest extends AddTaskTestRunner {
                 .selectChallenge(challenge);
         TaskPage taskPage = addTaskPage.save();
 
+        softly.assertEquals(addTaskPage.getSuccessMessage(),
+                format("Завдання '%s' успішно додане!", name),
+                "Incorrect popup success message");
+        softly.assertEquals(taskPage.getNameText(), name,
+                "Incorrect name of created task");
+        softly.assertEquals(taskPage.getTitleText(), title,
+                "Incorrect title of created task");
+        softly.assertEquals(taskPage.getDescriptionText(), description,
+                "Incorrect description of created task");
+
         TaskJoinChallengeDTO lastTaskJoinChallenge = new TaskService()
                 .getTasksJoinChallengeDTO(name, "id", true)
                 .get(0);
@@ -278,15 +288,6 @@ public class AddTaskTest extends AddTaskTestRunner {
                 configProps.getBaseUrl() + lastTaskJoinChallenge.getPicture(),
                 "Image path in DB should be equal to image path on Task page");
 
-        softly.assertEquals(addTaskPage.getSuccessMessage(),
-                format("Завдання '%s' успішно додане!", name),
-                "Incorrect popup success message");
-        softly.assertEquals(taskPage.getNameText(), name,
-                "Incorrect name of created task");
-        softly.assertEquals(taskPage.getTitleText(), title,
-                "Incorrect title of created task");
-        softly.assertEquals(taskPage.getDescriptionText(), description,
-                "Incorrect description of created task");
         softly.assertAll();
     }
 }
