@@ -7,7 +7,6 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -55,6 +54,7 @@ public class ClubsPage extends Header {
 
     @Step("Get list of cards")
     public List<CardComponent> getCards() {
+        wait.sleep(1000);
         this.cards = new ArrayList<>();
         for (WebElement card : cardsBody) {
             this.cards.add(new CardComponent(driver, card));
@@ -114,12 +114,7 @@ public class ClubsPage extends Header {
     public void clickManagingClubsPageElement(WebElement element) {
         List<CardComponent> cards = new ClubsPage(driver).getCards();
         element.click();
-        try {
-            wait.staleness(cards.get(0).getCardBody(), 2);
-            wait.staleness(cards.get(cards.size() - 1).getCardBody(), 2);
-            wait.visibility(cards.get(0).getCardBody(), 2);
-        } catch (TimeoutException | StaleElementReferenceException ignored) {
-        }
+        wait.sleep(2000);
     }
 
     @Step("Is closed advanced search panel")
