@@ -44,28 +44,19 @@ public class Header extends BasePage {
     }
 
     public LocationComponent getLocationComponent() {
-
         return new LocationComponent(driver);
-    }
-
-    public GuestProfileMenuComponent getGuestProfileMenuComponent() {
-        return new GuestProfileMenuComponent(driver);
-    }
-
-    public AdminProfileMenuComponent getAdminProfileMenuComponent() {
-        return new AdminProfileMenuComponent(driver);
     }
 
     @Step("Open guest profile menu")
     public GuestProfileMenuComponent openGuestProfileMenu() {
         profileMenuButton.click();
-        return getGuestProfileMenuComponent();
+        return new GuestProfileMenuComponent(driver);
     }
 
     @Step("Open admin profile menu")
     public AdminProfileMenuComponent openAdminProfileMenu() {
         profileMenuButton.click();
-        return getAdminProfileMenuComponent();
+        return new AdminProfileMenuComponent(driver);
     }
 
     public Header getHomePageReload() {

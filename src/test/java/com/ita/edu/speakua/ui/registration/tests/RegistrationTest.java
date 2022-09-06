@@ -1,6 +1,7 @@
 package com.ita.edu.speakua.ui.registration.tests;
 
 import com.ita.edu.speakua.ui.header.Header;
+import com.ita.edu.speakua.ui.header.profileMenuGuest.RegistrationModalComponent;
 import com.ita.edu.speakua.ui.runners.BaseTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -16,12 +17,12 @@ public class RegistrationTest extends BaseTestRunner {
                 {"Прізвище", "Ім'я", "0631133456", "adminNewRegistration@gmail.com", "12345Aa!"}
         };
     }
+
     @Issue("TUA-454")
     @Description("Verify that registration data are remembered")
     @Test(dataProvider = "registrationFormInputData")
     public void verifyThatRegistrationDataAreRememberedTest(String lastName, String firstName, String phone, String email, String password) {
-        Header header = new Header(driver);
-        header
+        RegistrationModalComponent registrationModalComponent = getHomePage()
                 .openGuestProfileMenu()
                 .openRegistrationModal()
                 .fillInLastName(lastName)
@@ -34,34 +35,22 @@ public class RegistrationTest extends BaseTestRunner {
                 .openGuestProfileMenu()
                 .openRegistrationModal();
 
-        String lastNameValue = header
-                .getGuestProfileMenuComponent()
-                .getRegistrationModal()
+        String lastNameValue = registrationModalComponent
                 .getLastNameValue();
 
-        String firstNameValue = header
-                .getGuestProfileMenuComponent()
-                .getRegistrationModal()
+        String firstNameValue = registrationModalComponent
                 .getFistNameValue();
 
-        String phoneValue = header
-                .getGuestProfileMenuComponent()
-                .getRegistrationModal()
+        String phoneValue = registrationModalComponent
                 .getPhoneValue();
 
-        String emailValue = header
-                .getGuestProfileMenuComponent()
-                .getRegistrationModal()
+        String emailValue = registrationModalComponent
                 .getEmailValue();
 
-        String passwordValue = header
-                .getGuestProfileMenuComponent()
-                .getRegistrationModal()
+        String passwordValue = registrationModalComponent
                 .getPasswordValue();
 
-        String confirmPasswordValue = header
-                .getGuestProfileMenuComponent()
-                .getRegistrationModal()
+        String confirmPasswordValue = registrationModalComponent
                 .getConfirmPasswordValue();
 
         SoftAssert softAssert = new SoftAssert();
