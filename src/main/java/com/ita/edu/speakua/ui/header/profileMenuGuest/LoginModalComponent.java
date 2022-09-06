@@ -24,18 +24,13 @@ public class LoginModalComponent extends BasePage {
 
     @Step("set login {email}")
     public LoginModalComponent fillInEmail(String email) {
-        emailField.click();
-        emailField.clear();
-        emailField.sendKeys(email);
+        action.setNewValueForInput(emailField, email);
         return this;
     }
 
     @Step("set password {password}")
     public LoginModalComponent fillInPassword(String password) {
-
-        passwordField.click();
-        passwordField.clear();
-        passwordField.sendKeys(password);
+        action.setNewValueForInput(passwordField, password);
         return this;
     }
 
