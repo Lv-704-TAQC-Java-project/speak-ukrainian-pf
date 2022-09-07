@@ -28,4 +28,7 @@ public class PropertyProvider {
     public String getJDBCUrl() {
         return properties.getProperty("jdbc_url");
     }
+    public String getAPIBaseUrl() {
+        return properties.getProperty("api_base_url");
+    }
 }
