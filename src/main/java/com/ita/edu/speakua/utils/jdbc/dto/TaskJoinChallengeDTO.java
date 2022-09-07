@@ -1,7 +1,7 @@
-package com.ita.edu.speakua.ui.utils.jdbc.dto;
+package com.ita.edu.speakua.utils.jdbc.dto;
 
-import com.ita.edu.speakua.ui.utils.jdbc.entity.ChallengeEntity;
-import com.ita.edu.speakua.ui.utils.jdbc.entity.TaskEntity;
+import com.ita.edu.speakua.utils.jdbc.entity.ChallengeEntity;
+import com.ita.edu.speakua.utils.jdbc.entity.TaskEntity;
 import lombok.Data;
 
 @Data

@@ -2,7 +2,7 @@ package com.ita.edu.speakua.ui.advancedSearch.tests;
 
 import com.ita.edu.speakua.ui.clubs.ClubsPage;
 import com.ita.edu.speakua.ui.runners.SameWindowTestRunner;
-import com.ita.edu.speakua.ui.utils.jdbc.services.CenterService;
+import com.ita.edu.speakua.utils.jdbc.services.CenterService;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.testng.annotations.Test;

@@ -1,6 +1,6 @@
-package com.ita.edu.speakua.ui.utils.jdbc.dao;
+package com.ita.edu.speakua.utils.jdbc.dao;
 
-import com.ita.edu.speakua.ui.utils.jdbc.entity.ClubEntity;
+import com.ita.edu.speakua.utils.jdbc.entity.ClubEntity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

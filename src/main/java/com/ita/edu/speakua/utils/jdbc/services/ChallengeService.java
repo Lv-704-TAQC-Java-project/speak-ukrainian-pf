@@ -1,7 +1,7 @@
-package com.ita.edu.speakua.ui.utils.jdbc.services;
+package com.ita.edu.speakua.utils.jdbc.services;
 
-import com.ita.edu.speakua.ui.utils.jdbc.dao.ChallengeDAO;
-import com.ita.edu.speakua.ui.utils.jdbc.entity.ChallengeEntity;
+import com.ita.edu.speakua.utils.jdbc.dao.ChallengeDAO;
+import com.ita.edu.speakua.utils.jdbc.entity.ChallengeEntity;
 
 import java.util.List;
 

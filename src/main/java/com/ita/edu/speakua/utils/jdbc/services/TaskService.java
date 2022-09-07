@@ -1,9 +1,9 @@
-package com.ita.edu.speakua.ui.utils.jdbc.services;
+package com.ita.edu.speakua.utils.jdbc.services;
 
-import com.ita.edu.speakua.ui.utils.jdbc.dao.ChallengeDAO;
-import com.ita.edu.speakua.ui.utils.jdbc.dao.TaskDAO;
-import com.ita.edu.speakua.ui.utils.jdbc.dto.TaskJoinChallengeDTO;
-import com.ita.edu.speakua.ui.utils.jdbc.entity.TaskEntity;
+import com.ita.edu.speakua.utils.jdbc.dao.ChallengeDAO;
+import com.ita.edu.speakua.utils.jdbc.dao.TaskDAO;
+import com.ita.edu.speakua.utils.jdbc.dto.TaskJoinChallengeDTO;
+import com.ita.edu.speakua.utils.jdbc.entity.TaskEntity;
 
 import java.util.ArrayList;
 import java.util.List;

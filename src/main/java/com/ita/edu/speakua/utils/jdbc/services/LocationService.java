@@ -1,7 +1,7 @@
-package com.ita.edu.speakua.ui.utils.jdbc.services;
+package com.ita.edu.speakua.utils.jdbc.services;
 
-import com.ita.edu.speakua.ui.utils.jdbc.dao.LocationDAO;
-import com.ita.edu.speakua.ui.utils.jdbc.entity.LocationEntity;
+import com.ita.edu.speakua.utils.jdbc.dao.LocationDAO;
+import com.ita.edu.speakua.utils.jdbc.entity.LocationEntity;
 
 import java.util.List;
 

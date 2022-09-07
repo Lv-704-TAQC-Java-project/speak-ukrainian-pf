@@ -1,4 +1,4 @@
-package com.ita.edu.speakua.ui.utils.jdbc.entity;
+package com.ita.edu.speakua.utils.jdbc.entity;
 
 import lombok.Data;
 

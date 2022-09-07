@@ -1,6 +1,6 @@
-package com.ita.edu.speakua.ui.utils.jdbc.dto;
+package com.ita.edu.speakua.utils.jdbc.dto;
 
-import com.ita.edu.speakua.ui.utils.jdbc.entity.ClubEntity;
+import com.ita.edu.speakua.utils.jdbc.entity.ClubEntity;
 
 public class ClubJoinCenterDTO {
     private long id;

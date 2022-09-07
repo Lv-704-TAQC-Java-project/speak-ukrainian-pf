@@ -1,6 +1,6 @@
-package com.ita.edu.speakua.ui.utils.jdbc.dao;
+package com.ita.edu.speakua.utils.jdbc.dao;
 
-import com.ita.edu.speakua.ui.utils.PropertyProvider;
+import com.ita.edu.speakua.utils.PropertyProvider;
 
 import java.sql.*;
 import java.util.ArrayList;

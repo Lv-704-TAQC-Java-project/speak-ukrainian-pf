@@ -1,12 +1,12 @@
 package com.ita.edu.speakua.ui;
 
-import com.ita.edu.speakua.ui.utils.jdbc.dao.CenterDAO;
-import com.ita.edu.speakua.ui.utils.jdbc.dao.CityDAO;
-import com.ita.edu.speakua.ui.utils.jdbc.entity.CenterEntity;
-import com.ita.edu.speakua.ui.utils.jdbc.entity.CityEntity;
-import com.ita.edu.speakua.ui.utils.jdbc.entity.ClubEntity;
-import com.ita.edu.speakua.ui.utils.jdbc.services.ClubService;
-import com.ita.edu.speakua.ui.utils.jdbc.services.LocationService;
+import com.ita.edu.speakua.utils.jdbc.dao.CenterDAO;
+import com.ita.edu.speakua.utils.jdbc.dao.CityDAO;
+import com.ita.edu.speakua.utils.jdbc.entity.CenterEntity;
+import com.ita.edu.speakua.utils.jdbc.entity.CityEntity;
+import com.ita.edu.speakua.utils.jdbc.entity.ClubEntity;
+import com.ita.edu.speakua.utils.jdbc.services.ClubService;
+import com.ita.edu.speakua.utils.jdbc.services.LocationService;
 import org.testng.annotations.Test;
 
 import java.util.List;
