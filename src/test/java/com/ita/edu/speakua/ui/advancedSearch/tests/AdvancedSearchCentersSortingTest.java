@@ -8,7 +8,7 @@ import io.qameta.allure.Issue;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-public class CentersSortingTest extends SameWindowTestRunner {
+public class AdvancedSearchCentersSortingTest extends SameWindowTestRunner {
 
     @Issue("TUA-440")
     @Description("Verify user can sort Centers alphabetically")
