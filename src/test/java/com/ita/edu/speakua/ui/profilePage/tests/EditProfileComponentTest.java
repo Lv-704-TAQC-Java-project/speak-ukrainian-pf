@@ -41,15 +41,15 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
         boolean isSaveChangesButtonDisabled;
         SoftAssert softAssert = new SoftAssert();
 
-        actualMessage = editProfileComponent.setFirstName(data).getFirstnameErrorText();
+        actualMessage = editProfileModal.enterFirstName(data).getFirstnameErrorText();
         softAssert.assertEquals(actualMessage, expectedMessage, "Expected error message did not appear");
 
-        isSaveChangesButtonDisabled = editProfileComponent.saveChangesButtonIsEnable();
+        isSaveChangesButtonDisabled = editProfileModal.isSaveChangesButtonEnabled();
         softAssert.assertFalse(isSaveChangesButtonDisabled, "'Зберегти зміни' button is enabled");
         softAssert.assertAll();
     }
 
-    @DataProvider(name = "invalidPhoneData")
+    @DataProvider(name = "verifyPhoneErrorMessageWhenEditProfile")
     public static Object[][] invalidPhoneData() {
         return new Object[][]{
                 {"06895", "Телефон не відповідає вказаному формату"},
@@ -63,22 +63,19 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
     }
 
     @Issue("TUA-356")
-    @Description("Verify error messages are shown and 'Save' button is disabled while entering invalid data in phone field")
+    @Description("Verify error messages are shown and 'Save' button is disabled when entering invalid phone number")
     @Test(dataProvider = "invalidPhoneData")
-    public void verifyPhoneErrorMessageWhenEditProfileTest(String phone, String expectedMessage) {
-        List<String> errorMessages = editProfileComponent
-                .setPhone(phone)
-                .getPhoneErrorText();
-        boolean expectedMessageIsPresent = errorMessages.contains(expectedMessage);
+    public void verifyPhoneErrorMessageWhenEditProfile(String phone, String expectedError) {
+        List<String> phoneErrors = editProfileModal
+                .enterPhone(phone)
+                .getPhoneErrors();
 
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertTrue(expectedMessageIsPresent, "Expected error message:\n"
-                + expectedMessage
-                + "\n\tActual error messages:\n"
-                + errorMessages);
+        softAssert.assertTrue(phoneErrors.contains(expectedError),
+                String.format("List of errors %s should contain '%s' error", phoneErrors, expectedError));
 
-        boolean saveChangesBtnIsEnabled = editProfileComponent.saveChangesButtonIsEnable();
-        softAssert.assertFalse(saveChangesBtnIsEnabled, "SaveChanges button is enabled.");
+        softAssert.assertFalse(editProfileModal.isSaveChangesButtonEnabled(),
+                "SaveChanges button is enabled.");
 
         softAssert.assertAll();
     }
@@ -103,7 +100,7 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
     @Description("Verify impossibility of editing profile with last name invalid data")
     @Test(dataProvider = "invalidLastNameData")
     public void verifyEditProfileWithInvalidLastNamedData(String lastName, String expectedMessage) {
-        List<String> errorMessages = editProfileComponent.setLastName(lastName).getLastNameErrorText();
+        List<String> errorMessages = editProfileModal.enterLastName(lastName).getLastNameErrorText();
         boolean expectedMessageIsPresent = errorMessages.contains(expectedMessage);
 
         SoftAssert softAssert = new SoftAssert();
@@ -112,7 +109,7 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
                 + "\n\tActual error messages:\n"
                 + errorMessages);
 
-        boolean saveChangesBtnIsEnabled = editProfileComponent.saveChangesButtonIsEnable();
+        boolean saveChangesBtnIsEnabled = editProfileModal.isSaveChangesButtonEnabled();
         softAssert.assertFalse(saveChangesBtnIsEnabled, "SaveChanges button is not enabled.");
 
         softAssert.assertAll();
@@ -126,12 +123,12 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
         boolean expectedMessageIsPresent = false;
 
         SoftAssert softAssert = new SoftAssert();
-        actualMessage = editProfileComponent
+        actualMessage = editProfileModal
                 .togglePasswordChange()
                 .enterOldPassword("admin")
                 .enterNewPassword("uyyyyuyu45ytty@")
                 .save()
-                .saveChangesButtonIsEnable();
+                .isSaveChangesButtonEnabled();
 
         String xPathErrorMessageText = "//div[@class='ant-form-item-explain ant-form-item-explain-connected']";
         WebElement item = driver.findElement(By.xpath(xPathErrorMessageText));
@@ -141,7 +138,7 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
         }
         softAssert.assertEquals(actualMessage, expectedMessageIsPresent);
 
-        editProfileComponent.togglePasswordChange();
+        editProfileModal.togglePasswordChange();
     }
 
     @Issue("TUA-359")
@@ -152,11 +149,11 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
         boolean expectedMessageIsPresent = false;
 
         SoftAssert softAssert = new SoftAssert();
-        actualMessage = editProfileComponent
+        actualMessage = editProfileModal
                 .togglePasswordChange()
                 .enterOldPassword("admin")
                 .save()
-                .saveChangesButtonIsEnable();
+                .isSaveChangesButtonEnabled();
 
         String xPathErrorMessageText = "//div[@class='ant-form-item-explain-error']";
         WebElement item = driver.findElement(By.xpath(xPathErrorMessageText));
@@ -166,19 +163,19 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
         }
         softAssert.assertEquals(actualMessage, expectedMessageIsPresent);
 
-        editProfileComponent.togglePasswordChange();
+        editProfileModal.togglePasswordChange();
     }
 
     @AfterMethod
     public void setInitialInfo() {
-        if (!editProfileComponent.getPhone().equals(initialPhone)) {
-            editProfileComponent.setPhone(initialPhone);
+        if (!editProfileModal.getPhone().equals(initialPhone)) {
+            editProfileModal.enterPhone(initialPhone);
         }
-        if (!editProfileComponent.getFirstName().equals(initialFirstName)) {
-            editProfileComponent.setFirstName(initialFirstName);
+        if (!editProfileModal.getFirstName().equals(initialFirstName)) {
+            editProfileModal.enterFirstName(initialFirstName);
         }
-        if (!editProfileComponent.getLastName().equals(initialLastName)) {
-            editProfileComponent.setLastName(initialLastName);
+        if (!editProfileModal.getLastName().equals(initialLastName)) {
+            editProfileModal.enterLastName(initialLastName);
         }
     }
 }

@@ -1,7 +1,7 @@
 package com.ita.edu.speakua.ui.advancedSearch.tests;
 
 import com.ita.edu.speakua.ui.clubs.ClubsPage;
-import com.ita.edu.speakua.ui.clubs.SortClubComponent;
+import com.ita.edu.speakua.ui.clubs.SortingPanel;
 import com.ita.edu.speakua.ui.runners.AdvancedSearchTestRunner;
 import com.ita.edu.speakua.ui.utils.jdbc.services.ClubService;
 import io.qameta.allure.Description;
@@ -23,7 +23,7 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
         advancedSearchPanel.selectClubFilter();
         ClubsPage clubsPage = new ClubsPage(driver);
 
-        SortClubComponent sortClubComponent = clubsPage
+        SortingPanel sortClubComponent = clubsPage
                 .getSortClubComponent()
                 .sortByAlphabet()
                 .orderByDesc();
@@ -58,7 +58,7 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
         advancedSearchPanel.selectCenterFilter();
         ClubsPage clubsPage = new ClubsPage(driver);
 
-        SortClubComponent sortClubComponent = clubsPage.getSortClubComponent()
+        SortingPanel sortClubComponent = clubsPage.getSortClubComponent()
                 .sortByAlphabet()
                 .orderByDesc();
 
@@ -80,7 +80,7 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
         advancedSearchPanel.selectClubFilter();
         ClubsPage clubsPage = new ClubsPage(driver);
 
-        SortClubComponent sortClubComponent = clubsPage
+        SortingPanel sortClubComponent = clubsPage
                 .getSortClubComponent()
                 .sortByRating()
                 .orderByDesc();
@@ -103,7 +103,7 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
         advancedSearchPanel.selectCenterFilter();
         ClubsPage clubsPage = new ClubsPage(driver);
 
-        SortClubComponent sortClubComponent = clubsPage.getSortClubComponent();
+        SortingPanel sortClubComponent = clubsPage.getSortClubComponent();
         sortClubComponent
                 .sortByRating()
                 .orderByDesc();
@@ -128,7 +128,7 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
                 .clearCitySelector();
         ClubsPage clubsPage = new ClubsPage(driver);
 
-        SortClubComponent sort = clubsPage
+        SortingPanel sort = clubsPage
                 .getSortClubComponent()
                 .sortByRating();
 

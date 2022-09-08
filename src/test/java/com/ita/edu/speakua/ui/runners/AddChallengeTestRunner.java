@@ -1,7 +1,7 @@
 package com.ita.edu.speakua.ui.runners;
 
 import com.ita.edu.speakua.ui.HomePage;
-import com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.addChallenge.AddChallengePage;
+import com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationMenu.addChallenge.AddChallengePage;
 import org.testng.annotations.BeforeMethod;
 
 public class AddChallengeTestRunner extends LoginTestRunner{

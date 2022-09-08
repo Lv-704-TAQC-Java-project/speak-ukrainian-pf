@@ -1,7 +1,7 @@
 package com.ita.edu.speakua.ui.clubs;
 
-import com.ita.edu.speakua.ui.clubs.card.components.CardComponent;
-import com.ita.edu.speakua.ui.clubs.card.components.CenterComponent;
+import com.ita.edu.speakua.ui.clubs.cards.Club;
+import com.ita.edu.speakua.ui.clubs.cards.Center;
 import com.ita.edu.speakua.ui.header.Header;
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
@@ -13,10 +13,10 @@ import java.util.stream.Collectors;
 
 public class ClubsPage extends Header {
 
-    private List<CardComponent> cards;
-    private List<CenterComponent> centers;
-    private PaginationComponent paginationComponent;
-    private SortClubComponent sortClubComponent;
+    private List<Club> cards;
+    private List<Center> centers;
+    private Pagination paginationComponent;
+    private SortingPanel sortClubComponent;
 
     @FindBy(xpath = "//span[@aria-label='search']")
     private WebElement searchIcon;
@@ -44,28 +44,28 @@ public class ClubsPage extends Header {
     }
 
     @Step("Get access to advanced search panel")
-    public AdvancedSearchPanelComponent getAdvancedSearchPanelComponent() {
-        return new AdvancedSearchPanelComponent(driver);
+    public AdvancedSearchPanel getAdvancedSearchPanelComponent() {
+        return new AdvancedSearchPanel(driver);
     }
 
-    public ExpandedCardComponent getExpandedCardComponent() {
-        return new ExpandedCardComponent(driver);
+    public ExpandedClub getExpandedCardComponent() {
+        return new ExpandedClub(driver);
     }
 
     @Step("Get list of cards")
-    public List<CardComponent> getCards() {
+    public List<Club> getCards() {
         wait.sleep(1000);
         this.cards = new ArrayList<>();
         for (WebElement card : cardsBody) {
-            this.cards.add(new CardComponent(driver, card));
+            this.cards.add(new Club(driver, card));
         }
         return this.cards;
     }
 
-    public List<CenterComponent> getCenters() {
+    public List<Center> getCenters() {
         this.centers = new ArrayList<>();
         for (WebElement center : cardsBody) {
-            this.centers.add(new CenterComponent(driver, center));
+            this.centers.add(new Center(driver, center));
         }
         return this.centers;
     }
@@ -76,19 +76,19 @@ public class ClubsPage extends Header {
         return this;
     }
 
-    public PaginationComponent getPaginationComponent() {
-        paginationComponent = new PaginationComponent(driver);
+    public Pagination getPaginationComponent() {
+        paginationComponent = new Pagination(driver);
         return paginationComponent;
     }
 
-    public PaginationComponent openPaginationComponent() {
+    public Pagination openPaginationComponent() {
         return getPaginationComponent().waitForPaginationComponentToOpen();
     }
 
     @Step("Get access to sort cards component")
-    public SortClubComponent getSortClubComponent() {
+    public SortingPanel getSortClubComponent() {
         if (sortClubComponent == null) {
-            sortClubComponent = new SortClubComponent(driver);
+            sortClubComponent = new SortingPanel(driver);
         }
         return sortClubComponent;
     }
@@ -112,7 +112,7 @@ public class ClubsPage extends Header {
     }
 
     public void clickManagingClubsPageElement(WebElement element) {
-        List<CardComponent> cards = new ClubsPage(driver).getCards();
+        List<Club> cards = new ClubsPage(driver).getCards();
         element.click();
         wait.sleep(2000);
     }
@@ -151,7 +151,7 @@ public class ClubsPage extends Header {
         return this
                 .getCenters()
                 .stream()
-                .map(CenterComponent::getTextCenterName)
+                .map(Center::getTextCenterName)
                 .toArray(String[]::new);
     }
 
@@ -159,7 +159,7 @@ public class ClubsPage extends Header {
         return this
                 .getCards()
                 .stream()
-                .map(CardComponent::getCardName)
+                .map(Club::getCardName)
                 .collect(Collectors.toList());
     }
 

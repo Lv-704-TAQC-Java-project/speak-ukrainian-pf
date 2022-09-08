@@ -1,12 +1,12 @@
 package com.ita.edu.speakua.ui.runners;
 
 import com.ita.edu.speakua.ui.HomePage;
-import com.ita.edu.speakua.ui.header.profileMenuAdmin.addCenterComponent.AddCenterMainInfoComponent;
+import com.ita.edu.speakua.ui.header.profileMenuAdmin.addCenterModal.AddCenterMainInfoStep;
 import org.testng.annotations.BeforeClass;
 
 public class AddCenterTestRunner extends LoginTestRunner {
 
-    protected AddCenterMainInfoComponent addCenterMainInfoComponent;
+    protected AddCenterMainInfoStep addCenterMainInfoComponent;
 
     @BeforeClass
     public void openAddClubDescribeComponent() {

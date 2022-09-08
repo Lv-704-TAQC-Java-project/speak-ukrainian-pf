@@ -1,7 +1,7 @@
 package com.ita.edu.speakua.ui.addCenter.tests;
 
 import com.ita.edu.speakua.ui.HomePage;
-import com.ita.edu.speakua.ui.header.profileMenuAdmin.addCenterComponent.AddCenterMainInfoComponent;
+import com.ita.edu.speakua.ui.header.profileMenuAdmin.addCenterModal.AddCenterMainInfoStep;
 import com.ita.edu.speakua.ui.runners.LoginTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -17,7 +17,7 @@ public class AddCenterTest extends LoginTestRunner {
     @Description("Verify if an error message appears under field when empty data is entered")
     @Test
     public void verifyErrorMessageIsDisplayTest() {
-        AddCenterMainInfoComponent addCenter = new HomePage(driver)
+        AddCenterMainInfoStep addCenter = new HomePage(driver)
                 .openAdminProfileMenu()
                 .openAddCenterModal();
         addCenter.openNextStep();

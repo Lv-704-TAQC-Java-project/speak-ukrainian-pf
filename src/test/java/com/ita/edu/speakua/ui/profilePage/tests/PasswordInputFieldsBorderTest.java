@@ -14,11 +14,11 @@ public class PasswordInputFieldsBorderTest extends EditProfileTestRunner {
     public void checkEditPasswordInputFieldsBorders() {
         String errorBorderColor = "rgb(255, 77, 79)";
 
-        editProfileComponent.togglePasswordChange().save().saveChangesButtonIsEnable();
+        editProfileModal.togglePasswordChange().save().isSaveChangesButtonEnabled();
 
-        String oldPasswordBorderColor = editProfileComponent.getOldPasswordFieldBorderColor(errorBorderColor);
-        String newPasswordBorderColor = editProfileComponent.getNewPasswordFieldBorderColor(errorBorderColor);
-        String repeatNewPasswordBorderColor = editProfileComponent.getRepeatNewPasswordFieldBorderColor(errorBorderColor);
+        String oldPasswordBorderColor = editProfileModal.getOldPasswordFieldBorderColor(errorBorderColor);
+        String newPasswordBorderColor = editProfileModal.getNewPasswordFieldBorderColor(errorBorderColor);
+        String repeatNewPasswordBorderColor = editProfileModal.getRepeatNewPasswordFieldBorderColor(errorBorderColor);
 
 
         SoftAssert softAssert = new SoftAssert();
@@ -32,6 +32,6 @@ public class PasswordInputFieldsBorderTest extends EditProfileTestRunner {
                 String.format("Border color of repeat new password field border is expected to be %s, but was %s.",
                         errorBorderColor, repeatNewPasswordBorderColor));
         softAssert.assertAll();
-        editProfileComponent.getCloseEditProfileButton();
+        editProfileModal.getCloseEditProfileButton();
     }
 }

@@ -1,7 +1,6 @@
 package com.ita.edu.speakua.ui.registration.tests;
 
-import com.ita.edu.speakua.ui.header.Header;
-import com.ita.edu.speakua.ui.header.profileMenuGuest.RegistrationModalComponent;
+import com.ita.edu.speakua.ui.header.profileMenuGuest.RegistrationModal;
 import com.ita.edu.speakua.ui.runners.BaseTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -22,7 +21,7 @@ public class RegistrationTest extends BaseTestRunner {
     @Description("Verify that registration data are remembered")
     @Test(dataProvider = "registrationFormInputData")
     public void verifyThatRegistrationDataAreRememberedTest(String lastName, String firstName, String phone, String email, String password) {
-        RegistrationModalComponent registrationModalComponent = getHomePage()
+        RegistrationModal registrationModalComponent = getHomePage()
                 .openGuestProfileMenu()
                 .openRegistrationModal()
                 .fillInLastName(lastName)

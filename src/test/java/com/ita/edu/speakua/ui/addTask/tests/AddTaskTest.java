@@ -1,6 +1,6 @@
 package com.ita.edu.speakua.ui.addTask.tests;
 
-import com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.addTask.TaskPage;
+import com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationMenu.addTask.TaskPage;
 import com.ita.edu.speakua.ui.runners.AddTaskTestRunner;
 import com.ita.edu.speakua.ui.utils.jdbc.dto.TaskJoinChallengeDTO;
 import com.ita.edu.speakua.ui.utils.jdbc.services.TaskService;

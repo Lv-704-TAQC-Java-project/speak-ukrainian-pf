@@ -1,7 +1,7 @@
 package com.ita.edu.speakua.ui.addCenter.tests;
 
-import com.ita.edu.speakua.ui.header.profileMenuAdmin.addCenterComponent.AddCenterMainInfoComponent;
-import com.ita.edu.speakua.ui.header.profileMenuAdmin.addLocation.Location;
+import com.ita.edu.speakua.ui.header.profileMenuAdmin.addCenterModal.AddCenterMainInfoStep;
+import com.ita.edu.speakua.ui.header.profileMenuAdmin.addLocationModal.Location;
 import com.ita.edu.speakua.ui.runners.LoginTestRunner;
 
 import io.qameta.allure.Description;
@@ -27,7 +27,7 @@ public class AddLocationTest extends LoginTestRunner {
     @Test(dataProvider = "menuDataAddLocation")
     public void addLocationTest(String city, String region, String address, String coordinates, String phoneNumber) {
         String name = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-        AddCenterMainInfoComponent addCenterMainInfoComponent = getHomePage()
+        AddCenterMainInfoStep addCenterMainInfoComponent = getHomePage()
                 .openAdminProfileMenu()
                 .openAddCenterModal()
                 .addLocation(new Location(name, city, region, address, coordinates, phoneNumber));

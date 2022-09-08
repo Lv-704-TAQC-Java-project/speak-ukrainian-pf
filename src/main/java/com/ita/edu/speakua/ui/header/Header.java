@@ -1,8 +1,8 @@
 package com.ita.edu.speakua.ui.header;
 
 import com.ita.edu.speakua.ui.BasePage;
-import com.ita.edu.speakua.ui.header.profileMenuAdmin.AdminProfileMenuComponent;
-import com.ita.edu.speakua.ui.header.profileMenuGuest.GuestProfileMenuComponent;
+import com.ita.edu.speakua.ui.header.profileMenuAdmin.AdminProfileMenu;
+import com.ita.edu.speakua.ui.header.profileMenuGuest.GuestProfileMenu;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -45,16 +45,16 @@ public class Header extends BasePage {
     }
 
     @Step("Header: open guest profile menu")
-    public GuestProfileMenuComponent openGuestProfileMenu() {
+    public GuestProfileMenu openGuestProfileMenu() {
         profileMenuButton.click();
-        return new GuestProfileMenuComponent(driver);
+        return new GuestProfileMenu(driver);
     }
 
     @Step("Header: open admin profile menu")
-    public AdminProfileMenuComponent openAdminProfileMenu() {
+    public AdminProfileMenu openAdminProfileMenu() {
         wait.visibility(profileMenuButton);
         profileMenuButton.click();
-        return new AdminProfileMenuComponent(driver);
+        return new AdminProfileMenu(driver);
     }
 
     public Header getHomePageReload() {

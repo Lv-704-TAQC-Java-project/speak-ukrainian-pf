@@ -1,7 +1,7 @@
 package com.ita.edu.speakua.ui.addCenter.tests;
 
 import com.ita.edu.speakua.ui.header.Header;
-import com.ita.edu.speakua.ui.header.profileMenuAdmin.addLocation.Location;
+import com.ita.edu.speakua.ui.header.profileMenuAdmin.addLocationModal.Location;
 import com.ita.edu.speakua.ui.runners.LoginTestRunner;
 
 import io.qameta.allure.Description;

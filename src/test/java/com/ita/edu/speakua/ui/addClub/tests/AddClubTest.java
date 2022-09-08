@@ -1,7 +1,7 @@
 package com.ita.edu.speakua.ui.addClub.tests;
 
 import com.ita.edu.speakua.ui.HomePage;
-import com.ita.edu.speakua.ui.header.profileMenuAdmin.addLocation.Location;
+import com.ita.edu.speakua.ui.header.profileMenuAdmin.addLocationModal.Location;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.profilePage.ProfilePage;
 import com.ita.edu.speakua.ui.runners.LoginTestRunner;
 import com.ita.edu.speakua.ui.utils.jdbc.entity.LocationEntity;

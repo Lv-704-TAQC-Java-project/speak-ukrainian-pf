@@ -1,6 +1,6 @@
 package com.ita.edu.speakua.ui.runners;
 
-import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubDescriptionStep;
+import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubModal.AddClubDescriptionStep;
 import org.testng.annotations.BeforeClass;
 
 public class AddClubDescriptionTestRunner extends LoginTestRunner {

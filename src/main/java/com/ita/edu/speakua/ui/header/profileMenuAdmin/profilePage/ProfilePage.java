@@ -1,9 +1,9 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.profilePage;
 
-import com.ita.edu.speakua.ui.clubs.PaginationComponent;
-import com.ita.edu.speakua.ui.clubs.card.components.CardComponent;
+import com.ita.edu.speakua.ui.clubs.Pagination;
+import com.ita.edu.speakua.ui.clubs.cards.Club;
 import com.ita.edu.speakua.ui.header.Header;
-import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubMainInfoStep;
+import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubModal.AddClubMainInfoStep;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,8 +13,8 @@ import java.util.List;
 
 public class ProfilePage extends Header {
 
-    private List<CardComponent> cards;
-    private PaginationComponent paginationComponent;
+    private List<Club> cards;
+    private Pagination paginationComponent;
 
     @FindBy(xpath = "//div[@class='edit-button']//button")
     private WebElement editProfileButton;
@@ -33,11 +33,11 @@ public class ProfilePage extends Header {
     }
 
     @Step("Profile page: open edit profile page")
-    public EditProfileComponent openEditProfilePage() {
+    public EditProfileModal openEditProfilePage() {
         wait.sleep(1000);
         wait.clickable(editProfileButton);
         editProfileButton.click();
-        return new EditProfileComponent(driver);
+        return new EditProfileModal(driver);
     }
 
     @Step("Profile page: open a model for adding club")
@@ -49,12 +49,12 @@ public class ProfilePage extends Header {
         return new AddClubMainInfoStep(driver);
     }
 
-    public CardComponent getLastCard() {
-        return new CardComponent(driver, cardsBody.get(cardsBody.size() - 1));
+    public Club getLastCard() {
+        return new Club(driver, cardsBody.get(cardsBody.size() - 1));
     }
 
-    public PaginationComponent getPaginationComponent() {
-        paginationComponent = new PaginationComponent(driver);
+    public Pagination getPaginationComponent() {
+        paginationComponent = new Pagination(driver);
         return paginationComponent;
     }
 
