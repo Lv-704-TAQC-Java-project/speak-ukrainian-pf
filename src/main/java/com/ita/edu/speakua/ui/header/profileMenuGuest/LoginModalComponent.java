@@ -1,6 +1,7 @@
 package com.ita.edu.speakua.ui.header.profileMenuGuest;
 
 import com.ita.edu.speakua.ui.BasePage;
+import com.ita.edu.speakua.ui.header.Header;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -22,22 +23,22 @@ public class LoginModalComponent extends BasePage {
     }
 
 
-    @Step("set login {email}")
+    @Step("Login modal: enter email {email}")
     public LoginModalComponent fillInEmail(String email) {
         action.setNewValueForInput(emailField, email);
         return this;
     }
 
-    @Step("set password {password}")
+    @Step("Login modal: enter password {password}")
     public LoginModalComponent fillInPassword(String password) {
         action.setNewValueForInput(passwordField, password);
         return this;
     }
 
-    @Step("click submit")
-    public LoginModalComponent clickLoginButton() {
+    @Step("Login modal: submit login form")
+    public Header submitLoginForm() {
         wait.visibility(loginButton);
         loginButton.click();
-        return this;
+        return new Header(driver);
     }
 }

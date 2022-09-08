@@ -5,13 +5,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public abstract class AbstractAddClubComponent extends BasePage {
-
+public abstract class AbstractAddClubStep extends BasePage {
     @FindBy(xpath = "//span[@aria-label='close']")
     private WebElement closeButton;
 
-    public AbstractAddClubComponent(WebDriver driver) {
+    public AbstractAddClubStep(WebDriver driver) {
         super(driver);
     }
-
 }

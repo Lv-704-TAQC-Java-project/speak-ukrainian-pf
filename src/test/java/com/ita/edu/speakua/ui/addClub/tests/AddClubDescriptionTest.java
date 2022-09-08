@@ -10,6 +10,8 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.util.List;
+
 import static org.testng.Assert.assertTrue;
 
 public class AddClubDescriptionTest extends AddClubDescriptionTestRunner {
@@ -29,8 +31,8 @@ public class AddClubDescriptionTest extends AddClubDescriptionTestRunner {
     @Test(dataProvider = "descriptionValidData")
     public void verifyAddClubDescribeFieldValidDataTest(int charAmount) {
         String descriptionInput = new String(new char[150]).replace("\0", "Lorem Ipsu");
-        boolean isButtonEnable = addClubDescriptionComponent
-                .inputDescription(descriptionInput.substring(0, charAmount))
+        boolean isButtonEnable = addClubDescriptionStep
+                .enterDescription(descriptionInput.substring(0, charAmount))
                 .isButtonEnable();
         assertTrue(isButtonEnable, "Button should be enabled");
     }
@@ -47,11 +49,11 @@ public class AddClubDescriptionTest extends AddClubDescriptionTestRunner {
     @Description("Verify error messages when description field is filled in with russian language")
     @Test(dataProvider = "descriptionErrorWithForbiddenCharacters")
     public void verifyErrorMessageAddClubDescriptionField(String description, String firstError, String secondError) {
-        addClubDescriptionComponent.inputDescription(description);
+        addClubDescriptionStep.enterDescription(description);
 
-        String firstActualErrorMessage = addClubDescriptionComponent.getErrorMessageDescriptionField().get(0);
-        String secondActualErrorMessage = addClubDescriptionComponent.getErrorMessageDescriptionField().get(1);
-        int amountOfErrorMessages = addClubDescriptionComponent.getErrorMessageDescriptionField().size();
+        String firstActualErrorMessage = addClubDescriptionStep.getErrorMessageDescriptionField().get(0);
+        String secondActualErrorMessage = addClubDescriptionStep.getErrorMessageDescriptionField().get(1);
+        int amountOfErrorMessages = addClubDescriptionStep.getErrorMessageDescriptionField().size();
 
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(firstActualErrorMessage, firstError,
@@ -67,34 +69,31 @@ public class AddClubDescriptionTest extends AddClubDescriptionTestRunner {
     @DataProvider(name = "descriptionLengthErrorData")
     public Object[][] descriptionLengthError() {
         String fifteenHundredCharactersDescription = new String(new char[60]).replace("\0", "Lorem ipsum dolor am sit.");
+        String lengthErrorMessage = "Опис гуртка може містити від 40 до 1500 символів.";
         return new Object[][]{
-                {fifteenHundredCharactersDescription, false},
-                {fifteenHundredCharactersDescription + "m", true},
-                {fifteenHundredCharactersDescription.substring(0, 1498), false},
-                {fifteenHundredCharactersDescription + "Hello world", true},
+                {fifteenHundredCharactersDescription, ""},
+                {fifteenHundredCharactersDescription + "m", lengthErrorMessage},
+                {fifteenHundredCharactersDescription.substring(0, 1498), ""},
+                {fifteenHundredCharactersDescription + "Hello world", lengthErrorMessage},
         };
     }
 
     @Issue("TUA-177")
-    @Description("Verify that description length error message appears when the user enters more than 1500 symbols into the field")
+    @Description("Verify that description length error message is shown, when entering more than 1500 symbols into description field")
     @Test(dataProvider = "descriptionLengthErrorData")
-    public void verifyDescriptionLengthErrorMessage(String description, boolean isErrorShown) {
-        String lengthErrorMessage = "Опис гуртка може містити від 40 до 1500 символів.";
+    public void verifyDescriptionLengthErrorMessage(String description, String expectedError) {
+        List<String> descriptionErrors = addClubDescriptionStep
+                .enterDescription(description)
+                .getDescriptionErrors();
 
-        boolean descriptionErrorsContainLengthError = addClubDescriptionComponent
-                .inputDescription(description)
-                .descriptionErrorsContainMessage(lengthErrorMessage);
+        boolean areErrorsExpected = !expectedError.isEmpty();
 
-        if (isErrorShown) {
-            Assert.assertTrue(addClubDescriptionComponent.areDescriptionErrorsShown(),
-                    "Description errors aren't shown.");
-            Assert.assertTrue(descriptionErrorsContainLengthError,
-                    "Description length error isn't shown.");
-        } else {
-            Assert.assertFalse(addClubDescriptionComponent.areDescriptionErrorsShown(),
-                    "Description errors are shown.");
-            Assert.assertFalse(descriptionErrorsContainLengthError,
-                    "Description length error is shown.");
+        Assert.assertEquals(!descriptionErrors.isEmpty(), areErrorsExpected,
+                String.format("Description errors should %sbe shown", areErrorsExpected ? "" : "not "));
+
+        if (areErrorsExpected) {
+            Assert.assertTrue(descriptionErrors.contains(expectedError),
+                    String.format("List of errors %s should contain '%s' error", descriptionErrors, expectedError));
         }
     }
 
@@ -115,8 +114,8 @@ public class AddClubDescriptionTest extends AddClubDescriptionTestRunner {
 
         SoftAssert softAssert = new SoftAssert();
 
-        addClubDescriptionComponent.inputDescription(testData);
-        isFinishButtonEnable = addClubDescriptionComponent.isButtonEnable();
+        addClubDescriptionStep.enterDescription(testData);
+        isFinishButtonEnable = addClubDescriptionStep.isButtonEnable();
         softAssert.assertTrue(isFinishButtonEnable, "'Завершити' button is disabled");
 
         softAssert.assertAll();
@@ -138,15 +137,15 @@ public class AddClubDescriptionTest extends AddClubDescriptionTestRunner {
     public void verifyDescriptionNotEnoughLengthErrorMessage(String description, boolean isErrorShown) {
         String lengthErrorMessage = "Опис гуртка закороткий";
 
-        boolean descriptionErrorsContainLengthError = addClubDescriptionComponent
-                .inputDescription(description)
+        boolean descriptionErrorsContainLengthError = addClubDescriptionStep
+                .enterDescription(description)
                 .descriptionErrorsContainMessage(lengthErrorMessage);
 
         if (isErrorShown) {
-            Assert.assertTrue(addClubDescriptionComponent.areDescriptionErrorsShown(), "Description errors are shown.");
+            Assert.assertTrue(addClubDescriptionStep.areDescriptionErrorsShown(), "Description errors are shown.");
             Assert.assertTrue(descriptionErrorsContainLengthError, "Description length error is shown.");
         } else {
-            Assert.assertFalse(addClubDescriptionComponent.areDescriptionErrorsShown(), "Description errors aren't shown.");
+            Assert.assertFalse(addClubDescriptionStep.areDescriptionErrorsShown(), "Description errors aren't shown.");
             Assert.assertFalse(descriptionErrorsContainLengthError, "Description length error isn't shown.");
         }
     }

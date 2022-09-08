@@ -22,14 +22,14 @@ public class GuestProfileMenuComponent extends BasePage {
         return new RegistrationModalComponent(driver);
     }
 
-    @Step("Open Login Modal")
+    @Step("Guest profile menu: open Login Modal")
     public LoginModalComponent openLoginModal() {
         wait.visibility(loginButton);
         action.click(loginButton);
         return new LoginModalComponent(driver);
     }
 
-    @Step("Open Registration Modal")
+    @Step("Guest profile menu: open Registration Modal")
     public RegistrationModalComponent openRegistrationModal() {
         registrationButton.click();
         return getRegistrationModal();

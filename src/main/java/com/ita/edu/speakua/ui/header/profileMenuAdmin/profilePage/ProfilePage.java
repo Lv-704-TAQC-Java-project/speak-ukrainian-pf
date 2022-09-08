@@ -1,13 +1,10 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.profilePage;
 
-import com.ita.edu.speakua.ui.clubs.ExpandedCardComponent;
 import com.ita.edu.speakua.ui.clubs.PaginationComponent;
 import com.ita.edu.speakua.ui.clubs.card.components.CardComponent;
 import com.ita.edu.speakua.ui.header.Header;
-import com.ita.edu.speakua.ui.header.profileMenuAdmin.addCenterComponent.AddCenterMainInfoComponent;
-import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubMainInfoComponent;
+import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubMainInfoStep;
 import io.qameta.allure.Step;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -35,7 +32,7 @@ public class ProfilePage extends Header {
         super(driver);
     }
 
-    @Step("Open edit profile page")
+    @Step("Profile page: open edit profile page")
     public EditProfileComponent openEditProfilePage() {
         wait.sleep(1000);
         wait.clickable(editProfileButton);
@@ -43,13 +40,13 @@ public class ProfilePage extends Header {
         return new EditProfileComponent(driver);
     }
 
-    @Step("Open a model for adding club")
-    public AddClubMainInfoComponent openAddClubModal() {
+    @Step("Profile page: open a model for adding club")
+    public AddClubMainInfoStep openAddClubModal() {
         wait.visibility(addButton);
         addButton.click();
         wait.visibility(addClubButton);
         addClubButton.click();
-        return new AddClubMainInfoComponent(driver);
+        return new AddClubMainInfoStep(driver);
     }
 
     public CardComponent getLastCard() {

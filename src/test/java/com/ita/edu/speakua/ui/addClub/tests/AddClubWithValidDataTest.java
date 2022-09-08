@@ -21,7 +21,6 @@ public class AddClubWithValidDataTest extends LoginTestRunner {
     @Description("Verify that user can create club with valid data")
     @Test(dataProvider = "addClubValidData")
     public void verifyClubIsAdded(String name, String category, int ageFrom, int ageTo, String phoneNumber) {
-
         String descriptionInput = new String(new char[50]).replace("\0", "Lorem Ipsu");
 
         new HomePage(driver)
@@ -34,7 +33,7 @@ public class AddClubWithValidDataTest extends LoginTestRunner {
                 .openNextStep()
                 .inputPhoneNumber(phoneNumber)
                 .openNextStep()
-                .inputDescription(descriptionInput)
+                .enterDescription(descriptionInput)
                 .addClub();
 
         boolean isClubAdded = new HomePage(driver)
@@ -45,5 +44,4 @@ public class AddClubWithValidDataTest extends LoginTestRunner {
         Assert.assertTrue(isClubAdded);
 
     }
-
 }

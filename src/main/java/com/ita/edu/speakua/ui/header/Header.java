@@ -44,14 +44,15 @@ public class Header extends BasePage {
         return new LocationComponent(driver);
     }
 
-    @Step("Open guest profile menu")
+    @Step("Header: open guest profile menu")
     public GuestProfileMenuComponent openGuestProfileMenu() {
         profileMenuButton.click();
         return new GuestProfileMenuComponent(driver);
     }
 
-    @Step("Open admin profile menu")
+    @Step("Header: open admin profile menu")
     public AdminProfileMenuComponent openAdminProfileMenu() {
+        wait.visibility(profileMenuButton);
         profileMenuButton.click();
         return new AdminProfileMenuComponent(driver);
     }

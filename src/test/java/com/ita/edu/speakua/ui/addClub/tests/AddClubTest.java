@@ -58,7 +58,7 @@ public class AddClubTest extends LoginTestRunner {
                 .addLogo(pathToImage)
                 .addBackground(pathToImage)
                 .addGallery(pathToImage)
-                .inputDescription(description)
+                .enterDescription(description)
                 .addClub();
 
         Assert.assertTrue(profilePage.isClubAvailable(title, description));

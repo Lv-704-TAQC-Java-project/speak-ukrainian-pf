@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class AddClubMainInfoComponent extends AbstractAddClubComponent {
+public class AddClubMainInfoStep extends AbstractAddClubStep {
     @FindBy(xpath = "//input[@placeholder='Назва гуртка']")
     private WebElement inputNameOfClub;
 
@@ -28,43 +28,43 @@ public class AddClubMainInfoComponent extends AbstractAddClubComponent {
     @FindBy(xpath = "//span[contains(text(),'Наступний крок')]/ancestor::button")
     private WebElement nextStepButton;
 
-    public AddClubMainInfoComponent(WebDriver driver) {
+    public AddClubMainInfoStep(WebDriver driver) {
         super(driver);
     }
 
-    @Step("Set nameOfClub {name}")
-    public AddClubMainInfoComponent inputNameOfClub(String name) {
+    @Step("Add club 'main info' step: Set nameOfClub {name}")
+    public AddClubMainInfoStep inputNameOfClub(String name) {
         wait.visibility(inputNameOfClub);
         inputNameOfClub.click();
         inputNameOfClub.clear();
         inputNameOfClub.sendKeys(name);
-        return new AddClubMainInfoComponent(driver);
+        return new AddClubMainInfoStep(driver);
     }
 
     private WebElement getCategoryItem(String name) {
         return categoryList.findElement(By.xpath(String.format(".//span[contains(text(),'%s')]", name)));
     }
 
-    @Step("Select category club")
-    public AddClubMainInfoComponent selectCategoryClub(String name) {
+    @Step("Add club 'main info' step: select category club")
+    public AddClubMainInfoStep selectCategoryClub(String name) {
         getCategoryItem(name).click();
-        return new AddClubMainInfoComponent(driver);
+        return new AddClubMainInfoStep(driver);
     }
 
-    @Step("Input the child's minimum age {age}")
-    public AddClubMainInfoComponent inputAgeFrom(int age) {
+    @Step("Add club 'main info' step: input the child's minimum age {age}")
+    public AddClubMainInfoStep inputAgeFrom(int age) {
         inputAgeFrom.click();
         inputAgeFrom.clear();
         inputAgeFrom.sendKeys(String.valueOf(age));
-        return new AddClubMainInfoComponent(driver);
+        return new AddClubMainInfoStep(driver);
     }
 
-    @Step("Input the child's maximum age {age}")
-    public AddClubMainInfoComponent inputAgeTo(int age) {
+    @Step("Add club 'main info' step: input the child's maximum age {age}")
+    public AddClubMainInfoStep inputAgeTo(int age) {
         inputAgeTo.click();
         inputAgeTo.clear();
         inputAgeTo.sendKeys(String.valueOf(age));
-        return new AddClubMainInfoComponent(driver);
+        return new AddClubMainInfoStep(driver);
     }
 
 
@@ -73,9 +73,9 @@ public class AddClubMainInfoComponent extends AbstractAddClubComponent {
     }
 
 
-    @Step("Open next modal 'Contacts'")
-    public AddClubContactComponent openNextStep() {
+    @Step("Add club 'main info' step: open next tab 'Contacts'")
+    public AddClubContactsStep openNextStep() {
         nextStepButton.click();
-        return new AddClubContactComponent(driver);
+        return new AddClubContactsStep(driver);
     }
 }

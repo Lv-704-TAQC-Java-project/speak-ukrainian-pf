@@ -1,16 +1,14 @@
 package com.ita.edu.speakua.ui.runners;
 
-import com.ita.edu.speakua.ui.HomePage;
-import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubDescribeComponent;
+import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubDescriptionStep;
 import org.testng.annotations.BeforeClass;
 
 public class AddClubDescriptionTestRunner extends LoginTestRunner {
-
-    protected AddClubDescribeComponent addClubDescriptionComponent;
+    protected AddClubDescriptionStep addClubDescriptionStep;
 
     @BeforeClass
     public void openAddClubDescribeComponent() {
-        addClubDescriptionComponent = new HomePage(driver)
+        addClubDescriptionStep = getHomePage()
                 .openAdminProfileMenu()
                 .openUserProfilePage()
                 .openAddClubModal()

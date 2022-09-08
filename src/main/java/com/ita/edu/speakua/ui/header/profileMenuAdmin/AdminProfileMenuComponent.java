@@ -3,7 +3,7 @@ package com.ita.edu.speakua.ui.header.profileMenuAdmin;
 import com.ita.edu.speakua.ui.BasePage;
 import com.ita.edu.speakua.ui.HomePage;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addCenterComponent.AddCenterMainInfoComponent;
-import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubMainInfoComponent;
+import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubMainInfoStep;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationComponent.AdministrationComponent;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.profilePage.ProfilePage;
 import io.qameta.allure.Step;
@@ -32,35 +32,35 @@ public class AdminProfileMenuComponent extends BasePage {
         super(driver);
     }
 
-    @Step("Open a modal for adding club")
-    public AddClubMainInfoComponent openAddClubModal() {
+    @Step("Admin profile menu: open a modal for adding club")
+    public AddClubMainInfoStep openAddClubModal() {
         addClubComponent.click();
-        return new AddClubMainInfoComponent(driver);
+        return new AddClubMainInfoStep(driver);
     }
 
-    @Step("Open a modal for adding center")
+    @Step("Admin profile menu: open a modal for adding center")
     public AddCenterMainInfoComponent openAddCenterModal() {
         addCenterModal.click();
         return new AddCenterMainInfoComponent(driver);
     }
 
-    @Step("Open user profile page")
+    @Step("Admin profile menu: open user profile page")
     public ProfilePage openUserProfilePage() {
         wait.clickable(userProfileBtn);
         userProfileBtn.click();
         return new ProfilePage(driver);
     }
 
-    @Step("Logout page")
+    @Step("Admin profile menu: logout")
     public HomePage logout() {
         logOutButton.click();
         return new HomePage(driver);
     }
 
-    @Step("Open administration list")
+    @Step("Admin profile menu: open administration list")
     public AdministrationComponent openAdministrationModal() {
         wait.visibility(administrationBtn);
-        administrationBtn.click();
+        action.click(administrationBtn);
         return new AdministrationComponent(driver);
     }
 
