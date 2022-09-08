@@ -1,8 +1,8 @@
 package com.ita.edu.speakua.ui.runners;
 
 import com.ita.edu.speakua.ui.HomePage;
-import com.ita.edu.speakua.ui.utils.ConfigProperties;
-import com.ita.edu.speakua.ui.utils.TestNgListener;
+import com.ita.edu.speakua.utils.ConfigProperties;
+import com.ita.edu.speakua.utils.TestNgListener;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;

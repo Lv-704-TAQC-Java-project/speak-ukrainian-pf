@@ -12,7 +12,11 @@ public abstract class BaseClient {
     public final ContentType contentType;
     protected static final PropertyProvider property =  new PropertyProvider();
 
-    public BaseClient(ContentType contentType, String entity, String url) {
+    public BaseClient() {
+        this.baseUrl = property.getAPIBaseUrl();
+        this.contentType = ContentType.JSON;
+    }
+    public BaseClient(ContentType contentType, String url) {
         this.baseUrl = url;
         this.contentType = contentType;
     }

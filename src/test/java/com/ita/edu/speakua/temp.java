@@ -1,9 +1,9 @@
-package com.ita.edu.speakua.ui;
+package com.ita.edu.speakua;
 
-import com.ita.edu.speakua.api.clients.LoginClient;
+import com.ita.edu.speakua.api.clients.SingInClient;
 import com.ita.edu.speakua.api.models.login.SingInRequest;
 import com.ita.edu.speakua.api.models.login.SingInResponse;
-import com.ita.edu.speakua.ui.utils.ConfigProperties;
+import com.ita.edu.speakua.utils.ConfigProperties;
 import com.ita.edu.speakua.utils.jdbc.dao.CenterDAO;
 import com.ita.edu.speakua.utils.jdbc.dao.CityDAO;
 import com.ita.edu.speakua.utils.jdbc.entity.CenterEntity;
@@ -67,9 +67,9 @@ public class temp {
 
     @Test
     public void api_login_test() {
-        LoginClient client = new LoginClient();
+        SingInClient client = new SingInClient();
         SingInRequest cred = new SingInRequest(property.getUserEmail(), property.getUserPassword());
-        Response response = client.signin(cred);
+        Response response = client.successSignInRequest(cred);
         SingInResponse singInData = response.as(SingInResponse.class);
 
         System.out.println(singInData);

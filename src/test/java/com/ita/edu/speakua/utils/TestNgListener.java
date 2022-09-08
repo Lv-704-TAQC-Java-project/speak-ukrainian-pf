@@ -1,4 +1,4 @@
-package com.ita.edu.speakua.ui.utils;
+package com.ita.edu.speakua.utils;
 
 import io.qameta.allure.Attachment;
 import org.openqa.selenium.OutputType;

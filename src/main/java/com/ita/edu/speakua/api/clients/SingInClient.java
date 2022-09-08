@@ -4,16 +4,16 @@ import com.ita.edu.speakua.api.models.login.SingInRequest;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
-public class LoginClient extends BaseClient {
+public class SingInClient extends BaseClient {
     private String accessToken;
 
-    public LoginClient() {
-        super(ContentType.JSON, "signin", property.getAPIBaseUrl());
+    public SingInClient() {
+        super();
         accessToken = "";
     }
-    public Response signin(SingInRequest credentioals) {
+    public Response successSignInRequest(SingInRequest credential) {
         return prepareRequest()
-                .body(credentioals)
+                .body(credential)
                 .when()
                 .post(baseUrl+"/signin");
     }
