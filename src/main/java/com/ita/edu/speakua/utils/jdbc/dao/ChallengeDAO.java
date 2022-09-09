@@ -17,7 +17,7 @@ public class ChallengeDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        ManagerDAO.getInstance().closeStatement(statement);
+        ManagerDAO.closeStatement(statement);
         return ChallengeEntity.parseRows(rows);
     }
 
@@ -30,7 +30,7 @@ public class ChallengeDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        ManagerDAO.getInstance().closeStatement(statement);
+        ManagerDAO.closeStatement(statement);
         return ChallengeEntity.parseRows(rows).get(0);
     }
 }

@@ -13,7 +13,7 @@ public class TestNgListener implements ITestListener {
     @Override
     public void onTestFailure(ITestResult result) {
         ITestContext context = result.getTestContext();
-        WebDriver driver = (WebDriver) context.getAttribute("myDriver");
+        WebDriver driver = (WebDriver) context.getAttribute("myDriver" + Thread.currentThread().getId());
         if (driver != null) {
             saveScreenshot(driver);
         }

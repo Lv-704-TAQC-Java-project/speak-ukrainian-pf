@@ -17,7 +17,7 @@ public class CityDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        ManagerDAO.getInstance().closeStatement(statement);
+        ManagerDAO.closeStatement(statement);
         return CityEntity.parseRows(rows);
     }
     public CityEntity selectById(long id) {
@@ -29,7 +29,7 @@ public class CityDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        ManagerDAO.getInstance().closeStatement(statement);
+        ManagerDAO.closeStatement(statement);
         return CityEntity.parseRows(rows).get(0);
     }
 }

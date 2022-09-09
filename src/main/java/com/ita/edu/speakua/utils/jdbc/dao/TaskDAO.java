@@ -17,7 +17,7 @@ public class TaskDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        ManagerDAO.getInstance().closeStatement(statement);
+        ManagerDAO.closeStatement(statement);
         return TaskEntity.parseRows(rows);
     }
 
@@ -30,7 +30,7 @@ public class TaskDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        ManagerDAO.getInstance().closeStatement(statement);
+        ManagerDAO.closeStatement(statement);
         return TaskEntity.parseRows(rows);
     }
 
@@ -43,7 +43,7 @@ public class TaskDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        ManagerDAO.getInstance().closeStatement(statement);
+        ManagerDAO.closeStatement(statement);
         return TaskEntity.parseRows(rows);
     }
 
@@ -57,7 +57,7 @@ public class TaskDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        ManagerDAO.getInstance().closeStatement(statement);
+        ManagerDAO.closeStatement(statement);
         return Long.parseLong(rows.get(0).get(0));
     }
 }

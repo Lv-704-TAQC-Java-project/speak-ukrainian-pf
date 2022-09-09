@@ -17,7 +17,7 @@ public class CenterDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        ManagerDAO.getInstance().closeStatement(statement);
+        ManagerDAO.closeStatement(statement);
         return CenterEntity.parseRows(rows);
     }
 
@@ -30,7 +30,7 @@ public class CenterDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        ManagerDAO.getInstance().closeStatement(statement);
+        ManagerDAO.closeStatement(statement);
         return CenterEntity.parseRows(rows).get(0);
     }
 
@@ -43,7 +43,7 @@ public class CenterDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        ManagerDAO.getInstance().closeStatement(statement);
+        ManagerDAO.closeStatement(statement);
         return CenterEntity.parseRows(rows);
     }
 }
