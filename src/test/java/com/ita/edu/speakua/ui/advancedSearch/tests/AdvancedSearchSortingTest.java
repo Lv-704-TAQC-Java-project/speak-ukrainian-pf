@@ -138,10 +138,10 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
         List<String> cardNames = clubService.getAllNamesOrderByRatingIdAscLimit(countOfCardsOnPage);
         List<Double> cardRatings = clubService.getAllRatingsOrderByRatingIdAscLimit(countOfCardsOnPage);
         for (int i = 0; i < countOfCardsOnPage; i++) {
-            int cardCountOfStarsActual = clubsPage.getCards().get(i).getStarRatingFullList().size();
+            int cardCountOfStarsActual = clubsPage.getCards().get(i).getStarRatingZeroList().size();
             int cardCountOfStarsExpected = (int) Math.floor(cardRatings.get(i));
 
-            softAssert.assertEquals(cardCountOfStarsActual, cardCountOfStarsExpected);
+            softAssert.assertEquals(cardCountOfStarsActual, 5 - cardCountOfStarsExpected);
 
             String cardNameActual = clubsPage.getCards().get(i).getCardName();
             String cardNameExpected = cardNames.get(i);
