@@ -1,6 +1,6 @@
 package com.ita.edu.speakua.ui.runners;
 
-import com.ita.edu.speakua.ui.utils.TestNgListener;
+import com.ita.edu.speakua.utils.TestNgListener;
 import org.testng.ITestContext;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;

@@ -3,7 +3,7 @@ package com.ita.edu.speakua.ui.advancedSearch.tests;
 import com.ita.edu.speakua.ui.HomePage;
 import com.ita.edu.speakua.ui.clubs.ClubsPage;
 import com.ita.edu.speakua.ui.runners.BaseTestRunner;
-import com.ita.edu.speakua.ui.utils.jdbc.services.ClubService;
+import com.ita.edu.speakua.utils.jdbc.services.ClubService;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.testng.annotations.*;
