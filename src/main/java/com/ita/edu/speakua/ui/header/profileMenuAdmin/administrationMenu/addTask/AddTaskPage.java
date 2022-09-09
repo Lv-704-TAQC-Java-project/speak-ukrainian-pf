@@ -50,37 +50,37 @@ public class AddTaskPage extends Header {
         super(driver);
     }
 
-    @Step("Enter task start date: {date}")
+    @Step("Add task page: enter task start date: {date}")
     public AddTaskPage enterStartDate(String date) {
         action.setNewValueForInput(startDate, date);
         return this;
     }
 
-    @Step("Upload task image: {imagePath}")
+    @Step("Add task page: upload image {imagePath}")
     public AddTaskPage uploadImage(String imagePath) {
         uploadImage.sendKeys(imagePath);
         return this;
     }
 
-    @Step("Enter task name: {name}")
+    @Step("Add task page: enter task name: {name}")
     public AddTaskPage enterName(String name) {
         action.setNewValueForInput(taskName, name);
         return this;
     }
 
-    @Step("Enter task title: {value}")
-    public AddTaskPage enterTitle(String value) {
-        action.setNewValueForInput(taskTitle, value);
+    @Step("Add task page: enter task title {title}")
+    public AddTaskPage enterTitle(String title) {
+        action.setNewValueForInput(taskTitle, title);
         return this;
     }
 
-    @Step("Enter task description: {value}")
-    public AddTaskPage enterDescription(String value) {
-        action.setNewValueForInput(enterDescription, value);
+    @Step("Add task page: enter task description {description}")
+    public AddTaskPage enterDescription(String description) {
+        action.setNewValueForInput(enterDescription, description);
         return this;
     }
 
-    @Step("Select challenge: {name}")
+    @Step("Add task page: select challenge {name}")
     public AddTaskPage selectChallenge(String name) {
         String challengeXpath = String.format("(//div[contains(@class,'option-content') and contains(text(), '%s')])[1]", name);
         String lastChallengeXpath = "(//div[contains(@class,'option-content')])[last()]";
@@ -97,7 +97,6 @@ public class AddTaskPage extends Header {
         return this;
     }
 
-    @Step("Check are allFields empty")
     public boolean areFieldsEmpty() {
         wait.visibility(startDate);
         return startDateIsEmpty() &&
@@ -132,7 +131,6 @@ public class AddTaskPage extends Header {
         return challengeInput.getText().equals("Оберіть челендж");
     }
 
-    @Step("Get error message")
     public String getErrorMessageText() {
         try {
             wait.visibility(errorMessage);
@@ -142,19 +140,17 @@ public class AddTaskPage extends Header {
         }
     }
 
-    @Step("Get success message")
     public String getSuccessMessage() {
         wait.visibility(successMessage);
         return successMessage.getText();
     }
 
-    @Step("Get error messages from invalid challenges")
     public boolean errorMessageIsEmptyIsVisible() {
         wait.visibility(By.xpath("//span[contains(text(),'Please')]"));
         return errorMessageIsEmpty.isDisplayed();
     }
 
-    @Step("Click on 'save' button")
+    @Step("Add task page: save task")
     public TaskPage save() {
         saveButton.click();
         return new TaskPage(driver);

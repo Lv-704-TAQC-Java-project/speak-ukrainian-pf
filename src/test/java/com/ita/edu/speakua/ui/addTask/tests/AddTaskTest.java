@@ -214,7 +214,7 @@ public class AddTaskTest extends AddTaskTestRunner {
     }
 
     @Issue("TUA-522")
-    @Severity(SeverityLevel.CRITICAL)
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verify admin can't create a new task without image")
     @Test
     public void verifyTaskCreationFailsWithoutImage() {
@@ -235,14 +235,14 @@ public class AddTaskTest extends AddTaskTestRunner {
         softly.assertEquals(actualErrorMessage, "Фото не може бути пустим",
                 "Incorrect 'no image' error message");
 
-        long tasksQuantityWithChosenName = new TaskService().getTasksCount(name);
-        softly.assertTrue(tasksQuantityWithChosenName == 0,
-                format("Should be 0 tasks in DB with '%s' name, but found %d", name, tasksQuantityWithChosenName));
+        long tasksQuantityWithChosenNameInDataBase = taskService.getTasksCount(name);
+        softly.assertTrue(tasksQuantityWithChosenNameInDataBase == 0,
+                format("Should be 0 tasks in DB with '%s' name, but found %d", name, tasksQuantityWithChosenNameInDataBase));
         softly.assertAll();
     }
 
     @Issue("TUA-520")
-    @Severity(SeverityLevel.CRITICAL)
+    @Severity(SeverityLevel.NORMAL)
     @Description("Verify admin can create a new task")
     @Test
     public void verifyTaskCreation() {
@@ -270,23 +270,23 @@ public class AddTaskTest extends AddTaskTestRunner {
         softly.assertEquals(taskPage.getDescriptionText(), description,
                 "Incorrect description of created task");
 
-        TaskJoinChallengeDTO lastTaskJoinChallenge = new TaskService()
+        TaskJoinChallengeDTO lastTaskWithChosenNameInDataBase = taskService
                 .getTasksJoinChallengeDTO(name, "id", true)
                 .get(0);
 
-        softly.assertEquals(lastTaskJoinChallenge.getStartDate(), tomorrow,
-                "Date in DB should be equal to entered task date");
-        softly.assertEquals(lastTaskJoinChallenge.getName(), name,
-                "Name in DB should be equal to entered task name");
-        softly.assertEquals(lastTaskJoinChallenge.getHeaderText(), "<p>" + title + "</p>",
-                "Description in DB should be equal to entered task description");
-        softly.assertEquals(lastTaskJoinChallenge.getDescription(), "<p>" + description + "</p>",
-                "Header title in DB should be equal to entered task header title");
-        softly.assertEquals(lastTaskJoinChallenge.getChallenge().getName(), challenge,
-                "Challenge name in DB should be equal to chosen challenge name");
+        softly.assertEquals(lastTaskWithChosenNameInDataBase.getStartDate(), tomorrow,
+                "Date in data base should be equal to entered task date");
+        softly.assertEquals(lastTaskWithChosenNameInDataBase.getName(), name,
+                "Name in data base should be equal to entered task name");
+        softly.assertEquals(lastTaskWithChosenNameInDataBase.getHeaderText(), "<p>" + title + "</p>",
+                "Description in data base should be equal to entered task description");
+        softly.assertEquals(lastTaskWithChosenNameInDataBase.getDescription(), "<p>" + description + "</p>",
+                "Header title in data base should be equal to entered task header title");
+        softly.assertEquals(lastTaskWithChosenNameInDataBase.getChallenge().getName(), challenge,
+                "Challenge name in data base should be equal to chosen challenge name");
         softly.assertEquals(taskPage.getImageURL(),
-                configProps.getBaseUrl() + lastTaskJoinChallenge.getPicture(),
-                "Image path in DB should be equal to image path on Task page");
+                configProps.getBaseUrl() + lastTaskWithChosenNameInDataBase.getPicture(),
+                "Image path in data base should be equal to image path on Task page");
 
         softly.assertAll();
     }
