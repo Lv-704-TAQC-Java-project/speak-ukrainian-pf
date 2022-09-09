@@ -235,7 +235,7 @@ public class AddTaskTest extends AddTaskTestRunner {
         softly.assertEquals(actualErrorMessage, "Фото не може бути пустим",
                 "Incorrect 'no image' error message");
 
-        long tasksQuantityWithChosenNameInDataBase = taskService.getTasksCount(name);
+        long tasksQuantityWithChosenNameInDataBase = new TaskService().getTasksCount(name);
         softly.assertTrue(tasksQuantityWithChosenNameInDataBase == 0,
                 format("Should be 0 tasks in DB with '%s' name, but found %d", name, tasksQuantityWithChosenNameInDataBase));
         softly.assertAll();
@@ -270,7 +270,7 @@ public class AddTaskTest extends AddTaskTestRunner {
         softly.assertEquals(taskPage.getDescriptionText(), description,
                 "Incorrect description of created task");
 
-        TaskJoinChallengeDTO lastTaskWithChosenNameInDataBase = taskService
+        TaskJoinChallengeDTO lastTaskWithChosenNameInDataBase = new TaskService()
                 .getTasksJoinChallengeDTO(name, "id", true)
                 .get(0);
 
