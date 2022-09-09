@@ -1,15 +1,20 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.profilePage;
 
-import com.ita.edu.speakua.ui.header.HeaderComponent;
-import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubComponent.AddClubMainInfoComponent;
+import com.ita.edu.speakua.ui.clubs.Pagination;
+import com.ita.edu.speakua.ui.clubs.cards.ClubCard;
+import com.ita.edu.speakua.ui.header.Header;
+import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubModal.AddClubMainInfoStep;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class ProfilePage extends HeaderComponent {
+import java.util.List;
 
-    @FindBy(xpath = "//div[@class='user-email-data']")
-    private WebElement currentUserEmailField;
+public class ProfilePage extends Header {
+
+    private List<ClubCard> cards;
+    private Pagination paginationComponent;
 
     @FindBy(xpath = "//div[@class='edit-button']//button")
     private WebElement editProfileButton;
@@ -20,24 +25,50 @@ public class ProfilePage extends HeaderComponent {
     @FindBy(xpath = "//li[@class = 'ant-dropdown-menu-item ant-dropdown-menu-item-only-child menu-item']//div[contains(text(),'Додати гурток')]")
     private WebElement addClubButton;
 
-    private EditProfileComponent editProfileModalComponent;
+    @FindBy(xpath = ".//div[contains(@class, 'card-body')]")
+    private List<WebElement> cardsBody;
 
     public ProfilePage(WebDriver driver) {
         super(driver);
     }
 
-    public EditProfileComponent clickEditProfileButton() {
-        waitElementIsClickable(editProfileButton);
+    @Step("Profile page: open edit profile page")
+    public EditProfileModal openEditProfilePage() {
+        wait.sleep(1000);
+        wait.clickable(editProfileButton);
         editProfileButton.click();
-        return new EditProfileComponent(driver);
+        return new EditProfileModal(driver);
     }
 
-    public AddClubMainInfoComponent openAddClubModal() {
-        waitVisibilityOfWebElement(addButton);
+    @Step("Profile page: open a model for adding club")
+    public AddClubMainInfoStep openAddClubModal() {
+        wait.visibility(addButton);
         addButton.click();
-        waitVisibilityOfWebElement(addClubButton);
+        wait.visibility(addClubButton);
         addClubButton.click();
-        return new AddClubMainInfoComponent(driver);
+        return new AddClubMainInfoStep(driver);
     }
 
+    public ClubCard getLastCard() {
+        return new ClubCard(driver, cardsBody.get(cardsBody.size() - 1));
+    }
+
+    public Pagination getPaginationComponent() {
+        paginationComponent = new Pagination(driver);
+        return paginationComponent;
+    }
+
+    public boolean isClubAvailableOnCurrentPage(String clubName) {
+        getPaginationComponent().clickLastPageButton();
+        return getLastCard().getCardName().equals(clubName);
+    }
+
+    public boolean isClubWithCurrentDescription(String description) {
+        getPaginationComponent().clickLastPageButton();
+        return getLastCard().getCardDescription().equals(description);
+    }
+
+    public boolean isClubAvailable(String name, String description) {
+        return isClubAvailableOnCurrentPage(name) && isClubWithCurrentDescription(description);
+    }
 }

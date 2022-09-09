@@ -1,18 +1,22 @@
 package com.ita.edu.speakua.ui.runners;
 
-import com.ita.edu.speakua.ui.HomePage;
-import com.ita.edu.speakua.ui.header.profileMenuAdmin.profilePage.EditProfileComponent;
+import com.ita.edu.speakua.ui.header.profileMenuAdmin.profilePage.EditProfileModal;
 import org.testng.annotations.BeforeClass;
 
-
-public class EditProfileTestRunner extends BaseTestRunnerWithLogIn {
-    protected EditProfileComponent editProfileComponent;
+public class EditProfileTestRunner extends LoginTestRunner {
+    protected EditProfileModal editProfileModal;
+    protected String initialPhone;
+    protected String initialFirstName;
+    protected String initialLastName;
 
     @BeforeClass
     public void openEditProfile() {
-        editProfileComponent = new HomePage(driver)
+        editProfileModal = homePage
                 .openAdminProfileMenu()
                 .openUserProfilePage()
-                .clickEditProfileButton();
+                .openEditProfilePage();
+        initialPhone = editProfileModal.getPhone();
+        initialFirstName = editProfileModal.getFirstName();
+        initialLastName = editProfileModal.getLastName();
     }
 }

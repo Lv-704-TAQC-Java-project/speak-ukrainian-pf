@@ -18,7 +18,7 @@ buildNumber.properties
 .settings
 test-output
 
-/src/test/resources/config.properties
+config.properties
 *.iml
 target/allure-results/
 .allure

@@ -1,97 +1,106 @@
 package com.ita.edu.speakua.ui.addTask.tests;
 
+import com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationMenu.addTask.TaskPage;
 import com.ita.edu.speakua.ui.runners.AddTaskTestRunner;
+import com.ita.edu.speakua.utils.jdbc.dto.TaskJoinChallengeDTO;
+import com.ita.edu.speakua.utils.jdbc.services.TaskService;
+import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
+
+import static java.lang.String.format;
 
 public class AddTaskTest extends AddTaskTestRunner {
+    private final String tomorrow = LocalDate.now().plusDays(1).toString();
     private final String pathToImage = Paths.get(Paths.get(System.getProperty("user.dir")).toString(),
-                    "src", "test", "resources", "image.png")
-            .toString();
+            "src", "test", "resources", "image.png").toString();
+    private final String title = "Lorem ipsum dolor sit amet, sed do eiusmod et dolore magna aliqua.";
+    private final String description = "Facilisis sed odio morbi quis. Mauris rhoncus aenean vel elit scelerisque.";
+    private final String challenge = "The European languages";
 
-    @Test
-    public void verifyCreateTaskInvalidData() {
+    @DataProvider(name = "invalidDescriptionData")
+    public static Object[][] invalidDescriptionData() {
+        return new Object[][]{
+                {"", "description не може бути пустим"},
+                {"ъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ð",
+                        "description Помилка. Текст містить недопустимі символи"},
+                {"Lorem Ipsum 5% ",
+                        "description must contain a minimum of 40 and a maximum of 3000 letters"},
+                {new String(new char[350]).replace("\0", "Lorem ipsum "),
+                        "description must contain a minimum of 40 and a maximum of 3000 letters"}
+        };
+    }
 
-        boolean allFieldsAreEmpty = addTaskPage.allFieldsAreEmpty();
-
+    @Issue("TUA-525")
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("Verify that admin can't create a task with invalid data in description field")
+    @Test(dataProvider = "invalidDescriptionData")
+    public void verifyCreateTaskInvalidDescription(String textDescription, String expectedMessage) {
+        boolean allFieldsAreEmpty = addTaskPage.areFieldsEmpty();
+        String clubName = "Yaroslav test" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
         addTaskPage = addTaskPage
-                .inputStartDate("2022-08-23")
-                .inputImage(pathToImage)
-                .inputName("Yaroslav test")
-                .inputHeading("Lorem Ipsum is simply dummy text of the printing and typesetting industry. " +
-                        "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s," +
-                        " when an unknown printer took a galley of type and scrambled " +
-                        "it to make a type specimen book.")
-                .chooseChallenge("Example name");
-//                .tryClickSaveButton();
-
-//        boolean errorMessageDescribeIsEmpty = addTaskPage.errorMessageIsEmptyIsVisible();
-
-        addTaskPage = addTaskPage
-                .inputDescribing("ъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ðъэы, ผม, Ÿ, ð")
-                .tryClickSaveButton();
-
-        boolean errorMessageDescribeInvalidCharacters = addTaskPage.errorMessageInvalidCharactersIsVisible();
-
-        addTaskPage = addTaskPage
-                .inputHeading("Lorem Ipsum is simply ")
-                .tryClickSaveButton();
-
-        boolean errorMessageHeadingNotEnoughChars = addTaskPage.errorMessageLessThenFortyCharactersIsVisible();
-
-        addTaskPage = addTaskPage
-                .inputHeading("What is Lorem Ipsum?\n" +
-                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has " +
-                        "been the industry's standard dummy text ever since the 1500s, when an unknown printer took a " +
-                        "galley of type and scrambled it to make a type specimen book. It has survived not only five " +
-                        "centuries, but also the leap into electronic typesetting, remaining essentially unchanged. " +
-                        "It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum " +
-                        "passages, and more recently with desktop publishing software like Aldus PageMaker including " +
-                        "versions of Lorem Ipsum.\n" +
-                        "It is a long established fact that a reader will be distracted by the readable content of " +
-                        "a page when looking at its layout. The point of using Lorem Ipsum is that it has a " +
-                        "more-or-less normal distribution of letters, as opposed to using 'Content here, content here'," +
-                        " making it look like readable English. Many desktop publishing packages and web page editors " +
-                        "now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover " +
-                        "many web sites still in their infancy. Various versions have evolved over the years, sometimes" +
-                        " by accident, sometimes on purpose (injected humour and the like). Contrary to popular belief, " +
-                        "Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature " +
-                        "from 45 BC, making it over 2000 years old. Richard McClintock,a Latin professor at" +
-                        "Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, " +
-                        "from a Lorem Ipsum passage, and going through the cites of the word in classical literature, " +
-                        "discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de " +
-                        "Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. " +
-                        "This book is a treatise on the theory of ethics, very popular during the Renaissance. The " +
-                        "first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section " +
-                        "1.10.32. There are many variations of passages of Lorem Ipsum available, but the majority " +
-                        "have suffered alteration in some form,by injected humour, or randomised words which don't " +
-                        "look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to " +
-                        "be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum " +
-                        "generators on the Internet tend to repeat predefined chunks as necessary, making this the " +
-                        "first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined " +
-                        "with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. " +
-                        "The generated Lorem Ipsum is therefore always free from repetition, injected humour, or " +
-                        "non-characteristic words etc. The standard chunk of Lorem Ipsum used since the 1500s is " +
-                        "reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum " +
-                        "et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by " +
-                        "English versions from the 1914 translation")
-                .tryClickSaveButton();
-
-        boolean errorMessageHeadingTooManyChars = addTaskPage.errorMessageMoreThenThreeThousandCharactersIsVisible();
+                .enterStartDate(LocalDate.now().plusDays(2).toString())
+                .uploadImage(pathToImage)
+                .enterName(clubName)
+                .enterTitle("Some forty character text for the test!!")
+                .enterDescription(textDescription)
+                .selectChallenge(challenge);
+        addTaskPage.save();
+        String errorMessage = addTaskPage.getErrorMessageText();
 
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertTrue(allFieldsAreEmpty, "All field should be empty");
-//        softAssert.assertTrue(errorMessageDescribeIsEmpty, "A message should appear that the field is empty");
-        softAssert.assertTrue(errorMessageDescribeInvalidCharacters, "A message should appear stating that invalid " +
-                "characters have been entered");
-        softAssert.assertTrue(errorMessageHeadingNotEnoughChars, "A message should appear stating that not enough " +
-                "characters have been entered");
-        softAssert.assertTrue(errorMessageHeadingTooManyChars, "A message should appear stating that too many " +
-                "characters have been entered");
+        softAssert.assertTrue(allFieldsAreEmpty);
+        softAssert.assertEquals(errorMessage, expectedMessage, "Message should be displayed ");
+
+        TaskService taskService = new TaskService();
+        List<String> clubNamesInDataBase = taskService.getAllNameWhere(clubName);
+        softAssert.assertTrue(clubNamesInDataBase.size() == 0, "Database shouldn't contain tasks with the name " + clubName);
+        softAssert.assertAll();
+    }
+
+    @DataProvider(name = "invalidDateData")
+    public static Object[][] invalidDateData() {
+        return new Object[][]{
+                {"", "startDate не може бути відсутнім, має бути задано"},
+                {"2021-01-01", "startDate дата має бути в майбутньому"}
+        };
+    }
+
+    @Issue("TUA-521")
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("Verify that admin can't create a task with invalid data in date field")
+    @Test(dataProvider = "invalidDateData")
+    public void verifyCreateTaskInvalidDateData(String actualDate, String expectedErrorMessage) {
+        String descriptionInput = new String(new char[350]).replace("\0", "Lorem Ipsu");
+        String clubName = "Yaroslav test" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertTrue(addTaskPage.areFieldsEmpty());
+        addTaskPage = addTaskPage
+                .enterStartDate(actualDate)
+                .uploadImage(pathToImage)
+                .enterName(clubName)
+                .enterTitle(descriptionInput.substring(0, 50))
+                .enterDescription(descriptionInput.substring(0, 500))
+                .selectChallenge("Example name");
+        addTaskPage.save();
+        String actualErrorMessage = addTaskPage.getErrorMessageText();
+        softAssert.assertEquals(actualErrorMessage, expectedErrorMessage);
+
+        TaskService taskService = new TaskService();
+        List<String> clubNamesInDataBase = taskService.getAllNameWhere(clubName);
+
+        softAssert.assertTrue(clubNamesInDataBase.size() == 0, "Database shouldn't contain tasks with name " + clubName);
         softAssert.assertAll();
     }
 
@@ -108,20 +117,92 @@ public class AddTaskTest extends AddTaskTestRunner {
         };
     }
 
+    @Issue("TUA-524")
+    @Description("Verify impossibility of creating task with heading invalid data")
     @Test(dataProvider = "invalidHeaderData")
-    public void verifyImpossibilityOfCreatingTaskWithInvalidData(String invalidData, String expectedMessage) {
-        String descriptionInput = new String(new char[10]).replace("\0", "Lorem 56№*");
+    public void verifyCreatingTaskWithHeadingInvalidData(String invalidData, String expectedMessage) {
+        String actualErrorMessage;
+        String clubName = "Test task # 5/";
+        boolean areAllFieldsEmptyByDefault = addTaskPage.areFieldsEmpty();
+
+        addTaskPage.enterStartDate(LocalDate.now().plusDays(1).toString())
+                .uploadImage(pathToImage)
+                .enterName(clubName)
+                .enterTitle(invalidData)
+                .enterDescription(description)
+                .selectChallenge(challenge)
+                .save();
+
+        SoftAssert softAssert = new SoftAssert();
+
+        softAssert.assertTrue(areAllFieldsEmptyByDefault, "Not all fields are empty by default");
+
+        actualErrorMessage = addTaskPage.getErrorMessageText();
+        softAssert.assertEquals(actualErrorMessage, expectedMessage, "Expected error message did not appear");
+
+        List<String> clubs = taskService.getAllNameWhere(clubName);
+        softAssert.assertTrue(clubs.isEmpty());
+
+        softAssert.assertAll();
+    }
+
+    @Issue("TUA-526")
+    @Test
+    public void verifyCreateTaskWithoutChallenge() {
+        String title = "Title " + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+        addTaskPage = addTaskPage
+                .enterStartDate("2023-01-01")
+                .enterName(title)
+                .enterTitle("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has " +
+                        "been the industry's standard dummy text ever since the 1500s, when an unknown printer took a " +
+                        "galley of type and scrambled it to make a type specimen book. It has survived not only five " +
+                        "centuries, but also the leap into electronic typesetting, remaining essentially unchanged. " +
+                        "It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum " +
+                        "passages, and more recently with desktop publishing software like Aldus PageMaker including " +
+                        "versions of Lorem Ipsum")
+                .enterDescription("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has " +
+                        "been the industry's standard dummy text ever since the 1500s, when an unknown printer took a ");
+        addTaskPage.save();
+
+
+        Assert.assertTrue(addTaskPage.errorMessageIsEmptyIsVisible(), "Error message didn't find");
+        TaskService taskService = new TaskService();
+        Assert.assertEquals(taskService.getAllNameWhere(title).size(), 0);
+    }
+
+    @DataProvider(name = "invalidNameData")
+    public static Object[][] invalidNameData() {
+        return new Object[][]{
+                {"", "name не може бути пустим"},
+                {"Lor",
+                        "name must contain a minimum of 5 and a maximum of 100 letters"},
+                {new String(new char[400]).replace("\0", "Lorem 56№*"),
+                        "name must contain a minimum of 5 and a maximum of 100 letters"}
+        };
+    }
+
+    @Issue("TUA-523")
+    @Description("Verify impossibility of creating task with name invalid data")
+    @Test(dataProvider = "invalidNameData")
+    public void verifyCreateTaskWithInvalidNameData(String invalidData, String expectedMessage) {
         String actualErrorMessage;
 
-        boolean isAllFieldsAreEmptyByDefault = addTaskPage.allFieldsAreEmpty();
+        boolean isAllFieldsAreEmptyByDefault = addTaskPage.areFieldsEmpty();
 
-        addTaskPage.inputStartDate("2022-10-19")
-                .inputImage(pathToImage)
-                .inputName("Test task # 5/")
-                .inputHeading(invalidData)
-                .inputDescribing(descriptionInput)
-                .chooseChallenge("Example name")
-                .tryClickSaveButton();
+        addTaskPage.enterStartDate(LocalDate.now().plusDays(1).toString())
+                .uploadImage(pathToImage)
+                .enterName(invalidData)
+                .enterTitle("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has " +
+                        "been the industry's standard dummy text ever since the 1500s, when an unknown printer took a " +
+                        "galley of type and scrambled it to make a type specimen book. It has survived not only five " +
+                        "centuries, but also the leap into electronic typesetting, remaining essentially unchanged. " +
+                        "It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum " +
+                        "passages, and more recently with desktop publishing software like Aldus PageMaker including " +
+                        "versions of Lorem Ipsum")
+                .enterDescription("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has " +
+                        "been the industry's standard dummy text ever since the 1500s, when an unknown printer took a ")
+                .selectChallenge("Example name");
+        addTaskPage.save();
 
         SoftAssert softAssert = new SoftAssert();
 
@@ -132,25 +213,81 @@ public class AddTaskTest extends AddTaskTestRunner {
         softAssert.assertAll();
     }
 
-
-
+    @Issue("TUA-522")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Verify admin can't create a new task without image")
     @Test
-    public void verifyCreateTaskWithoutChallenge(){
+    public void verifyTaskCreationFailsWithoutImage() {
+        SoftAssert softly = new SoftAssert();
+        softly.assertTrue(addTaskPage.areFieldsEmpty(),
+                "Create task form fields should be empty by default");
+
+        String name = "Maksym test " + System.currentTimeMillis();
         addTaskPage = addTaskPage
-                .inputStartDate("2023-01-01")
-                .inputName("Lorem Ipsum")
-                .inputHeading("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has " +
-                        "been the industry's standard dummy text ever since the 1500s, when an unknown printer took a " +
-                        "galley of type and scrambled it to make a type specimen book. It has survived not only five " +
-                        "centuries, but also the leap into electronic typesetting, remaining essentially unchanged. " +
-                        "It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum " +
-                        "passages, and more recently with desktop publishing software like Aldus PageMaker including " +
-                        "versions of Lorem Ipsum")
-                .inputDescribing("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has " +
-                        "been the industry's standard dummy text ever since the 1500s, when an unknown printer took a ")
-                .tryClickSaveButton();
+                .enterStartDate(tomorrow)
+                .enterName(name)
+                .enterTitle(title)
+                .enterDescription(description)
+                .selectChallenge(challenge);
+        addTaskPage.save();
 
+        String actualErrorMessage = addTaskPage.getErrorMessageText();
+        softly.assertEquals(actualErrorMessage, "Фото не може бути пустим",
+                "Incorrect 'no image' error message");
 
-        Assert.assertTrue(addTaskPage.errorMessageIsEmptyIsVisible(), "Error message didn't find");
+        long tasksQuantityWithChosenNameInDataBase = new TaskService().getTasksCount(name);
+        softly.assertTrue(tasksQuantityWithChosenNameInDataBase == 0,
+                format("Should be 0 tasks in DB with '%s' name, but found %d", name, tasksQuantityWithChosenNameInDataBase));
+        softly.assertAll();
+    }
+
+    @Issue("TUA-520")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Verify admin can create a new task")
+    @Test
+    public void verifyTaskCreation() {
+        SoftAssert softly = new SoftAssert();
+        softly.assertTrue(addTaskPage.areFieldsEmpty(),
+                "Create task form fields should be empty by default");
+
+        String name = "Maksym test " + System.currentTimeMillis();
+        addTaskPage = addTaskPage
+                .enterStartDate(tomorrow)
+                .uploadImage(pathToImage)
+                .enterName(name)
+                .enterTitle(title)
+                .enterDescription(description)
+                .selectChallenge(challenge);
+        TaskPage taskPage = addTaskPage.save();
+
+        softly.assertEquals(addTaskPage.getSuccessMessage(),
+                format("Завдання '%s' успішно додане!", name),
+                "Incorrect popup success message");
+        softly.assertEquals(taskPage.getNameText(), name,
+                "Incorrect name of created task");
+        softly.assertEquals(taskPage.getTitleText(), title,
+                "Incorrect title of created task");
+        softly.assertEquals(taskPage.getDescriptionText(), description,
+                "Incorrect description of created task");
+
+        TaskJoinChallengeDTO lastTaskWithChosenNameInDataBase = new TaskService()
+                .getTasksJoinChallengeDTO(name, "id", true)
+                .get(0);
+
+        softly.assertEquals(lastTaskWithChosenNameInDataBase.getStartDate(), tomorrow,
+                "Date in data base should be equal to entered task date");
+        softly.assertEquals(lastTaskWithChosenNameInDataBase.getName(), name,
+                "Name in data base should be equal to entered task name");
+        softly.assertEquals(lastTaskWithChosenNameInDataBase.getHeaderText(), "<p>" + title + "</p>",
+                "Description in data base should be equal to entered task description");
+        softly.assertEquals(lastTaskWithChosenNameInDataBase.getDescription(), "<p>" + description + "</p>",
+                "Header title in data base should be equal to entered task header title");
+        softly.assertEquals(lastTaskWithChosenNameInDataBase.getChallenge().getName(), challenge,
+                "Challenge name in data base should be equal to chosen challenge name");
+        softly.assertEquals(taskPage.getImageURL(),
+                configProps.getBaseUrl() + lastTaskWithChosenNameInDataBase.getPicture(),
+                "Image path in data base should be equal to image path on Task page");
+
+        softly.assertAll();
     }
 }

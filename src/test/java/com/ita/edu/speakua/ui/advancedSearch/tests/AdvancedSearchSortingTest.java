@@ -1,111 +1,165 @@
 package com.ita.edu.speakua.ui.advancedSearch.tests;
 
 import com.ita.edu.speakua.ui.clubs.ClubsPage;
-import com.ita.edu.speakua.ui.clubs.SortClubComponent;
-import com.ita.edu.speakua.ui.header.HeaderComponent;
-import com.ita.edu.speakua.ui.runners.BaseTestRunnerSortingFunctional;
+import com.ita.edu.speakua.ui.clubs.SortingPanel;
+import com.ita.edu.speakua.ui.runners.AdvancedSearchTestRunner;
+import com.ita.edu.speakua.utils.jdbc.services.ClubService;
+import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class AdvancedSearchSortingTest extends BaseTestRunnerSortingFunctional {
+public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
 
+    @Issue("TUA-103")
+    @Description("Verify that clubs are sorted by ABC")
     @Test
-    public void advancedSearchABCSortingClubTest() {
-        ClubsPage clubsPage = new ClubsPage(driver);
-        clubsPage
-                .getAdvancedSearchPanelComponent()
-                .clubRadioButtonClick();
-        SortClubComponent sortClubComponent = clubsPage
-                .getSortClubComponent()
-                .sortByABCButtonClick()
-                .arrowUpButtonClick();
+    public void advancedSearchABCSortClubTest() {
+        advancedSearchPanel.clearCitySelector();
+        advancedSearchPanel.selectClubFilter();
 
+        SortingPanel sortClubComponent = clubsPage
+                .getSortClubComponent()
+                .sortByAlphabet()
+                .orderByDesc();
+
+        int cardsLimit = 6;
+
+        ClubService clubService = new ClubService();
         SoftAssert softAssert = new SoftAssert();
 
-        List<String> cardNamesDECExpected = new ArrayList<>();
-        cardNamesDECExpected.add("ячсячячс");
-        cardNamesDECExpected.add("школа танців dream team");
-        cardNamesDECExpected.add("школа робототехніки та програмування для дітей robocode");
-        cardNamesDECExpected.add("школа лідерства і бізнесу kidbi");
-        cardNamesDECExpected.add("школа джазового та естрадного мистецтв");
-        cardNamesDECExpected.add("школа бойового гопака «шаблезуб»");
-
-        List<String> cardNamesTextDecActual = new ArrayList<>();
+        List<String> cardNamesDescExpected = clubService.getNamesOrderByDescending(cardsLimit);
         for (int i = 0; i < clubsPage.getCards().size(); i++) {
-            cardNamesTextDecActual.add(i, clubsPage.getCards().get(i).getTextCardName().toLowerCase());
+            softAssert.assertEquals(clubsPage.getCards().get(i).getCardName().replaceAll("[\n\r]", ""),
+                    cardNamesDescExpected.get(i).replaceAll("[\n\r]", ""),
+                    "Club cards are not sorted by ABC DEC when arrowUp is clicked");
         }
 
-        softAssert.assertEquals(cardNamesTextDecActual.toString(), cardNamesDECExpected.toString(),
-                "Club cards are not sorted by ABC DEC when arrowUp is clicked");
+        sortClubComponent.orderByAsc();
 
-        sortClubComponent.arrowDownButtonClick();
-        softAssert.assertTrue(clubsPage.getCards().get(0).getTextCardName().toLowerCase().startsWith("a"),
-                "Club cards are not sorted by ABC ASC when arrowDown is clicked");
-
+        List<String> cardNamesAscExpected = clubService.getNamesOrderByAscending(cardsLimit);
+        for (int i = 0; i < clubsPage.getCards().size(); i++) {
+            softAssert.assertEquals(clubsPage.getCards().get(i).getCardName(),
+                    cardNamesAscExpected.get(i),
+                    "Club cards are not sorted by ABC ASC when arrowDown is clicked");
+        }
         softAssert.assertAll();
     }
 
+    @Issue("TUA-103")
+    @Description("Verify that centers are sorted by ABC")
     @Test
-    public void advancedSearchABCSortingCenterTest() {
-        ClubsPage clubsPage = new ClubsPage(driver);
-        clubsPage
-                .getAdvancedSearchPanelComponent()
-                .centerRadioButtonClick();
+    public void advancedSearchABCSortCenterTest() {
+        advancedSearchPanel.selectCenterFilter();
 
-        SortClubComponent sortClubComponent = clubsPage.getSortClubComponent()
-                .sortByABCButtonClick()
-                .arrowUpButtonClick();
+        SortingPanel sortClubComponent = clubsPage.getSortClubComponent()
+                .sortByAlphabet()
+                .orderByDesc();
 
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertTrue(clubsPage.getCenters().get(0).getTextCenterName().toLowerCase().startsWith("ш"),
-                "Center cards are not sorted by ABC DEC order when arrowUp is clicked");
+                "Center cards are not sorted by ABC in descending order when arrowUp is clicked");
 
-        sortClubComponent.arrowDownButtonClick();
+        sortClubComponent.orderByAsc();
 
         softAssert.assertTrue(clubsPage.getCenters().get(0).getTextCenterName().toLowerCase().startsWith("a"),
-                "Center cards are not sorted by ABC ASC order when arrowDown is clicked");
+                "Center cards are not sorted by ABC in ascending order when arrowDown is clicked");
         softAssert.assertAll();
     }
 
+    @Issue("TUA-103")
+    @Description("Verify that clubs are sorted by rating")
     @Test
-    public void advancedSearchRatingSortingClubTst() {
-        ClubsPage clubsPage = new ClubsPage(driver);
-        clubsPage
-                .getAdvancedSearchPanelComponent()
-                .clubRadioButtonClick();
-        SortClubComponent sortClubComponent = clubsPage
+    public void advancedSearchRatingSortClubTest() {
+        advancedSearchPanel.selectClubFilter();
+
+        SortingPanel sortClubComponent = clubsPage
                 .getSortClubComponent()
-                .sortByRatingButtonClick()
-                .arrowUpButtonClick();
+                .sortByRating()
+                .orderByDesc();
 
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(clubsPage.getCards().get(0).getStarRatingFullList().size(), 5);
+        softAssert.assertEquals(clubsPage.getCards().get(0).getStarRatingFullList().size(), 5,
+                "Clubs are not sorted by rating in descending order when arrowUpButton is clicked");
 
-        sortClubComponent.arrowDownButtonClick();
-        softAssert.assertEquals(clubsPage.getCards().get(0).getStarRatingZeroList().size(), 5);
+        sortClubComponent.orderByAsc();
+        softAssert.assertEquals(clubsPage.getCards().get(0).getStarRatingZeroList().size(), 5,
+                "Clubs are not sorted by rating in ascending order when arrowDownButton is clicked");
         softAssert.assertAll();
     }
 
+    @Issue("TUA-103")
+    @Issue("TUA-449")
+    @Description("Verify that centers are sorted by rating")
     @Test
-    public void advancedSearchRatingSortingCenterTest() {
-        ClubsPage clubsPage = new ClubsPage(driver);
-        clubsPage
-                .getAdvancedSearchPanelComponent()
-                .centerRadioButtonClick();
+    public void advancedSearchRatingSortCenterTest() {
+        advancedSearchPanel.selectCenterFilter();
 
-        SortClubComponent sortClubComponent = clubsPage.getSortClubComponent();
+        SortingPanel sortClubComponent = clubsPage.getSortClubComponent();
         sortClubComponent
-                .sortByRatingButtonClick()
-                .arrowUpButtonClick();
+                .sortByRating()
+                .orderByDesc();
 
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(clubsPage.getCards().get(0).getStarRatingFullList().size(), 5);
+        softAssert.assertEquals(clubsPage.getCards().get(0).getStarRatingFullList().size(), 5,
+                "Centers are not sorted by rating in descending order when arrowUpButton is clicked");
 
-        sortClubComponent.arrowDownButtonClick();
-        softAssert.assertEquals(clubsPage.getCards().get(0).getStarRatingZeroList().size(), 5);
+        sortClubComponent.orderByAsc();
+        softAssert.assertEquals(clubsPage.getCards().get(0).getStarRatingZeroList().size(), 5,
+                "Centers are not sorted by rating in ascending order when arrowDownButton is clicked");
+        softAssert.assertAll();
+    }
+
+    @Issue("TUA-516")
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("Verify that the clubs can be sorted by rating")
+    @Test
+    public void verifySortingClubsByRating() {
+        advancedSearchPanel
+                .selectClubFilter()
+                .clearCitySelector();
+        ClubsPage clubsPage = new ClubsPage(driver);
+
+        SortingPanel sort = clubsPage
+                .getSortClubComponent()
+                .sortByRating();
+
+        SoftAssert softAssert = new SoftAssert();
+        ClubService clubService = new ClubService();
+        long countOfCardsOnPage = clubsPage.getCards().size();
+        List<String> cardNames = clubService.getAllNamesOrderByRatingIdAscLimit(countOfCardsOnPage);
+        List<Double> cardRatings = clubService.getAllRatingsOrderByRatingIdAscLimit(countOfCardsOnPage);
+        for (int i = 0; i < countOfCardsOnPage; i++) {
+            int cardCountOfStarsActual = clubsPage.getCards().get(i).getStarRatingZeroList().size();
+            int cardCountOfStarsExpected = (int) Math.floor(cardRatings.get(i));
+
+            softAssert.assertEquals(cardCountOfStarsActual, 5 - cardCountOfStarsExpected);
+
+            String cardNameActual = clubsPage.getCards().get(i).getCardName();
+            String cardNameExpected = cardNames.get(i);
+
+            softAssert.assertEquals(cardNameActual, cardNameExpected);
+        }
+
+        sort.orderByDesc();
+
+        cardNames = clubService.getAllNamesOrderByRatingIdDescLimit(countOfCardsOnPage);
+        cardRatings = clubService.getAllRatingsOrderByRatingIdDescLimit(countOfCardsOnPage);
+        for (int i = 0; i < countOfCardsOnPage; i++) {
+            int cardCountOfStarsActual = clubsPage.getCards().get(i).getStarRatingFullList().size();
+            int cardCountOfStarsExpected = cardRatings.get(i) <= 5 ? (int) Math.floor(cardRatings.get(i)) : 5;
+
+            softAssert.assertEquals(cardCountOfStarsActual, cardCountOfStarsExpected);
+
+            String cardNameActual = clubsPage.getCards().get(i).getCardName();
+            String cardNameExpected = cardNames.get(i);
+
+            softAssert.assertEquals(cardNameActual, cardNameExpected);
+        }
         softAssert.assertAll();
     }
 }

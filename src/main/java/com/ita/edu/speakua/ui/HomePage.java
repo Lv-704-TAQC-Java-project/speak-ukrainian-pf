@@ -1,16 +1,15 @@
 package com.ita.edu.speakua.ui;
 
 import com.ita.edu.speakua.ui.clubs.ClubsPage;
-import com.ita.edu.speakua.ui.header.HeaderComponent;
-import com.ita.edu.speakua.ui.header.profileMenuAdmin.profilePage.EditProfileComponent;
+import com.ita.edu.speakua.ui.header.Header;
 import io.qameta.allure.Step;
-import org.openqa.selenium.Keys;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 
-public class HomePage extends HeaderComponent {
+public class HomePage extends Header {
 
     @FindBy(xpath = "//span[contains(@class, 'anticon-search')]")
     private WebElement searchButton;
@@ -25,27 +24,21 @@ public class HomePage extends HeaderComponent {
         super(driver);
     }
 
-    public ClubsPage fillInSearch(String query) {
-        searchInput.sendKeys(Keys.chord(Keys.CONTROL, "a"), "");
-        searchInput.sendKeys(query);
+    public ClubsPage search(String query) {
+        action.setNewValueForInput(searchInput, query);
         return new ClubsPage(driver);
     }
 
-    public ClubsPage clickAdvancedSearchInput() {
-        searchInput.click();
-        return new ClubsPage(driver);
-    }
-
-    @Step("click Advanced Search Button")
-    public ClubsPage clickAdvancedSearchButton() {
+    @Step("open Advanced Search menu")
+    public ClubsPage openAdvancedSearch() {
         advancedSearchButton.click();
+        wait.sleep(500);
         return new ClubsPage(driver);
     }
 
-    public ClubsPage clickSearchButton() {
-        searchButton.click();
-        return new ClubsPage(driver);
+    public boolean isHomePageOpened() {
+        wait.pageReload();
+        WebElement banner = driver.findElement(By.xpath("//div[@class='ant-carousel']"));
+        return banner.isDisplayed();
     }
-
-
 }
