@@ -77,8 +77,8 @@ public class AddClubContactsStep extends AbstractAddClubStep {
         return this;
     }
 
-    @Step("Add club 'contacts' step: enter PhoneNumber {phone}")
-    public AddClubContactsStep inputPhoneNumber(String phone) {
+    @Step("Add club 'contacts' step: enter phone '{phone}'")
+    public AddClubContactsStep enterPhone(String phone) {
         phoneNumber.click();
         phoneNumber.clear();
         phoneNumber.sendKeys(phone);
@@ -92,7 +92,7 @@ public class AddClubContactsStep extends AbstractAddClubStep {
         return this;
     }
 
-    @Step("Add club 'contacts' step: open next modal 'Describe'")
+    @Step("Add club 'contacts' step: open next step 'description'")
     public AddClubDescriptionStep openNextStep() {
         nextStepButton.click();
         return new AddClubDescriptionStep(driver);

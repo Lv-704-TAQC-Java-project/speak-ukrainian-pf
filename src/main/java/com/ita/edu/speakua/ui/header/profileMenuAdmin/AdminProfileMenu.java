@@ -57,8 +57,8 @@ public class AdminProfileMenu extends BasePage {
         return new HomePage(driver);
     }
 
-    @Step("Admin profile menu: open administration list")
-    public AdministrationMenu openAdministrationModal() {
+    @Step("Admin profile menu: open administration menu")
+    public AdministrationMenu openAdministrationMenu() {
         wait.visibility(administrationBtn);
         action.click(administrationBtn);
         return new AdministrationMenu(driver);

@@ -50,37 +50,37 @@ public class AddTaskPage extends Header {
         super(driver);
     }
 
-    @Step("Add task page: enter task start date: {date}")
+    @Step("Add task page: enter task start date '{date}'")
     public AddTaskPage enterStartDate(String date) {
         action.setNewValueForInput(startDate, date);
         return this;
     }
 
-    @Step("Add task page: upload image {imagePath}")
+    @Step("Add task page: upload image '{imagePath}'")
     public AddTaskPage uploadImage(String imagePath) {
         uploadImage.sendKeys(imagePath);
         return this;
     }
 
-    @Step("Add task page: enter task name: {name}")
+    @Step("Add task page: enter task name '{name}'")
     public AddTaskPage enterName(String name) {
         action.setNewValueForInput(taskName, name);
         return this;
     }
 
-    @Step("Add task page: enter task title {title}")
+    @Step("Add task page: enter task title '{title}'")
     public AddTaskPage enterTitle(String title) {
         action.setNewValueForInput(taskTitle, title);
         return this;
     }
 
-    @Step("Add task page: enter task description {description}")
+    @Step("Add task page: enter task description '{description}'")
     public AddTaskPage enterDescription(String description) {
         action.setNewValueForInput(enterDescription, description);
         return this;
     }
 
-    @Step("Add task page: select challenge {name}")
+    @Step("Add task page: select challenge '{name}'")
     public AddTaskPage selectChallenge(String name) {
         String challengeXpath = String.format("(//div[contains(@class,'option-content') and contains(text(), '%s')])[1]", name);
         String lastChallengeXpath = "(//div[contains(@class,'option-content')])[last()]";

@@ -77,21 +77,22 @@ public class AdvancedSearchPanel extends ClubsPage {
         return action.isVisible(childAgeBlock);
     }
 
-    @Step("Click on 'club' radioButton")
+    @Step("Advanced search panel: filter by clubs")
     public AdvancedSearchPanel selectClubFilter() {
         wait.visibility(clubRadioButton);
         clubRadioButton.click();
         return this;
     }
 
-    @Step("Click on 'center' radioButton")
+    @Step("Advanced search panel: filter by centers")
     public AdvancedSearchPanel selectCenterFilter() {
         wait.visibility(centerRadioButton);
         centerRadioButton.click();
         return this;
     }
 
-    public AdvancedSearchPanel setChildAge(int age) {
+    @Step("Advanced search panel: enter child's age")
+    public AdvancedSearchPanel enterChildAge(int age) {
         childAgeInput.sendKeys(Keys.chord(Keys.CONTROL, "a"));
         childAgeInput.sendKeys(String.valueOf(age));
         return this;
@@ -101,7 +102,8 @@ public class AdvancedSearchPanel extends ClubsPage {
         return Integer.parseInt(childAgeInput.getAttribute("value"));
     }
 
-    public AdvancedSearchPanel clearCitySelector() {
+    @Step("Advanced search panel: remove city filter")
+    public AdvancedSearchPanel removeCityFilter() {
         new Actions(driver)
                 .moveToElement(citySelectArrow)
                 .perform();

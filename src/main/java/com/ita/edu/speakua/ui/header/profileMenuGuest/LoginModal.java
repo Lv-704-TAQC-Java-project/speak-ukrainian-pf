@@ -23,13 +23,13 @@ public class LoginModal extends BasePage {
     }
 
 
-    @Step("Login modal: enter email {email}")
+    @Step("Login modal: enter email '{email}'")
     public LoginModal enterEmail(String email) {
         action.setNewValueForInput(emailField, email);
         return this;
     }
 
-    @Step("Login modal: enter password {password}")
+    @Step("Login modal: enter password '{password}'")
     public LoginModal enterPassword(String password) {
         action.setNewValueForInput(passwordField, password);
         return this;

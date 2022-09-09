@@ -29,7 +29,7 @@ public class HomePage extends Header {
         return new ClubsPage(driver);
     }
 
-    @Step("open Advanced Search menu")
+    @Step("Home page: open advanced search menu")
     public ClubsPage openAdvancedSearch() {
         advancedSearchButton.click();
         wait.sleep(500);

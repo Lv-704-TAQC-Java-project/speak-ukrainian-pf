@@ -40,7 +40,7 @@ public class ProfilePage extends Header {
         return new EditProfileModal(driver);
     }
 
-    @Step("Profile page: open a model for adding club")
+    @Step("Profile page: open add club model")
     public AddClubMainInfoStep openAddClubModal() {
         wait.visibility(addButton);
         addButton.click();

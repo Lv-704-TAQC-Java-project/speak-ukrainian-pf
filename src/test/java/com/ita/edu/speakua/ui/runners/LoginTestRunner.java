@@ -15,6 +15,6 @@ public class LoginTestRunner extends SameWindowTestRunner {
                 .enterEmail(configProps.getUserEmail())
                 .enterPassword(configProps.getUserPassword())
                 .submitLoginForm()
-                .getHomePageReload();
+                .reloadHomePage();
     }
 }

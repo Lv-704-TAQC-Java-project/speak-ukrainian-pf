@@ -223,7 +223,7 @@ public class AddTaskTest extends AddTaskTestRunner {
                 "Create task form fields should be empty by default");
 
         String name = "Maksym test " + System.currentTimeMillis();
-        addTaskPage = addTaskPage
+        addTaskPage
                 .enterStartDate(tomorrow)
                 .enterName(name)
                 .enterTitle(title)
@@ -237,7 +237,7 @@ public class AddTaskTest extends AddTaskTestRunner {
 
         long tasksQuantityWithChosenNameInDataBase = new TaskService().getTasksCount(name);
         softly.assertTrue(tasksQuantityWithChosenNameInDataBase == 0,
-                format("Should be 0 tasks in DB with '%s' name, but found %d", name, tasksQuantityWithChosenNameInDataBase));
+                format("Should be 0 tasks in data base with '%s' name, but found %d", name, tasksQuantityWithChosenNameInDataBase));
         softly.assertAll();
     }
 

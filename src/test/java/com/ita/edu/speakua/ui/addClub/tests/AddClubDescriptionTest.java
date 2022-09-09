@@ -12,6 +12,8 @@ import org.testng.asserts.SoftAssert;
 
 import java.util.List;
 
+import static java.lang.String.format;
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class AddClubDescriptionTest extends AddClubDescriptionTestRunner {
@@ -88,12 +90,12 @@ public class AddClubDescriptionTest extends AddClubDescriptionTestRunner {
 
         boolean areErrorsExpected = !expectedError.isEmpty();
 
-        Assert.assertEquals(!descriptionErrors.isEmpty(), areErrorsExpected,
-                String.format("Description errors should %sbe shown", areErrorsExpected ? "" : "not "));
+        assertEquals(!descriptionErrors.isEmpty(), areErrorsExpected,
+                format("Description errors should %sbe shown", areErrorsExpected ? "" : "not "));
 
         if (areErrorsExpected) {
-            Assert.assertTrue(descriptionErrors.contains(expectedError),
-                    String.format("List of errors %s should contain '%s' error", descriptionErrors, expectedError));
+            assertTrue(descriptionErrors.contains(expectedError),
+                    format("List of errors %s should contain '%s' error", descriptionErrors, expectedError));
         }
     }
 

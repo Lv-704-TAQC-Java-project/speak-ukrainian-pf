@@ -19,7 +19,7 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
     @Description("Verify that clubs are sorted by ABC")
     @Test
     public void advancedSearchABCSortClubTest() {
-        advancedSearchPanel.clearCitySelector();
+        advancedSearchPanel.removeCityFilter();
         advancedSearchPanel.selectClubFilter();
 
         SortingPanel sortClubComponent = clubsPage
@@ -121,7 +121,7 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
     public void verifySortingClubsByRating() {
         advancedSearchPanel
                 .selectClubFilter()
-                .clearCitySelector();
+                .removeCityFilter();
         ClubsPage clubsPage = new ClubsPage(driver);
 
         SortingPanel sort = clubsPage

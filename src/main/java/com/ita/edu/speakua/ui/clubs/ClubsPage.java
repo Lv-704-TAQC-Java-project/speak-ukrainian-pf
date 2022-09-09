@@ -43,7 +43,6 @@ public class ClubsPage extends Header {
         super(driver);
     }
 
-    @Step("Get access to advanced search panel")
     public AdvancedSearchPanel getAdvancedSearchPanelComponent() {
         return new AdvancedSearchPanel(driver);
     }
@@ -122,7 +121,7 @@ public class ClubsPage extends Header {
         return advancedSearchButton == null;
     }
 
-    @Step("Clubs page: Search by {phrase}")
+    @Step("Clubs page: search by phrase '{phrase}'")
     public ClubsPage fillInSearch(String phrase) {
         action.clearInput(searchInputField);
         searchInputField.click();
@@ -163,7 +162,7 @@ public class ClubsPage extends Header {
                 .collect(Collectors.toList());
     }
 
-    @Step("Clubs page: Search by {phrase}")
+    @Step("Clubs page: Search by phrase '{phrase}'")
     public ClubsPage search(String phrase) {
         action.clearInput(searchInputField);
         searchInputField.click();
@@ -175,7 +174,7 @@ public class ClubsPage extends Header {
         return new ClubsPage(driver);
     }
 
-    @Step("Clubs page: Search {phrase} using JS set search field value. Maximum search field length {inputFieldMaxLength} chars.")
+    @Step("Clubs page: Search '{phrase}' using JavaScript. Maximum search field length '{inputFieldMaxLength}' chars.")
     public ClubsPage searchUsingJavaScript(String phrase, int inputLengthLimit) {
         action.clearInput(searchInputField);
         searchInputField.click();

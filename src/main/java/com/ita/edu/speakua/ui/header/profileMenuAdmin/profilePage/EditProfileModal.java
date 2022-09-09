@@ -74,7 +74,7 @@ public class EditProfileModal extends BasePage {
         return phoneInput.getAttribute("value");
     }
 
-    @Step("Edit profile modal: enter lastname {lastName}")
+    @Step("Edit profile modal: enter lastname '{lastName}'")
     public EditProfileModal enterLastName(String lastName) {
         List<WebElement> previousPhoneErrors = lastnameErrors;
         action.setNewValueForInput(lastNameInput, lastName);
@@ -82,7 +82,7 @@ public class EditProfileModal extends BasePage {
         return this;
     }
 
-    @Step("Edit profile modal: enter firstname {firstName}")
+    @Step("Edit profile modal: enter firstname '{firstName}'")
     public EditProfileModal enterFirstName(String firstName) {
         List<WebElement> previousFirstNameErrors = firstNameErrors;
         action.setNewValueForInput(firstNameInput, firstName);
@@ -90,7 +90,7 @@ public class EditProfileModal extends BasePage {
         return this;
     }
 
-    @Step("Edit profile modal: enter phone number {phone}")
+    @Step("Edit profile modal: enter phone '{phone}'")
     public EditProfileModal enterPhone(String phone) {
         List<WebElement> previousLastNameErrors = phoneErrors;
         action.setNewValueForInput(phoneInput, phone);
@@ -104,13 +104,13 @@ public class EditProfileModal extends BasePage {
         return this;
     }
 
-    @Step("Edit profile modal: enter old password {oldPassword}")
+    @Step("Edit profile modal: enter old password '{oldPassword}'")
     public EditProfileModal enterOldPassword(String oldPassword) {
         oldPasswordInput.sendKeys(oldPassword);
         return this;
     }
 
-    @Step("Edit profile modal: enter new password {newPassword}")
+    @Step("Edit profile modal: enter new password '{newPassword}'")
     public EditProfileModal enterNewPassword(String newPassword) {
         newPasswordInput.sendKeys(newPassword);
         return this;

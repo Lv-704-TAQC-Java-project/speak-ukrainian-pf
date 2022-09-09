@@ -12,6 +12,8 @@ import org.testng.asserts.SoftAssert;
 
 import java.util.List;
 
+import static java.lang.String.format;
+
 public class EditProfileComponentTest extends EditProfileTestRunner {
 
     @DataProvider(name = "invalidFirstNameData")
@@ -70,14 +72,13 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
                 .enterPhone(phone)
                 .getPhoneErrors();
 
-        SoftAssert softAssert = new SoftAssert();
-        softAssert.assertTrue(phoneErrors.contains(expectedError),
-                String.format("List of errors %s should contain '%s' error", phoneErrors, expectedError));
+        SoftAssert softly = new SoftAssert();
+        softly.assertTrue(phoneErrors.contains(expectedError),
+                format("List of errors %s should contain '%s' error", phoneErrors, expectedError));
 
-        softAssert.assertFalse(editProfileModal.isSaveChangesButtonEnabled(),
+        softly.assertFalse(editProfileModal.isSaveChangesButtonEnabled(),
                 "SaveChanges button is enabled.");
-
-        softAssert.assertAll();
+        softly.assertAll();
     }
 
     @DataProvider(name = "invalidLastNameData")

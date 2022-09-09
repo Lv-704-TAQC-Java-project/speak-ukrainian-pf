@@ -32,8 +32,8 @@ public class AddClubMainInfoStep extends AbstractAddClubStep {
         super(driver);
     }
 
-    @Step("Add club 'main info' step: Set nameOfClub {name}")
-    public AddClubMainInfoStep inputNameOfClub(String name) {
+    @Step("Add club 'main info' step: enter name '{name}'")
+    public AddClubMainInfoStep enterClubName(String name) {
         wait.visibility(inputNameOfClub);
         inputNameOfClub.click();
         inputNameOfClub.clear();
@@ -45,22 +45,22 @@ public class AddClubMainInfoStep extends AbstractAddClubStep {
         return categoryList.findElement(By.xpath(String.format(".//span[contains(text(),'%s')]", name)));
     }
 
-    @Step("Add club 'main info' step: select category club")
+    @Step("Add club 'main info' step: select category '{name}'")
     public AddClubMainInfoStep selectCategoryClub(String name) {
         getCategoryItem(name).click();
         return new AddClubMainInfoStep(driver);
     }
 
-    @Step("Add club 'main info' step: input the child's minimum age {age}")
-    public AddClubMainInfoStep inputAgeFrom(int age) {
+    @Step("Add club 'main info' step: enter child's minimum age '{age}'")
+    public AddClubMainInfoStep enterMinimumAge(int age) {
         inputAgeFrom.click();
         inputAgeFrom.clear();
         inputAgeFrom.sendKeys(String.valueOf(age));
         return new AddClubMainInfoStep(driver);
     }
 
-    @Step("Add club 'main info' step: input the child's maximum age {age}")
-    public AddClubMainInfoStep inputAgeTo(int age) {
+    @Step("Add club 'main info' step: enter child's maximum age '{age}'")
+    public AddClubMainInfoStep enterMaximumAge(int age) {
         inputAgeTo.click();
         inputAgeTo.clear();
         inputAgeTo.sendKeys(String.valueOf(age));
@@ -73,7 +73,7 @@ public class AddClubMainInfoStep extends AbstractAddClubStep {
     }
 
 
-    @Step("Add club 'main info' step: open next tab 'Contacts'")
+    @Step("Add club 'main info' step: open next step 'contacts'")
     public AddClubContactsStep openNextStep() {
         nextStepButton.click();
         return new AddClubContactsStep(driver);

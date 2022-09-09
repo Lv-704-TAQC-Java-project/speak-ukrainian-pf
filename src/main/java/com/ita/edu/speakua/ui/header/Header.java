@@ -57,7 +57,7 @@ public class Header extends BasePage {
         return new AdminProfileMenu(driver);
     }
 
-    public Header getHomePageReload() {
+    public Header reloadHomePage() {
         wait.pageReload();
         return new Header(driver);
     }

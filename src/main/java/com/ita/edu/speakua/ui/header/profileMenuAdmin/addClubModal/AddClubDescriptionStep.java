@@ -45,7 +45,7 @@ public class AddClubDescriptionStep extends AbstractAddClubStep {
         super(driver);
     }
 
-    @Step("Add club 'description' step: enter description {text}")
+    @Step("Add club 'description' step: enter description '{text}'")
     public AddClubDescriptionStep enterDescription(String text) {
         action.setNewValueForInput(describeArea, text);
         return new AddClubDescriptionStep(driver);

@@ -12,12 +12,12 @@ public class AddChallengeTestRunner extends LoginTestRunner{
     public void openEditProfile() {
         lastChallengeNumber = new HomePage(driver)
                 .openAdminProfileMenu()
-                .openAdministrationModal()
+                .openAdministrationMenu()
                 .openChallengePage()
                 .getLastChallengeNumber();
         addChallengePage = new HomePage(driver)
                 .openAdminProfileMenu()
-                .openAdministrationModal()
+                .openAdministrationMenu()
                 .openChallengePage()
                 .openChallengeAddPage();
     }

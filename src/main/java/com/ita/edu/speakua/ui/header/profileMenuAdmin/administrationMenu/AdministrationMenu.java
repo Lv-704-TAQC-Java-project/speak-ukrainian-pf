@@ -20,14 +20,14 @@ public class AdministrationMenu extends BasePage {
         super(driver);
     }
 
-    @Step("Open tasks page")
+    @Step("Administration menu: open tasks page")
     public TasksPage openTasksPage() {
         wait.visibility(taskButton);
         action.click(taskButton);
         return new TasksPage(driver);
     }
 
-    @Step("Open challenge page")
+    @Step("Administration menu: open challenge page")
     public ChallengePage openChallengePage() {
         wait.visibility(challengeButton);
         action.click(challengeButton);
