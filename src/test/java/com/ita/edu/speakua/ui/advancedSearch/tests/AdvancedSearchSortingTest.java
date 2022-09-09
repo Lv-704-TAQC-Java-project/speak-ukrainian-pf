@@ -21,7 +21,6 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
     public void advancedSearchABCSortClubTest() {
         advancedSearchPanel.clearCitySelector();
         advancedSearchPanel.selectClubFilter();
-        ClubsPage clubsPage = new ClubsPage(driver);
 
         SortingPanel sortClubComponent = clubsPage
                 .getSortClubComponent()
@@ -56,7 +55,6 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
     @Test
     public void advancedSearchABCSortCenterTest() {
         advancedSearchPanel.selectCenterFilter();
-        ClubsPage clubsPage = new ClubsPage(driver);
 
         SortingPanel sortClubComponent = clubsPage.getSortClubComponent()
                 .sortByAlphabet()
@@ -78,7 +76,6 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
     @Test
     public void advancedSearchRatingSortClubTest() {
         advancedSearchPanel.selectClubFilter();
-        ClubsPage clubsPage = new ClubsPage(driver);
 
         SortingPanel sortClubComponent = clubsPage
                 .getSortClubComponent()
@@ -101,7 +98,6 @@ public class AdvancedSearchSortingTest extends AdvancedSearchTestRunner {
     @Test
     public void advancedSearchRatingSortCenterTest() {
         advancedSearchPanel.selectCenterFilter();
-        ClubsPage clubsPage = new ClubsPage(driver);
 
         SortingPanel sortClubComponent = clubsPage.getSortClubComponent();
         sortClubComponent
