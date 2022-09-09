@@ -49,7 +49,7 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
         softAssert.assertAll();
     }
 
-    @DataProvider(name = "verifyPhoneErrorMessageWhenEditProfile")
+    @DataProvider(name = "invalidPhoneData")
     public static Object[][] invalidPhoneData() {
         return new Object[][]{
                 {"06895", "Телефон не відповідає вказаному формату"},

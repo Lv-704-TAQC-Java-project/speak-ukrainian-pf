@@ -14,7 +14,7 @@
             </class>
             <class name="com.ita.edu.speakua.ui.profilePage.tests.EditProfileComponentTest">
                 <methods>
-                    <include name="verifyPhoneErrorMessageWhenEditProfileTest"/>
+                    <include name="verifyPhoneErrorMessageWhenEditProfile"/>
                 </methods>
             </class>
             <class name="com.ita.edu.speakua.ui.addClub.tests.AddClubDescriptionTest">
