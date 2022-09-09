@@ -9,7 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 
-public class NavigationComponent extends BasePage {
+public class HeaderNavigation extends BasePage {
 
     @FindBy(xpath = "//header//div[contains(@class, 'logo')]/parent::a")
     WebElement homePageLink;
@@ -30,7 +30,7 @@ public class NavigationComponent extends BasePage {
     WebElement servicesBtn;
 
 
-    public NavigationComponent(WebDriver driver) {
+    public HeaderNavigation(WebDriver driver) {
         super(driver);
     }
 
@@ -46,7 +46,7 @@ public class NavigationComponent extends BasePage {
         return new ClubsPage(driver);
     }
 
-    public NavigationComponent clickChallengesBtn() {
+    public HeaderNavigation clickChallengesBtn() {
         challengesBtn.click();
         return this;
     }

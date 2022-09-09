@@ -5,14 +5,14 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 
 
-public class MapLocationComponent extends BasePage {
+public class MapModal extends BasePage {
     @FindBy(xpath = "//button[contains(@class,'show-map-button')]")
     private WebElement showOnMapButton;
 
     @FindBy(xpath = "//input[@id='mapCitiesList']/ancestor::div[@class='ant-select-selector']")
     private WebElement locationMenuButton;
 
-    public MapLocationComponent(WebDriver driver) {
+    public MapModal(WebDriver driver) {
         super(driver);
     }
 }

@@ -1,7 +1,7 @@
 package com.ita.edu.speakua.ui.header.profileMenuAdmin.profilePage;
 
 import com.ita.edu.speakua.ui.clubs.Pagination;
-import com.ita.edu.speakua.ui.clubs.cards.Club;
+import com.ita.edu.speakua.ui.clubs.cards.ClubCard;
 import com.ita.edu.speakua.ui.header.Header;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubModal.AddClubMainInfoStep;
 import io.qameta.allure.Step;
@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ProfilePage extends Header {
 
-    private List<Club> cards;
+    private List<ClubCard> cards;
     private Pagination paginationComponent;
 
     @FindBy(xpath = "//div[@class='edit-button']//button")
@@ -49,8 +49,8 @@ public class ProfilePage extends Header {
         return new AddClubMainInfoStep(driver);
     }
 
-    public Club getLastCard() {
-        return new Club(driver, cardsBody.get(cardsBody.size() - 1));
+    public ClubCard getLastCard() {
+        return new ClubCard(driver, cardsBody.get(cardsBody.size() - 1));
     }
 
     public Pagination getPaginationComponent() {

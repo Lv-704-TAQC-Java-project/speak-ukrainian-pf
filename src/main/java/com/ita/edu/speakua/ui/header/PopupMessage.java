@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 
-public class PopupMessageComponent extends BasePage {
+public class PopupMessage extends BasePage {
 
     @FindBy(xpath = "//div[@class='message']//span[contains(text(), 'успішно')]")
     WebElement loginSuccessPopupMessage;
@@ -14,7 +14,7 @@ public class PopupMessageComponent extends BasePage {
     @FindBy(xpath = "//div[@class='message']//span[contains(text(), 'невірний')]")
     WebElement loginErrorPopupMessage;
 
-    public PopupMessageComponent(WebDriver driver) {
+    public PopupMessage(WebDriver driver) {
         super(driver);
     }
 

@@ -12,7 +12,7 @@ import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
 
 import java.util.List;
 
-public class Club extends BasePage {
+public class ClubCard extends BasePage {
     protected WebElement cardBody;
 
     @FindBy(xpath = "./parent::div")
@@ -42,7 +42,7 @@ public class Club extends BasePage {
     @FindBy(xpath = ".//div[contains(@class, 'club-online')]")
     protected WebElement availableOnline;
 
-    public Club(WebDriver driver, WebElement cardBody) {
+    public ClubCard(WebDriver driver, WebElement cardBody) {
         super(driver);
         this.cardBody = cardBody;
         PageFactory.initElements(new DefaultElementLocatorFactory(cardBody), this);
@@ -58,7 +58,7 @@ public class Club extends BasePage {
         return cardBody;
     }
 
-    public Club waitNameRefresh(long timeoutMillis, int polling) {
+    public ClubCard waitNameRefresh(long timeoutMillis, int polling) {
         try {
             wait.fluentStaleness(cardName, timeoutMillis, polling);
             wait.fluentVisibility(cardName, timeoutMillis, polling);

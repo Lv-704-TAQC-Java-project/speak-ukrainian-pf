@@ -36,12 +36,12 @@ public class Header extends BasePage {
         super(driver);
     }
 
-    public NavigationComponent getNavigationComponent() {
-        return new NavigationComponent(driver);
+    public HeaderNavigation getNavigationComponent() {
+        return new HeaderNavigation(driver);
     }
 
-    public LocationComponent getLocationComponent() {
-        return new LocationComponent(driver);
+    public LocationMenu getLocationComponent() {
+        return new LocationMenu(driver);
     }
 
     @Step("Header: open guest profile menu")

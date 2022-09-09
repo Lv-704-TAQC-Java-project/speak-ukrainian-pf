@@ -1,7 +1,7 @@
 package com.ita.edu.speakua.ui.clubs;
 
-import com.ita.edu.speakua.ui.clubs.cards.Club;
-import com.ita.edu.speakua.ui.clubs.cards.Center;
+import com.ita.edu.speakua.ui.clubs.cards.ClubCard;
+import com.ita.edu.speakua.ui.clubs.cards.CenterCard;
 import com.ita.edu.speakua.ui.header.Header;
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
@@ -13,8 +13,8 @@ import java.util.stream.Collectors;
 
 public class ClubsPage extends Header {
 
-    private List<Club> cards;
-    private List<Center> centers;
+    private List<ClubCard> cards;
+    private List<CenterCard> centers;
     private Pagination paginationComponent;
     private SortingPanel sortClubComponent;
 
@@ -53,19 +53,19 @@ public class ClubsPage extends Header {
     }
 
     @Step("Get list of cards")
-    public List<Club> getCards() {
+    public List<ClubCard> getCards() {
         wait.sleep(1000);
         this.cards = new ArrayList<>();
         for (WebElement card : cardsBody) {
-            this.cards.add(new Club(driver, card));
+            this.cards.add(new ClubCard(driver, card));
         }
         return this.cards;
     }
 
-    public List<Center> getCenters() {
+    public List<CenterCard> getCenters() {
         this.centers = new ArrayList<>();
         for (WebElement center : cardsBody) {
-            this.centers.add(new Center(driver, center));
+            this.centers.add(new CenterCard(driver, center));
         }
         return this.centers;
     }
@@ -112,7 +112,7 @@ public class ClubsPage extends Header {
     }
 
     public void clickManagingClubsPageElement(WebElement element) {
-        List<Club> cards = new ClubsPage(driver).getCards();
+        List<ClubCard> cards = new ClubsPage(driver).getCards();
         element.click();
         wait.sleep(2000);
     }
@@ -151,7 +151,7 @@ public class ClubsPage extends Header {
         return this
                 .getCenters()
                 .stream()
-                .map(Center::getTextCenterName)
+                .map(CenterCard::getTextCenterName)
                 .toArray(String[]::new);
     }
 
@@ -159,7 +159,7 @@ public class ClubsPage extends Header {
         return this
                 .getCards()
                 .stream()
-                .map(Club::getCardName)
+                .map(ClubCard::getCardName)
                 .collect(Collectors.toList());
     }
 

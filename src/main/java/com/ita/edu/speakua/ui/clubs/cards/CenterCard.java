@@ -4,12 +4,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class Center extends Club {
+public class CenterCard extends ClubCard {
 
     @FindBy(xpath = ".//div[contains(@class, 'center-name')]")
     private WebElement centerName;
 
-    public Center(WebDriver driver, WebElement cardBody) {
+    public CenterCard(WebDriver driver, WebElement cardBody) {
         super(driver, cardBody);
     }
 

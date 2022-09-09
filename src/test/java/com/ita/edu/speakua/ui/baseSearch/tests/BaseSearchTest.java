@@ -3,7 +3,7 @@ package com.ita.edu.speakua.ui.baseSearch.tests;
 import com.ita.edu.speakua.ui.HomePage;
 import com.ita.edu.speakua.ui.clubs.ClubsPage;
 import com.ita.edu.speakua.ui.clubs.ExpandedClub;
-import com.ita.edu.speakua.ui.clubs.cards.Club;
+import com.ita.edu.speakua.ui.clubs.cards.ClubCard;
 import com.ita.edu.speakua.ui.runners.BaseTestRunner;
 import com.ita.edu.speakua.utils.jdbc.entity.ClubEntity;
 import com.ita.edu.speakua.utils.jdbc.services.ClubService;
@@ -37,12 +37,12 @@ public class BaseSearchTest extends BaseTestRunner {
         SoftAssert softAssert = new SoftAssert();
 
         List<ClubEntity> clubEntities = clubService.getAllNameWhereNameLike(clubToSearch);
-        List<Club> actualClubs = clubsPage.getCards();
+        List<ClubCard> actualClubs = clubsPage.getCards();
 
         assertTrue(actualClubs.size() >= 1);
         softAssert.assertEquals(clubEntities.size(), actualClubs.size());
 
-        for (Club card : actualClubs) {
+        for (ClubCard card : actualClubs) {
             for (ClubEntity clubEntity : clubEntities) {
                 ExpandedClub expandedCardComponent = card.expandCard();
 
