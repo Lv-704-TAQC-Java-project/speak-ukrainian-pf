@@ -120,28 +120,27 @@ public class AddTaskTest extends AddTaskTestRunner {
     @Issue("TUA-524")
     @Description("Verify impossibility of creating task with heading invalid data")
     @Test(dataProvider = "invalidHeaderData")
-    public void verifyCreatingTaskWithHeadingInvalidData(String invalidData, String expectedMessage) {
-        String actualErrorMessage;
-        String clubName = "Test task # 5/";
+    public void verifyThatTaskIsNotCreatedWhenEnteringHeadingInvalidData(String invalidData, String expectedMessage) {
+        String taskName = "Test task # 5/";
         boolean areAllFieldsEmptyByDefault = addTaskPage.areFieldsEmpty();
 
-        addTaskPage.enterStartDate(LocalDate.now().plusDays(1).toString())
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertTrue(areAllFieldsEmptyByDefault, "All fields should be empty by default");
+
+        addTaskPage
+                .enterStartDate(LocalDate.now().plusDays(1).toString())
                 .uploadImage(pathToImage)
-                .enterName(clubName)
+                .enterName(taskName)
                 .enterTitle(invalidData)
                 .enterDescription(description)
                 .selectChallenge(challenge)
                 .save();
 
-        SoftAssert softAssert = new SoftAssert();
+        String actualErrorMessage = addTaskPage.getErrorMessageText();
+        softAssert.assertEquals(actualErrorMessage, expectedMessage, "Expected error message should appear");
 
-        softAssert.assertTrue(areAllFieldsEmptyByDefault, "Not all fields are empty by default");
-
-        actualErrorMessage = addTaskPage.getErrorMessageText();
-        softAssert.assertEquals(actualErrorMessage, expectedMessage, "Expected error message did not appear");
-
-        List<String> clubs = taskService.getAllNameWhere(clubName);
-        softAssert.assertTrue(clubs.isEmpty());
+        List<String> tasks = taskService.getAllNameWhere(taskName);
+        softAssert.assertTrue(tasks.isEmpty(), "New tasks should not be added to the DB");
 
         softAssert.assertAll();
     }
