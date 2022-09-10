@@ -1,7 +1,7 @@
 package com.ita.edu.speakua.ui.clubs;
 
-import com.ita.edu.speakua.ui.clubs.cards.ClubCard;
 import com.ita.edu.speakua.ui.clubs.cards.CenterCard;
+import com.ita.edu.speakua.ui.clubs.cards.ClubCard;
 import com.ita.edu.speakua.ui.header.Header;
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
@@ -52,7 +52,6 @@ public class ClubsPage extends Header {
         return new ExpandedClub(driver);
     }
 
-    @Step("Get list of cards")
     public List<ClubCard> getCards() {
         wait.sleep(1000);
         this.cards = new ArrayList<>();
@@ -122,7 +121,7 @@ public class ClubsPage extends Header {
         return advancedSearchButton == null;
     }
 
-    @Step("Clubs page: Search by {phrase}")
+    @Step("Clubs page: search by {phrase}")
     public ClubsPage fillInSearch(String phrase) {
         action.clearInput(searchInputField);
         searchInputField.click();

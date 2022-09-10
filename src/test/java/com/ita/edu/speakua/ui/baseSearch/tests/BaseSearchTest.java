@@ -22,8 +22,8 @@ public class BaseSearchTest extends BaseTestRunner {
     @Issue("TUA-226")
     @Description("Verify that user can perform basic search by name of a club")
     @Test
-    public void verifyPossibilityOfSearchByClubName() {
-        HomePage homePage = new HomePage(driver);
+    public void verifyThatUserCanPerformSearchByClubName() {
+        HomePage homePage = getHomePage();
         ClubService clubService = new ClubService();
 
         String city = homePage.getLocationFromHeader();
@@ -32,31 +32,38 @@ public class BaseSearchTest extends BaseTestRunner {
 
         String clubToSearch = clubNames.get(new Random().nextInt(clubNames.size()));
 
-        ClubsPage clubsPage = new HomePage(driver).openAdvancedSearch().fillInSearch(clubToSearch);
+        ClubsPage clubsPage = new HomePage(driver)
+                .openAdvancedSearch()
+                .fillInSearch(clubToSearch);
 
         SoftAssert softAssert = new SoftAssert();
 
         List<ClubEntity> clubEntities = clubService.getAllNameWhereNameLike(clubToSearch);
         List<ClubCard> actualClubs = clubsPage.getCards();
 
-        assertTrue(actualClubs.size() >= 1);
-        softAssert.assertEquals(clubEntities.size(), actualClubs.size());
+        assertTrue(actualClubs.size() >= 1,
+                "There should be at least one club on the page");
+        softAssert.assertEquals(clubEntities.size(), actualClubs.size(),
+                "The clubs quantity on the page should be the same as in the DB");
 
         for (ClubCard card : actualClubs) {
             for (ClubEntity clubEntity : clubEntities) {
                 ExpandedClub expandedCardComponent = card.expandCard();
 
-                String cardName = expandedCardComponent.getClubName();
-                String entityName = clubEntity.getName();
-                softAssert.assertEquals(cardName, entityName);
+                String pageClubName = expandedCardComponent.getClubName();
+                String dbClubName = clubEntity.getName();
+                softAssert.assertEquals(pageClubName, dbClubName,
+                        "Club name on the page should be the same as in the DB");
 
-                int cardFeedbackCount = expandedCardComponent.getFeedbackCount();
-                int entityFeedbackCount = clubEntity.getFeedbackCount();
-                softAssert.assertEquals(cardFeedbackCount, entityFeedbackCount);
+                int pageClubFeedbackCount = expandedCardComponent.getFeedbackCount();
+                int dbClubFeedbackCount = clubEntity.getFeedbackCount();
+                softAssert.assertEquals(pageClubFeedbackCount, dbClubFeedbackCount,
+                        "Club feedback count on the page should be the same as in the DB");
 
-                List<Integer> audienceAge = expandedCardComponent.getAudienceAge();
-                List<Integer> entityAudienceAge = List.of(clubEntity.getAgeFrom(), clubEntity.getAgeTo());
-                softAssert.assertEquals(audienceAge, entityAudienceAge);
+                List<Integer> pageClubAudienceAge = expandedCardComponent.getAudienceAge();
+                List<Integer> dbClubAudienceAge = List.of(clubEntity.getAgeFrom(), clubEntity.getAgeTo());
+                softAssert.assertEquals(pageClubAudienceAge, dbClubAudienceAge,
+                        "Club audience age on the page should be the same as in the DB");
 
                 expandedCardComponent.close();
             }
