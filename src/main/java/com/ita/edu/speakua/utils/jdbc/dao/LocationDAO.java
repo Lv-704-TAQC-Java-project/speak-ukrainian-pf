@@ -17,7 +17,7 @@ public class LocationDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        ManagerDAO.getInstance().closeStatement(statement);
+        ManagerDAO.closeStatement(statement);
         return LocationEntity.parseRows(rows);
     }
 }

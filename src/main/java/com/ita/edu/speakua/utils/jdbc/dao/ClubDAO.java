@@ -18,7 +18,7 @@ public class ClubDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        ManagerDAO.getInstance().closeStatement(statement);
+        ManagerDAO.closeStatement(statement);
         return ClubEntity.parseRows(rows);
     }
 
@@ -31,7 +31,7 @@ public class ClubDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        ManagerDAO.getInstance().closeStatement(statement);
+        ManagerDAO.closeStatement(statement);
         return ClubEntity.parseRows(rows).get(0);
     }
 
@@ -44,7 +44,7 @@ public class ClubDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        ManagerDAO.getInstance().closeStatement(statement);
+        ManagerDAO.closeStatement(statement);
         return ClubEntity.parseRows(rows);
     }
 
@@ -57,7 +57,7 @@ public class ClubDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        ManagerDAO.getInstance().closeStatement(statement);
+        ManagerDAO.closeStatement(statement);
         return ClubEntity.parseRows(rows);
     }
 
@@ -71,7 +71,7 @@ public class ClubDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        ManagerDAO.getInstance().closeStatement(statement);
+        ManagerDAO.closeStatement(statement);
         return ClubEntity.parseRows(rows);
     }
 
@@ -84,7 +84,7 @@ public class ClubDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        ManagerDAO.getInstance().closeStatement(statement);
+        ManagerDAO.closeStatement(statement);
         return ClubEntity.parseRows(rows);
     }
 
@@ -97,7 +97,7 @@ public class ClubDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        ManagerDAO.getInstance().closeStatement(statement);
+        ManagerDAO.closeStatement(statement);
         return ClubEntity.parseRows(rows);
     }
 
@@ -110,7 +110,7 @@ public class ClubDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        ManagerDAO.getInstance().closeStatement(statement);
+        ManagerDAO.closeStatement(statement);
         return ClubEntity.parseRows(rows);
     }
 }

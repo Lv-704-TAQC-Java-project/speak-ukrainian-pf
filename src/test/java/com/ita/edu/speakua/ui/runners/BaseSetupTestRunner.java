@@ -27,11 +27,11 @@ public class BaseSetupTestRunner {
 
     public void setDriver(List<String> arguments, ITestContext context) {
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless");
-        options.addArguments("--window-size=1920,1080", "--no-sandbox", "--disable-dev-shm-usage");
+//        options.addArguments("--headless");
+//        options.addArguments("--window-size=1920,1080", "--no-sandbox", "--disable-dev-shm-usage");
         options.addArguments(arguments);
         driver = new ChromeDriver(options);
-        context.setAttribute("myDriver", driver);
+        context.setAttribute("myDriver" + Thread.currentThread().getId(), driver);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.get(configProps.getBaseUrl());
@@ -39,7 +39,7 @@ public class BaseSetupTestRunner {
 
     public void setDriver(ITestContext context) {
         driver = new ChromeDriver();
-        context.setAttribute("myDriver", driver);
+        context.setAttribute("myDriver" + Thread.currentThread().getId(), driver);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.get(configProps.getBaseUrl());

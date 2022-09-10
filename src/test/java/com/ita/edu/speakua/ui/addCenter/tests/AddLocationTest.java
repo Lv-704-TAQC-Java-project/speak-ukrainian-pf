@@ -32,7 +32,6 @@ public class AddLocationTest extends LoginTestRunner {
                 .openAddCenterModal()
                 .addLocation(new Location(name, city, region, address, coordinates, phoneNumber));
 
-
         Assert.assertTrue(addCenterMainInfoComponent
                         .isLocationAdded(name),
                 "New Location is not added");
