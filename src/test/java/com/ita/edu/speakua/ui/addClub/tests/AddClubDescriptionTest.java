@@ -97,7 +97,7 @@ public class AddClubDescriptionTest extends AddClubDescriptionTestRunner {
         }
     }
 
-    @DataProvider(name = "validDescriptionData")
+    @DataProvider(name = "verifyThatUserCanCreatClubWithDescribeValidData")
     public static Object[][] validDescriptionData() {
         return new Object[][]{
                 {"Education, students, Школа балету, Teachers"},
@@ -109,7 +109,7 @@ public class AddClubDescriptionTest extends AddClubDescriptionTestRunner {
     @Issue("TUA-173")
     @Description("Verify that the description field is filled in with valid data and the 'Завершити' button is enable")
     @Test(dataProvider = "validDescriptionData")
-    public void verifyCreatingClubWithDescribeValidData(String testData) {
+    public void verifyThatUserCanCreatClubWithDescribeValidData(String testData) {
         SoftAssert softAssert = new SoftAssert();
 
         addClubDescriptionStep.enterDescription(testData);
