@@ -36,16 +36,17 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
     @Issue("TUA-328")
     @Description("Verify impossibility of editing profile with first name invalid data")
     @Test(dataProvider = "invalidFirstNameData")
-    public void verifyErrorMessageWithFirstNameInvalidData(String data, String expectedMessage) {
-        String actualMessage;
-        boolean isSaveChangesButtonDisabled;
+    public void verifyThatErrorMessagesAppearWhenEnteringFirstNameInvalidData(String invalidData, String expectedErrorMessage) {
         SoftAssert softAssert = new SoftAssert();
 
-        actualMessage = editProfileModal.enterFirstName(data).getFirstnameErrorText();
-        softAssert.assertEquals(actualMessage, expectedMessage, "Expected error message did not appear");
+        String actualErrorMessage = editProfileModal
+                .enterFirstName(invalidData)
+                .getFirstnameErrorText();
+        softAssert.assertEquals(actualErrorMessage, expectedErrorMessage, "Expected error message should appear");
 
-        isSaveChangesButtonDisabled = editProfileModal.isSaveChangesButtonEnabled();
-        softAssert.assertFalse(isSaveChangesButtonDisabled, "'Зберегти зміни' button is enabled");
+        boolean isSaveChangesButtonDisabled = editProfileModal.isSaveChangesButtonEnabled();
+        softAssert.assertFalse(isSaveChangesButtonDisabled, "'Зберегти зміни' button should be disabled");
+
         softAssert.assertAll();
     }
 
@@ -96,6 +97,7 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
                 {"Lastname'", "Прізвище повинно починатися і закінчуватися літерою"}
         };
     }
+
     @Issue("TUA-343")
     @Description("Verify impossibility of editing profile with last name invalid data")
     @Test(dataProvider = "invalidLastNameData")
