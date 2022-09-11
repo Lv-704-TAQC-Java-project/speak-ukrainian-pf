@@ -45,6 +45,15 @@ public class BaseSetupTestRunner {
         driver.get(configProps.getBaseUrl());
     }
 
+    public void signInAsAdmin() {
+        getHomePage()
+                .openGuestProfileMenu()
+                .openSignInModal()
+                .enterEmail(configProps.getUserEmail())
+                .enterPassword(configProps.getUserPassword())
+                .submit();
+    }
+
     @AfterSuite
     public void tearDown() {
         if (driver != null) {

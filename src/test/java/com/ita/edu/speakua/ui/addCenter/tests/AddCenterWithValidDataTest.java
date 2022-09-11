@@ -1,18 +1,31 @@
 package com.ita.edu.speakua.ui.addCenter.tests;
 
 import com.ita.edu.speakua.ui.HomePage;
+import com.ita.edu.speakua.ui.header.profileMenuAdmin.addCenterModal.AddCenterMainInfoStep;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addLocationModal.Location;
-import com.ita.edu.speakua.ui.runners.AddCenterTestRunner;
+import com.ita.edu.speakua.ui.runners.SameWindowTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class AddCenterWithValidDataTest extends AddCenterTestRunner {
+public class AddCenterWithValidDataTest extends SameWindowTestRunner {
+    protected AddCenterMainInfoStep addCenterMainInfoComponent;
+
+    @BeforeClass
+    public void openAddClubDescribeComponent() {
+        signInAsAdmin();
+
+        addCenterMainInfoComponent = new HomePage(driver)
+                .openAdminProfileMenu()
+                .openAddCenterModal();
+    }
+
 
     @DataProvider(name = "addCenterData")
     public Object[][] addCenterData() {

@@ -1,11 +1,13 @@
 package com.ita.edu.speakua.ui.profilePage.tests;
 
-import com.ita.edu.speakua.ui.runners.EditProfileTestRunner;
+import com.ita.edu.speakua.ui.header.profileMenuAdmin.profilePage.EditProfileModal;
+import com.ita.edu.speakua.ui.runners.SameWindowTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -14,7 +16,24 @@ import java.util.List;
 
 import static java.lang.String.format;
 
-public class EditProfileComponentTest extends EditProfileTestRunner {
+public class EditProfileComponentTest extends SameWindowTestRunner {
+    private EditProfileModal editProfileModal;
+    private String initialPhone;
+    private String initialFirstName;
+    private String initialLastName;
+
+    @BeforeClass
+    public void openEditProfileModal() {
+        signInAsAdmin();
+
+        editProfileModal = getHomePage()
+                .openAdminProfileMenu()
+                .openUserProfilePage()
+                .openEditProfilePage();
+        initialPhone = editProfileModal.getPhone();
+        initialFirstName = editProfileModal.getFirstName();
+        initialLastName = editProfileModal.getLastName();
+    }
 
     @DataProvider(name = "invalidFirstNameData")
     public static Object[][] invalidFirstNameData() {
@@ -97,6 +116,7 @@ public class EditProfileComponentTest extends EditProfileTestRunner {
                 {"Lastname'", "Прізвище повинно починатися і закінчуватися літерою"}
         };
     }
+
     @Issue("TUA-343")
     @Description("Verify impossibility of editing profile with last name invalid data")
     @Test(dataProvider = "invalidLastNameData")

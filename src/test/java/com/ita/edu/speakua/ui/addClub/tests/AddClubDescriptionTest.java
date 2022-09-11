@@ -1,11 +1,13 @@
 package com.ita.edu.speakua.ui.addClub.tests;
 
-import com.ita.edu.speakua.ui.runners.AddClubDescriptionTestRunner;
+import com.ita.edu.speakua.ui.header.profileMenuAdmin.addClubModal.AddClubDescriptionStep;
+import com.ita.edu.speakua.ui.runners.SameWindowTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -16,7 +18,25 @@ import static java.lang.String.format;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-public class AddClubDescriptionTest extends AddClubDescriptionTestRunner {
+public class AddClubDescriptionTest extends SameWindowTestRunner {
+    private AddClubDescriptionStep addClubDescriptionStep;
+
+    @BeforeClass
+    public void openAddClubDescriptionStep() {
+        signInAsAdmin();
+
+        addClubDescriptionStep = getHomePage()
+                .openAdminProfileMenu()
+                .openUserProfilePage()
+                .openAddClubModal()
+                .enterClubName("Спортивні танці")
+                .selectCategoryClub("Спортивні секції")
+                .enterMinimumAge(4)
+                .enterMaximumAge(8)
+                .openNextStep()
+                .enterPhone("0672131246")
+                .openNextStep();
+    }
 
     @DataProvider(name = "descriptionValidData")
     public Object[][] validDescriptionField() {

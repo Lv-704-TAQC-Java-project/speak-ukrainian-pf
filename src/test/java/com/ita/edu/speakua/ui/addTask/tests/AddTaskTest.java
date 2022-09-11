@@ -1,7 +1,8 @@
 package com.ita.edu.speakua.ui.addTask.tests;
 
+import com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationMenu.addTask.AddTaskPage;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationMenu.addTask.TaskPage;
-import com.ita.edu.speakua.ui.runners.AddTaskTestRunner;
+import com.ita.edu.speakua.ui.runners.SameWindowTestRunner;
 import com.ita.edu.speakua.utils.jdbc.dto.TaskJoinChallengeDTO;
 import com.ita.edu.speakua.utils.jdbc.services.TaskService;
 import io.qameta.allure.Description;
@@ -9,6 +10,7 @@ import io.qameta.allure.Issue;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -21,13 +23,26 @@ import java.util.List;
 
 import static java.lang.String.format;
 
-public class AddTaskTest extends AddTaskTestRunner {
+public class AddTaskTest extends SameWindowTestRunner {
+    private AddTaskPage addTaskPage;
+    private final TaskService taskService = new TaskService();
     private final String tomorrow = LocalDate.now().plusDays(1).toString();
     private final String pathToImage = Paths.get(Paths.get(System.getProperty("user.dir")).toString(),
             "src", "test", "resources", "image.png").toString();
     private final String title = "Lorem ipsum dolor sit amet, sed do eiusmod et dolore magna aliqua.";
     private final String description = "Facilisis sed odio morbi quis. Mauris rhoncus aenean vel elit scelerisque.";
     private final String challenge = "The European languages";
+
+    @BeforeMethod
+    public void openAddTaskPage() {
+        signInAsAdmin();
+
+        addTaskPage = getHomePage()
+                .openAdminProfileMenu()
+                .openAdministrationMenu()
+                .openTasksPage()
+                .openAddTaskPage();
+    }
 
     @DataProvider(name = "invalidDescriptionData")
     public static Object[][] invalidDescriptionData() {
@@ -49,7 +64,7 @@ public class AddTaskTest extends AddTaskTestRunner {
     public void verifyCreateTaskInvalidDescription(String textDescription, String expectedMessage) {
         boolean allFieldsAreEmpty = addTaskPage.areFieldsEmpty();
         String clubName = "Yaroslav test" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-        addTaskPage = addTaskPage
+        addTaskPage
                 .enterStartDate(LocalDate.now().plusDays(2).toString())
                 .uploadImage(pathToImage)
                 .enterName(clubName)
@@ -86,7 +101,7 @@ public class AddTaskTest extends AddTaskTestRunner {
         String clubName = "Yaroslav test" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertTrue(addTaskPage.areFieldsEmpty());
-        addTaskPage = addTaskPage
+        addTaskPage
                 .enterStartDate(actualDate)
                 .uploadImage(pathToImage)
                 .enterName(clubName)
@@ -150,7 +165,7 @@ public class AddTaskTest extends AddTaskTestRunner {
     @Test
     public void verifyCreateTaskWithoutChallenge() {
         String title = "Title " + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-        addTaskPage = addTaskPage
+        addTaskPage
                 .enterStartDate("2023-01-01")
                 .enterName(title)
                 .enterTitle("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has " +
@@ -251,7 +266,7 @@ public class AddTaskTest extends AddTaskTestRunner {
                 "Create task form fields should be empty by default");
 
         String name = "Maksym test " + System.currentTimeMillis();
-        addTaskPage = addTaskPage
+        addTaskPage
                 .enterStartDate(tomorrow)
                 .uploadImage(pathToImage)
                 .enterName(name)
