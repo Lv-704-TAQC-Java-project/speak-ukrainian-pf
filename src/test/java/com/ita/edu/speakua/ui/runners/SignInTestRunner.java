@@ -14,7 +14,6 @@ public class SignInTestRunner extends SameWindowTestRunner {
                 .openSignInModal()
                 .enterEmail(configProps.getUserEmail())
                 .enterPassword(configProps.getUserPassword())
-                .submit()
-                .reloadHomePage();
+                .submit();
     }
 }

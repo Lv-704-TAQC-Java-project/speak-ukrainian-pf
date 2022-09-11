@@ -7,7 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class LoginModal extends BasePage {
+public class SignInModal extends BasePage {
 
     @FindBy(xpath = "//input[@id='basic_email']")
     private WebElement emailField;
@@ -16,29 +16,30 @@ public class LoginModal extends BasePage {
     private WebElement passwordField;
 
     @FindBy(xpath = "//button[contains(@class, 'login-button')]")
-    private WebElement loginButton;
+    private WebElement submitButton;
 
-    public LoginModal(WebDriver driver) {
+    public SignInModal(WebDriver driver) {
         super(driver);
     }
 
 
-    @Step("Login modal: enter email '{email}'")
-    public LoginModal enterEmail(String email) {
+    @Step("Sign in modal: enter email '{email}'")
+    public SignInModal enterEmail(String email) {
         action.setNewValueForInput(emailField, email);
         return this;
     }
 
-    @Step("Login modal: enter password '{password}'")
-    public LoginModal enterPassword(String password) {
+    @Step("Sign in modal: enter password '{password}'")
+    public SignInModal enterPassword(String password) {
         action.setNewValueForInput(passwordField, password);
         return this;
     }
 
-    @Step("Login modal: submit sign in form")
+    @Step("Sign in modal: submit sign in form")
     public Header submit() {
-        wait.visibility(loginButton);
-        loginButton.click();
+        wait.visibility(submitButton);
+        submitButton.click();
+        wait.pageReload();
         return new Header(driver);
     }
 }
