@@ -28,27 +28,27 @@ public class SortingPanel extends ClubsPage {
         super(driver);
     }
 
-    @Step("Sort cards by alphabet")
+    @Step("Sorting panel: sort cards by alphabet")
     public SortingPanel sortByAlphabet() {
         wait.visibility(sortByAlphabetButton);
         clickManagingClubsPageElement(sortByAlphabetButton);
         return this;
     }
 
-    @Step("Sort cards by rating")
+    @Step("Sorting panel: sort cards by rating")
     public SortingPanel sortByRating() {
         wait.visibility(sortByRatingButton);
         clickManagingClubsPageElement(sortByRatingButton);
         return this;
     }
 
-    @Step("Sort cards in ascending order")
+    @Step("Sorting panel: sort cards in ascending order")
     public SortingPanel orderByAsc() {
         clickManagingClubsPageElement(arrowDownButton);
         return this;
     }
 
-    @Step("Sort cards in descending order")
+    @Step("Sorting panel: sort cards in descending order")
     public SortingPanel orderByDesc() {
         clickManagingClubsPageElement(arrowUpButton);
         return this;

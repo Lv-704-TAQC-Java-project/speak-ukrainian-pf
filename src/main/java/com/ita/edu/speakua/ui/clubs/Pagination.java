@@ -39,20 +39,11 @@ public class Pagination extends ClubsPage {
     }
 
     public WebElement getLastPaginationPage() {
-//        sleep(3000);
         lastPaginationPage = listOfPagesInPagination.get(listOfPagesInPagination.size() - 1);
-//        lastPaginationPage = driver
-//                .findElements(By.xpath("//li[contains(@class, 'ant-pagination-item')]"))
-//                .get(listOfPagesInPagination.size() - 1);
         return lastPaginationPage;
     }
 
     public int getLastPaginationPageNumber() {
-//        if (getLastPaginationPage().isDisplayed()) {
-//            waitStalenessOfElement(getLastPaginationPage());
-//        } else {
-//            waitVisibilityOfWebElement(getLastPaginationPage());
-//        }
         return Integer.parseInt(getLastPaginationPage().getText());
     }
 
@@ -64,7 +55,6 @@ public class Pagination extends ClubsPage {
         return listOfClubsOnCurrentPage.size();
     }
 
-    //Check
     public int getNumberOfPagesInPagination() {
         return Integer.parseInt(getLastPaginationPage().findElement(By.xpath("./child::a")).getText());
     }

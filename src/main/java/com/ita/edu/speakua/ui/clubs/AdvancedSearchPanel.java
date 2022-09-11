@@ -47,32 +47,26 @@ public class AdvancedSearchPanel extends ClubsPage {
     }
 
 
-    @Step("Check is citySelector displayed")
     public boolean isCitySelectorVisible() {
         return action.isVisible(citySelector);
     }
 
-    @Step("Check is districtSelector displayed")
     public boolean isDistrictSelectorVisible() {
         return action.isVisible(districtSelector);
     }
 
-    @Step("Check is metroSelector displayed")
     public boolean isMetroSelectorVisible() {
         return action.isVisible(metroSelector);
     }
 
-    @Step("Check is availableOnlineCheckbox displayed")
     public boolean isAvailableOnlineCheckboxVisible() {
         return action.isVisible(availableOnline);
     }
 
-    @Step("Check is categoriesBlock displayed")
     public boolean isCategoriesBlockVisible() {
         return action.isVisible(categoriesBlock);
     }
 
-    @Step("Check is childAgeBlock displayed")
     public boolean isChildAgeBlockVisible() {
         return action.isVisible(childAgeBlock);
     }

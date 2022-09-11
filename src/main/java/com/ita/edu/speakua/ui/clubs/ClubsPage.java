@@ -51,7 +51,6 @@ public class ClubsPage extends Header {
         return new ExpandedClub(driver);
     }
 
-    @Step("Get list of cards")
     public List<ClubCard> getCards() {
         wait.sleep(1000);
         this.cards = new ArrayList<>();
@@ -69,7 +68,7 @@ public class ClubsPage extends Header {
         return this.centers;
     }
 
-    @Step("Open advanced search panel")
+    @Step("ClubsPage: open advanced search panel")
     public ClubsPage advancedSearchButtonClick() {
         clickManagingClubsPageElement(advancedSearchButton);
         return this;
@@ -84,7 +83,6 @@ public class ClubsPage extends Header {
         return getPaginationComponent().waitForPaginationComponentToOpen();
     }
 
-    @Step("Get access to sort cards component")
     public SortingPanel getSortClubComponent() {
         if (sortClubComponent == null) {
             sortClubComponent = new SortingPanel(driver);
@@ -116,7 +114,6 @@ public class ClubsPage extends Header {
         wait.sleep(2000);
     }
 
-    @Step("Is closed advanced search panel")
     public boolean isDisappearsAdvancedSearchPanelComponent() {
         return advancedSearchButton == null;
     }
@@ -162,7 +159,7 @@ public class ClubsPage extends Header {
                 .collect(Collectors.toList());
     }
 
-    @Step("Clubs page: Search by phrase '{phrase}'")
+    @Step("Clubs page: search phrase '{phrase}'")
     public ClubsPage search(String phrase) {
         action.clearInput(searchInputField);
         searchInputField.click();
@@ -174,7 +171,7 @@ public class ClubsPage extends Header {
         return new ClubsPage(driver);
     }
 
-    @Step("Clubs page: Search '{phrase}' using JavaScript. Maximum search field length '{inputFieldMaxLength}' chars.")
+    @Step("Clubs page: search phrase '{phrase}' using JavaScript. Maximum search field length '{inputFieldMaxLength}' chars.")
     public ClubsPage searchUsingJavaScript(String phrase, int inputLengthLimit) {
         action.clearInput(searchInputField);
         searchInputField.click();

@@ -27,8 +27,8 @@ public class BaseSetupTestRunner {
 
     public void setDriver(List<String> arguments, ITestContext context) {
         ChromeOptions options = new ChromeOptions();
-//        options.addArguments("--headless");
-//        options.addArguments("--window-size=1920,1080", "--no-sandbox", "--disable-dev-shm-usage");
+        options.addArguments("--headless");
+        options.addArguments("--window-size=1920,1080", "--no-sandbox", "--disable-dev-shm-usage");
         options.addArguments(arguments);
         driver = new ChromeDriver(options);
         context.setAttribute("myDriver" + Thread.currentThread().getId(), driver);

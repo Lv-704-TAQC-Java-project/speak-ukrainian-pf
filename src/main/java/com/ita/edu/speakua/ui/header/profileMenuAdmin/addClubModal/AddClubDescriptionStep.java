@@ -86,12 +86,10 @@ public class AddClubDescriptionStep extends AbstractAddClubStep {
         return errorMessages;
     }
 
-    @Step("Add club 'description' step: check is 'finish' button enable and 'success' area displayed")
     public boolean isButtonEnable() {
         return successArea.isDisplayed() && finishButton.isEnabled();
     }
 
-    @Step("Add club 'description' step: check description field has errors")
     public boolean areDescriptionErrorsShown() {
         try {
             wait.invisibility(descriptionFieldErrors, 1);
@@ -101,7 +99,6 @@ public class AddClubDescriptionStep extends AbstractAddClubStep {
         return descriptionFieldErrors.size() > 0;
     }
 
-    @Step("Add club 'description' step: check description field error message contains {errorMsg}")
     public boolean descriptionErrorsContainMessage(String errorMsg) {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
         if (descriptionFieldErrors != null && descriptionFieldErrors.size() > 0) {

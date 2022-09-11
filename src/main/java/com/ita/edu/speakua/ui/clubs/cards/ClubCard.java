@@ -48,7 +48,6 @@ public class ClubCard extends BasePage {
         PageFactory.initElements(new DefaultElementLocatorFactory(cardBody), this);
     }
 
-    @Step("Get full card text")
     public String getCardText() {
         wait.visibility(cardWrapper);
         return cardWrapper.getText();
@@ -67,7 +66,6 @@ public class ClubCard extends BasePage {
         return this;
     }
 
-    @Step("Get card name.")
     public String getCardName() {
         wait.visibility(cardName);
         return cardName.getText();
