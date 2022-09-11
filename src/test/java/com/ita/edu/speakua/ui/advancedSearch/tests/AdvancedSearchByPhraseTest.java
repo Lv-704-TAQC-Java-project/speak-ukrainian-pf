@@ -1,6 +1,5 @@
 package com.ita.edu.speakua.ui.advancedSearch.tests;
 
-import com.ita.edu.speakua.ui.HomePage;
 import com.ita.edu.speakua.ui.clubs.ClubsPage;
 import com.ita.edu.speakua.ui.runners.BaseTestRunner;
 import com.ita.edu.speakua.utils.jdbc.services.ClubService;
@@ -32,26 +31,25 @@ public class AdvancedSearchByPhraseTest extends BaseTestRunner {
     @Description("User should be able to search clubs by phrase")
     @Test(dataProvider = "searchByPhraseData")
     public void verifySearchByPhraseFunctionality(String phrase, boolean isJavaScriptPermitted) {
-        ClubsPage clubsPage = new HomePage(driver)
-                .openAdvancedSearch();
+        ClubsPage clubsPage = getHomePage().openAdvancedSearch();
 
-        List<String> dataBaseClubNames = new ClubService().getAllClubNamesFromCityBySearchPhrase("Київ", phrase, 6);
+        List<String> databaseClubNames = new ClubService().getAllClubNamesFromCityBySearchPhrase("Київ", phrase, 6);
         final int inputFieldLengthLimit = 50;
 
         if (isJavaScriptPermitted) {
-            clubsPage.searchUsingJavaScript(phrase, inputFieldLengthLimit);
+            clubsPage.searchBySettingInputWithJavaScript(phrase, inputFieldLengthLimit);
         } else {
-            clubsPage.search(phrase);
+            clubsPage.searchBy(phrase);
         }
 
         List<String> actualClubNames = clubsPage.getClubNames();
 
-        assertEquals(actualClubNames.size(), dataBaseClubNames.size(),
+        assertEquals(actualClubNames.size(), databaseClubNames.size(),
                 "Clubs quantity on page should be equal to clubs quantity in DB");
 
         SoftAssert softly = new SoftAssert();
         for (int i = 0; i < actualClubNames.size(); i++) {
-            softly.assertEquals(actualClubNames.get(i).trim(), dataBaseClubNames.get(i).trim(),
+            softly.assertEquals(actualClubNames.get(i).trim(), databaseClubNames.get(i).trim(),
                     format("Club name %s on page should be equal to club name in DB\n", i + 1));
         }
         softly.assertTrue(clubsPage.getSearchInputLength() <= inputFieldLengthLimit,

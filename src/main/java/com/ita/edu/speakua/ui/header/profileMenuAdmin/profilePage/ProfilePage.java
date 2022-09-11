@@ -32,8 +32,8 @@ public class ProfilePage extends Header {
         super(driver);
     }
 
-    @Step("Profile page: open edit profile page")
-    public EditProfileModal openEditProfilePage() {
+    @Step("Profile page: open edit profile modal")
+    public EditProfileModal openEditProfileModal() {
         wait.sleep(1000);
         wait.clickable(editProfileButton);
         editProfileButton.click();

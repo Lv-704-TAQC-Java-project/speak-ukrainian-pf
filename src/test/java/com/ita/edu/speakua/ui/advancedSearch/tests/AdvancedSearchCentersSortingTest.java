@@ -25,22 +25,22 @@ public class AdvancedSearchCentersSortingTest extends SameWindowTestRunner {
         long cardsQuantity = 6;
         CenterService centerService = new CenterService();
         String[] actualCenterNamesAscOrder = clubsPage.getCenterNames();
-        String[] expectedCenterNamesAscOrder = centerService.getCenterNames("Київ", "name", false, cardsQuantity);
+        String[] databaseCenterNamesAscOrder = centerService.getCenterNames("Київ", "name", false, cardsQuantity);
 
         clubsPage
                 .getSortClubComponent()
                 .orderByDesc();
 
         String[] actualCenterNamesDescOrder = clubsPage.getCenterNames();
-        String[] expectedCenterNamesDescOrder = centerService.getCenterNames("Київ", "name",true, cardsQuantity);
+        String[] databaseCenterNamesDescOrder = centerService.getCenterNames("Київ", "name",true, cardsQuantity);
 
         SoftAssert softAssert = new SoftAssert();
         for (int i = 0; i < cardsQuantity; i++) {
             softAssert.assertEquals(actualCenterNamesAscOrder[i],
-                    expectedCenterNamesAscOrder[i],
+                    databaseCenterNamesAscOrder[i],
                     "Incorrect cards sequence after sorting by alphabet in ascending order.");
             softAssert.assertEquals(actualCenterNamesDescOrder[i],
-                    expectedCenterNamesDescOrder[i],
+                    databaseCenterNamesDescOrder[i],
                     "Incorrect cards sequence after sorting by alphabet in descending order.");
         }
         softAssert.assertAll();

@@ -29,7 +29,8 @@ public class EditProfileComponentTest extends SameWindowTestRunner {
         editProfileModal = getHomePage()
                 .openAdminProfileMenu()
                 .openUserProfilePage()
-                .openEditProfilePage();
+                .openEditProfileModal();
+        
         initialPhone = editProfileModal.getPhone();
         initialFirstName = editProfileModal.getFirstName();
         initialLastName = editProfileModal.getLastName();

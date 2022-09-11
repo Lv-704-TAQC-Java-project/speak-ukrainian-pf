@@ -18,7 +18,7 @@ public class PasswordInputFieldsBorderTest extends SameWindowTestRunner {
         editProfileModal = getHomePage()
                 .openAdminProfileMenu()
                 .openUserProfilePage()
-                .openEditProfilePage();
+                .openEditProfileModal();
     }
 
     @Issue("TUA-359")

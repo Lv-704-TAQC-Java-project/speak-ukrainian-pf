@@ -160,7 +160,7 @@ public class ClubsPage extends Header {
     }
 
     @Step("Clubs page: search phrase '{phrase}'")
-    public ClubsPage search(String phrase) {
+    public ClubsPage searchBy(String phrase) {
         action.clearInput(searchInputField);
         searchInputField.click();
 
@@ -172,7 +172,7 @@ public class ClubsPage extends Header {
     }
 
     @Step("Clubs page: search phrase '{phrase}' using JavaScript. Maximum search field length '{inputFieldMaxLength}' chars.")
-    public ClubsPage searchUsingJavaScript(String phrase, int inputLengthLimit) {
+    public ClubsPage searchBySettingInputWithJavaScript(String phrase, int inputLengthLimit) {
         action.clearInput(searchInputField);
         searchInputField.click();
 
