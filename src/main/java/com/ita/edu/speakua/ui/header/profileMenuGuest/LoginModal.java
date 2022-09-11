@@ -35,8 +35,8 @@ public class LoginModal extends BasePage {
         return this;
     }
 
-    @Step("Login modal: submit login form")
-    public Header submitLoginForm() {
+    @Step("Login modal: submit sign in form")
+    public Header submit() {
         wait.visibility(loginButton);
         loginButton.click();
         return new Header(driver);

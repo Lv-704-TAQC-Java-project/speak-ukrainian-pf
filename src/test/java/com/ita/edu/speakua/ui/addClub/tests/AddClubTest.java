@@ -3,7 +3,7 @@ package com.ita.edu.speakua.ui.addClub.tests;
 import com.ita.edu.speakua.ui.HomePage;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addLocationModal.Location;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.profilePage.ProfilePage;
-import com.ita.edu.speakua.ui.runners.LoginTestRunner;
+import com.ita.edu.speakua.ui.runners.SignInTestRunner;
 import com.ita.edu.speakua.utils.jdbc.entity.LocationEntity;
 import com.ita.edu.speakua.utils.jdbc.services.LocationService;
 import io.qameta.allure.Issue;
@@ -16,7 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class AddClubTest extends LoginTestRunner {
+public class AddClubTest extends SignInTestRunner {
     private final String pathToImage = Paths.get(Paths.get(System.getProperty("user.dir")).toString(),
             "src", "test", "resources", "image.png").toString();
 

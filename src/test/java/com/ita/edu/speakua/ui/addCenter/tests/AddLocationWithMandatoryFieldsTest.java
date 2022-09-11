@@ -2,7 +2,7 @@ package com.ita.edu.speakua.ui.addCenter.tests;
 
 import com.ita.edu.speakua.ui.header.Header;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addLocationModal.Location;
-import com.ita.edu.speakua.ui.runners.LoginTestRunner;
+import com.ita.edu.speakua.ui.runners.SignInTestRunner;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -13,7 +13,7 @@ import org.testng.annotations.Test;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class AddLocationWithMandatoryFieldsTest extends LoginTestRunner {
+public class AddLocationWithMandatoryFieldsTest extends SignInTestRunner {
 
     @DataProvider(name = "addLocationValidData")
     public Object[][] addLocationValidData() {

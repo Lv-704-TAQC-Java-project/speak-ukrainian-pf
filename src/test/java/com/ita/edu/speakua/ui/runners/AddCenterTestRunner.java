@@ -4,7 +4,7 @@ import com.ita.edu.speakua.ui.HomePage;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.addCenterModal.AddCenterMainInfoStep;
 import org.testng.annotations.BeforeClass;
 
-public class AddCenterTestRunner extends LoginTestRunner {
+public class AddCenterTestRunner extends SignInTestRunner {
 
     protected AddCenterMainInfoStep addCenterMainInfoComponent;
 

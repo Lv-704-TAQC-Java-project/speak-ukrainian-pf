@@ -1,14 +1,14 @@
 package com.ita.edu.speakua.ui.addClub.tests;
 
 import com.ita.edu.speakua.ui.HomePage;
-import com.ita.edu.speakua.ui.runners.LoginTestRunner;
+import com.ita.edu.speakua.ui.runners.SignInTestRunner;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class AddClubWithValidDataTest extends LoginTestRunner {
+public class AddClubWithValidDataTest extends SignInTestRunner {
 
     @DataProvider(name = "addClubValidData")
     public Object[][] addClubValidData() {

@@ -3,7 +3,7 @@ package com.ita.edu.speakua.ui.runners;
 import com.ita.edu.speakua.ui.header.profileMenuAdmin.profilePage.EditProfileModal;
 import org.testng.annotations.BeforeClass;
 
-public class EditProfileTestRunner extends LoginTestRunner {
+public class EditProfileTestRunner extends SignInTestRunner {
     protected EditProfileModal editProfileModal;
     protected String initialPhone;
     protected String initialFirstName;

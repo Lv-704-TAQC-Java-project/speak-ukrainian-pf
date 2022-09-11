@@ -4,7 +4,7 @@ import com.ita.edu.speakua.ui.header.profileMenuAdmin.administrationMenu.addTask
 import com.ita.edu.speakua.utils.jdbc.services.TaskService;
 import org.testng.annotations.BeforeMethod;
 
-public class AddTaskTestRunner extends LoginTestRunner {
+public class AddTaskTestRunner extends SignInTestRunner {
     protected AddTaskPage addTaskPage;
     protected TaskService taskService = new TaskService();
 

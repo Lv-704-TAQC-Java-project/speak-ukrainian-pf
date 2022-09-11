@@ -22,8 +22,8 @@ public class GuestProfileMenu extends BasePage {
         return new RegistrationModal(driver);
     }
 
-    @Step("Guest profile menu: open login modal")
-    public LoginModal openLoginModal() {
+    @Step("Guest profile menu: open sign in modal")
+    public LoginModal openSignInModal() {
         wait.visibility(loginButton);
         action.click(loginButton);
         return new LoginModal(driver);
