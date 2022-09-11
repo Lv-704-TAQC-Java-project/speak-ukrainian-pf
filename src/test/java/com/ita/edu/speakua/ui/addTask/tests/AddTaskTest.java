@@ -270,23 +270,23 @@ public class AddTaskTest extends AddTaskTestRunner {
         softly.assertEquals(taskPage.getDescriptionText(), description,
                 "Incorrect description of created task");
 
-        TaskJoinChallengeDTO lastTaskWithChosenNameInDataBase = new TaskService()
-                .getTasksJoinChallengeDTO(name, "id", true)
+        TaskJoinChallengeDTO lastTaskWithChosenNameInDatabase = new TaskService()
+                .getTaskJoinChallengeDTO(name, "id", true)
                 .get(0);
 
-        softly.assertEquals(lastTaskWithChosenNameInDataBase.getStartDate(), tomorrow,
-                "Date in data base should be equal to entered task date");
-        softly.assertEquals(lastTaskWithChosenNameInDataBase.getName(), name,
-                "Name in data base should be equal to entered task name");
-        softly.assertEquals(lastTaskWithChosenNameInDataBase.getHeaderText(), "<p>" + title + "</p>",
-                "Description in data base should be equal to entered task description");
-        softly.assertEquals(lastTaskWithChosenNameInDataBase.getDescription(), "<p>" + description + "</p>",
-                "Header title in data base should be equal to entered task header title");
-        softly.assertEquals(lastTaskWithChosenNameInDataBase.getChallenge().getName(), challenge,
-                "Challenge name in data base should be equal to chosen challenge name");
+        softly.assertEquals(lastTaskWithChosenNameInDatabase.getStartDate(), tomorrow,
+                "Date in database should be equal to entered task date");
+        softly.assertEquals(lastTaskWithChosenNameInDatabase.getName(), name,
+                "Name in database should be equal to entered task name");
+        softly.assertEquals(lastTaskWithChosenNameInDatabase.getHeaderText(), "<p>" + title + "</p>",
+                "Description in database should be equal to entered task description");
+        softly.assertEquals(lastTaskWithChosenNameInDatabase.getDescription(), "<p>" + description + "</p>",
+                "Header title in database should be equal to entered task header title");
+        softly.assertEquals(lastTaskWithChosenNameInDatabase.getChallenge().getName(), challenge,
+                "Challenge name in database should be equal to chosen challenge name");
         softly.assertEquals(taskPage.getImageURL(),
-                configProps.getBaseUrl() + lastTaskWithChosenNameInDataBase.getPicture(),
-                "Image path in data base should be equal to image path on Task page");
+                configProps.getBaseUrl() + lastTaskWithChosenNameInDatabase.getPicture(),
+                "Image path in database should be equal to image path on Task page");
 
         softly.assertAll();
     }

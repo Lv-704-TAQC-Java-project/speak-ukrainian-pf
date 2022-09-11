@@ -39,13 +39,13 @@ public class TaskService {
         return taskDAO.getTasksCount(name);
     }
 
-    public List<TaskJoinChallengeDTO> getTasksJoinChallengeDTO(String name, String orderBy, boolean desc) {
-        List<TaskJoinChallengeDTO> taskWithChallenge = new ArrayList<>();
+    public List<TaskJoinChallengeDTO> getTaskJoinChallengeDTO(String name, String orderBy, boolean desc) {
+        List<TaskJoinChallengeDTO> taskJoinChallenge = new ArrayList<>();
         for (TaskEntity task: taskDAO.selectTasks(name, orderBy, desc)) {
-            TaskJoinChallengeDTO taskWithChallengeDTO = new TaskJoinChallengeDTO(task);
-            taskWithChallengeDTO.setChallenge(challengeDAO.selectChallengeById(task.getChallengeId()));
-            taskWithChallenge.add(taskWithChallengeDTO);
+            TaskJoinChallengeDTO taskJoinChallengeDTO = new TaskJoinChallengeDTO(task);
+            taskJoinChallengeDTO.setChallenge(challengeDAO.selectChallengeById(task.getChallengeId()));
+            taskJoinChallenge.add(taskJoinChallengeDTO);
         }
-        return taskWithChallenge;
+        return taskJoinChallenge;
     }
 }
