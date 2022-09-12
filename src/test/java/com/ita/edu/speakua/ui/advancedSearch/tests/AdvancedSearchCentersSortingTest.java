@@ -24,15 +24,15 @@ public class AdvancedSearchCentersSortingTest extends SameWindowTestRunner {
 
         long cardsQuantity = 6;
         CenterService centerService = new CenterService();
-        String[] actualCenterNamesAscOrder = clubsPage.getCenterNames();
         String[] databaseCenterNamesAscOrder = centerService.getCenterNames("Київ", "name", false, cardsQuantity);
+        String[] actualCenterNamesAscOrder = clubsPage.getCenterNames();
 
         clubsPage
                 .getSortClubComponent()
                 .orderByDesc();
 
-        String[] actualCenterNamesDescOrder = clubsPage.getCenterNames();
         String[] databaseCenterNamesDescOrder = centerService.getCenterNames("Київ", "name",true, cardsQuantity);
+        String[] actualCenterNamesDescOrder = clubsPage.getCenterNames();
 
         SoftAssert softAssert = new SoftAssert();
         for (int i = 0; i < cardsQuantity; i++) {
