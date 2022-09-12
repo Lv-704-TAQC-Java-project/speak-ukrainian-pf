@@ -185,7 +185,7 @@ public class AddTaskTest extends AddTaskTestRunner {
     @Test(dataProvider = "invalidNameData")
     public void verifyCreateTaskWithInvalidNameData(String invalidData, String expectedMessage) {
         String actualErrorMessage;
-
+        String taskDescription = "Lorem Ipsum is simply dummy, when an unknown printer took a ";
         boolean isAllFieldsAreEmptyByDefault = addTaskPage.areFieldsEmpty();
 
         addTaskPage.enterStartDate(LocalDate.now().plusDays(1).toString())
@@ -198,16 +198,18 @@ public class AddTaskTest extends AddTaskTestRunner {
                         "It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum " +
                         "passages, and more recently with desktop publishing software like Aldus PageMaker including " +
                         "versions of Lorem Ipsum")
-                .enterDescription("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has " +
-                        "been the industry's standard dummy text ever since the 1500s, when an unknown printer took a ")
-                .selectChallenge("Example name");
-        addTaskPage.save();
+                .enterDescription(taskDescription)
+                .selectChallenge("Example name")
+                .save();
 
         SoftAssert softAssert = new SoftAssert();
 
         softAssert.assertTrue(isAllFieldsAreEmptyByDefault);
         actualErrorMessage = addTaskPage.getErrorMessageText();
         softAssert.assertEquals(actualErrorMessage, expectedMessage);
+
+        List<String> clubs = taskService.getAllNameWhere(taskDescription);
+        softAssert.assertTrue(clubs.isEmpty());
 
         softAssert.assertAll();
     }
