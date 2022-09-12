@@ -16,7 +16,7 @@ import java.util.List;
 
 import static java.lang.String.format;
 
-public class EditProfileComponentTest extends SameWindowTestRunner {
+public class EditProfileTest extends SameWindowTestRunner {
     private EditProfileModal editProfileModal;
     private String initialPhone;
     private String initialFirstName;
