@@ -30,9 +30,9 @@ public class AddClubWithValidDataTest extends SignInTestRunner {
                 .selectCategoryClub(category)
                 .enterMinimumAge(ageFrom)
                 .enterMaximumAge(ageTo)
-                .openNextStep()
+                .goToNextStep()
                 .enterPhone(phoneNumber)
-                .openNextStep()
+                .goToNextStep()
                 .enterDescription(descriptionInput)
                 .addClub();
 

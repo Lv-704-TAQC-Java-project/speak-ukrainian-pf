@@ -33,9 +33,9 @@ public class AddClubDescriptionTest extends SameWindowTestRunner {
                 .selectCategoryClub("Спортивні секції")
                 .enterMinimumAge(4)
                 .enterMaximumAge(8)
-                .openNextStep()
+                .goToNextStep()
                 .enterPhone("0672131246")
-                .openNextStep();
+                .goToNextStep();
     }
 
     @DataProvider(name = "descriptionValidData")

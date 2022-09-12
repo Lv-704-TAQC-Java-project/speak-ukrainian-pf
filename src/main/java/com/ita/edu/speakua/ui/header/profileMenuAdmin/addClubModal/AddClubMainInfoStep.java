@@ -73,8 +73,8 @@ public class AddClubMainInfoStep extends AbstractAddClubStep {
     }
 
 
-    @Step("Add club 'main info' step: open next step 'contacts'")
-    public AddClubContactsStep openNextStep() {
+    @Step("Add club 'main info' step: go to next step 'contacts'")
+    public AddClubContactsStep goToNextStep() {
         nextStepButton.click();
         return new AddClubContactsStep(driver);
     }
