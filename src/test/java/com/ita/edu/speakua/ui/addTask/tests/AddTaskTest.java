@@ -135,28 +135,27 @@ public class AddTaskTest extends SameWindowTestRunner {
     @Issue("TUA-524")
     @Description("Verify impossibility of creating task with heading invalid data")
     @Test(dataProvider = "invalidHeaderData")
-    public void verifyCreatingTaskWithHeadingInvalidData(String invalidData, String expectedMessage) {
-        String actualErrorMessage;
-        String clubName = "Test task # 5/";
+    public void verifyThatTaskIsNotCreatedWhenEnteringHeadingInvalidData(String invalidData, String expectedMessage) {
+        String taskName = "Test task # 5/";
         boolean areAllFieldsEmptyByDefault = addTaskPage.areFieldsEmpty();
 
-        addTaskPage.enterStartDate(LocalDate.now().plusDays(1).toString())
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertTrue(areAllFieldsEmptyByDefault, "All fields should be empty by default");
+
+        addTaskPage
+                .enterStartDate(LocalDate.now().plusDays(1).toString())
                 .uploadImage(pathToImage)
-                .enterName(clubName)
+                .enterName(taskName)
                 .enterTitle(invalidData)
                 .enterDescription(description)
                 .selectChallenge(challenge)
                 .save();
 
-        SoftAssert softAssert = new SoftAssert();
+        String actualErrorMessage = addTaskPage.getErrorMessageText();
+        softAssert.assertEquals(actualErrorMessage, expectedMessage, "Expected error message should appear");
 
-        softAssert.assertTrue(areAllFieldsEmptyByDefault, "Not all fields are empty by default");
-
-        actualErrorMessage = addTaskPage.getErrorMessageText();
-        softAssert.assertEquals(actualErrorMessage, expectedMessage, "Expected error message did not appear");
-
-        List<String> clubs = taskService.getAllNameWhere(clubName);
-        softAssert.assertTrue(clubs.isEmpty());
+        List<String> tasks = taskService.getAllNameWhere(taskName);
+        softAssert.assertTrue(tasks.isEmpty(), "New tasks should not be added to the DB");
 
         softAssert.assertAll();
     }
@@ -201,7 +200,7 @@ public class AddTaskTest extends SameWindowTestRunner {
     @Test(dataProvider = "invalidNameData")
     public void verifyCreateTaskWithInvalidNameData(String invalidData, String expectedMessage) {
         String actualErrorMessage;
-
+        String taskDescription = "Lorem Ipsum is simply dummy, when an unknown printer took a ";
         boolean isAllFieldsAreEmptyByDefault = addTaskPage.areFieldsEmpty();
 
         addTaskPage.enterStartDate(LocalDate.now().plusDays(1).toString())
@@ -214,16 +213,18 @@ public class AddTaskTest extends SameWindowTestRunner {
                         "It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum " +
                         "passages, and more recently with desktop publishing software like Aldus PageMaker including " +
                         "versions of Lorem Ipsum")
-                .enterDescription("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has " +
-                        "been the industry's standard dummy text ever since the 1500s, when an unknown printer took a ")
-                .selectChallenge("Example name");
-        addTaskPage.save();
+                .enterDescription(taskDescription)
+                .selectChallenge("Example name")
+                .save();
 
         SoftAssert softAssert = new SoftAssert();
 
         softAssert.assertTrue(isAllFieldsAreEmptyByDefault);
         actualErrorMessage = addTaskPage.getErrorMessageText();
         softAssert.assertEquals(actualErrorMessage, expectedMessage);
+
+        List<String> clubs = taskService.getAllNameWhere(taskDescription);
+        softAssert.assertTrue(clubs.isEmpty());
 
         softAssert.assertAll();
     }

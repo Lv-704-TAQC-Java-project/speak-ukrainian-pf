@@ -36,23 +36,23 @@ public class AdvancedSearchTest extends AdvancedSearchTestRunner {
     @Issue("TUA-510")
     @Description("Verify disability of some elements after selecting center")
     @Test
-    public void verifySomeElementsIsDisabledAfterSelectingCenter() {
+    public void verifyThatSomeElementsIsDisabledAfterSelectingCenter() {
         advancedSearchPanel.selectCenterFilter();
 
         SoftAssert softAssert = new SoftAssert();
 
         softAssert.assertTrue(advancedSearchPanel.isCitySelectorVisible(),
-                "City selector isn't displayed");
+                "City selector should be displayed");
         softAssert.assertTrue(advancedSearchPanel.isDistrictSelectorVisible(),
-                "District selector isn't displayed");
+                "District selector should be displayed");
         softAssert.assertTrue(advancedSearchPanel.isMetroSelectorVisible(),
-                "Metro selector isn't displayed");
+                "Metro selector should be displayed");
         softAssert.assertFalse(advancedSearchPanel.isAvailableOnlineCheckboxVisible(),
-                "Available online checkbox is displayed");
+                "Available online checkbox should not be displayed");
         softAssert.assertFalse(advancedSearchPanel.isCategoriesBlockVisible(),
-                "Categories block is displayed");
+                "Categories block should not be displayed");
         softAssert.assertFalse(advancedSearchPanel.isChildAgeBlockVisible(),
-                "Child age block is displayed");
+                "Child age block should not be displayed");
 
         softAssert.assertAll();
     }

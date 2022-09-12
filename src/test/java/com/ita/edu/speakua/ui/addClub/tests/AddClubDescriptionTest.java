@@ -119,7 +119,7 @@ public class AddClubDescriptionTest extends SameWindowTestRunner {
         }
     }
 
-    @DataProvider(name = "validDescriptionData")
+    @DataProvider(name = "verifyThatUserCanCreatClubWithDescribeValidData")
     public static Object[][] validDescriptionData() {
         return new Object[][]{
                 {"Education, students, Школа балету, Teachers"},
@@ -129,16 +129,14 @@ public class AddClubDescriptionTest extends SameWindowTestRunner {
     }
 
     @Issue("TUA-173")
-    @Description("Verify the description field is filled in with valid data and the 'Завершити' button is enable")
+    @Description("Verify that the description field is filled in with valid data and the 'Завершити' button is enable")
     @Test(dataProvider = "validDescriptionData")
-    public void verifyCreatingClubWithDescribeValidData(String testData) {
-        boolean isFinishButtonEnable;
-
+    public void verifyThatUserCanCreatClubWithDescribeValidData(String testData) {
         SoftAssert softAssert = new SoftAssert();
 
         addClubDescriptionStep.enterDescription(testData);
-        isFinishButtonEnable = addClubDescriptionStep.isButtonEnable();
-        softAssert.assertTrue(isFinishButtonEnable, "'Завершити' button is disabled");
+        boolean isFinishButtonEnable = addClubDescriptionStep.isButtonEnable();
+        softAssert.assertTrue(isFinishButtonEnable, "'Завершити' button should be enabled");
 
         softAssert.assertAll();
     }

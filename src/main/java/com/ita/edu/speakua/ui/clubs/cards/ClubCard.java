@@ -84,7 +84,7 @@ public class ClubCard extends BasePage {
         return starRatingZeroList;
     }
 
-    @Step("Card component: expand card")
+    @Step("Club card: expand card")
     public ExpandedClub expandCard() {
         cardTitle.click();
         return new ExpandedClub(driver);
