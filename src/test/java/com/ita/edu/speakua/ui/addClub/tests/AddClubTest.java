@@ -67,6 +67,6 @@ public class AddClubTest extends LoginTestRunner {
         LocationService locationService = new LocationService();
         List<LocationEntity> locations = locationService.getLocationByName(locationName);
         Assert.assertEquals(locations.size(), 1);
-        Assert.assertEquals(location.getName(), locationName);
+        Assert.assertEquals(locations.get(0).getName(), locationName);
     }
 }
