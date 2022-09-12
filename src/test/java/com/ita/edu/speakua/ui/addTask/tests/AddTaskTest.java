@@ -10,6 +10,7 @@ import io.qameta.allure.Issue;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -33,10 +34,13 @@ public class AddTaskTest extends SameWindowTestRunner {
     private final String description = "Facilisis sed odio morbi quis. Mauris rhoncus aenean vel elit scelerisque.";
     private final String challenge = "The European languages";
 
+    @BeforeClass
+    public void signIn() {
+        signInAsAdmin();
+    }
+
     @BeforeMethod
     public void openAddTaskPage() {
-        signInAsAdmin();
-
         addTaskPage = getHomePage()
                 .openAdminProfileMenu()
                 .openAdministrationMenu()
