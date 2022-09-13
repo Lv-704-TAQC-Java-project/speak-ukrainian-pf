@@ -32,23 +32,23 @@ public class BaseSearchTest extends BaseTestRunner {
 
         String clubToSearch = clubNames.get(new Random().nextInt(clubNames.size()));
 
+        List<ClubEntity> clubEntities = clubService.getAllNameWhereNameLike(clubToSearch);
+
         ClubsPage clubsPage = new HomePage(driver)
                 .openAdvancedSearch()
                 .fillInSearch(clubToSearch);
 
-        SoftAssert softAssert = new SoftAssert();
-
-        List<ClubEntity> clubEntities = clubService.getAllNameWhereNameLike(clubToSearch);
         List<ClubCard> actualClubs = clubsPage.getCards();
 
+        SoftAssert softAssert = new SoftAssert();
         assertTrue(actualClubs.size() >= 1,
                 "There should be at least one club on the page");
         softAssert.assertEquals(clubEntities.size(), actualClubs.size(),
                 "The clubs quantity on the page should be the same as in the DB");
 
-        for (ClubCard card : actualClubs) {
+        for (ClubCard clubCard : actualClubs) {
             for (ClubEntity clubEntity : clubEntities) {
-                ExpandedClub expandedCardComponent = card.expandCard();
+                ExpandedClub expandedCardComponent = clubCard.expandCard();
 
                 String pageClubName = expandedCardComponent.getClubName();
                 String dbClubName = clubEntity.getName();

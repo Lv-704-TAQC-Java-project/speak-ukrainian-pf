@@ -67,11 +67,11 @@ public class AddTaskTest extends SameWindowTestRunner {
     @Test(dataProvider = "invalidDescriptionData")
     public void verifyCreateTaskInvalidDescription(String textDescription, String expectedMessage) {
         boolean allFieldsAreEmpty = addTaskPage.areFieldsEmpty();
-        String clubName = "Yaroslav test" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+        String taskName = "Yaroslav test" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
         addTaskPage
                 .enterStartDate(LocalDate.now().plusDays(2).toString())
                 .uploadImage(pathToImage)
-                .enterName(clubName)
+                .enterName(taskName)
                 .enterTitle("Some forty character text for the test!!")
                 .enterDescription(textDescription)
                 .selectChallenge(challenge);
@@ -83,8 +83,8 @@ public class AddTaskTest extends SameWindowTestRunner {
         softAssert.assertEquals(errorMessage, expectedMessage, "Message should be displayed ");
 
         TaskService taskService = new TaskService();
-        List<String> clubNamesInDataBase = taskService.getAllNameWhere(clubName);
-        softAssert.assertTrue(clubNamesInDataBase.size() == 0, "Database shouldn't contain tasks with the name " + clubName);
+        List<String> taskNamesInDataBase = taskService.getAllNameWhere(taskName);
+        softAssert.assertTrue(taskNamesInDataBase.size() == 0, "Database shouldn't contain tasks with the name " + taskName);
         softAssert.assertAll();
     }
 
@@ -102,13 +102,13 @@ public class AddTaskTest extends SameWindowTestRunner {
     @Test(dataProvider = "invalidDateData")
     public void verifyCreateTaskInvalidDateData(String actualDate, String expectedErrorMessage) {
         String descriptionInput = new String(new char[350]).replace("\0", "Lorem Ipsu");
-        String clubName = "Yaroslav test" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+        String taskName = "Yaroslav test" + new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertTrue(addTaskPage.areFieldsEmpty());
         addTaskPage
                 .enterStartDate(actualDate)
                 .uploadImage(pathToImage)
-                .enterName(clubName)
+                .enterName(taskName)
                 .enterTitle(descriptionInput.substring(0, 50))
                 .enterDescription(descriptionInput.substring(0, 500))
                 .selectChallenge("Example name");
@@ -117,9 +117,9 @@ public class AddTaskTest extends SameWindowTestRunner {
         softAssert.assertEquals(actualErrorMessage, expectedErrorMessage);
 
         TaskService taskService = new TaskService();
-        List<String> clubNamesInDataBase = taskService.getAllNameWhere(clubName);
+        List<String> taskNamesInDataBase = taskService.getAllNameWhere(taskName);
 
-        softAssert.assertTrue(clubNamesInDataBase.size() == 0, "Database shouldn't contain tasks with name " + clubName);
+        softAssert.assertTrue(taskNamesInDataBase.size() == 0, "Database shouldn't contain tasks with name " + taskName);
         softAssert.assertAll();
     }
 
