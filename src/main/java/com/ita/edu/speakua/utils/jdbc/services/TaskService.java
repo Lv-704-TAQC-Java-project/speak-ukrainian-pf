@@ -48,4 +48,8 @@ public class TaskService {
         }
         return taskJoinChallenge;
     }
+
+    public long getTasksMaxId() {
+        return taskDAO.getTasksMaxId();
+    }
 }

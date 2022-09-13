@@ -14,6 +14,7 @@ public class TaskEntity {
     public static final String SELECT_TASKS_WITH_NAME = SELECT_ALL_FIELDS + " FROM tasks WHERE name = '%s';";
     public static final String SELECT_TASKS_WITH_NAME_ORDERED_AND_SORTED = SELECT_ALL_FIELDS + " FROM tasks WHERE name='%s' ORDER BY %s %s;";
     public static final String COUNT_TASKS_WITH_NAME = "SELECT COUNT(*) FROM tasks WHERE name='%s';";
+    public static final String MAX_TASKS_ID = "SELECT MAX(id) FROM tasks;";
 
     private long id;
     private String description;

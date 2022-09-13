@@ -60,4 +60,17 @@ public class TaskDAO {
         ManagerDAO.closeStatement(statement);
         return Long.parseLong(rows.get(0).get(0));
     }
+
+    public long getTasksMaxId() {
+        Statement statement = ManagerDAO.getInstance().getStatement();
+        List<List<String>> rows = null;
+        try {
+            ResultSet resultSet = statement.executeQuery(TaskEntity.MAX_TASKS_ID);
+            rows = ManagerDAO.getInstance().parseResultSet(resultSet);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        ManagerDAO.closeStatement(statement);
+        return Long.parseLong(rows.get(0).get(0));
+    }
 }
