@@ -33,4 +33,17 @@ public class UserDAO {
         ManagerDAO.closeStatement(statement);
         return Long.parseLong(rows.get(0).get(0));
     }
+
+    public List<UserEntity> selectUsersWhereId(long id) {
+        Statement statement = ManagerDAO.getInstance().getStatement();
+        List<List<String>> rows;
+        try {
+            ResultSet resultSet = statement.executeQuery(String.format(UserEntity.SELECT_ALL_WHERE_ID, id));
+            rows = ManagerDAO.getInstance().parseResultSet(resultSet);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        ManagerDAO.closeStatement(statement);
+        return UserEntity.parseRows(rows);
+    }
 }

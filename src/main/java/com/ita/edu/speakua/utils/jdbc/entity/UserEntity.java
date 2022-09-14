@@ -19,6 +19,8 @@ public class UserEntity {
             "AND first_name='%s' " +
             "AND last_name='%s';";
 
+    public static final String SELECT_ALL_WHERE_ID = "SELECT * FROM users WHERE id='%d';";
+
     private long id;
     private String email;
     private String firstName;
