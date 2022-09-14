@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class CreateChallengeRerquest {
+public class CreateChallengeRequest {
     private String name;
     private String title;
     private String description;
