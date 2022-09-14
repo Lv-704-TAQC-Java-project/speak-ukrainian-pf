@@ -1,7 +1,9 @@
 package com.ita.edu.speakua.api.clients;
 
 import com.ita.edu.speakua.api.models.ErrorResponse;
+import com.ita.edu.speakua.api.models.challenge.CreateChallengeRequest;
 import com.ita.edu.speakua.api.models.challenge.CreateChallengeResponse;
+import com.ita.edu.speakua.api.models.registration.SignUpRequest;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.asynchttpclient.Request;
@@ -23,12 +25,10 @@ public class ChallengeClient extends BaseClient {
                 .get(String.format("%s%s/%s", baseUrl, path, id));
     }
 
-    public RequestSpecification input(String name, String title, String description) {
+    public Response post(CreateChallengeRequest createChallengeRequest) {
         return prepareRequest()
-                .header("Authorization", "Bearer " + this.authentication)
+                .body(createChallengeRequest.json())
                 .when()
-                .accept(name)
-                .accept(title)
-                .accept(description);
+                .post(baseUrl + "/challenge");
     }
 }
