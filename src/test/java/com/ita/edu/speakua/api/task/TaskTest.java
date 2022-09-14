@@ -28,7 +28,7 @@ public class TaskTest extends ApiBaseTestRunner {
     }
 
     @Issue("TUA-441")
-    @Description("Verify that user can create Task with valid values")
+    @Description("Verify user can create Task with valid values")
     @Link("https://jira.softserve.academy/browse/TUA-441")
     @Test
     public void verifyTaskCreation() {
@@ -56,20 +56,20 @@ public class TaskTest extends ApiBaseTestRunner {
 
         CreateTaskResponse createTaskResponse = postResponse.as(CreateTaskResponse.class);
 
-        SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(createTaskResponse.getId(), maxTaskId + 1);
-        softAssert.assertEquals(createTaskResponse.getName(), name);
-        softAssert.assertEquals(createTaskResponse.getDescription(), description);
-        softAssert.assertEquals(createTaskResponse.getPicture(), picture);
-        softAssert.assertEquals(createTaskResponse.getChallengeId(), challengeId);
+        SoftAssert softly = new SoftAssert();
+        softly.assertEquals(createTaskResponse.getId(), maxTaskId + 1);
+        softly.assertEquals(createTaskResponse.getName(), name);
+        softly.assertEquals(createTaskResponse.getDescription(), description);
+        softly.assertEquals(createTaskResponse.getPicture(), picture);
+        softly.assertEquals(createTaskResponse.getChallengeId(), challengeId);
 
         List<Integer> parsedDateList = Arrays.stream(date.split("-"))
                 .map(Integer::parseInt)
                 .collect(Collectors.toList());
-        softAssert.assertEquals(createTaskResponse.getStartDate().get(0), parsedDateList.get(0));
-        softAssert.assertEquals(createTaskResponse.getStartDate().get(1), parsedDateList.get(1));
-        softAssert.assertEquals(createTaskResponse.getStartDate().get(2), parsedDateList.get(2));
+        softly.assertEquals(createTaskResponse.getStartDate().get(0), parsedDateList.get(0));
+        softly.assertEquals(createTaskResponse.getStartDate().get(1), parsedDateList.get(1));
+        softly.assertEquals(createTaskResponse.getStartDate().get(2), parsedDateList.get(2));
 
-        softAssert.assertAll();
+        softly.assertAll();
     }
 }
