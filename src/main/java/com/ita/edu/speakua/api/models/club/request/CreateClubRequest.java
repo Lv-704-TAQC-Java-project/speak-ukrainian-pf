@@ -1,10 +1,15 @@
 package com.ita.edu.speakua.api.models.club.request;
 
-import lombok.Data;
+import lombok.Builder;
 
+import java.io.IOException;
+import java.nio.file.*;
 import java.util.ArrayList;
+import java.util.List;
 
-@Data
+import static java.lang.String.format;
+
+@Builder
 public class CreateClubRequest {
     private int id;
     private ArrayList<String> categoriesName;
@@ -23,4 +28,63 @@ public class CreateClubRequest {
     private int centerId;
     private int clubExternalId;
     private int centerExternalId;
+
+    public String json() {
+        return format("{\n" +
+                        "  \"id\": %d,\n" +
+                        "  \"categoriesName\": [\n    \"%s\"\n  ],\n" +
+                        "  \"locations\": [\n" +
+                        "   {\n" +
+                        "%s\n" +
+                        "   }\n" +
+                        " ],\n" +
+                        "  \"description\": \"%s\",\n" +
+                        "  \"name\": \"%s\",\n" +
+                        "  \"ageFrom\": %d,\n" +
+                        "  \"ageTo\": %d,\n" +
+                        "  \"urlBackground\": \"%s\",\n" +
+                        "  \"urlLogo\": \"%s\",\n" +
+                        "  \"urlGallery\": [\n" +
+                        "   {\n" +
+                        "    %s\n" +
+                        "   }\n" +
+                        " ],\n" +
+                        "  \"isOnline\": %s,\n" +
+                        "  \"contacts\": \"%s\",\n" +
+                        "  \"isApproved\": %s,\n" +
+                        "  \"userId\": %d,\n" +
+                        "  \"centerId\": %d,\n" +
+                        "  \"clubExternalId\": %d,\n" +
+                        "  \"centerExternalId\": %d\n" +
+                        "}",
+                id,
+                categoriesName.toString().replaceAll("\\[|\\]", ""),
+                locations.toString().replaceAll("\\[|\\]", ""),
+                description,
+                name,
+                ageFrom,
+                ageTo,
+                urlBackground,
+                urlLogo,
+                urlGallery.toString().replaceAll("\\[|\\]", ""),
+                isOnline,
+                contacts,
+                isApproved,
+                userId,
+                centerId,
+                clubExternalId,
+                centerExternalId
+        );
+    }
+
+    public static String parseJson(String jsonFilePath, String name) {
+        List<String> lines = new ArrayList<>();
+        try {
+            lines = Files.readAllLines(Paths.get(jsonFilePath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(format(lines.toString(), name));
+        return format(lines.toString(), name);
+    }
 }
