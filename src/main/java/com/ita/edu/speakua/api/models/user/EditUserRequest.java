@@ -22,9 +22,9 @@ public class EditUserRequest {
                         "  \"email\": \"%s\",\n" +
                         "  \"firstName\": \"%s\",\n" +
                         "  \"lastName\": \"%s\",\n" +
-                        "  \"phone\": \"%s\"\n" +
-                        "  \"urlLogo\": \"%s\"\n" +
-                        "  \"status\": \"%s\"\n" +
+                        "  \"phone\": \"%s\",\n" +
+                        "  \"urlLogo\": \"%s\",\n" +
+                        "  \"status\": \"%s\",\n" +
                         "  \"roleName\": \"%s\"\n" +
                         "}",
                 id,

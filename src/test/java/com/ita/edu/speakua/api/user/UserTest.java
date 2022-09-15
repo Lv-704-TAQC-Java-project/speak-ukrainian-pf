@@ -4,6 +4,7 @@ import com.ita.edu.speakua.api.ApiBaseTestRunner;
 import com.ita.edu.speakua.api.clients.Authentication;
 import com.ita.edu.speakua.api.clients.UserClient;
 import com.ita.edu.speakua.api.data.Role;
+import com.ita.edu.speakua.api.models.ErrorResponse;
 import com.ita.edu.speakua.api.models.user.EditUserRequest;
 import com.ita.edu.speakua.api.models.user.ReadUserResponse;
 import com.ita.edu.speakua.utils.jdbc.entity.UserEntity;
@@ -55,11 +56,14 @@ public class UserTest extends ApiBaseTestRunner {
                 .build();
 
         Response response = userClient.put(id, editUserRequest);
-        assertEquals(response.statusCode(), 400, "Phone' field contain an invalid value");
+        assertEquals(response.statusCode(), 400);
+
+        ErrorResponse errorResponse = response.as(ErrorResponse.class);
+        assertEquals(errorResponse.getMessage(), "Phone' field contain an invalid value");
 
         List<UserEntity> users = new UserService().getUsersWhereId(id);
         for (UserEntity user : users) {
-            assertEquals(user.getPhone(), readUserResponse.getPhone(), "User phone should pe unchanged");
+            assertEquals(user.getPhone(), readUserResponse.getPhone(), "User phone should be unchanged");
         }
     }
 }

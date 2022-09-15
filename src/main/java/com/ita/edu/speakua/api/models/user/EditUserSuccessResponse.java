@@ -3,7 +3,7 @@ package com.ita.edu.speakua.api.models.user;
 import lombok.Data;
 
 @Data
-public class EditUserResponse {
+public class EditUserSuccessResponse {
     public int id;
     public String firstName;
     public String lastName;
