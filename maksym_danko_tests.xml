@@ -1,7 +1,7 @@
 <?xml version = "1.0" encoding = "UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="Speak UA tests" parallel="classes" thread-count="1">
+<suite name="Speak UA tests" parallel="classes" thread-count="6">
     <test name="Maksym Danko Tests">
         <classes>
             <class name="com.ita.edu.speakua.ui.advancedSearch.tests.AdvancedSearchByPhraseTest"/>
