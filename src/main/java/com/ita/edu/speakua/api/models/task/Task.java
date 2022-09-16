@@ -2,13 +2,13 @@ package com.ita.edu.speakua.api.models.task;
 
 import lombok.Data;
 
-import java.util.List;
+import java.util.ArrayList;
 
 @Data
 public class Task {
-    public long id;
-    public String name;
-    public String headerText;
-    public String picture;
-    public List<Integer> startDate;
+    private long id;
+    private String name;
+    private String headerText;
+    private String picture;
+    private ArrayList<Integer> startDate;
 }

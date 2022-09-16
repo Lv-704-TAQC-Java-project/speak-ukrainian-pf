@@ -6,11 +6,11 @@ import java.util.List;
 
 @Data
 public class ReadTaskResponse {
-    public long id;
-    public String name;
-    public String headerText;
-    public String description;
-    public String picture;
-    public List<Integer> startDate;
-    public long challengeId;
+    private long id;
+    private String name;
+    private String headerText;
+    private String description;
+    private String picture;
+    private List<Integer> startDate;
+    private long challengeId;
 }

@@ -12,7 +12,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;

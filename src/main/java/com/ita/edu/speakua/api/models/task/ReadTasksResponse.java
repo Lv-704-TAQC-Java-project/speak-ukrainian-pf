@@ -2,9 +2,9 @@ package com.ita.edu.speakua.api.models.task;
 
 import lombok.Data;
 
-import java.util.Collection;
+import java.util.ArrayList;
 
 @Data
 public class ReadTasksResponse {
-    public Collection<Task> tasks;
+    private ArrayList<Task> tasks;
 }
