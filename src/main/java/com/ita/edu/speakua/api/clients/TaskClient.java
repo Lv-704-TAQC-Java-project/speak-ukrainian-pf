@@ -11,14 +11,14 @@ public class TaskClient extends BaseClient {
         this.authentication = authentication;
     }
 
-    public Response getAll() {
+    public Response getAllTasks() {
         return prepareRequest()
                 .header("Authorization", "Bearer " + this.authentication)
                 .when()
                 .get(baseUrl + "/tasks");
     }
 
-    public Response post(int id, CreateTaskRequest createTaskRequest) {
+    public Response createTask(int id, CreateTaskRequest createTaskRequest) {
         return prepareRequest()
                 .header("Authorization", "Bearer " + this.authentication)
                 .body(createTaskRequest.json())
