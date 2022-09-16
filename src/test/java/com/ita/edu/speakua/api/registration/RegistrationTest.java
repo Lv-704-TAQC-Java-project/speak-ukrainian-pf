@@ -3,8 +3,8 @@ package com.ita.edu.speakua.api.registration;
 import com.ita.edu.speakua.api.ApiBaseTestRunner;
 import com.ita.edu.speakua.api.clients.RegistrationClient;
 import com.ita.edu.speakua.api.data.Role;
+import com.ita.edu.speakua.api.models.ErrorResponse;
 import com.ita.edu.speakua.api.models.registration.SignUpRequest;
-import com.ita.edu.speakua.api.models.registration.SingUpFailResponse;
 import com.ita.edu.speakua.utils.jdbc.services.UserService;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -37,15 +37,15 @@ public class RegistrationTest extends ApiBaseTestRunner {
                 .roleName(Role.MANAGER)
                 .build();
 
-        Response postResponse = registrationClient.post(signUpRequest);
-        assertEquals(postResponse.statusCode(), 400,
+        Response signUpResponse = registrationClient.signUp(signUpRequest);
+        assertEquals(signUpResponse.statusCode(), 400,
                 "Incorrect response status code");
 
-        SingUpFailResponse singUpFailResponse = postResponse.as(SingUpFailResponse.class);
+        ErrorResponse singUpErrorResponse = signUpResponse.as(ErrorResponse.class);
         SoftAssert softly = new SoftAssert();
-        softly.assertEquals(Integer.parseInt(singUpFailResponse.getStatus()), 400,
+        softly.assertEquals(singUpErrorResponse.getStatus(), 400,
                 "Unexpected response status code");
-        softly.assertEquals(singUpFailResponse.getMessage(), "email is not valid",
+        softly.assertEquals(singUpErrorResponse.getMessage(), "email is not valid",
                 "Incorrect error message");
         softly.assertAll();
 

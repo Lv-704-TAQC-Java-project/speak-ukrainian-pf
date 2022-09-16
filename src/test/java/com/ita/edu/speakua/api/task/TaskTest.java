@@ -55,10 +55,10 @@ public class TaskTest extends ApiBaseTestRunner {
         long maxTaskId = new TaskService().getTasksMaxId();
         int challengeId = 5;
 
-        Response postResponse = taskClient.post(challengeId, createTaskRequest);
-        assertEquals(postResponse.statusCode(), 200);
+        Response createTaskRawResponse = taskClient.createTask(challengeId, createTaskRequest);
+        assertEquals(createTaskRawResponse.statusCode(), 200);
 
-        CreateTaskResponse createTaskResponse = postResponse.as(CreateTaskResponse.class);
+        CreateTaskResponse createTaskResponse = createTaskRawResponse.as(CreateTaskResponse.class);
 
         SoftAssert softly = new SoftAssert();
         softly.assertEquals(createTaskResponse.getId(), maxTaskId + 1);
@@ -101,8 +101,6 @@ public class TaskTest extends ApiBaseTestRunner {
     @Link("https://jira.softserve.academy/browse/TUA-443")
     @Test(dataProvider = "createTaskInvalidData")
     public void verifyTaskCreationFailsForEmptyFields(String name, String headerText, String description, String picture, String date, List<String> errors) {
-
-
         TaskClient taskClient = new TaskClient(authentication.getToken());
         CreateTaskRequest createTaskRequest = CreateTaskRequest
                 .builder()
@@ -113,15 +111,16 @@ public class TaskTest extends ApiBaseTestRunner {
                 .startDate(date)
                 .build();
 
-        Response postResponse = taskClient.post(5, createTaskRequest);
-        assertEquals(postResponse.statusCode(), 400);
+        Response createTaskRawResponse = taskClient.createTask(5, createTaskRequest);
+        assertEquals(createTaskRawResponse.statusCode(), 400);
 
-        ErrorResponse errorResponse = postResponse.as(ErrorResponse.class);
+        ErrorResponse createTaskErrorResponse = createTaskRawResponse.as(ErrorResponse.class);
 
         SoftAssert softly = new SoftAssert();
-        softly.assertEquals(errorResponse.getStatus(), 400);
+        softly.assertEquals(createTaskErrorResponse.getStatus(), 400);
+
         errors.forEach(error -> {
-            String errorMessage = errorResponse.getMessage();
+            String errorMessage = createTaskErrorResponse.getMessage();
             softly.assertTrue(errorMessage.contains(error),
                     format("Error message [%s] should contain: \n\t\t[%s]", errorMessage, error));
         });
