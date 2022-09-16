@@ -102,5 +102,4 @@ public class ChallengeTest extends ApiBaseTestRunner {
         }
         softly.assertAll();
     }
-
 }
