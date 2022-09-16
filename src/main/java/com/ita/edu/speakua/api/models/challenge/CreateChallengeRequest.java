@@ -23,7 +23,7 @@ public class CreateChallengeRequest {
                         "\"title\":\"%s\",\n" +
                         "\"description\":\"%s\",\n" +
                         "\"picture\":\"%s\",\n" +
-                        "\"sortNumber\":\"%s\",\n" +
+                        "\"sortNumber\":\"%s\"\n" +
                         "}",
                 name,
                 title,

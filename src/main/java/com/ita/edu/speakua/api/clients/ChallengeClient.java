@@ -29,6 +29,6 @@ public class ChallengeClient extends BaseClient {
         return prepareRequest()
                 .body(createChallengeRequest.json())
                 .when()
-                .post(baseUrl + "/challenge");
+                .post(baseUrl + path);
     }
 }

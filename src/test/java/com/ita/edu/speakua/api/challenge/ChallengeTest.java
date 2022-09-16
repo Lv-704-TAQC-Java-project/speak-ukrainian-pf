@@ -60,49 +60,23 @@ public class ChallengeTest extends ApiBaseTestRunner {
     @DataProvider(name = "addChallengeData")
     public Object[][] addChallengeData() {
         return new Object[][]{
-                {"nam", "tit", "des"},
-                {"Lorem ipsum dolor sit amet, consect", "Lorem ipsum dolor sit amet, consect", "Lorem ipsum dolor " +
-                        "sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet " +
-                        "dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation " +
-                        "ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum " +
-                        "iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu " +
-                        "feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent " +
-                        "luptatum zzril delenit augue duis dolore te feugait nulla facilisi.Lorem ipsum dolor sit amet, " +
-                        "consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna " +
-                        "aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper " +
-                        "suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in " +
-                        "hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla " +
-                        "facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril " +
-                        "delenit augue duis dolore te feugait nulla facilisi.Lorem ipsum dolor sit amet, consectetuer " +
-                        "adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat " +
-                        "volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit " +
-                        "lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit " +
-                        "in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at " +
-                        "vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit " +
-                        "augue duis dolore te feugait nulla facilisi.Lorem ipsum dolor sit amet, consectetuer " +
-                        "adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat " +
-                        "volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit " +
-                        "lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit " +
-                        "in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero " +
-                        "eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis d" +
-                        "olore te feugait nulla facilisi.Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed " +
-                        "diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim " +
-                        "ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea " +
-                        "commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie " +
-                        "consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio " +
-                        "dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi." +
-                        "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod " +
-                        "tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis " +
-                        "nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. " +
-                        "Duis autem vel eu"},
-                {"эЭъЪыЫёЁ", "эЭъЪыЫёЁ", "эЭъЪыЫёЁэЭъЪыЫёЁэЭъЪыЫёЁэЭъЪыЫёЁэЭъЪыЫёЁ"},
+                {"эЭъЪыЫёЁ", "эЭъЪыЫёЁ", "эЭъЪыЫёЁэЭъЪыЫёЁэЭъЪыЫёЁэЭъЪыЫёЁэЭъЪыЫёЁ",
+                        new String[]{"name Помилка. Текст містить недопустимі символи",
+                                "description Помилка. Текст містить недопустимі символи",
+                                "title Помилка. Текст містить недопустимі символи"}},
+                {"nam", "tit", "des", new String[]{"description must contain a maximum of 25000 letters",
+                        "title must contain a minimum of 5 and a maximum of 100 letters",
+                        "name  must contain a minimum of 5 and a maximum of 30 letters"}},
+                {"Lorem ipsum dolor sit amet, consect", "Lorem ipsum dolor sit amet, consect",
+                        new String(new char[350]).replace("\0", "Lorem ipsum "),
+                        new String[]{"name  must contain a minimum of 5 and a maximum of 30 letters"}}
         };
     }
 
     @Issue("TUA-430")
     @Description("Verify that user is not able to create Challenge using invalid values")
     @Test(dataProvider = "addChallengeData")
-    public void unSuccessPostTest(String name, String title, String description) {
+    public void unSuccessPostTest(String name, String title, String description, String[] expectedMessages) {
         ChallengeClient challengeClient = new ChallengeClient(authentication.getToken());
         CreateChallengeRequest createChallengeRequest = CreateChallengeRequest
                 .builder()
@@ -122,8 +96,11 @@ public class ChallengeTest extends ApiBaseTestRunner {
 
         softly.assertEquals(errorResponse.getStatus(), 400,
                 "Unexpected response status code");
-        softly.assertEquals(errorResponse.getMessage(), "email is not valid",
-                "Incorrect error message");
+        for (String expectedMessage : expectedMessages) {
+            softly.assertTrue(errorResponse.getMessage().contains(expectedMessage), "Message should be correct "
+                    + errorResponse.getMessage() + " / " + expectedMessage);
+        }
         softly.assertAll();
     }
+
 }
