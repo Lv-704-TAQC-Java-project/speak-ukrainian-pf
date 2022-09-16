@@ -3,23 +3,29 @@ package com.ita.edu.speakua.api.task;
 import com.ita.edu.speakua.api.ApiBaseTestRunner;
 import com.ita.edu.speakua.api.clients.Authentication;
 import com.ita.edu.speakua.api.clients.TaskClient;
+import com.ita.edu.speakua.api.models.ErrorResponse;
 import com.ita.edu.speakua.api.models.task.CreateTaskRequest;
 import com.ita.edu.speakua.api.models.task.CreateTaskResponse;
 import com.ita.edu.speakua.utils.jdbc.services.TaskService;
 import io.qameta.allure.*;
 import io.restassured.response.Response;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.lang.String.format;
+import static java.util.Arrays.asList;
 import static org.testng.Assert.assertEquals;
 
 public class TaskTest extends ApiBaseTestRunner {
     private Authentication authentication;
+    private final String tomorrow = LocalDate.now().plusDays(1).toString();
 
     @BeforeClass
     public void beforeClass() {
@@ -35,7 +41,6 @@ public class TaskTest extends ApiBaseTestRunner {
         String headerText = "Some header text header text header text header text";
         String description = "Some description description description description description description description";
         String picture = "/upload/some/image.png";
-        String date = "2022-09-17";
 
         TaskClient taskClient = new TaskClient(authentication.getToken());
         CreateTaskRequest createTaskRequest = CreateTaskRequest
@@ -44,7 +49,7 @@ public class TaskTest extends ApiBaseTestRunner {
                 .headerText(headerText)
                 .description(description)
                 .picture(picture)
-                .startDate(date)
+                .startDate(tomorrow)
                 .build();
 
         long maxTaskId = new TaskService().getTasksMaxId();
@@ -62,12 +67,64 @@ public class TaskTest extends ApiBaseTestRunner {
         softly.assertEquals(createTaskResponse.getPicture(), picture);
         softly.assertEquals(createTaskResponse.getChallengeId(), challengeId);
 
-        List<Integer> parsedDateList = Arrays.stream(date.split("-"))
+        List<Integer> parsedDateList = Arrays.stream(tomorrow.split("-"))
                 .map(Integer::parseInt)
                 .collect(Collectors.toList());
         softly.assertEquals(createTaskResponse.getStartDate().get(0), parsedDateList.get(0));
         softly.assertEquals(createTaskResponse.getStartDate().get(1), parsedDateList.get(1));
         softly.assertEquals(createTaskResponse.getStartDate().get(2), parsedDateList.get(2));
+
+        softly.assertAll();
+    }
+
+    @DataProvider(name = "createTaskInvalidData")
+    public Object[][] createTaskInvalidData() {
+        String name = "Some name";
+        String headerText = "Some header text header text header text header text";
+        String description = "Some description description description description description description description";
+        String picture = "/upload/some/image.png";
+        return new Object[][]{
+                {"", headerText, description, picture, tomorrow, asList("name must not be blank", "name must contain a minimum of 5 and a maximum of 100 letters")},
+                {name, "", description, picture, tomorrow, asList("headerText must contain a minimum of 40 and a maximum of 3000 letters", "headerText must not be blank")},
+                {name, headerText, "", picture, tomorrow, asList("description must contain a minimum of 40 and a maximum of 3000 letters")},
+                {name, headerText, description, "", tomorrow, asList("picture must not be blank", "picture Incorrect file path.", "It must be like /upload/*/*.png")},
+                {name, headerText, description, picture, "", asList("startDate must not be null")},
+                {name, headerText, description, " " + picture, tomorrow, asList("picture Incorrect file path.", "It must be like /upload/*/*.png")},
+                {null, headerText, description, picture, tomorrow, asList("name must contain a minimum of 5 and a maximum of 100 letters")},
+                {name, null, description, picture, tomorrow, asList("headerText must contain a minimum of 40 and a maximum of 3000 letters")},
+                {name, headerText, null, picture, tomorrow, asList("description must not be blank")},
+        };
+    }
+
+    @Issue("TUA-443")
+    @Description("Verify user can not create Task with empty fields")
+    @Link("https://jira.softserve.academy/browse/TUA-443")
+    @Test(dataProvider = "createTaskInvalidData")
+    public void verifyTaskCreationFailsForEmptyFields(String name, String headerText, String description, String picture, String date, List<String> errors) {
+
+
+        TaskClient taskClient = new TaskClient(authentication.getToken());
+        CreateTaskRequest createTaskRequest = CreateTaskRequest
+                .builder()
+                .name(name)
+                .headerText(headerText)
+                .description(description)
+                .picture(picture)
+                .startDate(date)
+                .build();
+
+        Response postResponse = taskClient.post(5, createTaskRequest);
+        assertEquals(postResponse.statusCode(), 400);
+
+        ErrorResponse errorResponse = postResponse.as(ErrorResponse.class);
+
+        SoftAssert softly = new SoftAssert();
+        softly.assertEquals(errorResponse.getStatus(), 400);
+        errors.forEach(error -> {
+            String errorMessage = errorResponse.getMessage();
+            softly.assertTrue(errorMessage.contains(error),
+                    format("Error message [%s] should contain: \n\t\t[%s]", errorMessage, error));
+        });
 
         softly.assertAll();
     }
