@@ -9,6 +9,7 @@ import com.ita.edu.speakua.api.models.challenge.CreateChallengeRequest;
 import com.ita.edu.speakua.api.models.challenge.ReadChallengeResponse;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
+import io.qameta.allure.Link;
 import io.restassured.response.Response;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -75,6 +76,7 @@ public class ChallengeTest extends ApiBaseTestRunner {
     }
 
     @Issue("TUA-430")
+    @Link("https://jira.softserve.academy/browse/TUA-430")
     @Description("Verify that user is not able to create Challenge using invalid values")
     @Test(dataProvider = "addChallengeData")
     public void unSuccessPostTest(String name, String title, String description, String[] expectedMessages) {
@@ -105,6 +107,7 @@ public class ChallengeTest extends ApiBaseTestRunner {
     }
 
     @Issue("TUA-436")
+    @Link("https://jira.softserve.academy/browse/TUA-436")
     @Description("Verify that user is not able to create Challenge using invalid values")
     @Test
     public void unSuccessDeleteTest() {

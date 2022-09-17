@@ -26,6 +26,10 @@ import static org.testng.Assert.assertEquals;
 public class TaskTest extends ApiBaseTestRunner {
     private Authentication authentication;
     private final String tomorrow = LocalDate.now().plusDays(1).toString();
+    private final String picture = "/upload/some/image.png";
+    private final String name = "Some name";
+    private final String headerText = "Some header text header text header text header text";
+    private final String description = "Some description description description description description description description";
 
     @BeforeClass
     public void beforeClass() {
@@ -125,6 +129,50 @@ public class TaskTest extends ApiBaseTestRunner {
                     format("Error message [%s] should contain: \n\t\t[%s]", errorMessage, error));
         });
 
+        softly.assertAll();
+    }
+
+    @DataProvider(name = "InvalidDescriptionAndNameData")
+    public Object[][] InvalidDescriptionAndNameData() {
+        return new Object[][]{
+                {"name", description,
+                        "name must contain a minimum of 5 and a maximum of 100 letters"},
+                {new String(new char[26]).replace("\0", "name"), description,
+                        "name must contain a minimum of 5 and a maximum of 100 letters"},
+                {"namenameЁ, Ы,Э", description,
+                        "name Помилка. Текст містить недопустимі символи"},
+                {name,  "descriptiondescriptiondescriptiondescri ",
+                        "description must contain a minimum of 40 and a maximum of 3000 letters"},
+                {name,  new String(new char[300]).replace("\0", "description"),
+                        "description must contain a minimum of 40 and a maximum of 3000 letters"},
+                {name,  "descriptiondescriptiondescriptiondescriptiondescription Ё, Ы,Э ",
+                        "description Помилка. Текст містить недопустимі символи"}
+        };
+    }
+
+    @Issue("TUA-445")
+    @Description("Verify that user can not edit Task with invalid values")
+    @Link("https://jira.softserve.academy/browse/TUA-445")
+    @Test(dataProvider = "InvalidDescriptionAndNameData")
+    public void verifyTaskCreationFailsForInvalidValues(String name, String description, String expectedErrorMessage) {
+        TaskClient taskClient = new TaskClient(authentication.getToken());
+        CreateTaskRequest createTaskRequest = CreateTaskRequest
+                .builder()
+                .name(name)
+                .headerText(headerText)
+                .description(description)
+                .picture(picture)
+                .startDate(tomorrow)
+                .build();
+
+        Response createTaskRawResponse = taskClient.createTask(746, createTaskRequest);
+        assertEquals(createTaskRawResponse.statusCode(), 400);
+
+        ErrorResponse createTaskErrorResponse = createTaskRawResponse.as(ErrorResponse.class);
+
+        SoftAssert softly = new SoftAssert();
+        softly.assertEquals(createTaskErrorResponse.getStatus(), 400);
+        softly.assertEquals(createTaskErrorResponse.getMessage(), expectedErrorMessage);
         softly.assertAll();
     }
 }
