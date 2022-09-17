@@ -6,10 +6,12 @@ import com.ita.edu.speakua.api.clients.ClubClient;
 import com.ita.edu.speakua.api.models.club.request.CreateClubRequest;
 import com.ita.edu.speakua.api.models.club.request.Location;
 import com.ita.edu.speakua.api.models.club.request.UrlGallery;
+import com.ita.edu.speakua.api.models.club.response.ReadClubResponse;
 import io.restassured.response.Response;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import java.util.ArrayList;
 
@@ -52,11 +54,11 @@ public class ClubTest extends ApiBaseTestRunner {
         ArrayList<Location> locations = new ArrayList<>();
         locations.add(location);
 
-        UrlGallery urlGalery = new UrlGallery();
-        urlGalery.setUrlGallery("https://apiTest.API");
+        UrlGallery urlGallery = new UrlGallery();
+        urlGallery.setUrlGallery("https://apiTest.API");
 
         ArrayList<UrlGallery> urlGaleryList = new ArrayList<>();
-        urlGaleryList.add(urlGalery);
+        urlGaleryList.add(urlGallery);
 
         CreateClubRequest createClubRequest = CreateClubRequest
                 .builder()
@@ -95,6 +97,13 @@ public class ClubTest extends ApiBaseTestRunner {
         Response response = clubClient.postParseJson("src/test/resources/create_club.json",
                 RandomStringUtils.randomAlphanumeric(100));
         assertEquals(response.statusCode(), 200);
+        System.out.println(response.asPrettyString());
+        ReadClubResponse createClubResponse = response.as(ReadClubResponse.class);
+
+
+//        SoftAssert softAssert = new SoftAssert();
+//        softAssert.assertEquals(createClubResponse.getId(), 913);
+//        softAssert.assertAll();
     }
 }
 
