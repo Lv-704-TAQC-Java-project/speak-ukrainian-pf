@@ -4,7 +4,6 @@ import com.ita.edu.speakua.api.ApiBaseTestRunner;
 import com.ita.edu.speakua.api.clients.Authentication;
 import com.ita.edu.speakua.api.clients.ChallengeClient;
 import com.ita.edu.speakua.api.models.ErrorResponse;
-import com.ita.edu.speakua.api.models.challenge.ChallengeFailResponse;
 import com.ita.edu.speakua.api.models.challenge.CreateChallengeRequest;
 import com.ita.edu.speakua.api.models.challenge.ReadChallengeResponse;
 import io.qameta.allure.Description;
@@ -119,7 +118,7 @@ public class ChallengeTest extends ApiBaseTestRunner {
         Response deleteResponse = challengeClient.delete(388);
         assertEquals(deleteResponse.statusCode(), 401);
 
-        ChallengeFailResponse challengeFailResponse = deleteResponse.as(ChallengeFailResponse.class);
+        ErrorResponse challengeFailResponse = deleteResponse.as(ErrorResponse.class);
 
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(challengeFailResponse.getStatus(), 401);
