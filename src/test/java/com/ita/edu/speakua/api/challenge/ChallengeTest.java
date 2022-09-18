@@ -6,6 +6,10 @@ import com.ita.edu.speakua.api.clients.ChallengeClient;
 import com.ita.edu.speakua.api.models.ErrorResponse;
 import com.ita.edu.speakua.api.models.challenge.CreateChallengeRequest;
 import com.ita.edu.speakua.api.models.challenge.ReadChallengeResponse;
+import com.ita.edu.speakua.utils.jdbc.entity.ChallengeEntity;
+import com.ita.edu.speakua.utils.jdbc.entity.TaskEntity;
+import com.ita.edu.speakua.utils.jdbc.services.ChallengeService;
+import com.ita.edu.speakua.utils.jdbc.services.TaskService;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Link;
@@ -14,6 +18,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+
+import java.util.List;
 
 import static org.testng.Assert.assertEquals;
 
@@ -31,15 +37,45 @@ public class ChallengeTest extends ApiBaseTestRunner {
         Response response = client.get(378);
         assertEquals(response.statusCode(), 200);
 
-        ReadChallengeResponse createChallengeResponse = response.as(ReadChallengeResponse.class);
+        ReadChallengeResponse readChallengeResponse = response.as(ReadChallengeResponse.class);
 
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(createChallengeResponse.getId(), 378);
-        softAssert.assertEquals(createChallengeResponse.getName(), "MzFGwuRN");
-        softAssert.assertEquals(createChallengeResponse.getSortNumber(), 1897237667);
-        softAssert.assertEquals(createChallengeResponse.getTasks().size(), 0);
-        softAssert.assertEquals(createChallengeResponse.getUser().getFirstName(), "Admin");
-        softAssert.assertEquals(createChallengeResponse.getUser().getId(), 1);
+        softAssert.assertEquals(readChallengeResponse.getId(), 378);
+        softAssert.assertEquals(readChallengeResponse.getName(), "MzFGwuRN");
+        softAssert.assertEquals(readChallengeResponse.getSortNumber(), 1897237667);
+        softAssert.assertEquals(readChallengeResponse.getTasks().size(), 0);
+        softAssert.assertEquals(readChallengeResponse.getUser().getFirstName(), "Admin");
+        softAssert.assertEquals(readChallengeResponse.getUser().getId(), 1);
+        softAssert.assertAll();
+    }
+
+    @Issue("TUA-437")
+    @Description("Verify API returns same challenge as database")
+    @Link("https://jira.softserve.academy/browse/TUA-437")
+    @Test
+    public void verifyApiGetChallengeEqualsDatabaseChallenge() {
+        long databaseFirstChallengeId = new ChallengeService().getAllChallenges().get(0).getId();
+        ChallengeEntity databaseChallenge = new ChallengeService().getChallengeById(databaseFirstChallengeId);
+        List<TaskEntity> firstChallengeTasks = new TaskService().getTasks(databaseFirstChallengeId);
+        ChallengeClient client = new ChallengeClient(authentication.getToken());
+
+        Response response = client.get(databaseFirstChallengeId);
+        assertEquals(response.statusCode(), 200);
+
+        ReadChallengeResponse readChallengeResponse = response.as(ReadChallengeResponse.class);
+
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertEquals(readChallengeResponse.getId(), databaseFirstChallengeId);
+        softAssert.assertEquals(readChallengeResponse.getName(), databaseChallenge.getName());
+        softAssert.assertEquals(readChallengeResponse.getTitle(), databaseChallenge.getTitle());
+        softAssert.assertEquals(readChallengeResponse.getDescription(), databaseChallenge.getDescription());
+        softAssert.assertEquals(readChallengeResponse.getPicture(), databaseChallenge.getPicture());
+        softAssert.assertEquals(readChallengeResponse.getSortNumber(), databaseChallenge.getSortNumber());
+        softAssert.assertEquals(readChallengeResponse.getIsActive(), databaseChallenge.getIsActive());
+        softAssert.assertEquals(readChallengeResponse.getTasks().size(), firstChallengeTasks.size());
+        softAssert.assertEquals(readChallengeResponse.getUser() != null ? readChallengeResponse.getUser().getId() : 0, databaseChallenge.getUserId());
+        softAssert.assertEquals(readChallengeResponse.getRegistrationLink(), databaseChallenge.getRegistrationLink());
+
         softAssert.assertAll();
     }
 

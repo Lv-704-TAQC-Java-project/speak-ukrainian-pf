@@ -23,6 +23,10 @@ public class TaskService {
         return taskDAO.selectAllTasks();
     }
 
+    public List<TaskEntity> getTasks(long challengeId) {
+        return taskDAO.selectTasks(challengeId);
+    }
+
     public List<String> getAllNameWhere(String name) {
         return taskDAO
                 .selectTasks(name)

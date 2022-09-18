@@ -13,7 +13,7 @@ public class ChallengeClient extends BaseClient {
         this.authentication = authentication;
     }
 
-    public Response get(int id) {
+    public Response get(long id) {
         return prepareRequest()
                 .header("Authorization", "Bearer " + this.authentication)
                 .when()

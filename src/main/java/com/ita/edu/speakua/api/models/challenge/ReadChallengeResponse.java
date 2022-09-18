@@ -7,14 +7,14 @@ import java.util.ArrayList;
 
 @Data
 public class ReadChallengeResponse {
-    public int id;
-    public String name;
-    public String title;
-    public String description;
-    public String picture;
-    public int sortNumber;
-    public boolean isActive;
-    public ArrayList<Task> tasks;
-    public User user;
-    public Object registrationLink;
+    private int id;
+    private String name;
+    private String title;
+    private String description;
+    private String picture;
+    private int sortNumber;
+    private Boolean isActive;
+    private ArrayList<Task> tasks;
+    private User user;
+    private String registrationLink;
 }

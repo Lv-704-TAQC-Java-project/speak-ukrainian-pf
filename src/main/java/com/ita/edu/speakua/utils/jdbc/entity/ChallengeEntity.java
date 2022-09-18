@@ -16,7 +16,7 @@ public class ChallengeEntity {
 
     private long id;
     private String description;
-    private boolean isActive;
+    private Boolean isActive;
     private String name;
     private String picture;
     private String registrationLink;
@@ -28,13 +28,13 @@ public class ChallengeEntity {
         ChallengeEntity challengeEntity = new ChallengeEntity();
         challengeEntity.setId(Long.parseLong(row.get(0)));
         challengeEntity.setDescription(row.get(1));
-        challengeEntity.setActive(Boolean.parseBoolean(row.get(2)));
+        challengeEntity.setIsActive(row.get(2).equals("t"));
         challengeEntity.setName(row.get(3));
         challengeEntity.setPicture(row.get(4));
         challengeEntity.setRegistrationLink(row.get(5));
         challengeEntity.setSortNumber(Long.parseLong(row.get(6)));
         challengeEntity.setTitle(row.get(7));
-        challengeEntity.setUserId(Long.parseLong(row.get(8)));
+        challengeEntity.setUserId(Long.parseLong(row.get(8) == null ? "0" : row.get(8)));
         return challengeEntity;
     }
 

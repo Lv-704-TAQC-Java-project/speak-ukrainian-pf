@@ -2,7 +2,6 @@ package com.ita.edu.speakua.api.registration;
 
 import com.ita.edu.speakua.api.ApiBaseTestRunner;
 import com.ita.edu.speakua.api.clients.RegistrationClient;
-import com.ita.edu.speakua.api.data.Role;
 import com.ita.edu.speakua.api.models.ErrorResponse;
 import com.ita.edu.speakua.api.models.registration.SignUpRequest;
 import com.ita.edu.speakua.utils.jdbc.services.UserService;
@@ -13,6 +12,7 @@ import io.restassured.response.Response;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import static com.ita.edu.speakua.api.data.Role.MANAGER;
 import static org.testng.Assert.assertEquals;
 
 public class RegistrationTest extends ApiBaseTestRunner {
@@ -34,7 +34,7 @@ public class RegistrationTest extends ApiBaseTestRunner {
                 .email(email)
                 .password("Pf#123456")
                 .phone("0634562314")
-                .roleName(Role.MANAGER)
+                .roleName(MANAGER)
                 .build();
 
         Response signUpResponse = registrationClient.signUp(signUpRequest);
