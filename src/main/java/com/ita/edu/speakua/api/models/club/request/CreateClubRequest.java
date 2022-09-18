@@ -1,16 +1,8 @@
 package com.ita.edu.speakua.api.models.club.request;
 
-import com.fasterxml.jackson.core.json.JsonReadContext;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonStreamParser;
-import com.google.gson.stream.JsonReader;
 import lombok.Builder;
-import org.openqa.selenium.json.Json;
 
-import java.io.IOException;
-import java.nio.file.*;
 import java.util.ArrayList;
-import java.util.List;
 
 import static java.lang.String.format;
 
@@ -80,16 +72,5 @@ public class CreateClubRequest {
                 clubExternalId,
                 centerExternalId
         );
-    }
-
-    public static String parseJson(String jsonFilePath, String name) {
-        String json = null;
-        try {
-            json = String.valueOf(JsonParser.parseReader(new JsonReader(Files.newBufferedReader(Paths.get(jsonFilePath)))));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println(format(json, name));
-        return format(json, name);
     }
 }
