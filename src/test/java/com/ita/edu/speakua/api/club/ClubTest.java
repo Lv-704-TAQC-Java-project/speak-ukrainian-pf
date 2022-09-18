@@ -1,4 +1,4 @@
-package com.ita.edu.speakua.api.challenge;
+package com.ita.edu.speakua.api.club;
 
 import com.ita.edu.speakua.api.ApiBaseTestRunner;
 import com.ita.edu.speakua.api.clients.Authentication;
