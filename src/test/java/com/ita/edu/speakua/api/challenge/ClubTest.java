@@ -7,6 +7,9 @@ import com.ita.edu.speakua.api.models.club.request.CreateClubRequest;
 import com.ita.edu.speakua.api.models.club.request.Location;
 import com.ita.edu.speakua.api.models.club.request.UrlGallery;
 import com.ita.edu.speakua.api.models.club.response.ReadClubResponse;
+import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
+import io.qameta.allure.Link;
 import io.restassured.response.Response;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.annotations.BeforeClass;
@@ -25,6 +28,9 @@ public class ClubTest extends ApiBaseTestRunner {
         authentication = new Authentication(properties.getUserEmail(), properties.getUserPassword());
     }
 
+    @Issue("TUA-505")
+    @Description("Verify admin can create club with name more than 100 chars")
+    @Link("https://jira.softserve.academy/browse/TUA-505")
     @Test
     public void successPostClubTest() {
         ClubClient clubClient = new ClubClient(authentication.getToken());
@@ -93,11 +99,16 @@ public class ClubTest extends ApiBaseTestRunner {
 
         ReadClubResponse readClubResponse = response.as(ReadClubResponse.class);
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(readClubResponse.getName(), clubName, "Club name should be correct");
-        softAssert.assertEquals(readClubResponse.getAgeFrom(), 4, "AgeFrom should be equal to expected");
-        softAssert.assertEquals(readClubResponse.getAgeTo(), 8, "AgeTo should be equal to expected");
-        softAssert.assertEquals(readClubResponse.getIsApproved(), "true", "IsApproved value should be correct");
-        softAssert.assertEquals(readClubResponse.getIsOnline(), "true", "IsOnline value should be correct");
+        softAssert.assertEquals(readClubResponse.getName(), clubName,
+                "Club name should be correct");
+        softAssert.assertEquals(readClubResponse.getAgeFrom(), 4,
+                "AgeFrom should be equal to expected");
+        softAssert.assertEquals(readClubResponse.getAgeTo(), 8,
+                "AgeTo should be equal to expected");
+        softAssert.assertEquals(readClubResponse.getIsApproved(), "true",
+                "IsApproved value should be correct");
+        softAssert.assertEquals(readClubResponse.getIsOnline(), "true",
+                "IsOnline value should be correct");
         softAssert.assertAll();
     }
 }
