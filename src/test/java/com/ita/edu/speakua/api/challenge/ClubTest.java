@@ -3,7 +3,6 @@ package com.ita.edu.speakua.api.challenge;
 import com.ita.edu.speakua.api.ApiBaseTestRunner;
 import com.ita.edu.speakua.api.clients.Authentication;
 import com.ita.edu.speakua.api.clients.ClubClient;
-import com.ita.edu.speakua.api.models.ErrorResponse;
 import com.ita.edu.speakua.api.models.club.request.CreateClubRequest;
 import com.ita.edu.speakua.api.models.club.request.Location;
 import com.ita.edu.speakua.api.models.club.request.UrlGallery;
@@ -27,7 +26,7 @@ public class ClubTest extends ApiBaseTestRunner {
     }
 
     @Test
-    public void successPostTest() {
+    public void successPostClubTest() {
         ClubClient clubClient = new ClubClient(authentication.getToken());
 
         ArrayList<String> categoriesName = new ArrayList<>();
@@ -61,6 +60,8 @@ public class ClubTest extends ApiBaseTestRunner {
         ArrayList<UrlGallery> urlGaleryList = new ArrayList<>();
         urlGaleryList.add(urlGallery);
 
+        String clubName = RandomStringUtils.randomAlphabetic(100);
+
         CreateClubRequest createClubRequest = CreateClubRequest
                 .builder()
                 .id(900)
@@ -71,7 +72,7 @@ public class ClubTest extends ApiBaseTestRunner {
                         "де дітки навчатимуться з задоволенням, а батьки радітимуть від результатів." +
                         "\\\",\\\"type\\\":\\\"unstyled\\\",\\\"depth\\\":1,\\\"inlineStyleRanges\\\":[],\\\"entityRanges\\\":[]," +
                         "\\\"data\\\":{}}],\\\"entityMap\\\":{}}\\\"")
-                .name(RandomStringUtils.randomAlphabetic(100))
+                .name(clubName)
                 .ageFrom(4)
                 .ageTo(8)
                 .urlBackground("/dev/static/images/user/avatar/user1.png")
@@ -87,12 +88,17 @@ public class ClubTest extends ApiBaseTestRunner {
                 .build();
 
         Response response = clubClient.post(createClubRequest);
-
-        System.out.println(createClubRequest.json());
-
         assertEquals(response.statusCode(), 200);
-        System.out.println("Response:");
         System.out.println(response.asPrettyString());
+
+        ReadClubResponse readClubResponse = response.as(ReadClubResponse.class);
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertEquals(readClubResponse.getName(), clubName, "Club name should be correct");
+        softAssert.assertEquals(readClubResponse.getAgeFrom(), 4, "AgeFrom should be equal to expected");
+        softAssert.assertEquals(readClubResponse.getAgeTo(), 8, "AgeTo should be equal to expected");
+        softAssert.assertEquals(readClubResponse.getIsApproved(), "true", "IsApproved value should be correct");
+        softAssert.assertEquals(readClubResponse.getIsOnline(), "true", "IsOnline value should be correct");
+        softAssert.assertAll();
     }
 }
 
