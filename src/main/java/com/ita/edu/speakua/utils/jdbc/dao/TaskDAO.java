@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+import static java.lang.String.format;
+
 public class TaskDAO {
     public List<TaskEntity> selectAllTasks() {
         Statement statement = ManagerDAO.getInstance().getStatement();
@@ -21,11 +23,24 @@ public class TaskDAO {
         return TaskEntity.parseRows(rows);
     }
 
+    public List<TaskEntity> selectTasks(long challengeId) {
+        Statement statement = ManagerDAO.getInstance().getStatement();
+        List<List<String>> rows;
+        try {
+            ResultSet resultSet = statement.executeQuery(format(TaskEntity.SELECT_TASKS_FROM_CHALLENGE, challengeId));
+            rows = ManagerDAO.getInstance().parseResultSet(resultSet);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        ManagerDAO.closeStatement(statement);
+        return TaskEntity.parseRows(rows);
+    }
+
     public List<TaskEntity> selectTasks(String name) {
         Statement statement = ManagerDAO.getInstance().getStatement();
         List<List<String>> rows;
         try {
-            ResultSet resultSet = statement.executeQuery(String.format(TaskEntity.SELECT_TASKS_WITH_NAME, name));
+            ResultSet resultSet = statement.executeQuery(format(TaskEntity.SELECT_TASKS_WITH_NAME, name));
             rows = ManagerDAO.getInstance().parseResultSet(resultSet);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -38,7 +53,7 @@ public class TaskDAO {
         Statement statement = ManagerDAO.getInstance().getStatement();
         List<List<String>> rows;
         try {
-            ResultSet resultSet = statement.executeQuery(String.format(TaskEntity.SELECT_TASKS_WITH_NAME_ORDERED_AND_SORTED, name, orderBy, desc ? "DESC" : "ASC"));
+            ResultSet resultSet = statement.executeQuery(format(TaskEntity.SELECT_TASKS_WITH_NAME_ORDERED_AND_SORTED, name, orderBy, desc ? "DESC" : "ASC"));
             rows = ManagerDAO.getInstance().parseResultSet(resultSet);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -52,7 +67,7 @@ public class TaskDAO {
         Statement statement = ManagerDAO.getInstance().getStatement();
         List<List<String>> rows = null;
         try {
-            ResultSet resultSet = statement.executeQuery(String.format(TaskEntity.COUNT_TASKS_WITH_NAME, name));
+            ResultSet resultSet = statement.executeQuery(format(TaskEntity.COUNT_TASKS_WITH_NAME, name));
             rows = ManagerDAO.getInstance().parseResultSet(resultSet);
         } catch (SQLException e) {
             throw new RuntimeException(e);

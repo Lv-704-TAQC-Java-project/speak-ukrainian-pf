@@ -5,7 +5,7 @@ import io.restassured.response.Response;
 
 public class RegistrationClient extends BaseClient {
 
-    public Response post(SignUpRequest signUpRequest) {
+    public Response signUp(SignUpRequest signUpRequest) {
         return prepareRequest()
                 .body(signUpRequest.json())
                 .when()

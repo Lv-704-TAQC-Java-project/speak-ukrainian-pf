@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class User {
-    public int id;
+    public long id;
     public String firstName;
     public String lastName;
     public String urlLogo;
