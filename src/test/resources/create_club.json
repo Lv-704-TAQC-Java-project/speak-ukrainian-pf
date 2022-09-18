@@ -1,0 +1,43 @@
+{
+  "id": 913,
+  "categoriesName": [
+    "Спортивні секції"
+  ],
+  "locations": [
+    {
+      "id": 23,
+      "name": "Голосівська",
+      "address": "string",
+      "cityId": 1,
+      "districtId": 1,
+      "stationId": 1,
+      "cityName": "Київ",
+      "districtName": "Голосіївський",
+      "stationName": "Голосіївська",
+      "coordinates": "50.35535081747696, 30.51765754176391",
+      "longitude": 0,
+      "latitude": 0,
+      "centerId": 2,
+      "clubId": 3,
+      "phone": "0631133456"
+    }
+  ],
+  "description": "{\"blocks\":[{\"key\":\"brl63\",\"text\":\"Ми поставили перед собою ціль створити мережу найкращих центрів раннього розвитку в Україні, де дітки навчатимуться з задоволенням, а батьки радітимуть від результатів.\",\"type\":\"unstyled\",\"depth\":1,\"inlineStyleRanges\":[],\"entityRanges\":[],\"data\":{}}],\"entityMap\":{}}\"",
+  "name": "%s",
+  "ageFrom": 17,
+  "ageTo": 18,
+  "urlBackground": "/dev/static/images/user/avatar/user1.png",
+  "urlLogo": "/dev/static/images/user/avatar/user1.png",
+  "urlGallery": [
+    {
+      "urlGallery": "https://apiTest.API"
+    }
+  ],
+  "isOnline": true,
+  "contacts": "string",
+  "isApproved": true,
+  "userId": 1,
+  "centerId": 1,
+  "clubExternalId": 4,
+  "centerExternalId": 5
+}
