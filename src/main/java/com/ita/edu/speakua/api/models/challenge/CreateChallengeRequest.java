@@ -22,7 +22,7 @@ public class CreateChallengeRequest {
     @JsonProperty("picture")
     private String picture;
     @JsonProperty("sortNumber")
-    private int sortNumber;
+    private Integer sortNumber;
 
     public String json() {
         return format("{\n" +
