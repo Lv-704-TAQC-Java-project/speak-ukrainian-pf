@@ -1,58 +1,38 @@
 package com.ita.edu.speakua.api.models.club.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
-
-import static java.lang.String.format;
 
 @Builder
 public class Location {
+    @JsonProperty("id")
     private int id;
+    @JsonProperty("name")
     private String name;
+    @JsonProperty("address")
     private String address;
+    @JsonProperty("cityId")
     private int cityId;
+    @JsonProperty("districtId")
     private int districtId;
+    @JsonProperty("stationId")
     private int stationId;
+    @JsonProperty("cityName")
     private String cityName;
+    @JsonProperty("districtName")
     private String districtName;
+    @JsonProperty("stationName")
     private String stationName;
+    @JsonProperty("coordinates")
     private String coordinates;
+    @JsonProperty("longitude")
     private int longitude;
+    @JsonProperty("latitude")
     private int latitude;
+    @JsonProperty("centerId")
     private int centerId;
+    @JsonProperty("clubId")
     private int clubId;
+    @JsonProperty("phone")
     private String phone;
-
-    @Override
-    public String toString() {
-        return format("    \"id\": %d,\n" +
-                        "    \"name\": \"%s\",\n" +
-                        "    \"address\": \"%s\",\n" +
-                        "    \"cityId\": %d,\n" +
-                        "    \"districtId\": %d,\n" +
-                        "    \"stationId\": %d,\n" +
-                        "    \"cityName\": \"%s\",\n" +
-                        "    \"districtName\": \"%s\",\n" +
-                        "    \"stationName\": \"%s\",\n" +
-                        "    \"coordinates\": \"%s\",\n" +
-                        "    \"longitude\": %d,\n" +
-                        "    \"latitude\": %d,\n" +
-                        "    \"centerId\": %d,\n" +
-                        "    \"clubId\": %d,\n" +
-                        "    \"phone\": \"%s\"",
-                id,
-                name,
-                address,
-                cityId,
-                districtId,
-                stationId,
-                cityName,
-                districtName,
-                stationName,
-                coordinates,
-                longitude,
-                latitude,
-                centerId,
-                clubId,
-                phone);
-    }
 }

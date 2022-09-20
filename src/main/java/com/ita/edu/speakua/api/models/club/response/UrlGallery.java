@@ -8,14 +8,13 @@ import static java.lang.String.format;
 public class UrlGallery {
     private int id;
     private String url;
-
-    @Override
-    public String toString() {
-        return format("    {\n" +
-                        "\"id\": %d,\n" +
-                        "\"url\": \"%s\",\n" +
-                        "    }\n",
-                id,
-                url);
-    }
+//    @Override
+//    public String toString() {
+//        return format("    {\n" +
+//                        "\"id\": %d,\n" +
+//                        "\"url\": \"%s\",\n" +
+//                        "    }\n",
+//                id,
+//                url);
+//    }
 }
