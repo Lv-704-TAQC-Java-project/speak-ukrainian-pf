@@ -6,8 +6,13 @@ import com.ita.edu.speakua.api.clients.TaskClient;
 import com.ita.edu.speakua.api.models.ErrorResponse;
 import com.ita.edu.speakua.api.models.task.CreateTaskRequest;
 import com.ita.edu.speakua.api.models.task.CreateTaskResponse;
+import com.ita.edu.speakua.api.models.task.EditTaskRequest;
+import com.ita.edu.speakua.api.models.task.ReadTaskResponse;
+import com.ita.edu.speakua.utils.jdbc.entity.TaskEntity;
 import com.ita.edu.speakua.utils.jdbc.services.TaskService;
-import io.qameta.allure.*;
+import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
+import io.qameta.allure.Link;
 import io.restassured.response.Response;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -141,11 +146,11 @@ public class TaskTest extends ApiBaseTestRunner {
                         "name must contain a minimum of 5 and a maximum of 100 letters"},
                 {"namenameЁ, Ы,Э", description,
                         "name Помилка. Текст містить недопустимі символи"},
-                {name,  "descriptiondescriptiondescriptiondescri ",
+                {name, "descriptiondescriptiondescriptiondescri ",
                         "description must contain a minimum of 40 and a maximum of 3000 letters"},
-                {name,  new String(new char[300]).replace("\0", "description"),
+                {name, new String(new char[300]).replace("\0", "description"),
                         "description must contain a minimum of 40 and a maximum of 3000 letters"},
-                {name,  "descriptiondescriptiondescriptiondescriptiondescription Ё, Ы,Э ",
+                {name, "descriptiondescriptiondescriptiondescriptiondescription Ё, Ы,Э ",
                         "description Помилка. Текст містить недопустимі символи"}
         };
     }
@@ -173,6 +178,48 @@ public class TaskTest extends ApiBaseTestRunner {
         SoftAssert softly = new SoftAssert();
         softly.assertEquals(createTaskErrorResponse.getStatus(), 400);
         softly.assertEquals(createTaskErrorResponse.getMessage(), expectedErrorMessage);
+        softly.assertAll();
+    }
+
+    @Issue("TUA-441")
+    @Description("Verify that user can edit Task with valid values")
+    @Link("https://jira.softserve.academy/browse/TUA-444")
+    @Test
+    public void verifyTaskCreationWithValidData() {
+        String name = "namenamename1213#$% ";
+        String description = "descriptiondescriptiondescriptiondescriptiondescription12345$%%^$# ";
+        String picture = "/upload/test/test.png";
+        int taskId = 703;
+
+        TaskEntity taskBeforeChanges = new TaskService().getTaskById(taskId);
+
+        TaskClient taskClient = new TaskClient(authentication.getToken());
+        EditTaskRequest editTaskRequest = EditTaskRequest
+                .builder()
+                .name(name)
+                .headerText(taskBeforeChanges.getHeaderText())
+                .description(description)
+                .picture(picture)
+                .startDate(tomorrow)
+                .challengeId(taskBeforeChanges.getChallengeId())
+                .build();
+
+        Response editTaskResponse = taskClient.put(taskId, editTaskRequest);
+        assertEquals(editTaskResponse.statusCode(), 200);
+
+        TaskEntity taskAfterChanges = new TaskService().getTaskById(taskId);
+
+        ReadTaskResponse readTaskResponse = editTaskResponse.as(ReadTaskResponse.class);
+        SoftAssert softly = new SoftAssert();
+
+        softly.assertEquals(taskAfterChanges.getId(), readTaskResponse.getId());
+        softly.assertEquals(taskAfterChanges.getName(), readTaskResponse.getName());
+        softly.assertEquals(taskAfterChanges.getHeaderText(), readTaskResponse.getHeaderText());
+        softly.assertEquals(taskAfterChanges.getDescription(), readTaskResponse.getDescription());
+        softly.assertEquals(taskAfterChanges.getPicture(), readTaskResponse.getPicture());
+
+        softly.assertEquals(taskAfterChanges.getStartDate(), readTaskResponse.getStartDate());
+
         softly.assertAll();
     }
 }

@@ -16,6 +16,7 @@ public class TaskEntity {
     public static final String COUNT_TASKS_WITH_NAME = "SELECT COUNT(*) FROM tasks WHERE name='%s';";
     public static final String MAX_TASKS_ID = "SELECT MAX(id) FROM tasks;";
     public static final String SELECT_TASKS_FROM_CHALLENGE = "SELECT * FROM tasks WHERE challenge_id=%d AND start_date < CURRENT_DATE;";
+    public static final String SELECT_TASK_WHERE_ID = "SELECT * FROM tasks WHERE id=%d;";
 
     private long id;
     private String description;

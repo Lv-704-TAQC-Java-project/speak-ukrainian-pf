@@ -88,4 +88,17 @@ public class TaskDAO {
         ManagerDAO.closeStatement(statement);
         return Long.parseLong(rows.get(0).get(0));
     }
+
+    public TaskEntity selectTask(long taskId) {
+        Statement statement = ManagerDAO.getInstance().getStatement();
+        List<List<String>> rows;
+        try {
+            ResultSet resultSet = statement.executeQuery(format(TaskEntity.SELECT_TASK_WHERE_ID, taskId));
+            rows = ManagerDAO.getInstance().parseResultSet(resultSet);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        ManagerDAO.closeStatement(statement);
+        return TaskEntity.parseRow(rows.get(0));
+    }
 }
