@@ -19,4 +19,8 @@ public class ChallengeService {
     public ChallengeEntity getChallengeById(long id) {
         return centerDAO.selectChallengeById(id);
     }
+
+    public long getMaxChallengeId() {
+        return centerDAO.selectChallengeWithMaxId().getId();
+    }
 }

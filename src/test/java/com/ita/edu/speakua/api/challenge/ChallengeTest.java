@@ -14,6 +14,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Link;
 import io.restassured.response.Response;
+import org.checkerframework.checker.units.qual.C;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -160,6 +161,41 @@ public class ChallengeTest extends ApiBaseTestRunner {
         softAssert.assertEquals(challengeFailResponse.getStatus(), 401);
         softAssert.assertEquals(challengeFailResponse.getMessage(), "You have no necessary permissions (role)");
         softAssert.assertEquals(getResponse.statusCode(), 200);
+        softAssert.assertAll();
+    }
+
+    @Issue("TUA-429")
+    @Link("https://jira.softserve.academy/browse/TUA-429")
+    @Description("Verify that user can create Challenge using valid values")
+    @Test
+    public void successPostChallengeTest() {
+        ChallengeClient challengeClient = new ChallengeClient(authentication.getToken());
+        String name = "New Challenge";
+        String title = "New title";
+        String description = "Lorem ipsum dolor sit amet, consectetuer adipiscin";
+        String picturePath = "/upload/test/test.png";
+        long maxId = new ChallengeService().getMaxChallengeId() + 1;
+
+        CreateChallengeRequest createChallengeRequest = CreateChallengeRequest
+                .builder()
+                .name(name)
+                .title(title)
+                .description(description)
+                .picture(picturePath)
+                .sortNumber((int) maxId)
+                .build();
+
+        Response response = challengeClient.postChallenge(createChallengeRequest);
+        System.out.println(response.asPrettyString());
+        assertEquals(response.statusCode(), 200, "Challenge should be created");
+
+        ReadChallengeResponse readChallengeResponse = response.as(ReadChallengeResponse.class);
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertEquals(readChallengeResponse.getName(), name);
+        softAssert.assertEquals(readChallengeResponse.getTitle(), title);
+        softAssert.assertEquals(readChallengeResponse.getDescription(), description);
+        softAssert.assertEquals(readChallengeResponse.getPicture(), picturePath);
+        softAssert.assertEquals(readChallengeResponse.getSortNumber(), maxId);
         softAssert.assertAll();
     }
 }
