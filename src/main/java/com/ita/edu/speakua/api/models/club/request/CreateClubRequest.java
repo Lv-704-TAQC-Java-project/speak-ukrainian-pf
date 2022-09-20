@@ -1,76 +1,56 @@
 package com.ita.edu.speakua.api.models.club.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Builder;
 
 import java.util.ArrayList;
 
-import static java.lang.String.format;
-
 @Builder
 public class CreateClubRequest {
-    private int id;
+    @JsonProperty("categoriesName")
     private ArrayList<String> categoriesName;
+    @JsonProperty("locations")
     private ArrayList<Location> locations;
+    @JsonProperty("description")
     private String description;
+    @JsonProperty("name")
     private String name;
+    @JsonProperty("ageFrom")
     private int ageFrom;
+    @JsonProperty("ageTo")
     private int ageTo;
+    @JsonProperty("urlBackground")
     private String urlBackground;
+    @JsonProperty("urlLogo")
     private String urlLogo;
+    @JsonProperty("urlGallery")
     private ArrayList<UrlGallery> urlGallery;
-    private boolean isOnline;
+    @JsonProperty("isOnline")
+    private Boolean isOnline;
+    @JsonProperty("contacts")
     private String contacts;
-    private boolean isApproved;
+    @JsonProperty("isApproved")
+    private Boolean isApproved;
+    @JsonProperty("userId")
     private int userId;
+    @JsonProperty("centerId")
     private int centerId;
+    @JsonProperty("clubExternalId")
     private int clubExternalId;
+    @JsonProperty("centerExternalId")
     private int centerExternalId;
 
-    public String json() {
-        return format("{\n" +
-                        "  \"id\": %d,\n" +
-                        "  \"categoriesName\": [\n    \"%s\"\n  ],\n" +
-                        "  \"locations\": [\n" +
-                        "   {\n" +
-                        "%s\n" +
-                        "   }\n" +
-                        " ],\n" +
-                        "  \"description\": \"%s\",\n" +
-                        "  \"name\": \"%s\",\n" +
-                        "  \"ageFrom\": %d,\n" +
-                        "  \"ageTo\": %d,\n" +
-                        "  \"urlBackground\": \"%s\",\n" +
-                        "  \"urlLogo\": \"%s\",\n" +
-                        "  \"urlGallery\": [\n" +
-                        "   {\n" +
-                        "    %s\n" +
-                        "   }\n" +
-                        " ],\n" +
-                        "  \"isOnline\": %s,\n" +
-                        "  \"contacts\": \"%s\",\n" +
-                        "  \"isApproved\": %s,\n" +
-                        "  \"userId\": %d,\n" +
-                        "  \"centerId\": %d,\n" +
-                        "  \"clubExternalId\": %d,\n" +
-                        "  \"centerExternalId\": %d\n" +
-                        "}",
-                id,
-                categoriesName.toString().replaceAll("\\[|\\]", ""),
-                locations.toString().replaceAll("\\[|\\]", ""),
-                description,
-                name,
-                ageFrom,
-                ageTo,
-                urlBackground,
-                urlLogo,
-                urlGallery.toString().replaceAll("\\[|\\]", ""),
-                isOnline,
-                contacts,
-                isApproved,
-                userId,
-                centerId,
-                clubExternalId,
-                centerExternalId
-        );
+    @Override
+    public String toString() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String object = "";
+        try {
+            return objectMapper.writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return object;
     }
 }

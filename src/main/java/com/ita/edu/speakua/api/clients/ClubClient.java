@@ -8,7 +8,6 @@ public class ClubClient extends BaseClient{
     private final String path = "/club";
     private final String authentication;
 
-
     public ClubClient(String authentication) {
         super();
         this.authentication = authentication;
@@ -17,7 +16,7 @@ public class ClubClient extends BaseClient{
     public Response post(CreateClubRequest createClubRequest) {
         return prepareRequest()
                 .header("Authorization", "Bearer " + this.authentication)
-                .body(createClubRequest.json())
+                .body(createClubRequest)
                 .when()
                 .post(String.format("%s%s", baseUrl, path));
     }

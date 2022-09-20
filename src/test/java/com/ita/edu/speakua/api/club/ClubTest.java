@@ -60,8 +60,10 @@ public class ClubTest extends ApiBaseTestRunner {
         ArrayList<Location> locations = new ArrayList<>();
         locations.add(location);
 
-        UrlGallery urlGallery = new UrlGallery();
-        urlGallery.setUrlGallery("https://apiTest.API");
+        UrlGallery urlGallery = UrlGallery
+                .builder()
+                .urlGallery("https://apiTest.API")
+                .build();
 
         ArrayList<UrlGallery> urlGaleryList = new ArrayList<>();
         urlGaleryList.add(urlGallery);
@@ -70,14 +72,13 @@ public class ClubTest extends ApiBaseTestRunner {
 
         CreateClubRequest createClubRequest = CreateClubRequest
                 .builder()
-                .id(900)
                 .categoriesName(categoriesName)
                 .locations(locations)
-                .description("{\\\"blocks\\\":[{\\\"key\\\":\\\"brl63\\\",\\\"text\\\":" +
-                        "\\\"Ми поставили перед собою ціль створити мережу найкращих центрів раннього розвитку в Україні, " +
+                .description("{\"blocks\":[{\"key\":\"brl63\",\"text\":" +
+                        "\"Ми поставили перед собою ціль створити мережу найкращих центрів раннього розвитку в Україні, " +
                         "де дітки навчатимуться з задоволенням, а батьки радітимуть від результатів." +
-                        "\\\",\\\"type\\\":\\\"unstyled\\\",\\\"depth\\\":1,\\\"inlineStyleRanges\\\":[],\\\"entityRanges\\\":[]," +
-                        "\\\"data\\\":{}}],\\\"entityMap\\\":{}}\\\"")
+                        "\",\"type\":\"unstyled\",\"depth\":1,\"inlineStyleRanges\":[],\"entityRanges\":[]," +
+                        "\"data\":{}}],\"entityMap\":{}}\"")
                 .name(clubName)
                 .ageFrom(4)
                 .ageTo(8)
@@ -95,7 +96,6 @@ public class ClubTest extends ApiBaseTestRunner {
 
         Response response = clubClient.post(createClubRequest);
         assertEquals(response.statusCode(), 200);
-        System.out.println(response.asPrettyString());
 
         ReadClubResponse readClubResponse = response.as(ReadClubResponse.class);
         SoftAssert softAssert = new SoftAssert();

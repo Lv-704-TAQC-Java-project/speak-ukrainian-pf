@@ -4,8 +4,6 @@ import lombok.Data;
 
 import java.util.ArrayList;
 
-import static java.lang.String.format;
-
 @Data
 public class Center {
     private int id;
@@ -20,38 +18,35 @@ public class Center {
     private User user;
     private ArrayList<Location> locations;
     private String contacts;
-
-    @Override
-    public String toString() {
-        return format("    {\n" +
-                        "\"id\": %d,\n" +
-                        "\"name\": \"%s\",\n" +
-                        "\"urlBackgroundPicture\": \"%s\",\n" +
-                        "\"email\": \"%s\",\n" +
-                        "\"phones\": \"%s\",\n" +
-                        "\"description\": \"%s\",\n" +
-                        "\"urlWeb\": \"%s\",\n" +
-                        "\"urlLogo\": \"%s\",\n" +
-                        "\"socialLinks\": \"%s\",\n" +
-                        "\"user\": %s,\n" +
-                        "\"locations\": [\n" +
-                        "%s,\n" +
-                        "],\n" +
-                        "\"contacts\": \"%s\",\n" +
-                        "    }\n",
-                id,
-                name,
-                urlBackgroundPicture,
-                email,
-                phones,
-                description,
-                urlWeb,
-                urlLogo,
-                socialLinks,
-                user.toString().replaceAll("\\[|\\]", ""),
-                locations.toString().replaceAll("\\[|\\]", ""),
-                contacts);
-    }
-
-
+//    @Override
+//    public String toString() {
+//        return format("    {\n" +
+//                        "\"id\": %d,\n" +
+//                        "\"name\": \"%s\",\n" +
+//                        "\"urlBackgroundPicture\": \"%s\",\n" +
+//                        "\"email\": \"%s\",\n" +
+//                        "\"phones\": \"%s\",\n" +
+//                        "\"description\": \"%s\",\n" +
+//                        "\"urlWeb\": \"%s\",\n" +
+//                        "\"urlLogo\": \"%s\",\n" +
+//                        "\"socialLinks\": \"%s\",\n" +
+//                        "\"user\": %s,\n" +
+//                        "\"locations\": [\n" +
+//                        "%s,\n" +
+//                        "],\n" +
+//                        "\"contacts\": \"%s\",\n" +
+//                        "    }\n",
+//                id,
+//                name,
+//                urlBackgroundPicture,
+//                email,
+//                phones,
+//                description,
+//                urlWeb,
+//                urlLogo,
+//                socialLinks,
+//                user.toString().replaceAll("\\[|\\]", ""),
+//                locations.toString().replaceAll("\\[|\\]", ""),
+//                contacts);
+//    }
 }

@@ -1,14 +1,10 @@
 package com.ita.edu.speakua.api.models.club.request;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
 
-@Data
+@Builder
 public class UrlGallery {
+    @JsonProperty("urlGallery")
     private String urlGallery;
-
-    @Override
-    public String toString() {
-        return "\"urlGallery\": "
-                + "\"" + urlGallery + "\"";
-    }
 }
