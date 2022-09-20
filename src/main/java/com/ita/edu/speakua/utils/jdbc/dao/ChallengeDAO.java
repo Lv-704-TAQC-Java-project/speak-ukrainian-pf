@@ -34,11 +34,11 @@ public class ChallengeDAO {
         return ChallengeEntity.parseRows(rows).get(0);
     }
 
-    public ChallengeEntity selectChallengeWithMaxId() {
+    public ChallengeEntity selectChallengeWithMaxSortNumber() {
         Statement statement = ManagerDAO.getInstance().getStatement();
         List<List<String>> rows;
         try {
-            ResultSet resultSet = statement.executeQuery(ChallengeEntity.SELECT_CHALLENGE_WHERE_ID_IS_MAX);
+            ResultSet resultSet = statement.executeQuery(ChallengeEntity.SELECT_CHALLENGE_WHERE_SORT_NUMBER_IS_MAX);
             rows = ManagerDAO.getInstance().parseResultSet(resultSet);
         } catch (SQLException e) {
             throw new RuntimeException(e);
