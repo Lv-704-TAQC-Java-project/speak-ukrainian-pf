@@ -22,6 +22,7 @@ import org.testng.asserts.SoftAssert;
 import java.util.List;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 public class ChallengeTest extends ApiBaseTestRunner {
     private Authentication authentication;
@@ -185,7 +186,7 @@ public class ChallengeTest extends ApiBaseTestRunner {
                 .build();
 
         Response response = challengeClient.postChallenge(createChallengeRequest);
-        System.out.println(response.asPrettyString());
+
         assertEquals(response.statusCode(), 200, "Challenge should be created");
 
         ReadChallengeResponse readChallengeResponse = response.as(ReadChallengeResponse.class);
@@ -200,6 +201,49 @@ public class ChallengeTest extends ApiBaseTestRunner {
                 "Picture should be correct");
         softAssert.assertEquals(readChallengeResponse.getSortNumber(), maxSortNumber,
                 "Sort number should be correct");
+        softAssert.assertAll();
+    }
+
+    @Issue("TUA-431")
+    @Link("https://jira.softserve.academy/browse/TUA-431")
+    @Description("Verify that user can  not create Challenge using invalid data")
+    @Test
+    public void unsuccessfulPostChallengeTest() {
+        ChallengeClient challengeClient = new ChallengeClient(authentication.getToken());
+
+        CreateChallengeRequest createChallengeRequest = CreateChallengeRequest
+                .builder()
+                .name(null)
+                .title(null)
+                .description(null)
+                .picture(null)
+                .sortNumber(null)
+                .build();
+
+        String nameErrorMessage = "name must not be blank";
+        String titleErrorMessage = "title must not be blank";
+        String descriptionErrorMessage = "description must not be blank";
+        String pictureErrorMessage = "picture must not be blank";
+        String sortNumberErrorMessage = "sortNumber must not be null";
+
+        Response response = challengeClient.postChallenge(createChallengeRequest);
+
+        assertEquals(response.statusCode(), 400,
+                "Challenge should not be created");
+
+        ErrorResponse errorResponse = response.as(ErrorResponse.class);
+
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertTrue(errorResponse.getMessage().contains(nameErrorMessage),
+                "Name error message should appear");
+        softAssert.assertTrue(errorResponse.getMessage().contains(titleErrorMessage),
+                "Title error message should appear");
+        softAssert.assertTrue(errorResponse.getMessage().contains(descriptionErrorMessage),
+                "Description error message should appear");
+        softAssert.assertTrue(errorResponse.getMessage().contains(pictureErrorMessage),
+                "Picture error message should appear");
+        softAssert.assertTrue(errorResponse.getMessage().contains(sortNumberErrorMessage),
+                "Sort number error message should appear");
         softAssert.assertAll();
     }
 }

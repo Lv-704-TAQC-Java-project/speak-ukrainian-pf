@@ -21,6 +21,6 @@ public class ChallengeService {
     }
 
     public long getMaxChallengeSortNumber() {
-        return centerDAO.selectChallengeWithMaxSortNumber().getId();
+        return centerDAO.selectChallengeWithMaxSortNumber().getSortNumber();
     }
 }
