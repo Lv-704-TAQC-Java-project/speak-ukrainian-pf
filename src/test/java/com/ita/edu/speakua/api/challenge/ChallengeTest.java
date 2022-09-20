@@ -14,7 +14,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Link;
 import io.restassured.response.Response;
-import org.checkerframework.checker.units.qual.C;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -174,7 +173,7 @@ public class ChallengeTest extends ApiBaseTestRunner {
         String title = "New title";
         String description = "Lorem ipsum dolor sit amet, consectetuer adipiscin";
         String picturePath = "/upload/test/test.png";
-        long maxId = new ChallengeService().getMaxChallengeId() + 1;
+        long maxSortNumber = new ChallengeService().getMaxChallengeSortNumber() + 1;
 
         CreateChallengeRequest createChallengeRequest = CreateChallengeRequest
                 .builder()
@@ -182,7 +181,7 @@ public class ChallengeTest extends ApiBaseTestRunner {
                 .title(title)
                 .description(description)
                 .picture(picturePath)
-                .sortNumber((int) maxId)
+                .sortNumber((int) maxSortNumber)
                 .build();
 
         Response response = challengeClient.postChallenge(createChallengeRequest);
@@ -191,11 +190,16 @@ public class ChallengeTest extends ApiBaseTestRunner {
 
         ReadChallengeResponse readChallengeResponse = response.as(ReadChallengeResponse.class);
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(readChallengeResponse.getName(), name);
-        softAssert.assertEquals(readChallengeResponse.getTitle(), title);
-        softAssert.assertEquals(readChallengeResponse.getDescription(), description);
-        softAssert.assertEquals(readChallengeResponse.getPicture(), picturePath);
-        softAssert.assertEquals(readChallengeResponse.getSortNumber(), maxId);
+        softAssert.assertEquals(readChallengeResponse.getName(), name,
+                "Name should be correct");
+        softAssert.assertEquals(readChallengeResponse.getTitle(), title,
+                "Title should be correct");
+        softAssert.assertEquals(readChallengeResponse.getDescription(), description,
+                "Description should be correct");
+        softAssert.assertEquals(readChallengeResponse.getPicture(), picturePath,
+                "Picture should be correct");
+        softAssert.assertEquals(readChallengeResponse.getSortNumber(), maxSortNumber,
+                "Sort number should be correct");
         softAssert.assertAll();
     }
 }
