@@ -22,7 +22,7 @@ public class TaskClient extends BaseClient {
     public Response createTask(int id, CreateTaskRequest createTaskRequest) {
         return prepareRequest()
                 .header("Authorization", "Bearer " + this.authentication)
-                .body(createTaskRequest.json())
+                .body(createTaskRequest)
                 .when()
                 .post(baseUrl + "/challenge/" + id + "/task");
     }
@@ -30,7 +30,7 @@ public class TaskClient extends BaseClient {
     public Response put(int id, EditTaskRequest editTaskRequest) {
         return prepareRequest()
                 .header("Authorization", "Bearer " + this.authentication)
-                .body(editTaskRequest.json())
+                .body(editTaskRequest)
                 .when()
                 .put(String.format("%s/challenge/task/%s", baseUrl, id));
     }

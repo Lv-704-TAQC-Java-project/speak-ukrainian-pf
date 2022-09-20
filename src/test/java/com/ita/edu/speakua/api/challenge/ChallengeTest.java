@@ -58,9 +58,9 @@ public class ChallengeTest extends ApiBaseTestRunner {
         long databaseFirstChallengeId = new ChallengeService().getAllChallenges().get(0).getId();
         ChallengeEntity databaseChallenge = new ChallengeService().getChallengeById(databaseFirstChallengeId);
         List<TaskEntity> firstChallengeTasks = new TaskService().getTasks(databaseFirstChallengeId);
-        ChallengeClient client = new ChallengeClient(authentication.getToken());
+        ChallengeClient challengeClient = new ChallengeClient(authentication.getToken());
 
-        Response response = client.get(databaseFirstChallengeId);
+        Response response = challengeClient.get(databaseFirstChallengeId);
         assertEquals(response.statusCode(), 200);
 
         ReadChallengeResponse readChallengeResponse = response.as(ReadChallengeResponse.class);

@@ -79,9 +79,7 @@ public class TaskTest extends ApiBaseTestRunner {
         List<Integer> parsedDateList = Arrays.stream(tomorrow.split("-"))
                 .map(Integer::parseInt)
                 .collect(Collectors.toList());
-        softly.assertEquals(createTaskResponse.getStartDate().get(0), parsedDateList.get(0));
-        softly.assertEquals(createTaskResponse.getStartDate().get(1), parsedDateList.get(1));
-        softly.assertEquals(createTaskResponse.getStartDate().get(2), parsedDateList.get(2));
+        softly.assertEquals(createTaskResponse.getStartDate(), parsedDateList);
 
         softly.assertAll();
     }
@@ -99,8 +97,8 @@ public class TaskTest extends ApiBaseTestRunner {
                 {name, headerText, description, "", tomorrow, asList("picture must not be blank", "picture Incorrect file path.", "It must be like /upload/*/*.png")},
                 {name, headerText, description, picture, "", asList("startDate must not be null")},
                 {name, headerText, description, " " + picture, tomorrow, asList("picture Incorrect file path.", "It must be like /upload/*/*.png")},
-                {null, headerText, description, picture, tomorrow, asList("name must contain a minimum of 5 and a maximum of 100 letters")},
-                {name, null, description, picture, tomorrow, asList("headerText must contain a minimum of 40 and a maximum of 3000 letters")},
+                {null, headerText, description, picture, tomorrow, asList("name must not be blank")},
+                {name, null, description, picture, tomorrow, asList("headerText must not be blank")},
                 {name, headerText, null, picture, tomorrow, asList("description must not be blank")},
         };
     }
@@ -218,7 +216,10 @@ public class TaskTest extends ApiBaseTestRunner {
         softly.assertEquals(taskAfterChanges.getDescription(), readTaskResponse.getDescription());
         softly.assertEquals(taskAfterChanges.getPicture(), readTaskResponse.getPicture());
 
-        softly.assertEquals(taskAfterChanges.getStartDate(), readTaskResponse.getStartDate());
+        List<Integer> parsedDateList = Arrays.stream(tomorrow.split("-"))
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
+        softly.assertEquals(readTaskResponse.getStartDate(), parsedDateList);
 
         softly.assertAll();
     }

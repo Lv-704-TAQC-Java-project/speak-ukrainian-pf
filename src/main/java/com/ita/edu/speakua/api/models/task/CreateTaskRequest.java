@@ -1,30 +1,20 @@
 package com.ita.edu.speakua.api.models.task;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 
-import static java.lang.String.format;
-
+@JsonInclude
 @Builder
 public class CreateTaskRequest {
+    @JsonProperty("name")
     private String name;
+    @JsonProperty("headerText")
     private String headerText;
+    @JsonProperty("description")
     private String description;
+    @JsonProperty("picture")
     private String picture;
+    @JsonProperty("startDate")
     private String startDate;
-
-    public String json() {
-        return format("{\n" +
-                        "  \"name\": \"%s\",\n" +
-                        "  \"headerText\": \"%s\",\n" +
-                        "  \"description\": \"%s\",\n" +
-                        "  \"picture\": \"%s\",\n" +
-                        "  \"startDate\": \"%s\"\n" +
-                        "}",
-                name,
-                headerText,
-                description,
-                picture,
-                startDate
-        );
-    }
 }

@@ -22,7 +22,7 @@ public class ChallengeClient extends BaseClient {
 
     public Response post(CreateChallengeRequest createChallengeRequest) {
         return prepareRequest()
-                .body(createChallengeRequest.json())
+                .body(createChallengeRequest)
                 .when()
                 .post(baseUrl + path);
     }

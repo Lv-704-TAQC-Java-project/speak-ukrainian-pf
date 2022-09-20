@@ -7,7 +7,7 @@ public class RegistrationClient extends BaseClient {
 
     public Response signUp(SignUpRequest signUpRequest) {
         return prepareRequest()
-                .body(signUpRequest.json())
+                .body(signUpRequest)
                 .when()
                 .post(baseUrl + "/signup");
     }
