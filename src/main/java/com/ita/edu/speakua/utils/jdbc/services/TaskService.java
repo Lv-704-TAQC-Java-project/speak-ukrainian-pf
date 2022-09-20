@@ -45,7 +45,7 @@ public class TaskService {
 
     public List<TaskJoinChallengeDTO> getTaskJoinChallengeDTO(String name, String orderBy, boolean desc) {
         List<TaskJoinChallengeDTO> taskJoinChallenge = new ArrayList<>();
-        for (TaskEntity task: taskDAO.selectTasks(name, orderBy, desc)) {
+        for (TaskEntity task : taskDAO.selectTasks(name, orderBy, desc)) {
             TaskJoinChallengeDTO taskJoinChallengeDTO = new TaskJoinChallengeDTO(task);
             taskJoinChallengeDTO.setChallenge(challengeDAO.selectChallengeById(task.getChallengeId()));
             taskJoinChallenge.add(taskJoinChallengeDTO);
@@ -55,5 +55,9 @@ public class TaskService {
 
     public long getTasksMaxId() {
         return taskDAO.getTasksMaxId();
+    }
+
+    public TaskEntity getTaskById(int id) {
+        return taskDAO.selectTask(id);
     }
 }

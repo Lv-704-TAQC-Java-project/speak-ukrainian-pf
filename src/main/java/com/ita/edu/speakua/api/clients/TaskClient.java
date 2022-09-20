@@ -1,6 +1,7 @@
 package com.ita.edu.speakua.api.clients;
 
 import com.ita.edu.speakua.api.models.task.CreateTaskRequest;
+import com.ita.edu.speakua.api.models.task.EditTaskRequest;
 import io.restassured.response.Response;
 
 public class TaskClient extends BaseClient {
@@ -24,5 +25,13 @@ public class TaskClient extends BaseClient {
                 .body(createTaskRequest.json())
                 .when()
                 .post(baseUrl + "/challenge/" + id + "/task");
+    }
+
+    public Response put(int id, EditTaskRequest editTaskRequest) {
+        return prepareRequest()
+                .header("Authorization", "Bearer " + this.authentication)
+                .body(editTaskRequest.json())
+                .when()
+                .put(String.format("%s/challenge/task/%s", baseUrl, id));
     }
 }
