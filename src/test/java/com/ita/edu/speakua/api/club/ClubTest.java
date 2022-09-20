@@ -35,6 +35,7 @@ public class ClubTest extends ApiBaseTestRunner {
     public void successPostClubTest() {
         ClubClient clubClient = new ClubClient(authentication.getToken());
 
+
         ArrayList<String> categoriesName = new ArrayList<>();
         categoriesName.add("Спортивні секції");
 

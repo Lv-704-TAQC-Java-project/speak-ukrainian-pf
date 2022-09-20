@@ -27,6 +27,13 @@ public class ChallengeClient extends BaseClient {
                 .post(baseUrl + path);
     }
 
+    public Response postChallenge(CreateChallengeRequest createChallengeRequest) {
+        return prepareRequest()
+                .body(createChallengeRequest)
+                .when()
+                .post(baseUrl + path);
+    }
+
     public Response delete(int id) {
         return prepareRequest()
                 .header("Authorization", "Bearer " + this.authentication)

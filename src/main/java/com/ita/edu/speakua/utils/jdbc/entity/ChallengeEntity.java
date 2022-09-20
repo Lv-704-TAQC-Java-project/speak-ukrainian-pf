@@ -13,6 +13,8 @@ public class ChallengeEntity {
 
     public static final String SELECT_ALL_CHALLENGES = SELECT_ALL_FIELDS + " FROM challenges;";
     public static final String SELECT_CHALLENGE_BY_ID = SELECT_ALL_FIELDS + " FROM challenges WHERE id='%s';";
+    public static final String SELECT_CHALLENGE_WHERE_ID_IS_MAX = SELECT_ALL_FIELDS +
+            " FROM challenges WHERE id = (SELECT MAX(id) FROM challenges)";
 
     private long id;
     private String description;

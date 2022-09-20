@@ -33,4 +33,17 @@ public class ChallengeDAO {
         ManagerDAO.closeStatement(statement);
         return ChallengeEntity.parseRows(rows).get(0);
     }
+
+    public ChallengeEntity selectChallengeWithMaxId() {
+        Statement statement = ManagerDAO.getInstance().getStatement();
+        List<List<String>> rows;
+        try {
+            ResultSet resultSet = statement.executeQuery(ChallengeEntity.SELECT_CHALLENGE_WHERE_ID_IS_MAX);
+            rows = ManagerDAO.getInstance().parseResultSet(resultSet);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        ManagerDAO.closeStatement(statement);
+        return ChallengeEntity.parseRows(rows).get(0);
+    }
 }
