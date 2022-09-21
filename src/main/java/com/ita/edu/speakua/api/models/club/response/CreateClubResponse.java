@@ -20,7 +20,7 @@ public class CreateClubResponse {
     private User user;
     private Center center;
     private int rating;
-    private ArrayList<Location> locations;
+    private ArrayList<LocationResponse> locations;
     private boolean isApproved;
     private boolean isOnline;
 }

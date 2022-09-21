@@ -1,7 +1,5 @@
 package com.ita.edu.speakua.api.models.club.response;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -22,7 +20,7 @@ public class ReadClubResponse {
     private User user;
     private Center center;
     private double rating;
-    private ArrayList<Location> locations;
+    private ArrayList<LocationResponse> locations;
     private String isApproved;
     private String isOnline;
 }
