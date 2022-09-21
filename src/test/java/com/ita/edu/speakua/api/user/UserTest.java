@@ -9,6 +9,7 @@ import com.ita.edu.speakua.api.models.user.EditUserResponse;
 import com.ita.edu.speakua.api.models.user.ReadUserResponse;
 import com.ita.edu.speakua.utils.jdbc.dto.UserJoinRoleDTO;
 import com.ita.edu.speakua.utils.jdbc.entity.UserEntity;
+import com.ita.edu.speakua.utils.jdbc.services.RoleService;
 import com.ita.edu.speakua.utils.jdbc.services.UserService;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -16,8 +17,6 @@ import io.qameta.allure.Link;
 import io.restassured.response.Response;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
-import java.util.List;
 
 import static com.ita.edu.speakua.api.data.Role.*;
 import static org.testng.Assert.assertEquals;
@@ -68,7 +67,7 @@ public class UserTest extends ApiBaseTestRunner {
         assertEquals(user.getPhone(), readUserResponse.getPhone(), "User phone should be unchanged");
         assertEquals(roleName, readUserResponse.getRoleName(), "Role should be unchanged");
         assertEquals(user.getUrlLogo(), readUserResponse.getUrlLogo(), "Url logo should be unchanged");
-        assertEquals(String.valueOf(user.isStatus()), readUserResponse.getStatus(), "Status should be unchanged");
+        assertEquals(String.valueOf(user.getStatus()), readUserResponse.getStatus(), "Status should be unchanged");
     }
 
     @Issue("TUA-416")
@@ -128,6 +127,5 @@ public class UserTest extends ApiBaseTestRunner {
 
         editedUserDB = new UserService().getUserJoinRoleDTO(email);
         assertEquals(editedUserDB.getRole().getName(), USER.getRoleValue());
-import com.ita.edu.speakua.utils.jdbc.services.RoleService;
     }
 }
