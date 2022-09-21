@@ -35,20 +35,20 @@ public class UserEntity {
     private long roleId;
 
     public static UserEntity parseRow(List<String> row) {
-        UserEntity UserEntity = new UserEntity();
-        UserEntity.setId(Long.parseLong(row.get(0)));
-        UserEntity.setEmail(row.get(1));
-        UserEntity.setFirstName(row.get(2));
-        UserEntity.setLastName(row.get(3));
-        UserEntity.setPassword(row.get(4));
-        UserEntity.setPhone(row.get(5));
-        UserEntity.setProvider(row.get(6));
-        UserEntity.setProviderId(row.get(7));
-        UserEntity.setStatus(Boolean.parseBoolean(row.get(8)));
-        UserEntity.setUrlLogo(row.get(9));
-        UserEntity.setVerificationCode(row.get(10));
-        UserEntity.setRoleId(Long.parseLong(row.get(11)));
-        return UserEntity;
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(Long.parseLong(row.get(0)));
+        userEntity.setEmail(row.get(1));
+        userEntity.setFirstName(row.get(2));
+        userEntity.setLastName(row.get(3));
+        userEntity.setPassword(row.get(4));
+        userEntity.setPhone(row.get(5));
+        userEntity.setProvider(row.get(6));
+        userEntity.setProviderId(row.get(7));
+        userEntity.setStatus(Boolean.parseBoolean(row.get(8)));
+        userEntity.setUrlLogo(row.get(9));
+        userEntity.setVerificationCode(row.get(10));
+        userEntity.setRoleId(Long.parseLong(row.get(11)));
+        return userEntity;
     }
 
     public static List<UserEntity> parseRows(List<List<String>> rows) {

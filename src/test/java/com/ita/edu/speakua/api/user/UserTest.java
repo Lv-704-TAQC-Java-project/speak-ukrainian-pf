@@ -8,13 +8,12 @@ import com.ita.edu.speakua.api.models.ErrorResponse;
 import com.ita.edu.speakua.api.models.user.EditUserRequest;
 import com.ita.edu.speakua.api.models.user.ReadUserResponse;
 import com.ita.edu.speakua.utils.jdbc.entity.UserEntity;
+import com.ita.edu.speakua.utils.jdbc.services.RoleService;
 import com.ita.edu.speakua.utils.jdbc.services.UserService;
 import io.restassured.response.Response;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
-import java.util.List;
 
 import static org.testng.Assert.assertEquals;
 
@@ -59,11 +58,17 @@ public class UserTest extends ApiBaseTestRunner {
         assertEquals(response.statusCode(), 400);
 
         ErrorResponse errorResponse = response.as(ErrorResponse.class);
-        assertEquals(errorResponse.getMessage(), "Phone' field contain an invalid value");
+        assertEquals(errorResponse.getMessage(),
+                "phone Phone number must contain 10 numbers and can`t contain other symbols");
 
-        List<UserEntity> users = new UserService().getUsersWhereId(id);
-        for (UserEntity user : users) {
-            assertEquals(user.getPhone(), readUserResponse.getPhone(), "User phone should be unchanged");
-        }
+        UserEntity user = new UserService().getUserWhereId(id);
+        String roleName = new RoleService().getRoleNameWhereUserId(id);
+        assertEquals(user.getFirstName(), readUserResponse.getFirstName(), "First name should be unchanged");
+        assertEquals(user.getLastName(), readUserResponse.getLastName(), "Last name should be unchanged");
+        assertEquals(user.getEmail(), readUserResponse.getEmail(), "Email should be unchanged");
+        assertEquals(user.getPhone(), readUserResponse.getPhone(), "User phone should be unchanged");
+        assertEquals(roleName, readUserResponse.getRoleName(), "Role should be unchanged");
+        assertEquals(user.getUrlLogo(), readUserResponse.getUrlLogo(), "Url logo should be unchanged");
+        assertEquals(String.valueOf(user.isStatus()), readUserResponse.getStatus(), "Status should be unchanged");
     }
 }

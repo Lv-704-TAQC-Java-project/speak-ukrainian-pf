@@ -21,7 +21,7 @@ public class UserService {
         return userDAO.getUsersCount(email, firstName, lastName);
     }
 
-    public List<UserEntity> getUsersWhereId(long id) {
+    public UserEntity getUserWhereId(long id) {
         return userDAO.selectUsersWhereId(id);
     }
 }
