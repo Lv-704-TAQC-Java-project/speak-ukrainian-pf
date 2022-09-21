@@ -12,8 +12,8 @@ public class SignInTestRunner extends SameWindowTestRunner {
         homePage
                 .openGuestProfileMenu()
                 .openSignInModal()
-                .enterEmail(configProps.getUserEmail())
-                .enterPassword(configProps.getUserPassword())
+                .enterEmail(configProps.getAdminEmail())
+                .enterPassword(configProps.getAdminPassword())
                 .submit();
     }
 }

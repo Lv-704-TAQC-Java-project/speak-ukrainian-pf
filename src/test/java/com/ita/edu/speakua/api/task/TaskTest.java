@@ -38,7 +38,7 @@ public class TaskTest extends ApiBaseTestRunner {
 
     @BeforeClass
     public void beforeClass() {
-        authentication = new Authentication(properties.getUserEmail(), properties.getUserPassword());
+        authentication = new Authentication(properties.getAdminEmail(), properties.getAdminPassword());
     }
 
     @Issue("TUA-441")
@@ -46,11 +46,6 @@ public class TaskTest extends ApiBaseTestRunner {
     @Link("https://jira.softserve.academy/browse/TUA-441")
     @Test
     public void verifyTaskCreation() {
-        String name = "Some name";
-        String headerText = "Some header text header text header text header text";
-        String description = "Some description description description description description description description";
-        String picture = "/upload/some/image.png";
-
         TaskClient taskClient = new TaskClient(authentication.getToken());
         CreateTaskRequest createTaskRequest = CreateTaskRequest
                 .builder()
@@ -86,10 +81,6 @@ public class TaskTest extends ApiBaseTestRunner {
 
     @DataProvider(name = "createTaskInvalidData")
     public Object[][] createTaskInvalidData() {
-        String name = "Some name";
-        String headerText = "Some header text header text header text header text";
-        String description = "Some description description description description description description description";
-        String picture = "/upload/some/image.png";
         return new Object[][]{
                 {"", headerText, description, picture, tomorrow, asList("name must not be blank", "name must contain a minimum of 5 and a maximum of 100 letters")},
                 {name, "", description, picture, tomorrow, asList("headerText must contain a minimum of 40 and a maximum of 3000 letters", "headerText must not be blank")},

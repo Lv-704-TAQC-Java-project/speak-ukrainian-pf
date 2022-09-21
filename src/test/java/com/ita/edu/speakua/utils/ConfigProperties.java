@@ -16,17 +16,31 @@ public class ConfigProperties {
             e.printStackTrace();
         }
     }
+    public String getAdminEmail() {
+        return properties.getProperty("ADMIN_EMAIL");
+    }
+
+    public String getAdminPassword() {
+        return properties.getProperty("ADMIN_PASSWORD");
+    }
+
+    public String getManagerEmail() {
+        return properties.getProperty("MANAGER_EMAIL");
+    }
+
+    public String getManagerPassword() {
+        return properties.getProperty("MANAGER_PASSWORD");
+    }
 
     public String getUserEmail() {
-        return properties.getProperty("VALID_USER_EMAIL");
+        return properties.getProperty("USER_EMAIL");
     }
 
     public String getUserPassword() {
-        return properties.getProperty("VALID_USER_PASSWORD");
+        return properties.getProperty("USER_PASSWORD");
     }
 
     public String getBaseUrl() {
         return properties.getProperty("BASE_URL");
     }
-
 }

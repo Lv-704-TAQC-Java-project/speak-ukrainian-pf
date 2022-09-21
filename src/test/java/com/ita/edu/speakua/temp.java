@@ -68,7 +68,7 @@ public class temp {
     @Test
     public void api_login_test() {
         SingInClient client = new SingInClient();
-        SingInRequest cred = new SingInRequest(property.getUserEmail(), property.getUserPassword());
+        SingInRequest cred = new SingInRequest(property.getAdminEmail(), property.getAdminPassword());
         Response response = client.successSignInRequest(cred);
         SingInResponse singInData = response.as(SingInResponse.class);
 
@@ -76,7 +76,7 @@ public class temp {
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(response.statusCode(), 200);
         softAssert.assertEquals(singInData.getId(), 1L);
-        softAssert.assertEquals(singInData.getEmail(), property.getUserEmail());
+        softAssert.assertEquals(singInData.getEmail(), property.getAdminEmail());
         System.out.println(singInData.getAccessToken());
 
     }

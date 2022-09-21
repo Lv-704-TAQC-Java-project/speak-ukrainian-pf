@@ -49,8 +49,8 @@ public class BaseSetupTestRunner {
         getHomePage()
                 .openGuestProfileMenu()
                 .openSignInModal()
-                .enterEmail(configProps.getUserEmail())
-                .enterPassword(configProps.getUserPassword())
+                .enterEmail(configProps.getAdminEmail())
+                .enterPassword(configProps.getAdminPassword())
                 .submit();
     }
 

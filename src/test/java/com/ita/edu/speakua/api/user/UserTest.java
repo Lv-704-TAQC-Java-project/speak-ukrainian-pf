@@ -24,7 +24,7 @@ public class UserTest extends ApiBaseTestRunner {
 
     @BeforeClass
     public void beforeClass() {
-        authentication = new Authentication(properties.getUserEmail(), properties.getUserPassword());
+        authentication = new Authentication(properties.getAdminEmail(), properties.getAdminPassword());
     }
 
     @DataProvider(name = "invalidPhoneData")
