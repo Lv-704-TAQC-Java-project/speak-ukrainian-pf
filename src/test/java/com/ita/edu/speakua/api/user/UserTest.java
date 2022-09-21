@@ -127,6 +127,5 @@ public class UserTest extends ApiBaseTestRunner {
 
         editedUserDB = new UserService().getUserJoinRoleDTO(email);
         assertEquals(editedUserDB.getRole().getName(), USER.getRoleValue());
-        assertEquals(user.getStatus(), readUserResponse.getStatus(), "Status should be unchanged");
     }
 }
