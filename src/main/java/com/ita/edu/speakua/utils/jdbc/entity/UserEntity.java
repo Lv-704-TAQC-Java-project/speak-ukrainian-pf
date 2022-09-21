@@ -29,7 +29,7 @@ public class UserEntity {
     private String phone;
     private String provider;
     private String providerId;
-    private boolean status;
+    private Boolean status;
     private String urlLogo;
     private String verificationCode;
     private long roleId;
