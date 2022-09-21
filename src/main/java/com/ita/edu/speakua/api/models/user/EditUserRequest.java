@@ -1,40 +1,27 @@
 package com.ita.edu.speakua.api.models.user;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ita.edu.speakua.api.data.Role;
 import lombok.Builder;
 
-import static java.lang.String.format;
-
+@JsonInclude
 @Builder
 public class EditUserRequest {
-    public int id;
-    public String email;
-    public String firstName;
-    public String lastName;
-    public String phone;
-    public String urlLogo;
-    public String status;
-    public Role roleName;
-
-    public String json() {
-        return format("{\n" +
-                        "  \"id\": \"%s\",\n" +
-                        "  \"email\": \"%s\",\n" +
-                        "  \"firstName\": \"%s\",\n" +
-                        "  \"lastName\": \"%s\",\n" +
-                        "  \"phone\": \"%s\",\n" +
-                        "  \"urlLogo\": \"%s\",\n" +
-                        "  \"status\": \"%s\",\n" +
-                        "  \"roleName\": \"%s\"\n" +
-                        "}",
-                id,
-                email,
-                firstName,
-                lastName,
-                phone,
-                urlLogo,
-                status,
-                roleName
-        );
-    }
+    @JsonProperty("id")
+    private int id;
+    @JsonProperty("email")
+    private String email;
+    @JsonProperty("firstName")
+    private String firstName;
+    @JsonProperty("lastName")
+    private String lastName;
+    @JsonProperty("phone")
+    private String phone;
+    @JsonProperty("urlLogo")
+    private String urlLogo;
+    @JsonProperty("status")
+    private String status;
+    @JsonProperty("roleName")
+    private Role roleName;
 }

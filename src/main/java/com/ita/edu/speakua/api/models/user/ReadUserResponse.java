@@ -4,13 +4,13 @@ import lombok.Data;
 
 @Data
 public class ReadUserResponse {
-    public int id;
-    public String firstName;
-    public String lastName;
-    public String phone;
-    public String email;
-    public String password;
-    public String roleName;
-    public String urlLogo;
-    public String status;
+    private int id;
+    private String firstName;
+    private String lastName;
+    private String phone;
+    private String email;
+    private String password;
+    private String roleName;
+    private String urlLogo;
+    private String status;
 }
