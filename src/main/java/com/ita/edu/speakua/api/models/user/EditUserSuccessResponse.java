@@ -11,5 +11,5 @@ public class EditUserSuccessResponse {
     private String email;
     private String roleName;
     private String urlLogo;
-    private String status;
+    private Boolean status;
 }

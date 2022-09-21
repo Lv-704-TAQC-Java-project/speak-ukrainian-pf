@@ -67,7 +67,7 @@ public class UserTest extends ApiBaseTestRunner {
         assertEquals(user.getPhone(), readUserResponse.getPhone(), "User phone should be unchanged");
         assertEquals(roleName, readUserResponse.getRoleName(), "Role should be unchanged");
         assertEquals(user.getUrlLogo(), readUserResponse.getUrlLogo(), "Url logo should be unchanged");
-        assertEquals(String.valueOf(user.getStatus()), readUserResponse.getStatus(), "Status should be unchanged");
+        assertEquals(user.getStatus(), readUserResponse.getStatus(), "Status should be unchanged");
     }
 
     @Issue("TUA-416")
