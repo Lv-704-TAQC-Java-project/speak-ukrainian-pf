@@ -41,10 +41,10 @@ public class ClubTest extends ApiBaseTestRunner {
         categoriesName.add(categoryName);
 
         int locationId = 23;
-        String locationName = "Голосівська";
         int cityId = 1;
         int districtId = 1;
         int stationId = 1;
+        String locationName = "Голосівська";
         String cityName = "Київ";
         String districtName = "Голосіївський";
         String stationName = "Голосіївська";
@@ -77,8 +77,8 @@ public class ClubTest extends ApiBaseTestRunner {
                 .urlGallery(urlGalleryValue)
                 .build();
 
-        ArrayList<UrlGallery> urlGaleryList = new ArrayList<>();
-        urlGaleryList.add(urlGallery);
+        ArrayList<UrlGallery> urlGalleryList = new ArrayList<>();
+        urlGalleryList.add(urlGallery);
 
         String clubName = RandomStringUtils.randomAlphabetic(100);
         String description = "{\"blocks\":[{\"key\":\"brl63\",\"text\":" +
@@ -88,12 +88,12 @@ public class ClubTest extends ApiBaseTestRunner {
                 "\"data\":{}}],\"entityMap\":{}}\"";
         int ageFrom = 4;
         int ageTo = 8;
-        String urlBackground = "/dev/static/images/user/avatar/user1.png";
-        String urlLogo = "/dev/static/images/user/avatar/user1.png";
         int userId = 1;
         int centerId = 1;
         int clubExternalId = 123;
         int centerExternalId = 111;
+        String urlBackground = "/dev/static/images/user/avatar/user1.png";
+        String urlLogo = "/dev/static/images/user/avatar/user1.png";
         String contacts = "Our new contacts";
 
         CreateClubRequest createClubRequest = CreateClubRequest
@@ -106,7 +106,7 @@ public class ClubTest extends ApiBaseTestRunner {
                 .ageTo(ageTo)
                 .urlBackground(urlBackground)
                 .urlLogo(urlLogo)
-                .urlGallery(urlGaleryList)
+                .urlGallery(urlGalleryList)
                 .isOnline(true)
                 .contacts(contacts)
                 .isApproved(true)
