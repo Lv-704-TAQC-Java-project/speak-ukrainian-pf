@@ -16,7 +16,7 @@ public class Center {
     private String urlLogo;
     private String socialLinks;
     private User user;
-    private ArrayList<Location> locations;
+    private ArrayList<LocationResponse> locations;
     private String contacts;
 //    @Override
 //    public String toString() {

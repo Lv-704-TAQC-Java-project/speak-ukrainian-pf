@@ -26,9 +26,9 @@ public class Location {
     @JsonProperty("coordinates")
     private String coordinates;
     @JsonProperty("longitude")
-    private int longitude;
+    private double longitude;
     @JsonProperty("latitude")
-    private int latitude;
+    private double latitude;
     @JsonProperty("centerId")
     private int centerId;
     @JsonProperty("clubId")
