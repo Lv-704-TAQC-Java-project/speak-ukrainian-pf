@@ -19,6 +19,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.testng.Assert.assertEquals;
@@ -204,29 +205,45 @@ public class ChallengeTest extends ApiBaseTestRunner {
         softAssert.assertAll();
     }
 
+    @DataProvider(name = "errorMessagesForChallengeFields")
+    public Object[][] errorMessagesForChallengeFields() {
+        List<String> errors = Arrays.asList("name  must contain a minimum of 5 and a maximum of 30 letters",
+                "name must not be blank",
+                "title must not be blank",
+                "title must contain a minimum of 5 and a maximum of 100 letters",
+                "description must contain a maximum of 25000 letters",
+                "description must not be blank",
+                "picture Incorrect file path. It must be like /upload/*/*.png",
+                "picture must not be blank",
+                "sortNumber must not be null");
+        return new Object[][]{
+                {null, Arrays.asList("name must not be blank",
+                        "title must not be blank",
+                        "description must not be blank",
+                        "picture must not be blank",
+                        "sortNumber must not be null")},
+                {"", errors},
+                {" ", errors}
+        };
+    }
+
     @Issue("TUA-431")
     @Link("https://jira.softserve.academy/browse/TUA-431")
     @Description("Verify that user can  not create Challenge using invalid data")
-    @Test
-    public void unsuccessfulPostChallengeTest() {
+    @Test(dataProvider = "errorMessagesForChallengeFields")
+    public void unsuccessfulPostChallengeTest(String incorrectValue, List<String> expectedErrorMessages) {
         ChallengeClient challengeClient = new ChallengeClient(authentication.getToken());
 
-        CreateChallengeRequest createChallengeRequest = CreateChallengeRequest
+        CreateChallengeRequest createChallengeRequestWithNullValues = CreateChallengeRequest
                 .builder()
-                .name(null)
-                .title(null)
-                .description(null)
-                .picture(null)
+                .name(incorrectValue)
+                .title(incorrectValue)
+                .description(incorrectValue)
+                .picture(incorrectValue)
                 .sortNumber(null)
                 .build();
 
-        String nameErrorMessage = "name must not be blank";
-        String titleErrorMessage = "title must not be blank";
-        String descriptionErrorMessage = "description must not be blank";
-        String pictureErrorMessage = "picture must not be blank";
-        String sortNumberErrorMessage = "sortNumber must not be null";
-
-        Response response = challengeClient.postChallenge(createChallengeRequest);
+        Response response = challengeClient.postChallenge(createChallengeRequestWithNullValues);
 
         assertEquals(response.statusCode(), 400,
                 "Challenge should not be created");
@@ -234,16 +251,10 @@ public class ChallengeTest extends ApiBaseTestRunner {
         ErrorResponse errorResponse = response.as(ErrorResponse.class);
 
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertTrue(errorResponse.getMessage().contains(nameErrorMessage),
-                "Name error message should appear");
-        softAssert.assertTrue(errorResponse.getMessage().contains(titleErrorMessage),
-                "Title error message should appear");
-        softAssert.assertTrue(errorResponse.getMessage().contains(descriptionErrorMessage),
-                "Description error message should appear");
-        softAssert.assertTrue(errorResponse.getMessage().contains(pictureErrorMessage),
-                "Picture error message should appear");
-        softAssert.assertTrue(errorResponse.getMessage().contains(sortNumberErrorMessage),
-                "Sort number error message should appear");
+
+        expectedErrorMessages.forEach(errorMessage ->
+                softAssert.assertTrue(errorResponse.getMessage().contains(errorMessage),
+                        "Error message should appear: " + errorMessage));
         softAssert.assertAll();
     }
 }
