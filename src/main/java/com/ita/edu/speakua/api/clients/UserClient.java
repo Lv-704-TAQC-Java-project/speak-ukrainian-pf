@@ -18,7 +18,7 @@ public class UserClient extends BaseClient {
     public Response put(int id, EditUserRequest editUserRequest) {
         return prepareRequest()
                 .header("Authorization", "Bearer " + this.authentication)
-                .body(editUserRequest.json())
+                .body(editUserRequest)
                 .when()
                 .put(String.format("%s%s/%s", baseUrl, path, id));
     }

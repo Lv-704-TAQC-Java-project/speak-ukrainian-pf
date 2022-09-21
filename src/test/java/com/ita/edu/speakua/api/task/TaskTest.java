@@ -196,9 +196,9 @@ public class TaskTest extends ApiBaseTestRunner {
         Response editTaskResponse = taskClient.put(taskId, editTaskRequest);
         assertEquals(editTaskResponse.statusCode(), 200);
 
+        ReadTaskResponse readTaskResponse = editTaskResponse.as(ReadTaskResponse.class);
         TaskEntity taskAfterChanges = new TaskService().getTaskById(taskId);
 
-        ReadTaskResponse readTaskResponse = editTaskResponse.as(ReadTaskResponse.class);
         SoftAssert softly = new SoftAssert();
 
         softly.assertEquals(taskAfterChanges.getId(), readTaskResponse.getId());

@@ -34,7 +34,7 @@ public class UserDAO {
         return Long.parseLong(rows.get(0).get(0));
     }
 
-    public List<UserEntity> selectUsersWhereId(long id) {
+    public UserEntity selectUsersWhereId(long id) {
         Statement statement = ManagerDAO.getInstance().getStatement();
         List<List<String>> rows;
         try {
@@ -44,6 +44,6 @@ public class UserDAO {
             throw new RuntimeException(e);
         }
         ManagerDAO.closeStatement(statement);
-        return UserEntity.parseRows(rows);
+        return UserEntity.parseRows(rows).get(0);
     }
 }
