@@ -8,6 +8,19 @@ import java.sql.Statement;
 import java.util.List;
 
 public class UserDAO {
+    public UserEntity selectUser(String email) {
+        Statement statement = ManagerDAO.getInstance().getStatement();
+        List<List<String>> rows;
+        try {
+            ResultSet resultSet = statement.executeQuery(String.format(UserEntity.SELECT_USER_BY_EMAIL, email));
+            rows = ManagerDAO.getInstance().parseResultSet(resultSet);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        ManagerDAO.closeStatement(statement);
+        return UserEntity.parseRows(rows).get(0);
+    }
+
     public List<UserEntity> selectUsers(String email, String firstName, String lastName) {
         Statement statement = ManagerDAO.getInstance().getStatement();
         List<List<String>> rows;

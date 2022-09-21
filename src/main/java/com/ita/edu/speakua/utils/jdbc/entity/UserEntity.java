@@ -7,6 +7,10 @@ import java.util.List;
 
 @Data
 public class UserEntity {
+    public static final String SELECT_USER_BY_EMAIL = "SELECT * " +
+            "FROM users " +
+            "WHERE email='%s';";
+
     public static final String SELECT_USER_BY_EMAIL_AND_FULL_NAME = "SELECT * " +
             "FROM users " +
             "WHERE email='%s' " +
@@ -29,7 +33,7 @@ public class UserEntity {
     private String phone;
     private String provider;
     private String providerId;
-    private boolean status;
+    private Boolean status;
     private String urlLogo;
     private String verificationCode;
     private long roleId;
@@ -44,7 +48,7 @@ public class UserEntity {
         UserEntity.setPhone(row.get(5));
         UserEntity.setProvider(row.get(6));
         UserEntity.setProviderId(row.get(7));
-        UserEntity.setStatus(Boolean.parseBoolean(row.get(8)));
+        UserEntity.setStatus(row.get(8).equals("t"));
         UserEntity.setUrlLogo(row.get(9));
         UserEntity.setVerificationCode(row.get(10));
         UserEntity.setRoleId(Long.parseLong(row.get(11)));
