@@ -7,6 +7,7 @@ import java.util.List;
 
 @Data
 public class RoleEntity {
+    public static final String SELECT_ROLE_BY_ID = "SELECT * FROM roles WHERE id=%d;";
 
     public static final String SELECT_WHERE_USER_ID = "SELECT roles.id, roles.name FROM roles " +
             "JOIN users ON roles.id = users.role_id " +
