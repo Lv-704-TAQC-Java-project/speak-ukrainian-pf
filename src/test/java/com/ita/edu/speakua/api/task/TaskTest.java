@@ -14,6 +14,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Link;
 import io.restassured.response.Response;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -212,6 +213,45 @@ public class TaskTest extends ApiBaseTestRunner {
                 .collect(Collectors.toList());
         softly.assertEquals(readTaskResponse.getStartDate(), parsedDateList);
 
+        softly.assertAll();
+    }
+
+    @DataProvider(name = "taskNameAndDescriptionData")
+    public Object[][] taskNameAndDescriptionData() {
+        List<String> errors = Arrays.asList("name must contain a minimum of 5 and a maximum of 100 letters",
+                "description must contain a minimum of 40 and a maximum of 3000 letters");
+        String forbiddenChars = "Ё, Ы,Э";
+        return new Object[][]{
+                {"Task", "Description", errors},
+                {RandomStringUtils.randomAlphabetic(101), RandomStringUtils.randomAlphabetic(3001), errors},
+                {name + forbiddenChars, description + forbiddenChars,
+                        asList("name Помилка. Текст містить недопустимі символи",
+                                "description Помилка. Текст містить недопустимі символи")
+                }
+        };
+    }
+
+    @Issue("TUA-442")
+    @Description("Verify that user can not add task with invalid name")
+    @Link("https://jira.softserve.academy/browse/TUA-442")
+    @Test(dataProvider = "taskNameAndDescriptionData")
+    public void verifyUserCanNotAddTaskWithInvalidNameAndDescription(String name, String description, List<String> errors) {
+        TaskClient taskClient = new TaskClient(authentication.getToken());
+
+        CreateTaskRequest createTaskRequest = CreateTaskRequest
+                .builder()
+                .name(name)
+                .description(description)
+                .headerText(headerText)
+                .picture(picture)
+                .startDate(tomorrow)
+                .build();
+
+        Response response = taskClient.createTask(1, createTaskRequest);
+        assertEquals(response.statusCode(), 400);
+        ErrorResponse errorResponse = response.as(ErrorResponse.class);
+        SoftAssert softly = new SoftAssert();
+        errors.forEach(error -> softly.assertTrue(errorResponse.getMessage().contains(error)));
         softly.assertAll();
     }
 }
