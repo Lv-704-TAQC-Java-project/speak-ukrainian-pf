@@ -117,14 +117,14 @@ public class UserTest extends ApiBaseTestRunner {
         softly.assertEquals(editUserResponse.getUrlLogo(), newUserUrlLogo);
         softly.assertEquals(editUserResponse.getStatus(), initialUserStatus);
 
-        UserJoinRoleDTO userDatabaseData = new UserService().getUserJoinRoleDTO(email);
-        softly.assertEquals(userDatabaseData.getId(), initialUserId);
-        softly.assertEquals(userDatabaseData.getFirstName(), newUserFirstName);
-        softly.assertEquals(userDatabaseData.getLastName(), newUserLastName);
-        softly.assertEquals(userDatabaseData.getPhone(), newUserPhone);
-        softly.assertEquals(userDatabaseData.getRole().getName(), newUserRoleName);
-        softly.assertEquals(userDatabaseData.getUrlLogo(), newUserUrlLogo);
-        softly.assertEquals(userDatabaseData.getStatus(), initialUserStatus);
+        UserJoinRoleDTO databaseUser = new UserService().getUserJoinRoleDTO(email);
+        softly.assertEquals(databaseUser.getId(), initialUserId);
+        softly.assertEquals(databaseUser.getFirstName(), newUserFirstName);
+        softly.assertEquals(databaseUser.getLastName(), newUserLastName);
+        softly.assertEquals(databaseUser.getPhone(), newUserPhone);
+        softly.assertEquals(databaseUser.getRole().getName(), newUserRoleName);
+        softly.assertEquals(databaseUser.getUrlLogo(), newUserUrlLogo);
+        softly.assertEquals(databaseUser.getStatus(), initialUserStatus);
         softly.assertAll();
 
         editUserRequest = EditUserRequest.builder()
@@ -149,14 +149,14 @@ public class UserTest extends ApiBaseTestRunner {
         softly.assertEquals(editUserResponse.getUrlLogo(), initialUserUrlLogo);
         softly.assertEquals(editUserResponse.getStatus(), initialUserStatus);
 
-        userDatabaseData = new UserService().getUserJoinRoleDTO(email);
-        softly.assertEquals(userDatabaseData.getId(), initialUserId);
-        softly.assertEquals(userDatabaseData.getFirstName(), initialUserFirstName);
-        softly.assertEquals(userDatabaseData.getLastName(), initialUserLastName);
-        softly.assertEquals(userDatabaseData.getPhone(), initialUserPhone);
-        softly.assertEquals(userDatabaseData.getRole().getName(), initialUserRoleName);
-        softly.assertEquals(userDatabaseData.getUrlLogo(), initialUserUrlLogo);
-        softly.assertEquals(userDatabaseData.getStatus(), initialUserStatus);
+        databaseUser = new UserService().getUserJoinRoleDTO(email);
+        softly.assertEquals(databaseUser.getId(), initialUserId);
+        softly.assertEquals(databaseUser.getFirstName(), initialUserFirstName);
+        softly.assertEquals(databaseUser.getLastName(), initialUserLastName);
+        softly.assertEquals(databaseUser.getPhone(), initialUserPhone);
+        softly.assertEquals(databaseUser.getRole().getName(), initialUserRoleName);
+        softly.assertEquals(databaseUser.getUrlLogo(), initialUserUrlLogo);
+        softly.assertEquals(databaseUser.getStatus(), initialUserStatus);
         softly.assertAll();
     }
 
