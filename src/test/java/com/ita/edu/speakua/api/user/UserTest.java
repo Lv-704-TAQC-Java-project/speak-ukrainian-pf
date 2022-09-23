@@ -17,6 +17,7 @@ import io.qameta.allure.Link;
 import io.restassured.response.Response;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import static com.ita.edu.speakua.api.data.Role.*;
 import static org.testng.Assert.assertEquals;
@@ -71,7 +72,7 @@ public class UserTest extends ApiBaseTestRunner {
     }
 
     @Issue("TUA-416")
-    @Description("Verify user and manager can edit role")
+    @Description("Verify user and manager can edit profile data")
     @Link("https://jira.softserve.academy/browse/TUA-416")
     @Test
     public void verifyUsersWithDifferentRolesCanEditProfile() {
@@ -83,50 +84,80 @@ public class UserTest extends ApiBaseTestRunner {
         String initialUserFirstName = initialUserDB.getFirstName();
         String initialUserLastName = initialUserDB.getLastName();
         String initialUserPhone = initialUserDB.getPhone();
-        boolean initialUserStatus = initialUserDB.getStatus();
+        Boolean initialUserStatus = initialUserDB.getStatus();
         String initialUserUrlLogo = initialUserDB.getUrlLogo();
         String initialUserRoleName = initialUserDB.getRole().getName();
 
-        assertEquals(initialUserRoleName, USER.getRoleValue());
+        String newUserFirstName = initialUserDB.getFirstName() + "New";
+        String newUserLastName = initialUserDB.getLastName() + "New";
+        String newUserPhone = "0631111111";
+        String newUserUrlLogo = "/upload/some/newImage.png";
+        String newUserRoleName = initialUserRoleName.equals(USER.getRoleValue()) ? MANAGER.getRoleValue() : USER.getRoleValue();
 
         EditUserRequest editUserRequest = EditUserRequest.builder()
-                .firstName(initialUserFirstName)
-                .lastName(initialUserLastName)
+                .firstName(newUserFirstName)
+                .lastName(newUserLastName)
                 .email(email)
-                .phone(initialUserPhone)
-                .roleName(MANAGER.getRoleValue())
-                .urlLogo(initialUserUrlLogo)
+                .phone(newUserPhone)
+                .roleName(newUserRoleName)
+                .urlLogo(newUserUrlLogo)
                 .status(initialUserStatus)
                 .build();
-
         UserClient userClient = new UserClient(new Authentication(email, password).getToken());
         Response apiResponse = userClient.put(initialUserId, editUserRequest);
         assertEquals(apiResponse.statusCode(), 200);
 
-        EditUserResponse editUserApiResponse = apiResponse.as(EditUserResponse.class);
-        assertEquals(editUserApiResponse.getRoleName(), MANAGER.getRoleValue());
+        SoftAssert softly = new SoftAssert();
+        EditUserResponse editUserResponse = apiResponse.as(EditUserResponse.class);
+        softly.assertEquals(editUserResponse.getId(), initialUserId);
+        softly.assertEquals(editUserResponse.getFirstName(), newUserFirstName);
+        softly.assertEquals(editUserResponse.getLastName(), newUserLastName);
+        softly.assertEquals(editUserResponse.getPhone(), newUserPhone);
+        softly.assertEquals(editUserResponse.getRoleName(), newUserRoleName);
+        softly.assertEquals(editUserResponse.getUrlLogo(), newUserUrlLogo);
+        softly.assertEquals(editUserResponse.getStatus(), initialUserStatus);
 
-        UserJoinRoleDTO editedUserDB = new UserService().getUserJoinRoleDTO(email);
-        assertEquals(editedUserDB.getRole().getName(), MANAGER.getRoleValue());
+        UserJoinRoleDTO userDatabaseData = new UserService().getUserJoinRoleDTO(email);
+        softly.assertEquals(userDatabaseData.getId(), initialUserId);
+        softly.assertEquals(userDatabaseData.getFirstName(), newUserFirstName);
+        softly.assertEquals(userDatabaseData.getLastName(), newUserLastName);
+        softly.assertEquals(userDatabaseData.getPhone(), newUserPhone);
+        softly.assertEquals(userDatabaseData.getRole().getName(), newUserRoleName);
+        softly.assertEquals(userDatabaseData.getUrlLogo(), newUserUrlLogo);
+        softly.assertEquals(userDatabaseData.getStatus(), initialUserStatus);
+        softly.assertAll();
 
         editUserRequest = EditUserRequest.builder()
                 .firstName(initialUserFirstName)
                 .lastName(initialUserLastName)
                 .email(email)
                 .phone(initialUserPhone)
-                .roleName(USER.getRoleValue())
+                .roleName(initialUserRoleName)
                 .urlLogo(initialUserUrlLogo)
                 .status(initialUserStatus)
                 .build();
-
         apiResponse = userClient.put(initialUserId, editUserRequest);
         assertEquals(apiResponse.statusCode(), 200);
 
-        editUserApiResponse = apiResponse.as(EditUserResponse.class);
-        assertEquals(editUserApiResponse.getRoleName(), USER.getRoleValue());
+        softly = new SoftAssert();
+        editUserResponse = apiResponse.as(EditUserResponse.class);
+        softly.assertEquals(editUserResponse.getId(), initialUserId);
+        softly.assertEquals(editUserResponse.getFirstName(), initialUserFirstName);
+        softly.assertEquals(editUserResponse.getLastName(), initialUserLastName);
+        softly.assertEquals(editUserResponse.getPhone(), initialUserPhone);
+        softly.assertEquals(editUserResponse.getRoleName(), initialUserRoleName);
+        softly.assertEquals(editUserResponse.getUrlLogo(), initialUserUrlLogo);
+        softly.assertEquals(editUserResponse.getStatus(), initialUserStatus);
 
-        editedUserDB = new UserService().getUserJoinRoleDTO(email);
-        assertEquals(editedUserDB.getRole().getName(), USER.getRoleValue());
+        userDatabaseData = new UserService().getUserJoinRoleDTO(email);
+        softly.assertEquals(userDatabaseData.getId(), initialUserId);
+        softly.assertEquals(userDatabaseData.getFirstName(), initialUserFirstName);
+        softly.assertEquals(userDatabaseData.getLastName(), initialUserLastName);
+        softly.assertEquals(userDatabaseData.getPhone(), initialUserPhone);
+        softly.assertEquals(userDatabaseData.getRole().getName(), initialUserRoleName);
+        softly.assertEquals(userDatabaseData.getUrlLogo(), initialUserUrlLogo);
+        softly.assertEquals(userDatabaseData.getStatus(), initialUserStatus);
+        softly.assertAll();
     }
 
     @DataProvider(name = "invalidNameData")
