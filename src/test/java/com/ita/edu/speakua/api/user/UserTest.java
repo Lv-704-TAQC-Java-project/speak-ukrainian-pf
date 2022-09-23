@@ -128,4 +128,43 @@ public class UserTest extends ApiBaseTestRunner {
         editedUserDB = new UserService().getUserJoinRoleDTO(email);
         assertEquals(editedUserDB.getRole().getName(), USER.getRoleValue());
     }
+
+    @DataProvider(name = "invalidNameData")
+    public static Object[][] invalidNameData() {
+        String firstName = "Nastia";
+        String lastName = "Kukh";
+        return new Object[][]{
+                {"Nastia1234", lastName, "\"firstName\" can`t contain numbers"},
+                {"NastiaNastiaNastiaNastiaNastia", lastName, "\"firstName\" can contain from 1 to 25 letters"},
+                {"Nastia!@##$#$%", lastName, "\"firstName\" can contain only ukrainian and english letters"},
+                {firstName, "Kukhar#%$#", "\"lastName\" can contain only ukrainian and english letters"},
+                {firstName, "KukharKukharKukharKukharKukharKukharKukhar#", "\"lastName\" can contain from 1 to 25 letters"},
+                {firstName, "Kukhar123343#", "\"lastName\" can`t contain numbers"},
+        };
+    }
+
+    @Issue("TUA-415")
+    @Description("Verify that user can not save changes with invalid data (fields lastName and firstName)")
+    @Link("https://jira.softserve.academy/browse/TUA-415")
+    @Test(dataProvider = "invalidNameData")
+    public void verifyThatUserCanNotSaveChangesWithNameInvalidData(String firstName, String lastName, String expectedErrorMessage) {
+        Authentication authentication = new Authentication(properties.getAdminEmail(), properties.getAdminPassword());
+        int id = 203;
+        UserClient userClient = new UserClient(authentication.getToken());
+        EditUserRequest editUserRequest = EditUserRequest.builder()
+                .firstName(firstName)
+                .lastName(lastName)
+                .email("soyec48727@busantei.com")
+                .phone("999999922")
+                .roleName(MANAGER.getRoleValue())
+                .urlLogo(null)
+                .status(true)
+                .build();
+
+        Response response = userClient.put(id, editUserRequest);
+        assertEquals(response.statusCode(), 400);
+
+        ErrorResponse errorResponse = response.as(ErrorResponse.class);
+        assertEquals(errorResponse.getMessage(), expectedErrorMessage);
+    }
 }
