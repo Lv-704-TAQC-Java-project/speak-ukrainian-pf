@@ -6,6 +6,7 @@ import com.ita.edu.speakua.api.clients.ChallengeClient;
 import com.ita.edu.speakua.api.models.ErrorResponse;
 import com.ita.edu.speakua.api.models.challenge.CreateChallengeRequest;
 import com.ita.edu.speakua.api.models.challenge.ReadChallengeResponse;
+import com.ita.edu.speakua.api.models.challenge.Task;
 import com.ita.edu.speakua.utils.jdbc.entity.ChallengeEntity;
 import com.ita.edu.speakua.utils.jdbc.entity.TaskEntity;
 import com.ita.edu.speakua.utils.jdbc.services.ChallengeService;
@@ -18,8 +19,11 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 
 import static org.testng.Assert.assertEquals;
 
@@ -40,33 +44,69 @@ public class ChallengeTest extends ApiBaseTestRunner {
     @Link("https://jira.softserve.academy/browse/TUA-437")
     @Test(dataProvider = "credentialsData")
     public void verifyUserWithAnyRoleCanViewChallenge(String email, String password) {
-        long databaseFirstChallengeId = new ChallengeService().getAllChallenges().get(0).getId();
-        ChallengeEntity databaseChallenge = new ChallengeService().getChallengeById(databaseFirstChallengeId);
-        List<TaskEntity> firstChallengeTasks = new TaskService().getTasks(databaseFirstChallengeId);
+        // Can be any existing challenge id from database
+        long challengeId = new ChallengeService().getAllChallenges().get(0).getId();
 
         ChallengeClient challengeClient = new ChallengeClient(email.isEmpty() && password.isEmpty()
                 ? ""
                 : new Authentication(email, password).getToken());
 
-        Response apiResponse = challengeClient.get(databaseFirstChallengeId);
-        assertEquals(apiResponse.statusCode(), 200);
+        Response apiResponse = challengeClient.get(challengeId);
+        assertEquals(apiResponse.statusCode(), 200,
+                "Api response should have status code 200 when requested challenge with id " + challengeId);
 
         ReadChallengeResponse readChallengeResponse = apiResponse.as(ReadChallengeResponse.class);
 
-        SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(readChallengeResponse.getId(), databaseFirstChallengeId);
-        softAssert.assertEquals(readChallengeResponse.getName(), databaseChallenge.getName());
-        softAssert.assertEquals(readChallengeResponse.getTitle(), databaseChallenge.getTitle());
-        softAssert.assertEquals(readChallengeResponse.getDescription(), databaseChallenge.getDescription());
-        softAssert.assertEquals(readChallengeResponse.getPicture(), databaseChallenge.getPicture());
-        softAssert.assertEquals(readChallengeResponse.getSortNumber(), databaseChallenge.getSortNumber());
-        softAssert.assertEquals(readChallengeResponse.getIsActive(), databaseChallenge.getIsActive());
-        softAssert.assertEquals(readChallengeResponse.getTasks().size(), firstChallengeTasks.size());
-        // TODO: compare tasks array
-        softAssert.assertEquals(readChallengeResponse.getUser() != null ? readChallengeResponse.getUser().getId() : 0, databaseChallenge.getUserId());
-        softAssert.assertEquals(readChallengeResponse.getRegistrationLink(), databaseChallenge.getRegistrationLink());
+        SoftAssert softly = new SoftAssert();
+        ChallengeEntity databaseChallenge = new ChallengeService().getChallengeById(challengeId);
+        softly.assertEquals(readChallengeResponse.getId(), challengeId,
+                "Database and API response should have same id");
+        softly.assertEquals(readChallengeResponse.getName(), databaseChallenge.getName(),
+                "Database and API response should have same name");
+        softly.assertEquals(readChallengeResponse.getTitle(), databaseChallenge.getTitle(),
+                "Database and API response should have same title");
+        softly.assertEquals(readChallengeResponse.getDescription(), databaseChallenge.getDescription(),
+                "Database and API response should have same description");
+        softly.assertEquals(readChallengeResponse.getPicture(), databaseChallenge.getPicture(),
+                "Database and API response should have same picture url");
+        softly.assertEquals(readChallengeResponse.getSortNumber(), databaseChallenge.getSortNumber(),
+                "Database and API response should have same sort number");
+        softly.assertEquals(readChallengeResponse.getIsActive(), databaseChallenge.getIsActive(),
+                "Database and API response should have same activity status");
+        softly.assertEquals(readChallengeResponse.getUser() != null ? readChallengeResponse.getUser().getId() : 0,
+                databaseChallenge.getUserId(),
+                "Database and API response should have same challenge user id");
+        softly.assertEquals(readChallengeResponse.getRegistrationLink(), databaseChallenge.getRegistrationLink(),
+                "Database and API response should have same registration link");
 
-        softAssert.assertAll();
+        ArrayList<Task> apiFirstChallengeTasks = readChallengeResponse.getTasks();
+        List<TaskEntity> databaseFirstChallengeTasks = new TaskService().getTasks(challengeId);
+        softly.assertEquals(apiFirstChallengeTasks.size(), databaseFirstChallengeTasks.size(),
+                "Database and API response should have tasks list of equal size");
+
+        apiFirstChallengeTasks.forEach(apiResponseTask -> {
+            AtomicBoolean isApiAndDatabaseResponseContainTaskWithSameId = new AtomicBoolean(false);
+            databaseFirstChallengeTasks.forEach(databaseTask -> {
+                long taskId = apiResponseTask.getId();
+                if (taskId == databaseTask.getId()) {
+                    isApiAndDatabaseResponseContainTaskWithSameId.set(true);
+                    softly.assertEquals(apiResponseTask.getName(), databaseTask.getName(),
+                            "Database and API response should have equal name for Task with id" + taskId);
+                    softly.assertEquals(apiResponseTask.getHeaderText(), databaseTask.getHeaderText(),
+                            "Database and API response should have equal header text for Task with id" + taskId);
+                    softly.assertEquals(apiResponseTask.getPicture(), databaseTask.getPicture(),
+                            "Database and API response should have equal picture url for Task with id" + taskId);
+                    softly.assertEquals(apiResponseTask.getStartDate(), Arrays
+                                    .stream(databaseTask.getStartDate().split("-"))
+                                    .map(Integer::parseInt)
+                                    .collect(Collectors.toList()),
+                            "Database and API response should have equal start date for Task with id" + taskId);
+                }
+            });
+            softly.assertTrue(isApiAndDatabaseResponseContainTaskWithSameId.get(),
+                    "Database and API response should have task with same id");
+        });
+        softly.assertAll();
     }
 
     @DataProvider(name = "addChallengeData")
