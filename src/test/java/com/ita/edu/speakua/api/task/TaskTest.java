@@ -113,6 +113,8 @@ public class TaskTest extends ApiBaseTestRunner {
                 {null, headerText, description, picture, tomorrow, asList("name must not be blank")},
                 {name, null, description, picture, tomorrow, asList("headerText must not be blank")},
                 {name, headerText, null, picture, tomorrow, asList("description must not be blank")},
+                {name, headerText, description, null, tomorrow, asList("picture must not be blank")},
+                {name, headerText, description, picture, null, asList("startDate must not be null")},
         };
     }
 
@@ -132,12 +134,14 @@ public class TaskTest extends ApiBaseTestRunner {
                 .build();
 
         Response createTaskRawResponse = taskClient.createTask(5, createTaskRequest);
-        assertEquals(createTaskRawResponse.statusCode(), 400);
+        assertEquals(createTaskRawResponse.statusCode(), 400,
+                "Incorrect API response status code when creating task with empty field");
 
         ErrorResponse createTaskErrorResponse = createTaskRawResponse.as(ErrorResponse.class);
 
         SoftAssert softly = new SoftAssert();
-        softly.assertEquals(createTaskErrorResponse.getStatus(), 400);
+        softly.assertEquals(createTaskErrorResponse.getStatus(), 400,
+                "Incorrect create task response status code");
 
         errors.forEach(error -> {
             String errorMessage = createTaskErrorResponse.getMessage();
