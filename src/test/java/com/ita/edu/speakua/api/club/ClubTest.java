@@ -248,5 +248,70 @@ public class ClubTest extends ApiBaseTestRunner {
                 "Message should be correct");
         softly.assertAll();
     }
+
+    @Issue("TUA-502")
+    @Link("https://jira.softserve.academy/browse/TUA-502")
+    @Description("Verify that User as \"Керiвник гуртка\" cannot create new club is in a center if \"Назва\" field contain less than 5 characters")
+    @Test
+    public void unSuccessPostWithShortNameTest() {
+        ClubClient clubClient = new ClubClient(authentication.getToken());
+
+        Location location = Location
+                .builder()
+                .name("Голосівська")
+                .cityName("Київ")
+                .districtName("Голосіївський")
+                .stationName("Голосіївська")
+                .address("https://speak-ukrainian.org.ua/dev/club/910")
+                .coordinates("50.35535081747696, 30.51765754176391")
+                .phone("0937777777")
+                .build();
+
+        UrlGallery urlGallery = UrlGallery
+                .builder()
+                .urlGallery("https://apiTest.API")
+                .build();
+
+        ArrayList<UrlGallery> urlGalleries = new ArrayList<>();
+        urlGalleries.add(urlGallery);
+        ArrayList<Location> locations = new ArrayList<>();
+        locations.add(location);
+
+        ArrayList<String> categoryNames = new ArrayList<>();
+        categoryNames.add("Вокальна студія");
+        categoryNames.add("музика");
+        categoryNames.add(" музичні інструменти");
+
+        CreateClubRequest createClubRequest = CreateClubRequest
+                .builder()
+                .categoriesName(categoryNames)
+                .name("Жук")
+                .ageFrom(2)
+                .ageTo(18)
+                .urlLogo("/dev/static/images/user/avatar/user1.png")
+                .urlBackground("/dev/static/images/user/avatar/user1.png")
+                .isOnline(true)
+                .description("{\"blocks\":[{\"key\":\"brl63\",\"text\":" +
+                        "\"Ми поставили перед собою ціль створити мережу найкращих центрів раннього розвитку в Україні, " +
+                        "де дітки навчатимуться з задоволенням, а батьки радітимуть від результатів.\",\"type\":" +
+                        "\"unstyled\",\"depth\":1,\"inlineStyleRanges\":[],\"entityRanges\":[]," +
+                        "\"data\":{}}],\"entityMap\":{}}")
+                .userId(264)
+                .locations(locations)
+                .contacts("{\"1\"::\"ліл\"}")
+                .centerId(2)
+                .urlGallery(urlGalleries)
+                .build();
+        Response postResponse = clubClient.post(createClubRequest);
+        ErrorResponse errorResponse = postResponse.as(ErrorResponse.class);
+
+        SoftAssert softly = new SoftAssert();
+
+        softly.assertEquals(errorResponse.getStatus(), 400);
+        softly.assertEquals(errorResponse.getMessage(),
+                "name Довжина назви має бути від 5 до 100 символів",
+                "Message should be correct");
+        softly.assertAll();
+    }
 }
 
