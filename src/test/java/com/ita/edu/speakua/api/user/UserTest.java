@@ -105,26 +105,41 @@ public class UserTest extends ApiBaseTestRunner {
                 .build();
         UserClient userClient = new UserClient(new Authentication(email, password).getToken());
         Response apiResponse = userClient.put(initialUserId, editUserRequest);
-        assertEquals(apiResponse.statusCode(), 200);
+        assertEquals(apiResponse.statusCode(), 200,
+                "Api response should have status code 200 when requested to edit user with id " + initialUserId);
 
         SoftAssert softly = new SoftAssert();
         EditUserResponse editUserResponse = apiResponse.as(EditUserResponse.class);
-        softly.assertEquals(editUserResponse.getId(), initialUserId);
-        softly.assertEquals(editUserResponse.getFirstName(), newUserFirstName);
-        softly.assertEquals(editUserResponse.getLastName(), newUserLastName);
-        softly.assertEquals(editUserResponse.getPhone(), newUserPhone);
-        softly.assertEquals(editUserResponse.getRoleName(), newUserRoleName);
-        softly.assertEquals(editUserResponse.getUrlLogo(), newUserUrlLogo);
-        softly.assertEquals(editUserResponse.getStatus(), initialUserStatus);
+        softly.assertEquals(editUserResponse.getId(), initialUserId,
+                "Api edit user first response should contain id");
+        softly.assertEquals(editUserResponse.getFirstName(), newUserFirstName,
+                "Api edit user first response should contain first name");
+        softly.assertEquals(editUserResponse.getLastName(), newUserLastName,
+                "Api edit user first response should contain last name");
+        softly.assertEquals(editUserResponse.getPhone(), newUserPhone,
+                "Api edit user first response should contain phone");
+        softly.assertEquals(editUserResponse.getRoleName(), newUserRoleName,
+                "Api edit user first response should contain role name");
+        softly.assertEquals(editUserResponse.getUrlLogo(), newUserUrlLogo,
+                "Api edit user first response should contain logo url");
+        softly.assertEquals(editUserResponse.getStatus(), initialUserStatus,
+                "Api edit user first response should contain status");
 
         UserJoinRoleDTO databaseUser = new UserService().getUserJoinRoleDTO(email);
-        softly.assertEquals(databaseUser.getId(), initialUserId);
-        softly.assertEquals(databaseUser.getFirstName(), newUserFirstName);
-        softly.assertEquals(databaseUser.getLastName(), newUserLastName);
-        softly.assertEquals(databaseUser.getPhone(), newUserPhone);
-        softly.assertEquals(databaseUser.getRole().getName(), newUserRoleName);
-        softly.assertEquals(databaseUser.getUrlLogo(), newUserUrlLogo);
-        softly.assertEquals(databaseUser.getStatus(), initialUserStatus);
+        softly.assertEquals(databaseUser.getId(), initialUserId,
+                "Database and API first response should have same user id");
+        softly.assertEquals(databaseUser.getFirstName(), newUserFirstName,
+                "Database and API first response should have same user first name");
+        softly.assertEquals(databaseUser.getLastName(), newUserLastName,
+                "Database and API first response should have same user last name");
+        softly.assertEquals(databaseUser.getPhone(), newUserPhone,
+                "Database and API first response should have same user phone");
+        softly.assertEquals(databaseUser.getRole().getName(), newUserRoleName,
+                "Database and API first response should have same user role name");
+        softly.assertEquals(databaseUser.getUrlLogo(), newUserUrlLogo,
+                "Database and API first response should have same user logo url");
+        softly.assertEquals(databaseUser.getStatus(), initialUserStatus,
+                "Database and API first response should have same user status");
         softly.assertAll();
 
         editUserRequest = EditUserRequest.builder()
@@ -137,26 +152,41 @@ public class UserTest extends ApiBaseTestRunner {
                 .status(initialUserStatus)
                 .build();
         apiResponse = userClient.put(initialUserId, editUserRequest);
-        assertEquals(apiResponse.statusCode(), 200);
+        assertEquals(apiResponse.statusCode(), 200,
+                "Api response should have status code 200 when requested to edit user with id " + initialUserId);
 
         softly = new SoftAssert();
         editUserResponse = apiResponse.as(EditUserResponse.class);
-        softly.assertEquals(editUserResponse.getId(), initialUserId);
-        softly.assertEquals(editUserResponse.getFirstName(), initialUserFirstName);
-        softly.assertEquals(editUserResponse.getLastName(), initialUserLastName);
-        softly.assertEquals(editUserResponse.getPhone(), initialUserPhone);
-        softly.assertEquals(editUserResponse.getRoleName(), initialUserRoleName);
-        softly.assertEquals(editUserResponse.getUrlLogo(), initialUserUrlLogo);
-        softly.assertEquals(editUserResponse.getStatus(), initialUserStatus);
+        softly.assertEquals(editUserResponse.getId(), initialUserId,
+                "Api edit user second response should contain id");
+        softly.assertEquals(editUserResponse.getFirstName(), initialUserFirstName,
+                "Api edit user second response should contain first name");
+        softly.assertEquals(editUserResponse.getLastName(), initialUserLastName,
+                "Api edit user second response should contain last name");
+        softly.assertEquals(editUserResponse.getPhone(), initialUserPhone,
+                "Api edit user second response should contain phone");
+        softly.assertEquals(editUserResponse.getRoleName(), initialUserRoleName,
+                "Api edit user second response should contain role name");
+        softly.assertEquals(editUserResponse.getUrlLogo(), initialUserUrlLogo,
+                "Api edit user second response should contain logo url");
+        softly.assertEquals(editUserResponse.getStatus(), initialUserStatus,
+                "Api edit user second response should contain status");
 
         databaseUser = new UserService().getUserJoinRoleDTO(email);
-        softly.assertEquals(databaseUser.getId(), initialUserId);
-        softly.assertEquals(databaseUser.getFirstName(), initialUserFirstName);
-        softly.assertEquals(databaseUser.getLastName(), initialUserLastName);
-        softly.assertEquals(databaseUser.getPhone(), initialUserPhone);
-        softly.assertEquals(databaseUser.getRole().getName(), initialUserRoleName);
-        softly.assertEquals(databaseUser.getUrlLogo(), initialUserUrlLogo);
-        softly.assertEquals(databaseUser.getStatus(), initialUserStatus);
+        softly.assertEquals(databaseUser.getId(), initialUserId,
+                "Database and API second response should have same user id");
+        softly.assertEquals(databaseUser.getFirstName(), initialUserFirstName,
+                "Database and API second response should have same user first name");
+        softly.assertEquals(databaseUser.getLastName(), initialUserLastName,
+                "Database and API second response should have same user last name");
+        softly.assertEquals(databaseUser.getPhone(), initialUserPhone,
+                "Database and API second response should have same user phone");
+        softly.assertEquals(databaseUser.getRole().getName(), initialUserRoleName,
+                "Database and API second response should have same user role name");
+        softly.assertEquals(databaseUser.getUrlLogo(), initialUserUrlLogo,
+                "Database and API second response should have same user logo url");
+        softly.assertEquals(databaseUser.getStatus(), initialUserStatus,
+                "Database and API second response should have same user status");
         softly.assertAll();
     }
 
