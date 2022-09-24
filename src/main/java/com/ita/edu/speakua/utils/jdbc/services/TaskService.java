@@ -57,7 +57,7 @@ public class TaskService {
         return taskDAO.getTasksMaxId();
     }
 
-    public TaskEntity getTaskById(int id) {
+    public TaskEntity getTaskById(long id) {
         return taskDAO.selectTask(id);
     }
 }

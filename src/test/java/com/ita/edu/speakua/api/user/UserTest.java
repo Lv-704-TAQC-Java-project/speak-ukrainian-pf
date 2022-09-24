@@ -17,6 +17,7 @@ import io.qameta.allure.Link;
 import io.restassured.response.Response;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import static com.ita.edu.speakua.api.data.Role.*;
 import static org.testng.Assert.assertEquals;
@@ -71,7 +72,7 @@ public class UserTest extends ApiBaseTestRunner {
     }
 
     @Issue("TUA-416")
-    @Description("Verify user and manager can edit role")
+    @Description("Verify user and manager can edit profile data")
     @Link("https://jira.softserve.academy/browse/TUA-416")
     @Test
     public void verifyUsersWithDifferentRolesCanEditProfile() {
@@ -83,49 +84,148 @@ public class UserTest extends ApiBaseTestRunner {
         String initialUserFirstName = initialUserDB.getFirstName();
         String initialUserLastName = initialUserDB.getLastName();
         String initialUserPhone = initialUserDB.getPhone();
-        boolean initialUserStatus = initialUserDB.getStatus();
+        Boolean initialUserStatus = initialUserDB.getStatus();
         String initialUserUrlLogo = initialUserDB.getUrlLogo();
         String initialUserRoleName = initialUserDB.getRole().getName();
 
-        assertEquals(initialUserRoleName, USER.getRoleValue());
+        String newUserFirstName = initialUserDB.getFirstName() + "New";
+        String newUserLastName = initialUserDB.getLastName() + "New";
+        String newUserPhone = "0631111111";
+        String newUserUrlLogo = "/upload/some/newImage.png";
+        String newUserRoleName = initialUserRoleName.equals(USER.getRoleValue()) ? MANAGER.getRoleValue() : USER.getRoleValue();
 
         EditUserRequest editUserRequest = EditUserRequest.builder()
-                .firstName(initialUserFirstName)
-                .lastName(initialUserLastName)
+                .firstName(newUserFirstName)
+                .lastName(newUserLastName)
                 .email(email)
-                .phone(initialUserPhone)
-                .roleName(MANAGER.getRoleValue())
-                .urlLogo(initialUserUrlLogo)
+                .phone(newUserPhone)
+                .roleName(newUserRoleName)
+                .urlLogo(newUserUrlLogo)
                 .status(initialUserStatus)
                 .build();
-
         UserClient userClient = new UserClient(new Authentication(email, password).getToken());
         Response apiResponse = userClient.put(initialUserId, editUserRequest);
-        assertEquals(apiResponse.statusCode(), 200);
+        assertEquals(apiResponse.statusCode(), 200,
+                "Incorrect API response status code when requested to edit user with id " + initialUserId);
 
-        EditUserResponse editUserApiResponse = apiResponse.as(EditUserResponse.class);
-        assertEquals(editUserApiResponse.getRoleName(), MANAGER.getRoleValue());
+        SoftAssert softly = new SoftAssert();
+        EditUserResponse editUserResponse = apiResponse.as(EditUserResponse.class);
+        softly.assertEquals(editUserResponse.getId(), initialUserId,
+                "Api edit user first response should contain id");
+        softly.assertEquals(editUserResponse.getFirstName(), newUserFirstName,
+                "Api edit user first response should contain first name");
+        softly.assertEquals(editUserResponse.getLastName(), newUserLastName,
+                "Api edit user first response should contain last name");
+        softly.assertEquals(editUserResponse.getPhone(), newUserPhone,
+                "Api edit user first response should contain phone");
+        softly.assertEquals(editUserResponse.getRoleName(), newUserRoleName,
+                "Api edit user first response should contain role name");
+        softly.assertEquals(editUserResponse.getUrlLogo(), newUserUrlLogo,
+                "Api edit user first response should contain logo url");
+        softly.assertEquals(editUserResponse.getStatus(), initialUserStatus,
+                "Api edit user first response should contain status");
 
-        UserJoinRoleDTO editedUserDB = new UserService().getUserJoinRoleDTO(email);
-        assertEquals(editedUserDB.getRole().getName(), MANAGER.getRoleValue());
+        UserJoinRoleDTO databaseUser = new UserService().getUserJoinRoleDTO(email);
+        softly.assertEquals(databaseUser.getId(), initialUserId,
+                "Database and API first response should have same user id");
+        softly.assertEquals(databaseUser.getFirstName(), newUserFirstName,
+                "Database and API first response should have same user first name");
+        softly.assertEquals(databaseUser.getLastName(), newUserLastName,
+                "Database and API first response should have same user last name");
+        softly.assertEquals(databaseUser.getPhone(), newUserPhone,
+                "Database and API first response should have same user phone");
+        softly.assertEquals(databaseUser.getRole().getName(), newUserRoleName,
+                "Database and API first response should have same user role name");
+        softly.assertEquals(databaseUser.getUrlLogo(), newUserUrlLogo,
+                "Database and API first response should have same user logo url");
+        softly.assertEquals(databaseUser.getStatus(), initialUserStatus,
+                "Database and API first response should have same user status");
+        softly.assertAll();
 
         editUserRequest = EditUserRequest.builder()
                 .firstName(initialUserFirstName)
                 .lastName(initialUserLastName)
                 .email(email)
                 .phone(initialUserPhone)
-                .roleName(USER.getRoleValue())
+                .roleName(initialUserRoleName)
                 .urlLogo(initialUserUrlLogo)
                 .status(initialUserStatus)
                 .build();
-
         apiResponse = userClient.put(initialUserId, editUserRequest);
-        assertEquals(apiResponse.statusCode(), 200);
+        assertEquals(apiResponse.statusCode(), 200,
+                "Incorrect API response status code when requested to edit user with id " + initialUserId);
 
-        editUserApiResponse = apiResponse.as(EditUserResponse.class);
-        assertEquals(editUserApiResponse.getRoleName(), USER.getRoleValue());
+        softly = new SoftAssert();
+        editUserResponse = apiResponse.as(EditUserResponse.class);
+        softly.assertEquals(editUserResponse.getId(), initialUserId,
+                "Api edit user second response should contain id");
+        softly.assertEquals(editUserResponse.getFirstName(), initialUserFirstName,
+                "Api edit user second response should contain first name");
+        softly.assertEquals(editUserResponse.getLastName(), initialUserLastName,
+                "Api edit user second response should contain last name");
+        softly.assertEquals(editUserResponse.getPhone(), initialUserPhone,
+                "Api edit user second response should contain phone");
+        softly.assertEquals(editUserResponse.getRoleName(), initialUserRoleName,
+                "Api edit user second response should contain role name");
+        softly.assertEquals(editUserResponse.getUrlLogo(), initialUserUrlLogo,
+                "Api edit user second response should contain logo url");
+        softly.assertEquals(editUserResponse.getStatus(), initialUserStatus,
+                "Api edit user second response should contain status");
 
-        editedUserDB = new UserService().getUserJoinRoleDTO(email);
-        assertEquals(editedUserDB.getRole().getName(), USER.getRoleValue());
+        databaseUser = new UserService().getUserJoinRoleDTO(email);
+        softly.assertEquals(databaseUser.getId(), initialUserId,
+                "Database and API second response should have same user id");
+        softly.assertEquals(databaseUser.getFirstName(), initialUserFirstName,
+                "Database and API second response should have same user first name");
+        softly.assertEquals(databaseUser.getLastName(), initialUserLastName,
+                "Database and API second response should have same user last name");
+        softly.assertEquals(databaseUser.getPhone(), initialUserPhone,
+                "Database and API second response should have same user phone");
+        softly.assertEquals(databaseUser.getRole().getName(), initialUserRoleName,
+                "Database and API second response should have same user role name");
+        softly.assertEquals(databaseUser.getUrlLogo(), initialUserUrlLogo,
+                "Database and API second response should have same user logo url");
+        softly.assertEquals(databaseUser.getStatus(), initialUserStatus,
+                "Database and API second response should have same user status");
+        softly.assertAll();
+    }
+
+    @DataProvider(name = "invalidNameData")
+    public static Object[][] invalidNameData() {
+        String firstName = "Nastia";
+        String lastName = "Kukh";
+        return new Object[][]{
+                {"Nastia1234", lastName, "\"firstName\" can`t contain numbers"},
+                {"NastiaNastiaNastiaNastiaNastia", lastName, "\"firstName\" can contain from 1 to 25 letters"},
+                {"Nastia!@##$#$%", lastName, "\"firstName\" can contain only ukrainian and english letters"},
+                {firstName, "Kukhar#%$#", "\"lastName\" can contain only ukrainian and english letters"},
+                {firstName, "KukharKukharKukharKukharKukharKukharKukhar#", "\"lastName\" can contain from 1 to 25 letters"},
+                {firstName, "Kukhar123343#", "\"lastName\" can`t contain numbers"},
+        };
+    }
+
+    @Issue("TUA-415")
+    @Description("Verify that user can not save changes with invalid data (fields lastName and firstName)")
+    @Link("https://jira.softserve.academy/browse/TUA-415")
+    @Test(dataProvider = "invalidNameData")
+    public void verifyThatUserCanNotSaveChangesWithNameInvalidData(String firstName, String lastName, String expectedErrorMessage) {
+        Authentication authentication = new Authentication(properties.getAdminEmail(), properties.getAdminPassword());
+        int id = 203;
+        UserClient userClient = new UserClient(authentication.getToken());
+        EditUserRequest editUserRequest = EditUserRequest.builder()
+                .firstName(firstName)
+                .lastName(lastName)
+                .email("soyec48727@busantei.com")
+                .phone("999999922")
+                .roleName(MANAGER.getRoleValue())
+                .urlLogo(null)
+                .status(true)
+                .build();
+
+        Response response = userClient.put(id, editUserRequest);
+        assertEquals(response.statusCode(), 400);
+
+        ErrorResponse errorResponse = response.as(ErrorResponse.class);
+        assertEquals(errorResponse.getMessage(), expectedErrorMessage);
     }
 }

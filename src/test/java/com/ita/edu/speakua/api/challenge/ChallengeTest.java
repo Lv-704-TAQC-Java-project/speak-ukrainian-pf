@@ -6,6 +6,7 @@ import com.ita.edu.speakua.api.clients.ChallengeClient;
 import com.ita.edu.speakua.api.models.ErrorResponse;
 import com.ita.edu.speakua.api.models.challenge.CreateChallengeRequest;
 import com.ita.edu.speakua.api.models.challenge.ReadChallengeResponse;
+import com.ita.edu.speakua.api.models.challenge.Task;
 import com.ita.edu.speakua.utils.jdbc.entity.ChallengeEntity;
 import com.ita.edu.speakua.utils.jdbc.entity.TaskEntity;
 import com.ita.edu.speakua.utils.jdbc.services.ChallengeService;
@@ -14,85 +15,98 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Link;
 import io.restassured.response.Response;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 
 import static org.testng.Assert.assertEquals;
 
 public class ChallengeTest extends ApiBaseTestRunner {
-    private Authentication authentication;
 
-    @BeforeClass
-    public void beforeClass() {
-        authentication = new Authentication(properties.getAdminEmail(), properties.getAdminPassword());
-    }
-
-    @Test
-    public void successGetTest() {
-        ChallengeClient client = new ChallengeClient(authentication.getToken());
-        Response response = client.get(378);
-        assertEquals(response.statusCode(), 200);
-
-        ReadChallengeResponse readChallengeResponse = response.as(ReadChallengeResponse.class);
-
-        SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(readChallengeResponse.getId(), 378);
-        softAssert.assertEquals(readChallengeResponse.getName(), "MzFGwuRN");
-        softAssert.assertEquals(readChallengeResponse.getSortNumber(), 1897237667);
-        softAssert.assertEquals(readChallengeResponse.getTasks().size(), 0);
-        softAssert.assertEquals(readChallengeResponse.getUser().getFirstName(), "Admin");
-        softAssert.assertEquals(readChallengeResponse.getUser().getId(), 1);
-        softAssert.assertAll();
+    @DataProvider(name = "credentialsData")
+    public Object[][] credentialsData() {
+        return new Object[][]{
+                {"", ""},
+                {properties.getAdminEmail(), properties.getAdminPassword()},
+                {properties.getManagerEmail(), properties.getManagerPassword()},
+                {properties.getUserEmail(), properties.getUserPassword()}
+        };
     }
 
     @Issue("TUA-437")
-    @Description("Verify API returns same challenge as database")
+    @Description("Verify that user with any role can view info about specific Challenge")
     @Link("https://jira.softserve.academy/browse/TUA-437")
-    @Test
-    public void verifyApiGetChallengeEqualsDatabaseChallenge() {
-        long databaseFirstChallengeId = new ChallengeService().getAllChallenges().get(0).getId();
-        ChallengeEntity databaseChallenge = new ChallengeService().getChallengeById(databaseFirstChallengeId);
-        List<TaskEntity> firstChallengeTasks = new TaskService().getTasks(databaseFirstChallengeId);
-        ChallengeClient challengeClient = new ChallengeClient(authentication.getToken());
+    @Test(dataProvider = "credentialsData")
+    public void verifyUserWithAnyRoleCanViewChallenge(String email, String password) {
+        // Can be any existing challenge id from database
+        long challengeId = new ChallengeService().getAllChallenges().get(0).getId();
 
-        Response response = challengeClient.get(databaseFirstChallengeId);
-        assertEquals(response.statusCode(), 200);
+        ChallengeClient challengeClient = new ChallengeClient(email.isEmpty() && password.isEmpty()
+                ? ""
+                : new Authentication(email, password).getToken());
 
-        ReadChallengeResponse readChallengeResponse = response.as(ReadChallengeResponse.class);
+        Response apiResponse = challengeClient.get(challengeId);
+        assertEquals(apiResponse.statusCode(), 200,
+                "Incorrect API response status code when requested challenge with id " + challengeId);
 
-        SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(readChallengeResponse.getId(), databaseFirstChallengeId);
-        softAssert.assertEquals(readChallengeResponse.getName(), databaseChallenge.getName());
-        softAssert.assertEquals(readChallengeResponse.getTitle(), databaseChallenge.getTitle());
-        softAssert.assertEquals(readChallengeResponse.getDescription(), databaseChallenge.getDescription());
-        softAssert.assertEquals(readChallengeResponse.getPicture(), databaseChallenge.getPicture());
-        softAssert.assertEquals(readChallengeResponse.getSortNumber(), databaseChallenge.getSortNumber());
-        softAssert.assertEquals(readChallengeResponse.getIsActive(), databaseChallenge.getIsActive());
-        softAssert.assertEquals(readChallengeResponse.getTasks().size(), firstChallengeTasks.size());
-        softAssert.assertEquals(readChallengeResponse.getUser() != null ? readChallengeResponse.getUser().getId() : 0, databaseChallenge.getUserId());
-        softAssert.assertEquals(readChallengeResponse.getRegistrationLink(), databaseChallenge.getRegistrationLink());
+        ReadChallengeResponse readChallengeResponse = apiResponse.as(ReadChallengeResponse.class);
 
-        softAssert.assertAll();
-    }
+        SoftAssert softly = new SoftAssert();
+        ChallengeEntity databaseChallenge = new ChallengeService().getChallengeById(challengeId);
+        softly.assertEquals(readChallengeResponse.getId(), challengeId,
+                "Database and API response should have same id");
+        softly.assertEquals(readChallengeResponse.getName(), databaseChallenge.getName(),
+                "Database and API response should have same name");
+        softly.assertEquals(readChallengeResponse.getTitle(), databaseChallenge.getTitle(),
+                "Database and API response should have same title");
+        softly.assertEquals(readChallengeResponse.getDescription(), databaseChallenge.getDescription(),
+                "Database and API response should have same description");
+        softly.assertEquals(readChallengeResponse.getPicture(), databaseChallenge.getPicture(),
+                "Database and API response should have same picture url");
+        softly.assertEquals(readChallengeResponse.getSortNumber(), databaseChallenge.getSortNumber(),
+                "Database and API response should have same sort number");
+        softly.assertEquals(readChallengeResponse.getIsActive(), databaseChallenge.getIsActive(),
+                "Database and API response should have same activity status");
+        softly.assertEquals(readChallengeResponse.getUser() != null ? readChallengeResponse.getUser().getId() : 0,
+                databaseChallenge.getUserId(),
+                "Database and API response should have same challenge user id");
+        softly.assertEquals(readChallengeResponse.getRegistrationLink(), databaseChallenge.getRegistrationLink(),
+                "Database and API response should have same registration link");
 
-    @Test
-    public void failGetTest() {
-        ChallengeClient client = new ChallengeClient(authentication.getToken());
-        Response response = client.get(3780);
-        assertEquals(response.statusCode(), 404);
+        ArrayList<Task> apiFirstChallengeTasks = readChallengeResponse.getTasks();
+        List<TaskEntity> databaseFirstChallengeTasks = new TaskService().getTasks(challengeId);
+        softly.assertEquals(apiFirstChallengeTasks.size(), databaseFirstChallengeTasks.size(),
+                "Database and API response should have tasks list of equal size");
 
-        ErrorResponse errorResponse = response.as(ErrorResponse.class);
-
-        SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(errorResponse.getStatus(), 404);
-        softAssert.assertEquals(errorResponse.getMessage(), "Challenge not found by id: 3780");
-        softAssert.assertAll();
-
+        apiFirstChallengeTasks.forEach(apiResponseTask -> {
+            AtomicBoolean isApiAndDatabaseResponseContainTaskWithSameId = new AtomicBoolean(false);
+            databaseFirstChallengeTasks.forEach(databaseTask -> {
+                long taskId = apiResponseTask.getId();
+                if (taskId == databaseTask.getId()) {
+                    isApiAndDatabaseResponseContainTaskWithSameId.set(true);
+                    softly.assertEquals(apiResponseTask.getName(), databaseTask.getName(),
+                            "Database and API response should have equal name for Task with id" + taskId);
+                    softly.assertEquals(apiResponseTask.getHeaderText(), databaseTask.getHeaderText(),
+                            "Database and API response should have equal header text for Task with id" + taskId);
+                    softly.assertEquals(apiResponseTask.getPicture(), databaseTask.getPicture(),
+                            "Database and API response should have equal picture url for Task with id" + taskId);
+                    softly.assertEquals(apiResponseTask.getStartDate(), Arrays
+                                    .stream(databaseTask.getStartDate().split("-"))
+                                    .map(Integer::parseInt)
+                                    .collect(Collectors.toList()),
+                            "Database and API response should have equal start date for Task with id" + taskId);
+                }
+            });
+            softly.assertTrue(isApiAndDatabaseResponseContainTaskWithSameId.get(),
+                    "Database and API response should have task with same id");
+        });
+        softly.assertAll();
     }
 
     @DataProvider(name = "addChallengeData")
@@ -116,6 +130,8 @@ public class ChallengeTest extends ApiBaseTestRunner {
     @Description("Verify that user is not able to create Challenge using invalid values")
     @Test(dataProvider = "addChallengeData")
     public void unSuccessPostTest(String name, String title, String description, String[] expectedMessages) {
+        Authentication authentication = new Authentication(properties.getAdminEmail(), properties.getAdminPassword());
+
         ChallengeClient challengeClient = new ChallengeClient(authentication.getToken());
         CreateChallengeRequest createChallengeRequest = CreateChallengeRequest
                 .builder()
@@ -147,7 +163,7 @@ public class ChallengeTest extends ApiBaseTestRunner {
     @Description("Verify that user is not able to create Challenge using invalid values")
     @Test
     public void unSuccessDeleteTest() {
-        authentication = new Authentication("ulpkzrapmhkpzaqcve@sdvgeft.com", "11111111");
+        Authentication authentication = new Authentication("ulpkzrapmhkpzaqcve@sdvgeft.com", "11111111");
         ChallengeClient challengeClient = new ChallengeClient(authentication.getToken());
         Response getResponse = challengeClient.get(388);
         assertEquals(getResponse.statusCode(), 200);
@@ -169,6 +185,8 @@ public class ChallengeTest extends ApiBaseTestRunner {
     @Description("Verify that user can create Challenge using valid values")
     @Test
     public void successPostChallengeTest() {
+        Authentication authentication = new Authentication(properties.getAdminEmail(), properties.getAdminPassword());
+
         ChallengeClient challengeClient = new ChallengeClient(authentication.getToken());
         String name = "New Challenge";
         String title = "New title";
@@ -231,6 +249,8 @@ public class ChallengeTest extends ApiBaseTestRunner {
     @Description("Verify that user can  not create Challenge using invalid data")
     @Test(dataProvider = "errorMessagesForChallengeFields")
     public void unsuccessfulPostChallengeTest(String incorrectValue, List<String> expectedErrorMessages) {
+        Authentication authentication = new Authentication(properties.getAdminEmail(), properties.getAdminPassword());
+
         ChallengeClient challengeClient = new ChallengeClient(authentication.getToken());
 
         CreateChallengeRequest createChallengeRequestWithNullValues = CreateChallengeRequest

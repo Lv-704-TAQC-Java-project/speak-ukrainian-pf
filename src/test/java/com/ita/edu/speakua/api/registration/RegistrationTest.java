@@ -12,7 +12,10 @@ import io.restassured.response.Response;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import static com.ita.edu.speakua.api.data.Role.MANAGER;
+import java.util.List;
+
+import static com.ita.edu.speakua.api.data.Role.USER;
+import static java.util.Arrays.asList;
 import static org.testng.Assert.assertEquals;
 
 public class RegistrationTest extends ApiBaseTestRunner {
@@ -24,7 +27,7 @@ public class RegistrationTest extends ApiBaseTestRunner {
     public void verifyInvalidPasswordRegistrationFails() {
         String firstName = "firstname";
         String lastName = "lastname";
-        String email = "email";
+        String email = "newuniqemail@gmail.com";
 
         RegistrationClient registrationClient = new RegistrationClient();
         SignUpRequest signUpRequest = SignUpRequest
@@ -32,21 +35,24 @@ public class RegistrationTest extends ApiBaseTestRunner {
                 .firstName(firstName)
                 .lastName(lastName)
                 .email(email)
-                .password("Pf#123456")
+                .password("123456")
                 .phone("0634562314")
-                .roleName(MANAGER)
+                .roleName(USER.getRoleValue())
                 .build();
 
         Response signUpResponse = registrationClient.signUp(signUpRequest);
         assertEquals(signUpResponse.statusCode(), 400,
-                "Incorrect response status code");
+                "Incorrect API response status code when registering with invalid password format");
 
         ErrorResponse singUpErrorResponse = signUpResponse.as(ErrorResponse.class);
         SoftAssert softly = new SoftAssert();
         softly.assertEquals(singUpErrorResponse.getStatus(), 400,
-                "Unexpected response status code");
-        softly.assertEquals(singUpErrorResponse.getMessage(), "email is not valid",
-                "Incorrect error message");
+                "Incorrect response status code");
+        List<String> passwordErrorMessages = asList("password must contain at least one number and special symbol",
+                "password must contain at least one uppercase and lowercase letter",
+                "password size must be between 8 and 20");
+        passwordErrorMessages.forEach(message -> softly.assertTrue(singUpErrorResponse.getMessage().contains(message),
+                "Password error message should contain: " + message));
         softly.assertAll();
 
         long usersQuantity = new UserService().getTasksCount(email, firstName, lastName);

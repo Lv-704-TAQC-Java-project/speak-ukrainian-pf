@@ -12,5 +12,5 @@ public class EditUserResponse {
     private String password;
     private String roleName;
     private String urlLogo;
-    private String status;
+    private Boolean status;
 }

@@ -5,17 +5,17 @@ import io.restassured.response.Response;
 
 public class ChallengeClient extends BaseClient {
     private final String path = "/challenge";
-    private final String authentication;
+    private final String token;
 
 
-    public ChallengeClient(String authentication) {
+    public ChallengeClient(String token) {
         super();
-        this.authentication = authentication;
+        this.token = token;
     }
 
     public Response get(long id) {
         return prepareRequest()
-                .header("Authorization", "Bearer " + this.authentication)
+                .header("Authorization", "Bearer " + this.token)
                 .when()
                 .get(String.format("%s%s/%s", baseUrl, path, id));
     }
@@ -29,7 +29,7 @@ public class ChallengeClient extends BaseClient {
 
     public Response postChallenge(CreateChallengeRequest createChallengeRequest) {
         return prepareRequest()
-                .header("Authorization", "Bearer " + this.authentication)
+                .header("Authorization", "Bearer " + this.token)
                 .body(createChallengeRequest)
                 .when()
                 .post(baseUrl + path);
@@ -37,7 +37,7 @@ public class ChallengeClient extends BaseClient {
 
     public Response delete(int id) {
         return prepareRequest()
-                .header("Authorization", "Bearer " + this.authentication)
+                .header("Authorization", "Bearer " + this.token)
                 .when()
                 .delete(String.format("%s%s/%s", baseUrl, path, id));
     }

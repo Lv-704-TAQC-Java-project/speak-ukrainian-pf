@@ -35,7 +35,7 @@ public class TaskTest extends ApiBaseTestRunner {
     private final String picture = "/upload/some/image.png";
     private final String name = "Some name";
     private final String headerText = "Some header text header text header text header text";
-    private final String description = "Some description description description description description description description";
+    private final String description = "Some description description description description description #$%'*+ ,-.:;=?|@_`{}~]";
 
     @BeforeClass
     public void beforeClass() {
@@ -46,7 +46,7 @@ public class TaskTest extends ApiBaseTestRunner {
     @Description("Verify user can create Task with valid values")
     @Link("https://jira.softserve.academy/browse/TUA-441")
     @Test
-    public void verifyTaskCreation() {
+    public void verifyTaskCreationWithValidData() {
         TaskClient taskClient = new TaskClient(authentication.getToken());
         CreateTaskRequest createTaskRequest = CreateTaskRequest
                 .builder()
@@ -58,24 +58,45 @@ public class TaskTest extends ApiBaseTestRunner {
                 .build();
 
         long maxTaskId = new TaskService().getTasksMaxId();
-        int challengeId = 5;
+        int challengeId = 5; // Can be any valid challenge id
 
         Response createTaskRawResponse = taskClient.createTask(challengeId, createTaskRequest);
-        assertEquals(createTaskRawResponse.statusCode(), 200);
+        assertEquals(createTaskRawResponse.statusCode(), 200,
+                "Api create task response should have status code 200");
 
         CreateTaskResponse createTaskResponse = createTaskRawResponse.as(CreateTaskResponse.class);
 
+        long createdTaskId = createTaskResponse.getId();
+
         SoftAssert softly = new SoftAssert();
-        softly.assertEquals(createTaskResponse.getId(), maxTaskId + 1);
-        softly.assertEquals(createTaskResponse.getName(), name);
-        softly.assertEquals(createTaskResponse.getDescription(), description);
-        softly.assertEquals(createTaskResponse.getPicture(), picture);
-        softly.assertEquals(createTaskResponse.getChallengeId(), challengeId);
+        softly.assertEquals(createdTaskId, maxTaskId + 1,
+                "Api create task response should have id");
+        softly.assertEquals(createTaskResponse.getName(), name,
+                "Api create task response should have name");
+        softly.assertEquals(createTaskResponse.getDescription(), description,
+                "Api create task response should have description");
+        softly.assertEquals(createTaskResponse.getPicture(), picture,
+                "Api create task response should have picture");
+        softly.assertEquals(createTaskResponse.getChallengeId(), challengeId,
+                "Api create task response should have challenge id");
 
         List<Integer> parsedDateList = Arrays.stream(tomorrow.split("-"))
                 .map(Integer::parseInt)
                 .collect(Collectors.toList());
-        softly.assertEquals(createTaskResponse.getStartDate(), parsedDateList);
+        softly.assertEquals(createTaskResponse.getStartDate(), parsedDateList,
+                "Api create task response should have start date");
+
+        TaskEntity databaseTask = new TaskService().getTaskById(createdTaskId);
+        softly.assertEquals(databaseTask.getName(), name,
+                "Database should have created task with name");
+        softly.assertEquals(databaseTask.getDescription(), description,
+                "Database should have created task with description");
+        softly.assertEquals(databaseTask.getPicture(), picture,
+                "Database should have created task with picture url");
+        softly.assertEquals(databaseTask.getChallengeId(), challengeId,
+                "Database should have created task with challenge id");
+        softly.assertEquals(databaseTask.getStartDate(), tomorrow,
+                "Database should have created task with start date");
 
         softly.assertAll();
     }
@@ -175,7 +196,7 @@ public class TaskTest extends ApiBaseTestRunner {
     @Description("Verify that user can edit Task with valid values")
     @Link("https://jira.softserve.academy/browse/TUA-444")
     @Test
-    public void verifyTaskCreationWithValidData() {
+    public void verifyTaskEditWithValidData() {
         String name = "namenamename1213#$% ";
         String description = "descriptiondescriptiondescriptiondescriptiondescription12345$%%^$# ";
         String picture = "/upload/test/test.png";
