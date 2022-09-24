@@ -106,7 +106,7 @@ public class UserTest extends ApiBaseTestRunner {
         UserClient userClient = new UserClient(new Authentication(email, password).getToken());
         Response apiResponse = userClient.put(initialUserId, editUserRequest);
         assertEquals(apiResponse.statusCode(), 200,
-                "Api response should have status code 200 when requested to edit user with id " + initialUserId);
+                "Incorrect API response status code when requested to edit user with id " + initialUserId);
 
         SoftAssert softly = new SoftAssert();
         EditUserResponse editUserResponse = apiResponse.as(EditUserResponse.class);
@@ -153,7 +153,7 @@ public class UserTest extends ApiBaseTestRunner {
                 .build();
         apiResponse = userClient.put(initialUserId, editUserRequest);
         assertEquals(apiResponse.statusCode(), 200,
-                "Api response should have status code 200 when requested to edit user with id " + initialUserId);
+                "Incorrect API response status code when requested to edit user with id " + initialUserId);
 
         softly = new SoftAssert();
         editUserResponse = apiResponse.as(EditUserResponse.class);

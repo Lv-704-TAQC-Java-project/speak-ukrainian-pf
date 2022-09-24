@@ -53,7 +53,7 @@ public class ChallengeTest extends ApiBaseTestRunner {
 
         Response apiResponse = challengeClient.get(challengeId);
         assertEquals(apiResponse.statusCode(), 200,
-                "Api response should have status code 200 when requested challenge with id " + challengeId);
+                "Incorrect API response status code when requested challenge with id " + challengeId);
 
         ReadChallengeResponse readChallengeResponse = apiResponse.as(ReadChallengeResponse.class);
 

@@ -39,12 +39,12 @@ public class RegistrationTest extends ApiBaseTestRunner {
 
         Response signUpResponse = registrationClient.signUp(signUpRequest);
         assertEquals(signUpResponse.statusCode(), 400,
-                "Incorrect response status code");
+                "Incorrect API response status code when registering with invalid password format");
 
         ErrorResponse singUpErrorResponse = signUpResponse.as(ErrorResponse.class);
         SoftAssert softly = new SoftAssert();
         softly.assertEquals(singUpErrorResponse.getStatus(), 400,
-                "Unexpected response status code");
+                "Incorrect response status code");
         softly.assertEquals(singUpErrorResponse.getMessage(), "email is not valid",
                 "Incorrect error message");
         softly.assertAll();
