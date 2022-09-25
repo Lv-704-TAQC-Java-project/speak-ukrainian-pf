@@ -290,12 +290,11 @@ public class ChallengeTest extends ApiBaseTestRunner {
                 .title("New title")
                 .description("Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet")
                 .registrationLink("https://docs.google.com/forms/d/e/132/viewform?embedded=true")
-
                 .picture("/upload/test/test.png")
                 .sortNumber((int) maxSortNumber)
                 .build();
 
-        Response postResponse = challengeClient.post(createChallengeRequest);
+        Response postResponse = challengeClient.postChallenge(createChallengeRequest);
         ReadChallengeResponse readChallengeResponse = postResponse.as(ReadChallengeResponse.class);
         return readChallengeResponse.getId();
     }
