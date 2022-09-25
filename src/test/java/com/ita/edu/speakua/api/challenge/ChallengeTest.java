@@ -25,7 +25,9 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
+import static java.lang.String.format;
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNull;
 
 public class ChallengeTest extends ApiBaseTestRunner {
 
@@ -275,5 +277,42 @@ public class ChallengeTest extends ApiBaseTestRunner {
                 softAssert.assertTrue(errorResponse.getMessage().contains(errorMessage),
                         "Error message should appear: " + errorMessage));
         softAssert.assertAll();
+    }
+
+    private int createChallengeAndGetId() {
+        Authentication authentication = new Authentication(properties.getAdminEmail(), properties.getAdminPassword());
+        ChallengeClient challengeClient = new ChallengeClient(authentication.getToken());
+        long maxSortNumber = new ChallengeService().getMaxChallengeSortNumber() + 1;
+
+        CreateChallengeRequest createChallengeRequest = CreateChallengeRequest
+                .builder()
+                .name("New Challenge")
+                .title("New title")
+                .description("Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet")
+                .registrationLink("https://docs.google.com/forms/d/e/132/viewform?embedded=true")
+
+                .picture("/upload/test/test.png")
+                .sortNumber((int) maxSortNumber)
+                .build();
+
+        Response postResponse = challengeClient.post(createChallengeRequest);
+        ReadChallengeResponse readChallengeResponse = postResponse.as(ReadChallengeResponse.class);
+        return readChallengeResponse.getId();
+    }
+
+    @Issue("TUA-435")
+    @Description("Verify that user is able to delete Challenge using administrator rights")
+    @Test
+    public void verifyThatUserCanDeleteChallenge() {
+        Authentication authentication = new Authentication(properties.getAdminEmail(), properties.getAdminPassword());
+        ChallengeClient challengeClient = new ChallengeClient(authentication.getToken());
+        int challengeIdToDelete = createChallengeAndGetId();
+        Response deleteResponse = challengeClient.delete(challengeIdToDelete);
+        assertEquals(deleteResponse.statusCode(), 200,
+                "Challenge should be deleted");
+
+        ChallengeService challengeService = new ChallengeService();
+        ChallengeEntity challengeEntity = challengeService.getChallengeById(challengeIdToDelete);
+        assertNull(challengeEntity, format("There should not be challenge with id=%s in the DB", challengeIdToDelete));
     }
 }
