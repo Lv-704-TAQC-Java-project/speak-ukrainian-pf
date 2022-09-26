@@ -19,6 +19,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.testng.Assert.assertEquals;
 
@@ -248,5 +249,111 @@ public class ClubTest extends ApiBaseTestRunner {
                 "Message should be correct");
         softly.assertAll();
     }
-}
 
+    @Issue("TUA-504")
+    @Description("Verify that User can create new club if 'Назва' field consists of a word length of 5 characters")
+    @Test
+    public void verifyThatUserCanCreateClub() {
+        ClubClient clubClient = new ClubClient(authentication.getToken());
+
+        String locationName = "Голосівська";
+        String address = "https://speak-ukrainian.org.ua/dev/club/910";
+        String cityName = "Київ";
+        String districtName = "Голосіївський";
+        String stationName = "Голосіївська";
+        String coordinates = "50.35535081747696, 30.51765754176391";
+        String phone = "0937777777";
+
+        ArrayList<Location> locations = new ArrayList<>(List.of(Location
+                .builder()
+                .name(locationName)
+                .address(address)
+                .cityName(cityName)
+                .districtName(districtName)
+                .stationName(stationName)
+                .coordinates(coordinates)
+                .centerId(2)
+                .phone(phone)
+                .build()));
+
+        ArrayList<String> categoriesName = new ArrayList<>(List.of("Вокальна студія, музика, музичні інструменти"));
+        String clubName = RandomStringUtils.randomAlphabetic(5);
+        String description = "{\"blocks\":[{\"key\":\"brl63\",\"text\":" +
+                "\"Ми поставили перед собою ціль створити мережу найкращих центрів раннього розвитку в Україні, " +
+                "де дітки навчатимуться з задоволенням, а батьки радітимуть від результатів." +
+                "\",\"type\":\"unstyled\",\"depth\":1,\"inlineStyleRanges\":[],\"entityRanges\":[]," +
+                "\"data\":{}}],\"entityMap\":{}}\"";
+        String urlBackground = "/dev/static/images/user/avatar/user1.png";
+        String urlLogo = "/dev/static/images/user/avatar/user1.png";
+        String contacts = "{\\\"1\\\"::\\\"ліл\\\"}";
+        int ageFrom = 2;
+        int ageTo = 18;
+        int centerId = 2;
+        boolean isOnline = true;
+
+        CreateClubRequest createClubRequest = CreateClubRequest
+                .builder()
+                .categoriesName(categoriesName)
+                .locations(locations)
+                .description(description)
+                .name(clubName)
+                .ageFrom(ageFrom)
+                .ageTo(ageTo)
+                .urlBackground(urlBackground)
+                .urlLogo(urlLogo)
+                .isOnline(true)
+                .contacts(contacts)
+                .centerId(centerId)
+                .build();
+
+        Response response = clubClient.post(createClubRequest);
+        assertEquals(response.statusCode(), 200);
+
+        ReadClubResponse readClubResponse = response.as(ReadClubResponse.class);
+        SoftAssert softAssert = new SoftAssert();
+
+        softAssert.assertEquals(readClubResponse.getCategories().get(0).getName(), categoriesName.get(0),
+                "Categories name should be correct");
+
+        LocationResponse actualLocation = readClubResponse.getLocations().get(0);
+        softAssert.assertEquals(actualLocation.getName(), locationName,
+                "Location name should be correct");
+        softAssert.assertEquals(actualLocation.getCityName(), cityName,
+                "Location city name should be correct");
+        softAssert.assertEquals(actualLocation.getDistrictName(), districtName,
+                "Location district name should be correct");
+        softAssert.assertEquals(actualLocation.getStationName(), stationName,
+                "Location station name should be correct");
+        //TODO: this test may fail as coordinates value is null
+        softAssert.assertEquals(actualLocation.getCoordinates(), coordinates,
+                "Coordinates should be correct");
+
+        String[] coordinatesArr = coordinates.split(", ");
+        softAssert.assertEquals(actualLocation.getLatitude(), Double.parseDouble(coordinatesArr[0]),
+                "Latitude should be correct");
+        softAssert.assertEquals(actualLocation.getLongitude(), Double.parseDouble(coordinatesArr[1]),
+                "Longitude should be correct");
+
+        softAssert.assertEquals(readClubResponse.getDescription(), description,
+                "Description should be correct");
+        softAssert.assertEquals(readClubResponse.getName(), clubName,
+                "Club name should be correct");
+        softAssert.assertEquals(readClubResponse.getAgeFrom(), ageFrom,
+                "AgeFrom should be equal to expected");
+        softAssert.assertEquals(readClubResponse.getAgeTo(), ageTo,
+                "AgeTo should be equal to expected");
+        softAssert.assertEquals(readClubResponse.getUrlBackground(), urlBackground,
+                "Url background should be correct");
+        softAssert.assertEquals(readClubResponse.getUrlLogo(), urlLogo,
+                "Url logo should be correct");
+        softAssert.assertEquals(Boolean.parseBoolean(readClubResponse.getIsOnline()), isOnline,
+                "IsOnline value should be correct");
+        //TODO: this test may fail as contacts value is null
+        softAssert.assertEquals(readClubResponse.getCenter().getContacts(), contacts,
+                "Contacts should be correct");
+        softAssert.assertEquals(readClubResponse.getCenter().getId(), centerId,
+                "Center id should be correct");
+
+        softAssert.assertAll();
+    }
+}
