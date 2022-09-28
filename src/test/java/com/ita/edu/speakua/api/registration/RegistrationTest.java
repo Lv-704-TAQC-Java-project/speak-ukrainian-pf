@@ -28,6 +28,8 @@ public class RegistrationTest extends ApiBaseTestRunner {
         String firstName = "firstname";
         String lastName = "lastname";
         String email = "newuniqemail@gmail.com";
+        String invalidPassword = "123456";
+        String phone = "0634562314";
 
         RegistrationClient registrationClient = new RegistrationClient();
         SignUpRequest signUpRequest = SignUpRequest
@@ -35,8 +37,8 @@ public class RegistrationTest extends ApiBaseTestRunner {
                 .firstName(firstName)
                 .lastName(lastName)
                 .email(email)
-                .password("123456")
-                .phone("0634562314")
+                .password(invalidPassword)
+                .phone(phone)
                 .roleName(USER.getRoleValue())
                 .build();
 
