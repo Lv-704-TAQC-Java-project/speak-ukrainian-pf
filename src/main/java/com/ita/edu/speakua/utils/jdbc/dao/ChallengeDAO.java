@@ -46,4 +46,17 @@ public class ChallengeDAO {
         ManagerDAO.closeStatement(statement);
         return ChallengeEntity.parseRows(rows).get(0);
     }
+
+    public int countChallengesWhereId(long id) {
+        Statement statement = ManagerDAO.getInstance().getStatement();
+        List<List<String>> rows;
+        try {
+            ResultSet resultSet = statement.executeQuery(String.format(ChallengeEntity.COUNT_WHERE_ID, id));
+            rows = ManagerDAO.getInstance().parseResultSet(resultSet);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        ManagerDAO.closeStatement(statement);
+        return Integer.parseInt(rows.get(0).get(0));
+    }
 }

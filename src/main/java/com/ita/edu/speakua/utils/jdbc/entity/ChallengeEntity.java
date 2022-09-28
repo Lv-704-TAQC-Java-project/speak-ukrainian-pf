@@ -13,6 +13,7 @@ public class ChallengeEntity {
 
     public static final String SELECT_ALL_CHALLENGES = SELECT_ALL_FIELDS + " FROM challenges;";
     public static final String SELECT_CHALLENGE_BY_ID = SELECT_ALL_FIELDS + " FROM challenges WHERE id='%s';";
+    public static final String COUNT_WHERE_ID = "SELECT count(*) FROM challenges WHERE id='%s';";
     public static final String SELECT_CHALLENGE_WHERE_SORT_NUMBER_IS_MAX = SELECT_ALL_FIELDS +
             " FROM challenges WHERE sort_number = (SELECT MAX(sort_number) FROM challenges)";
 

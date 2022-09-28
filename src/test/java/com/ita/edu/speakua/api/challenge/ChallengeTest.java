@@ -27,7 +27,6 @@ import java.util.stream.Collectors;
 
 import static java.lang.String.format;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNull;
 
 public class ChallengeTest extends ApiBaseTestRunner {
 
@@ -296,7 +295,13 @@ public class ChallengeTest extends ApiBaseTestRunner {
 
         Response postResponse = challengeClient.postChallenge(createChallengeRequest);
         ReadChallengeResponse readChallengeResponse = postResponse.as(ReadChallengeResponse.class);
-        return readChallengeResponse.getId();
+        ChallengeService challengeService = new ChallengeService();
+
+        int newChallengeId = readChallengeResponse.getId();
+
+        int challengesQuantity = challengeService.countChallengesById(newChallengeId);
+        assertEquals(challengesQuantity, 1, format("There should be challenge with id=%s in the DB", newChallengeId));
+        return newChallengeId;
     }
 
     @Issue("TUA-435")
@@ -311,7 +316,7 @@ public class ChallengeTest extends ApiBaseTestRunner {
                 "Challenge should be deleted");
 
         ChallengeService challengeService = new ChallengeService();
-        ChallengeEntity challengeEntity = challengeService.getChallengeById(challengeIdToDelete);
-        assertNull(challengeEntity, format("There should not be challenge with id=%s in the DB", challengeIdToDelete));
+        int challengesQuantity = challengeService.countChallengesById(challengeIdToDelete);
+        assertEquals(challengesQuantity, 0, format("There should not be challenge with id=%s in the DB", challengeIdToDelete));
     }
 }
