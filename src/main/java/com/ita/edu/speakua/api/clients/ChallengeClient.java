@@ -20,6 +20,13 @@ public class ChallengeClient extends BaseClient {
                 .get(String.format("%s%s/%s", baseUrl, path, id));
     }
 
+    public Response getChallenges() {
+        return prepareRequest()
+                .header("Authorization", "Bearer " + this.token)
+                .when()
+                .get(baseUrl + path + "s");
+    }
+
     public Response post(CreateChallengeRequest createChallengeRequest) {
         return prepareRequest()
                 .body(createChallengeRequest)

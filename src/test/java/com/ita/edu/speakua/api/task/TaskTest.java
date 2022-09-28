@@ -283,7 +283,6 @@ public class TaskTest extends ApiBaseTestRunner {
                 "name must not be blank");
         return new Object[][]{
                 {" ", " ", errors},
-//                {" namenamena ", " descriptiondescriptiondescriptiondescriptiondescription ", errors},
                 {null, null, List.of("name must not be blank")}
         };
     }
