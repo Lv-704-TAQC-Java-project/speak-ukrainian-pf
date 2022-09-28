@@ -4,6 +4,7 @@ import com.ita.edu.speakua.api.ApiBaseTestRunner;
 import com.ita.edu.speakua.api.clients.Authentication;
 import com.ita.edu.speakua.api.clients.ChallengeClient;
 import com.ita.edu.speakua.api.models.ErrorResponse;
+import com.ita.edu.speakua.api.models.challenge.Challenge;
 import com.ita.edu.speakua.api.models.challenge.CreateChallengeRequest;
 import com.ita.edu.speakua.api.models.challenge.ReadChallengeResponse;
 import com.ita.edu.speakua.api.models.challenge.Task;
@@ -27,6 +28,7 @@ import java.util.stream.Collectors;
 
 import static java.lang.String.format;
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 public class ChallengeTest extends ApiBaseTestRunner {
 
@@ -275,6 +277,47 @@ public class ChallengeTest extends ApiBaseTestRunner {
         expectedErrorMessages.forEach(errorMessage ->
                 softAssert.assertTrue(errorResponse.getMessage().contains(errorMessage),
                         "Error message should appear: " + errorMessage));
+        softAssert.assertAll();
+    }
+
+    @DataProvider(name = "credentialsUserData")
+    public Object[][] credentialsUserData() {
+        return new Object[][]{
+                {""},
+                {new Authentication(properties.getAdminEmail(), properties.getAdminPassword()).getToken()},
+                {new Authentication(properties.getManagerEmail(), properties.getManagerPassword()).getToken()},
+                {new Authentication(properties.getUserEmail(), properties.getUserPassword()).getToken()}
+        };
+    }
+
+    @Issue("TUA-438")
+    @Description("Verify that user with any rights can view Challenge list")
+    @Link("https://jira.softserve.academy/browse/TUA-438")
+    @Test(dataProvider = "credentialsUserData")
+    public void verifyUserWithAnyRoleCanViewListChallenges(String token) {
+        ChallengeClient challengeClient = new ChallengeClient(token);
+
+        Response response = challengeClient.getChallenges();
+        assertEquals(response.statusCode(), 200,
+                "Incorrect API response status code");
+
+        var challengesResponse = response.as(Challenge[].class);
+        assertTrue(challengesResponse.length > 0, "Challenges should be more then 0");
+
+        var challenges = new ChallengeService().getAllChallenges();
+
+        SoftAssert softAssert = new SoftAssert();
+        challenges.forEach(challengeDb -> {
+                    Arrays.stream(challengesResponse).forEach(challengeResponse -> {
+                        if (challengeDb.getId() == challengeResponse.getId()) {
+                            softAssert.assertEquals(challengeDb.getName(), challengeResponse.getName(), "Names should be same");
+                            softAssert.assertEquals(challengeDb.getTitle(), challengeResponse.getTitle(), "Titles should be same");
+                            softAssert.assertEquals(challengeDb.getSortNumber(), challengeResponse.getSortNumber(), "Sort numbers should be same");
+                        }
+                    });
+                }
+        );
+
         softAssert.assertAll();
     }
 
