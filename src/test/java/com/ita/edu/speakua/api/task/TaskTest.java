@@ -279,4 +279,41 @@ public class TaskTest extends ApiBaseTestRunner {
         errors.forEach(error -> softly.assertTrue(errorResponse.getMessage().contains(error)));
         softly.assertAll();
     }
+
+    @DataProvider(name = "InvalidDescriptionAndNameDataWithNull")
+    public Object[][] InvalidDescriptionAndNameDataWithNull() {
+        List<String> errors = Arrays.asList("name must contain a minimum of 5 and a maximum of 100 letters",
+                "description must contain a minimum of 40 and a maximum of 3000 letters",
+                "name must not be blank");
+        return new Object[][]{
+                {" ", " ", errors},
+                {null, null, List.of("name must not be blank")}
+        };
+    }
+
+    @Issue("TUA-446")
+    @Description("Verify that user can not edit Task using null, spaces as values")
+    @Link("https://jira.softserve.academy/browse/TUA-446")
+    @Test(dataProvider = "InvalidDescriptionAndNameDataWithNull")
+    public void verifyThatTaskCannotEditWithInvalidData(String name, String description, List<String> errors) {
+        TaskClient taskClient = new TaskClient(authentication.getToken());
+
+        CreateTaskRequest createTaskRequest = CreateTaskRequest
+                .builder()
+                .name(name)
+                .description(description)
+                .headerText(headerText)
+                .picture(picture)
+                .startDate(tomorrow)
+                .build();
+
+        Response response = taskClient.createTask(62, createTaskRequest);
+        assertEquals(response.statusCode(), 400);
+
+        ErrorResponse errorResponse = response.as(ErrorResponse.class);
+        SoftAssert softly = new SoftAssert();
+
+        errors.forEach(error -> softly.assertTrue(errorResponse.getMessage().contains(error)));
+        softly.assertAll();
+    }
 }

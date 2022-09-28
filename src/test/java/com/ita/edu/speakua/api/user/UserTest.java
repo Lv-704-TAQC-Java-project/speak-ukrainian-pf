@@ -228,4 +228,40 @@ public class UserTest extends ApiBaseTestRunner {
         ErrorResponse errorResponse = response.as(ErrorResponse.class);
         assertEquals(errorResponse.getMessage(), expectedErrorMessage);
     }
+
+    @DataProvider(name = "nullNameData")
+    public static Object[][] nullNameData() {
+        return new Object[][]{
+                {null, "Kukh", "999999922", "\"firstName\" can`t be null"},
+                {"Nastia", null, "999999922", "\"lastName\" can`t be null"},
+                {"Nastia", "Kukh", null, "phone must not be blank"},
+
+        };
+    }
+
+    @Issue("TUA-411")
+    @Description("Verify that user can not save changes where mandatory fields are empty")
+    @Link("https://jira.softserve.academy/browse/TUA-411")
+    @Test(dataProvider = "nullNameData")
+    public void verifyThatUserCanNotSaveChangesWithNullNameData(String firstName, String lastName, String phone, String expectedErrorMessage) {
+        Authentication authentication = new Authentication(properties.getAdminEmail(), properties.getAdminPassword());
+
+        int id = 203;
+        UserClient userClient = new UserClient(authentication.getToken());
+        EditUserRequest editUserRequest = EditUserRequest.builder()
+                .firstName(firstName)
+                .lastName(lastName)
+                .email("soyec48727@busantei.com")
+                .phone(phone)
+                .roleName(MANAGER.getRoleValue())
+                .urlLogo(null)
+                .status(true)
+                .build();
+
+        Response response = userClient.put(id, editUserRequest);
+        assertEquals(response.statusCode(), 400);
+
+        ErrorResponse errorResponse = response.as(ErrorResponse.class);
+        assertEquals(errorResponse.getMessage(), expectedErrorMessage);
+    }
 }
