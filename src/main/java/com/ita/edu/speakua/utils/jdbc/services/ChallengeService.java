@@ -23,4 +23,8 @@ public class ChallengeService {
     public long getMaxChallengeSortNumber() {
         return centerDAO.selectChallengeWithMaxSortNumber().getSortNumber();
     }
+
+    public int countChallengesById(long id) {
+        return centerDAO.countChallengesWhereId(id);
+    }
 }

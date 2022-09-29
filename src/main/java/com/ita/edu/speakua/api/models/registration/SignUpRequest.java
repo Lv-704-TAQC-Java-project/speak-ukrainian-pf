@@ -2,7 +2,6 @@ package com.ita.edu.speakua.api.models.registration;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.ita.edu.speakua.api.data.Role;
 import lombok.Builder;
 
 @JsonInclude
@@ -19,5 +18,5 @@ public class SignUpRequest {
     @JsonProperty
     public String phone;
     @JsonProperty
-    public Role roleName;
+    public String roleName;
 }
