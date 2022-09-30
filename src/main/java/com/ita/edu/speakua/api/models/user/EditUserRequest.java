@@ -1,10 +1,8 @@
 package com.ita.edu.speakua.api.models.user;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 
-@JsonInclude
 @Builder
 public class EditUserRequest {
     @JsonProperty

@@ -38,10 +38,6 @@ public class ClubTest extends ApiBaseTestRunner {
     public void successPostClubTest() {
         ClubClient clubClient = new ClubClient(authentication.getToken());
 
-        ArrayList<String> categoriesName = new ArrayList<>();
-        String categoryName = "Спортивні секції";
-        categoriesName.add(categoryName);
-
         int locationId = 23;
         int cityId = 1;
         int districtId = 1;
@@ -70,17 +66,11 @@ public class ClubTest extends ApiBaseTestRunner {
                 .phone(phone)
                 .build();
 
-        ArrayList<Location> locations = new ArrayList<>();
-        locations.add(location);
-
         String urlGalleryValue = "https://apiTest.API";
         UrlGallery urlGallery = UrlGallery
                 .builder()
                 .urlGallery(urlGalleryValue)
                 .build();
-
-        ArrayList<UrlGallery> urlGalleryList = new ArrayList<>();
-        urlGalleryList.add(urlGallery);
 
         String clubName = RandomStringUtils.randomAlphabetic(100);
         String description = "{\"blocks\":[{\"key\":\"brl63\",\"text\":" +
@@ -100,15 +90,15 @@ public class ClubTest extends ApiBaseTestRunner {
 
         CreateClubRequest createClubRequest = CreateClubRequest
                 .builder()
-                .categoriesName(categoriesName)
-                .locations(locations)
+                .categoriesName(List.of("Спортивні секції", ""))
+                .location(location)
                 .description(description)
                 .name(clubName)
                 .ageFrom(ageFrom)
                 .ageTo(ageTo)
                 .urlBackground(urlBackground)
                 .urlLogo(urlLogo)
-                .urlGallery(urlGalleryList)
+                .urlGallery(urlGallery)
                 .isOnline(true)
                 .contacts(contacts)
                 .isApproved(true)
@@ -124,7 +114,7 @@ public class ClubTest extends ApiBaseTestRunner {
         ReadClubResponse readClubResponse = response.as(ReadClubResponse.class);
         SoftAssert softAssert = new SoftAssert();
 
-        softAssert.assertEquals(readClubResponse.getCategories().get(0).getName(), categoryName,
+        softAssert.assertEquals(readClubResponse.getCategories().get(0).getName(), createClubRequest.getCategoriesName().get(0),
                 "Categories name should be correct");
 
         LocationResponse actualLocation = readClubResponse.getLocations().get(0);
@@ -208,10 +198,6 @@ public class ClubTest extends ApiBaseTestRunner {
                 .builder()
                 .urlGallery("https://apiTest.API")
                 .build();
-        ArrayList<UrlGallery> urlGalleries = new ArrayList<>();
-        urlGalleries.add(urlGallery);
-        ArrayList<Location> locations = new ArrayList<>();
-        locations.add(location);
 
         ArrayList<String> categoryNames = new ArrayList<>();
         categoryNames.add("Вокальна студія");
@@ -233,10 +219,10 @@ public class ClubTest extends ApiBaseTestRunner {
                         "\"unstyled\",\"depth\":1,\"inlineStyleRanges\":[],\"entityRanges\":[]," +
                         "\"data\":{}}],\"entityMap\":{}}")
                 .userId(264)
-                .locations(locations)
+                .location(location)
                 .contacts("{\"1\"::\"ліл\"}")
                 .centerId(2)
-                .urlGallery(urlGalleries)
+                .urlGallery(urlGallery)
                 .build();
         Response postResponse = clubClient.post(createClubRequest);
         ErrorResponse errorResponse = postResponse.as(ErrorResponse.class);
@@ -264,7 +250,7 @@ public class ClubTest extends ApiBaseTestRunner {
         String coordinates = "50.35535081747696, 30.51765754176391";
         String phone = "0937777777";
 
-        ArrayList<Location> locations = new ArrayList<>(List.of(Location
+        Location location = Location
                 .builder()
                 .name(locationName)
                 .address(address)
@@ -274,9 +260,8 @@ public class ClubTest extends ApiBaseTestRunner {
                 .coordinates(coordinates)
                 .centerId(2)
                 .phone(phone)
-                .build()));
+                .build();
 
-        ArrayList<String> categoriesName = new ArrayList<>(List.of("Вокальна студія, музика, музичні інструменти"));
         String clubName = RandomStringUtils.randomAlphabetic(5);
         String description = "{\"blocks\":[{\"key\":\"brl63\",\"text\":" +
                 "\"Ми поставили перед собою ціль створити мережу найкращих центрів раннього розвитку в Україні, " +
@@ -293,8 +278,8 @@ public class ClubTest extends ApiBaseTestRunner {
 
         CreateClubRequest createClubRequest = CreateClubRequest
                 .builder()
-                .categoriesName(categoriesName)
-                .locations(locations)
+                .categoryName("Вокальна студія, музика, музичні інструменти")
+                .location(location)
                 .description(description)
                 .name(clubName)
                 .ageFrom(ageFrom)
@@ -312,7 +297,7 @@ public class ClubTest extends ApiBaseTestRunner {
         ReadClubResponse readClubResponse = response.as(ReadClubResponse.class);
         SoftAssert softAssert = new SoftAssert();
 
-        softAssert.assertEquals(readClubResponse.getCategories().get(0).getName(), categoriesName.get(0),
+        softAssert.assertEquals(readClubResponse.getCategories().get(0).getName(), createClubRequest.getCategoriesName().get(0),
                 "Categories name should be correct");
 
         LocationResponse actualLocation = readClubResponse.getLocations().get(0);
@@ -381,11 +366,6 @@ public class ClubTest extends ApiBaseTestRunner {
                 .urlGallery("https://apiTest.API")
                 .build();
 
-        ArrayList<UrlGallery> urlGalleries = new ArrayList<>();
-        urlGalleries.add(urlGallery);
-        ArrayList<Location> locations = new ArrayList<>();
-        locations.add(location);
-
         ArrayList<String> categoryNames = new ArrayList<>();
         categoryNames.add("Вокальна студія");
         categoryNames.add("музика");
@@ -406,10 +386,10 @@ public class ClubTest extends ApiBaseTestRunner {
                         "\"unstyled\",\"depth\":1,\"inlineStyleRanges\":[],\"entityRanges\":[]," +
                         "\"data\":{}}],\"entityMap\":{}}")
                 .userId(264)
-                .locations(locations)
+                .location(location)
                 .contacts("{\"1\"::\"ліл\"}")
                 .centerId(2)
-                .urlGallery(urlGalleries)
+                .urlGallery(urlGallery)
                 .build();
         Response postResponse = clubClient.post(createClubRequest);
         ErrorResponse errorResponse = postResponse.as(ErrorResponse.class);

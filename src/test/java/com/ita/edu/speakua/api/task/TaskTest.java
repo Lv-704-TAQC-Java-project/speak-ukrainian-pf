@@ -200,7 +200,7 @@ public class TaskTest extends ApiBaseTestRunner {
     @Description("Verify that user can edit Task with valid values")
     @Link("https://jira.softserve.academy/browse/TUA-444")
     @Test
-    public void verifyTaskEditWithValidData() {
+    public void verifyTaskEditingWithValidData() {
         String name = "namenamename1213#$% ";
         String description = "descriptiondescriptiondescriptiondescriptiondescription12345$%%^$# ";
         String picture = "/upload/test/test.png";

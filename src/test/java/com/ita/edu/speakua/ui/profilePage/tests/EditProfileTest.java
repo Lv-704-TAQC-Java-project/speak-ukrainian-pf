@@ -64,6 +64,7 @@ public class EditProfileTest extends SameWindowTestRunner {
         String actualErrorMessage = editProfileModal
                 .enterFirstName(invalidData)
                 .getFirstnameErrorText();
+
         softAssert.assertEquals(actualErrorMessage, expectedErrorMessage, "Expected error message should appear");
 
         boolean isSaveChangesButtonDisabled = editProfileModal.isSaveChangesButtonEnabled();
