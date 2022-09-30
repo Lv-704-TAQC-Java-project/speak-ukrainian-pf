@@ -163,7 +163,7 @@ public class ChallengeTest extends ApiBaseTestRunner {
 
     @Issue("TUA-436")
     @Link("https://jira.softserve.academy/browse/TUA-436")
-    @Description("Verify that user is not able to create Challenge using invalid values")
+    @Description("Verify that user is not able to delete Challenge using non-administrator rights")
     @Test
     public void unSuccessDeleteTest() {
         Authentication authentication = new Authentication("ulpkzrapmhkpzaqcve@sdvgeft.com", "11111111");
