@@ -392,8 +392,8 @@ public class ChallengeTest extends ApiBaseTestRunner {
                                                                  String picture,
                                                                  String sortNumber,
                                                                  String[] expectedMessages) {
-        Authentication authentication = new Authentication(properties.getAdminEmail(), properties.getAdminPassword());
 
+        Authentication authentication = new Authentication(properties.getAdminEmail(), properties.getAdminPassword());
         ChallengeClient challengeClient = new ChallengeClient(authentication.getToken());
         CreateChallengeRequest createChallengeRequest = CreateChallengeRequest
                 .builder()
