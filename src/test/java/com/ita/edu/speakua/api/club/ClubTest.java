@@ -19,7 +19,6 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.testng.Assert.assertEquals;
 
@@ -90,7 +89,7 @@ public class ClubTest extends ApiBaseTestRunner {
 
         CreateClubRequest createClubRequest = CreateClubRequest
                 .builder()
-                .categoriesName(List.of("Спортивні секції", ""))
+                .categoryName("Спортивні секції")
                 .location(location)
                 .description(description)
                 .name(clubName)
