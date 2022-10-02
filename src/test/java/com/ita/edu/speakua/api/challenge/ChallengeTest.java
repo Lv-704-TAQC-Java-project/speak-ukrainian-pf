@@ -362,4 +362,61 @@ public class ChallengeTest extends ApiBaseTestRunner {
         int challengesQuantity = challengeService.countChallengesById(challengeIdToDelete);
         assertEquals(challengesQuantity, 0, format("There should not be challenge with id=%s in the DB", challengeIdToDelete));
     }
+
+    @DataProvider(name = "addInvalidChallengeData")
+    public Object[][] addInvalidChallengeData() {
+        return new Object[][]{
+                {"null", "null", "null", "null", "null",
+                        new String[]{"sortNumber не должно равняться null and name must contain a minimum of 5 and " +
+                                "a maximum of 30 letters and picture не должно быть пустым and description must contain " +
+                                "a maximum of 25000 letters and title must contain a minimum of 5 and a maximum " +
+                                "of 100 letters"}},
+                {" ", " ", " ", " ", " ", new String[]{"picture не должно быть пустым and name не должно быть пустым " +
+                        "and sortNumber не должно равняться null and description must contain a maximum of 25000 " +
+                        "letters and title must contain a minimum of 5 and a maximum of 100 letters and name must " +
+                        "contain a minimum of 5 and a maximum of 30 letters"}},
+                {"", "", "", "", "",
+                        new String[]{"picture не должно быть пустым and sortNumber не должно равняться null " +
+                                "and description не должно быть пустым and name не должно быть пустым and title " +
+                                "не должно быть пустым"}}
+        };
+    }
+
+    @Issue("TUA-434")
+    @Description("Verify that user is not able to edit information about Challenge" +
+            " using null, spaces or absence of symbols as values")
+    @Test(dataProvider = "addInvalidChallengeData")
+    public void verifyThatUserCanNotEditChallengeWithInvalidData(String name,
+                                                                 String title,
+                                                                 String description,
+                                                                 String picture,
+                                                                 String sortNumber,
+                                                                 String[] expectedMessages) {
+        Authentication authentication = new Authentication(properties.getAdminEmail(), properties.getAdminPassword());
+
+        ChallengeClient challengeClient = new ChallengeClient(authentication.getToken());
+        CreateChallengeRequest createChallengeRequest = CreateChallengeRequest
+                .builder()
+                .name(name)
+                .title(title)
+                .description(description)
+                .picture(picture)
+                .sortNumber(Integer.valueOf(sortNumber))
+                .build();
+
+        Response postResponse = challengeClient.post(createChallengeRequest);
+        assertEquals(postResponse.statusCode(), 400,
+                "Incorrect response status code");
+
+        ErrorResponse errorResponse = postResponse.as(ErrorResponse.class);
+        SoftAssert softly = new SoftAssert();
+
+        softly.assertEquals(errorResponse.getStatus(), 400,
+                "Unexpected response status code");
+        for (String expectedMessage : expectedMessages) {
+            softly.assertTrue(errorResponse.getMessage().contains(expectedMessage), "Message should be correct "
+                    + errorResponse.getMessage() + " / " + expectedMessage);
+        }
+        softly.assertAll();
+    }
 }
