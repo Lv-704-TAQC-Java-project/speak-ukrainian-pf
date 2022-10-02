@@ -202,7 +202,7 @@ public class AddTaskTest extends SameWindowTestRunner {
     @Issue("TUA-523")
     @Description("Verify impossibility of creating task with name invalid data")
     @Test(dataProvider = "invalidNameData")
-    public void verifyCreateTaskWithInvalidNameData(String invalidData, String expectedMessage) {
+    public void canNotCreateTaskWithInvalidNameData(String invalidData, String expectedMessage) {
         String taskDescription = "Lorem Ipsum is simply dummy, when an unknown printer took a ";
         boolean isAllFieldsAreEmptyByDefault = addTaskPage.areFieldsEmpty();
 
